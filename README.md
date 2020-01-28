@@ -16,7 +16,7 @@ CURRENT TO-DO's:
 1. Add additional scopes for Google Photo API
 2. Add page navigation.
 3. Encorporate "Daily View," accessing & displaying recipes from Firebase.
-4. Encoorporate "List View", displaying events from Calendar API
+4. Encorporate "List View", displaying events from Calendar API
 5. Encorporate "Monthly View," displaying image thumbnails from Firebase.
 
 Release v0.1 Functionality:
