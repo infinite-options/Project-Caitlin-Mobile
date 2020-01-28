@@ -6,7 +6,7 @@ Before running the application, open
 ProjectCaitlin -> Constants.cs
 to make sure each of the lines contain the correct ClientID's.
 
-If these vairables are empty, please copy and paste the ClientID's listed in the
+If these variables are empty, please copy and paste the ClientID's listed in the
 project-caitlin Slack channel before building and running.
 
 If you desire to test new functionality, please start your own branch and include your name within the title.
