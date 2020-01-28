@@ -1,0 +1,29 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ProjectCaitlin.LoginPage">
+    <StackLayout
+        VerticalOptions="Center"
+        Margin="20">
+        
+        <Label
+            Text="Project Caitlin"
+            HorizontalOptions="Center"
+            TextColor="#4682B4"
+            FontSize="35"
+            Margin="0, 20"
+            />
+        
+        <Button
+            Text="Login"
+            Clicked="LoginClicked"
+            Margin="60, 40"
+            BackgroundColor="#4682B4"
+            TextColor="White"
+            />
+        
+    </StackLayout>
+</ContentPage>
