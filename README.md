@@ -19,6 +19,6 @@ CURRENT TO-DO's:
 4. Encoorporate "List View", displaying events from Calendar API
 5. Encorporate "Monthly View," displaying image thumbnails from Firebase.
 
-Release v1.0 Functionality:
+Release v0.1 Functionality:
 1. Display Login Page
 2. Return to Login Page after Authentication
