@@ -4,23 +4,22 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             NavigationPage.HasNavigationBar="False" 
-             x:Class="ProjectCaitlin.LoginPage">
+             NavigationPage.HasNavigationBar="False"  
+             x:Class="ProjectCaitlin.DailyViewPage">
     <StackLayout
         VerticalOptions="Center"
         Margin="20">
-        
+
         <Label
-            Text="Project Caitlin"
+            Text="Daily View"
             HorizontalOptions="Center"
             TextColor="#4682B4"
-            FontSize="35"
+            FontSize="16"
             Margin="0, 20"
             />
         
         <Button
             Text="Login"
-            Clicked="LoginClicked"
             Margin="60, 40"
             BackgroundColor="#4682B4"
             TextColor="White"
