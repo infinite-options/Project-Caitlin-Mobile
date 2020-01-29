@@ -23,7 +23,7 @@ namespace ProjectCaitlin.Droid
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, savedInstanceState);
 
-            FirebaseApp.InitializeApp(Application.Context);
+            //FirebaseApp.InitializeApp(Application.Context);
 
             LoadApplication(new App());
         }

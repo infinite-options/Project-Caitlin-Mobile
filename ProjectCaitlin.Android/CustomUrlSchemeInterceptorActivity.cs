@@ -11,7 +11,7 @@ namespace ProjectCaitlin.Droid
 	[IntentFilter(
 		new[] { Intent.ActionView },
 		Categories = new[] { Intent.CategoryDefault, Intent.CategoryBrowsable },
-		DataSchemes = new[] { "com.googleusercontent.apps.863494635082-a617p00qkuafejrf3k7hq8s346l0u36h" },
+		DataSchemes = new[] { "com.googleusercontent.apps.1009120542229-61dahtq9jolmhmf72b4v3boeehfjrs08" },
 		DataPath = "/oauth2redirect")]
 	public class CustomUrlSchemeInterceptorActivity : Activity
 	{

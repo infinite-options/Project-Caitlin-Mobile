@@ -112,7 +112,7 @@ namespace ProjectCaitlin
 				}
 
 				//await store.SaveAsync(account = e.Account, Constants.AppName);
-				await DisplayAlert("Email address", user.Email, "OK");
+				await DisplayAlert("Login Successful", "", "OK");
 			}
 		}
 
