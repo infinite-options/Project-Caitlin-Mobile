@@ -26,4 +26,7 @@
     <EmbeddedResource Remove="MainPage.xaml" />
     <EmbeddedResource Remove="MainPage.xaml" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Models\" />
+  </ItemGroup>
 </Project>

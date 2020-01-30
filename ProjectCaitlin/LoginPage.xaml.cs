@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 using ProjectCaitlin.Authentication;
+using ProjectCaitlin.Methods;
+using ProjectCaitlin.Models;
 using Xamarin.Auth;
 using Xamarin.Forms;
 
@@ -19,33 +21,40 @@ namespace ProjectCaitlin
     [DesignTimeVisible(false)]
     public partial class LoginPage : ContentPage
     {
+
 		Account account;
+
+		user user = new user();
+
+		FirestoreMethods FSMethods = new FirestoreMethods();
 
 		public LoginPage()
         {
             InitializeComponent();
 
-            LoadFirestore();
+			LoadFirebaseUser();
         }
 
-        protected async Task LoadFirestore()
+        async Task LoadFirebaseUser()
         {
-            var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://firestore.googleapis.com/v1/projects/project-caitlin-c71a9/databases/(default)/documents/users/7R6hAVmDrNutRkG3sVRy");
-            request.Method = HttpMethod.Get;
-            var client = new HttpClient();
-            HttpResponseMessage response = await client.SendAsync(request);
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+			await FSMethods.LoadUser(user, "7R6hAVmDrNutRkG3sVRy");
+			Console.WriteLine("user first name: " + user.firstName);
+			Console.WriteLine("user last name: " + user.lastName);
+
+            foreach (routine routine in user.routines)
             {
-                HttpContent content = response.Content;
-                var mealsString = await content.ReadAsStringAsync();
-                JObject meals = JObject.Parse(mealsString);
+				Console.WriteLine("user routine title: " + routine.title);
+				Console.WriteLine("user routine id: " + routine.id);
+			}
 
-                Console.WriteLine("Firebase:" + meals["fields"]["last_name"]["stringValue"].ToString());
-            }
-        }
+			foreach (routine routine in user.goals)
+			{
+				Console.WriteLine("user goal title: " + routine.title);
+				Console.WriteLine("user goal id: " + routine.id);
+			}
+		}
 
-        async void LoginClicked(object sender, EventArgs e)
+		async void LoginClicked(object sender, EventArgs e)
         {
 			string clientId = null;
 			string redirectUri = null;
@@ -80,6 +89,8 @@ namespace ProjectCaitlin
 
 			var presenter = new Xamarin.Auth.Presenters.OAuthLoginPresenter();
 			presenter.Login(authenticator);
+
+			
 		}
 
 		async void OnAuthCompleted(object sender, AuthenticatorCompletedEventArgs e)
@@ -91,7 +102,6 @@ namespace ProjectCaitlin
 				authenticator.Error -= OnAuthError;
 			}
 
-			User user = null;
 			if (e.IsAuthenticated)
 			{
 				// If the user is authenticated, request their basic user data from Google
@@ -103,7 +113,7 @@ namespace ProjectCaitlin
 					// Deserialize the data and store it in the account store
 					// The users email address will be used to identify data in SimpleDB
 					string userJson = await response.GetResponseTextAsync();
-					user = JsonConvert.DeserializeObject<User>(userJson);
+					user = JsonConvert.DeserializeObject<user>(userJson);
 				}
 
 				if (account != null)
@@ -113,6 +123,10 @@ namespace ProjectCaitlin
 
 				//await store.SaveAsync(account = e.Account, Constants.AppName);
 				await DisplayAlert("Login Successful", "", "OK");
+
+                LoginGoogleAsync();
+
+				await Navigation.PushAsync(new DailyPage());
 			}
 		}
 
@@ -126,6 +140,52 @@ namespace ProjectCaitlin
 			}
 
 			Debug.WriteLine("Authentication error: " + e.Message);
+		}
+
+		async Task LoginGoogleAsync()
+		{
+			//try
+			//{
+			//	if (!string.IsNullOrEmpty(_googleService.ActiveToken))
+			//	{
+			//		//Always require user authentication
+			//		_googleService.Logout();
+			//	}
+
+			//	EventHandler<GoogleClientResultEventArgs<GoogleUser>> userLoginDelegate = null;
+			//	userLoginDelegate = async (object sender, GoogleClientResultEventArgs<GoogleUser> e) =>
+			//	{
+			//		switch (e.Status)
+			//		{
+			//			case GoogleActionStatus.Completed:
+   //                         #if DEBUG
+			//				var googleUserString = JsonConvert.SerializeObject(e.Data);
+			//				Debug.WriteLine($"Google Logged in succesfully: {googleUserString}");
+   //                         #endif
+			//				//await App.Current.MainPage.Navigation.PushModalAsync(new HomePage(socialLoginData));
+			//				break;
+			//			case GoogleActionStatus.Canceled:
+			//				await App.Current.MainPage.DisplayAlert("Google Auth", "Canceled", "Ok");
+			//				break;
+			//			case GoogleActionStatus.Error:
+			//				await App.Current.MainPage.DisplayAlert("Google Auth", "Error", "Ok");
+			//				break;
+			//			case GoogleActionStatus.Unauthorized:
+			//				await App.Current.MainPage.DisplayAlert("Google Auth", "Unauthorized", "Ok");
+			//				break;
+			//		}
+
+			//		_googleService.OnLogin -= userLoginDelegate;
+			//	};
+
+			//	_googleService.OnLogin += userLoginDelegate;
+
+			//	await _googleService.LoginAsync();
+			//}
+			//catch (Exception ex)
+			//{
+			//	Debug.WriteLine(ex.ToString());
+			//}
 		}
 	}
 }

@@ -1,0 +1,47 @@
+{
+  "project_info": {
+    "project_number": "711685546849",
+    "firebase_url": "https://project-caitlin-c71a9.firebaseio.com",
+    "project_id": "project-caitlin-c71a9",
+    "storage_bucket": "project-caitlin-c71a9.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:711685546849:android:6a1c1838923d7c4a35db20",
+        "android_client_info": {
+          "package_name": "com.infiniteoptions.project_caitlin"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "711685546849-uugff7spscakt9vib2k6a2tikrv8f4up.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyARRZN6rGoPMfUtzlHy-AhbnIk8R_uusJY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "711685546849-uugff7spscakt9vib2k6a2tikrv8f4up.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "711685546849-odo7bk7mr6db3r8hr2nmskrttlng6aj9.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.infiniteoptions.Project-Caitlin"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

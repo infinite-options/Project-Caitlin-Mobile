@@ -4,7 +4,6 @@ using System.Linq;
 
 using Foundation;
 using UIKit;
-using Firebase.Auth;
 
 namespace ProjectCaitlin.iOS
 {
@@ -28,7 +27,6 @@ namespace ProjectCaitlin.iOS
 
             global::Xamarin.Auth.Presenters.XamarinIOS.AuthenticationConfiguration.Init();
 
-            Firebase.Core.App.Configure();
             return base.FinishedLaunching(app, options);
         }
 
@@ -36,7 +34,6 @@ namespace ProjectCaitlin.iOS
         {
             // Convert NSUrl to Uri
             var uri = new Uri(url.AbsoluteString);
-
 
             // Load redirectUrl page
             AuthenticationState.Authenticator.OnPageLoading(uri);
