@@ -22,7 +22,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", GoogleAuthenticator.superToken);
+            string bearerString = string.Format("Bearer {0}", LoginPage.accessToken);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept" , "application/json");
             var client = new HttpClient();
@@ -64,7 +64,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", GoogleAuthenticator.superToken);
+            string bearerString = string.Format("Bearer {0}", LoginPage.accessToken);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
@@ -114,10 +114,10 @@ namespace ProjectCaitlin.Services
             //string endTimeString = String.Join(", ", itemList2);
 
             //System.Diagnostics.Debug.WriteLine(itemListString);
-            System.Diagnostics.Debug.WriteLine(eventNameString);
+            //System.Diagnostics.Debug.WriteLine(eventNameString);
 
             //return (eventNameString, startTimeString, endTimeString);
-            return (eventNameString);
+            return (json);
         }
 
         public async Task<string> GetSpecificEventsList(int publicYear, int publicMonth, int publicDay)

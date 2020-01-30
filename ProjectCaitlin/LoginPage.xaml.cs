@@ -21,7 +21,10 @@ namespace ProjectCaitlin
     {
 		Account account;
 
-		public LoginPage()
+        public static string accessToken = "ya29.Il-7B8r3xI0Tq6RAMn4qh5pNha875-JgmKEda7rEGYWDaRtNCrNXet7JwnwdQT_F1Sc1w5cPsYYyz5hTDnT4mt3c6seae3uDP8mnkytSLY7O6y5V0YGGkNU6EEtj9DF5Gg";
+        public static string refreshToken = "1//06wtEbpEnf3VBCgYIARAAGAYSNwF-L9IrTcpRa4IsqetNoVK3RQsX_FJHiPXso5sDweGSLW-N_7oB78Nu68vqFcAhacV9ZcbUAKY";
+
+        public LoginPage()
         {
             InitializeComponent();
         }
@@ -61,6 +64,7 @@ namespace ProjectCaitlin
 
 			var presenter = new Xamarin.Auth.Presenters.OAuthLoginPresenter();
 			presenter.Login(authenticator);
+
 		}
 
 		async void OnAuthCompleted(object sender, AuthenticatorCompletedEventArgs e)
@@ -74,8 +78,7 @@ namespace ProjectCaitlin
 
 			if (e.IsAuthenticated)
 			{
-
-				if (account != null)
+                if (account != null)
 				{
 					//store.Delete(account, Constants.AppName);
 				}
@@ -84,6 +87,16 @@ namespace ProjectCaitlin
 
                 //Display Successful Login Alert
 				await DisplayAlert("Login Successful", "", "OK");
+
+                //Reset accessToken
+                accessToken = e.Account.Properties["access_token"];
+
+                //Write the Toekn to console, in case it changes
+                Console.WriteLine("HERE is the key");
+                Console.WriteLine(e.Account.Properties["access_token"]);
+                Console.WriteLine(e.Account.Properties["refresh_token"]);
+                Console.WriteLine("----------------");
+
 
                 //Navigate to the Daily Page after Login
                 await Navigation.PushAsync(new DailyViewPage());
@@ -101,5 +114,10 @@ namespace ProjectCaitlin
 
 			DisplayAlert("Authentication error: " , e.Message, "OK");
 		}
-	}
+
+        public void SkipLoginClicked(object sender, EventArgs e)
+        {
+            Navigation.PushAsync(new DailyViewPage());
+        }
+    }
 }

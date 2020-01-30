@@ -21,7 +21,15 @@
         <Button
             Text="Login"
             Clicked="LoginClicked"
-            Margin="60, 40"
+            Margin="60, 10"
+            BackgroundColor="#4682B4"
+            TextColor="White"
+            />
+
+        <Button
+            Text="IO Dev Access"
+            Clicked="SkipLoginClicked"
+            Margin="60, 0"
             BackgroundColor="#4682B4"
             TextColor="White"
             />
