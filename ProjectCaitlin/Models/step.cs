@@ -4,7 +4,7 @@ using Newtonsoft.Json;
 namespace ProjectCaitlin.Models
 {
 	[JsonObject]
-	public class Step : INotifyPropertyChanged
+	public class step : INotifyPropertyChanged
 	{
 		public string title { get; set; }
 

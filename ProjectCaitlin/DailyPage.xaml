@@ -29,53 +29,6 @@
                         <StackLayout x:Name="taskList"
                             Orientation="Horizontal"
                                      Padding="10,0,10,0">
-
-                            <Button WidthRequest="80"
-                                    HeightRequest="80"
-                                    Text="Button"
-                                    TextColor="Black"
-                                    CornerRadius="5"
-                                    BorderColor="Black"
-                                    BorderWidth="1"
-                                    Margin="5,20,5,10"
-                                    BackgroundColor="LightGray"/>
-                            <Button WidthRequest="80"
-                                    HeightRequest="80"
-                                    Text="Button"
-                                    TextColor="Black"
-                                    CornerRadius="5"
-                                    BorderColor="Black"
-                                    BorderWidth="1"
-                                    Margin="5,20,5,10"
-                                    BackgroundColor="LightGray"/>
-                            <Button WidthRequest="80"
-                                    HeightRequest="80"
-                                    Text="Button"
-                                    TextColor="Black"
-                                    CornerRadius="5"
-                                    BorderColor="Black"
-                                    BorderWidth="1"
-                                    Margin="5,20,5,10"
-                                    BackgroundColor="LightGray"/>
-                            <Button WidthRequest="80"
-                                    HeightRequest="80"
-                                    Text="Button"
-                                    TextColor="Black"
-                                    CornerRadius="5"
-                                    BorderColor="Black"
-                                    BorderWidth="1"
-                                    Margin="5,20,5,10"
-                                    BackgroundColor="LightGray"/>
-                            <Button WidthRequest="80"
-                                    HeightRequest="80"
-                                    Text="Button"
-                                    TextColor="Black"
-                                    CornerRadius="5"
-                                    BorderColor="Black"
-                                    BorderWidth="1"
-                                    Margin="5,20,5,10"
-                                    BackgroundColor="LightGray"/>
-
                             
                         </StackLayout>
                     </ScrollView>

@@ -11,6 +11,8 @@ namespace ProjectCaitlin.Models
 
 		public string title { get; set; }
 
+		public string photo { get; set; }
+
 		public List<task> tasks { get; set; } = new List<task>();
 
         public event PropertyChangedEventHandler PropertyChanged;

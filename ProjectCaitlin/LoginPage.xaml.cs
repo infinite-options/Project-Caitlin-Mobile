@@ -26,18 +26,19 @@ namespace ProjectCaitlin
 		public static string accessToken;
 
 
-		FirestoreMethods FSMethods = new FirestoreMethods();
+		FirestoreMethods FSMethods;
 
 		public LoginPage()
         {
             InitializeComponent();
 
+			FSMethods = new FirestoreMethods("7R6hAVmDrNutRkG3sVRy");
 			LoadFirebaseUser();
         }
 
         async Task LoadFirebaseUser()
         {
-			await FSMethods.LoadUser("7R6hAVmDrNutRkG3sVRy");
+			await FSMethods.LoadUser();
 			OnPropertyChanged(nameof(App.user));
 			Console.WriteLine("user first name: " + App.user.firstName);
 			Console.WriteLine("user last name: " + App.user.lastName);

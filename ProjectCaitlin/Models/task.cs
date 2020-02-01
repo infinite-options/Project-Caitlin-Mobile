@@ -11,7 +11,9 @@ namespace ProjectCaitlin.Models
 
 		public string title { get; set; }
 
-		public List<Step> steps { get; set; } = new List<Step>();
+		public string photo { get; set; }
+
+		public List<step> steps { get; set; } = new List<step>();
 
 		public event PropertyChangedEventHandler PropertyChanged;
     }
