@@ -25,7 +25,6 @@ namespace ProjectCaitlin
 		Account account;
 		public static string accessToken;
 
-		public static user user = new user();
 
 		FirestoreMethods FSMethods = new FirestoreMethods();
 
@@ -38,19 +37,19 @@ namespace ProjectCaitlin
 
         async Task LoadFirebaseUser()
         {
-			await FSMethods.LoadUser(user, "7R6hAVmDrNutRkG3sVRy");
-			OnPropertyChanged(nameof(user));
-			Console.WriteLine("user first name: " + user.firstName);
-			Console.WriteLine("user last name: " + user.lastName);
+			await FSMethods.LoadUser("7R6hAVmDrNutRkG3sVRy");
+			OnPropertyChanged(nameof(App.user));
+			Console.WriteLine("user first name: " + App.user.firstName);
+			Console.WriteLine("user last name: " + App.user.lastName);
 
-            foreach (routine routine in user.routines)
+            foreach (routine routine in App.user.routines)
             {
 				OnPropertyChanged(nameof(routine));
 				Console.WriteLine("user routine title: " + routine.title);
 				Console.WriteLine("user routine id: " + routine.id);
 			}
 
-			foreach (routine goal in user.goals)
+			foreach (routine goal in App.user.goals)
 			{
 				OnPropertyChanged(nameof(goal));
 				Console.WriteLine("user goal title: " + goal.title);
@@ -117,7 +116,7 @@ namespace ProjectCaitlin
 					// Deserialize the data and store it in the account store
 					// The users email address will be used to identify data in SimpleDB
 					string userJson = await response.GetResponseTextAsync();
-					user = JsonConvert.DeserializeObject<user>(userJson);
+					//user = JsonConvert.DeserializeObject<user>(userJson);
 				}
 
 				if (account != null)
@@ -129,7 +128,7 @@ namespace ProjectCaitlin
 				await DisplayAlert("Login Successful", "", "OK");
 
                 accessToken = e.Account.Properties["access_token"];
-                LoginGoogleAsync();
+                //await LoginGoogleAsync();
 
 				await Navigation.PushAsync(new DailyPage());
 			}
