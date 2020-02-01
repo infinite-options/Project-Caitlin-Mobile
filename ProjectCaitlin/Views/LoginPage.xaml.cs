@@ -28,9 +28,8 @@ namespace ProjectCaitlin
 
 		FirestoreMethods FSMethods;
 
-		public LoginPage()
-        {
-            InitializeComponent();
+        public static string accessToken;
+        public static string refreshToken = "1//06wtEbpEnf3VBCgYIARAAGAYSNwF-L9IrTcpRa4IsqetNoVK3RQsX_FJHiPXso5sDweGSLW-N_7oB78Nu68vqFcAhacV9ZcbUAKY";
 
 			FSMethods = new FirestoreMethods("7R6hAVmDrNutRkG3sVRy");
 			LoadFirebaseUser();
@@ -94,7 +93,6 @@ namespace ProjectCaitlin
 			var presenter = new Xamarin.Auth.Presenters.OAuthLoginPresenter();
 			presenter.Login(authenticator);
 
-			
 		}
 
 		async void OnAuthCompleted(object sender, AuthenticatorCompletedEventArgs e)
@@ -132,6 +130,22 @@ namespace ProjectCaitlin
                 //await LoginGoogleAsync();
 
 				await Navigation.PushAsync(new DailyPage());
+
+                //Display Successful Login Alert
+				//await DisplayAlert("Login Successful", "", "OK");
+
+                //Reset accessToken
+                accessToken = e.Account.Properties["access_token"];
+
+                //Write the Toekn to console, in case it changes
+                Console.WriteLine("HERE is the key");
+                Console.WriteLine(e.Account.Properties["access_token"]);
+                Console.WriteLine(e.Account.Properties["refresh_token"]);
+                Console.WriteLine("----------------");
+
+
+                //Navigate to the Daily Page after Login
+                // await Navigation.PushAsync(new DailyViewPage());
 			}
 		}
 
@@ -144,9 +158,15 @@ namespace ProjectCaitlin
 				authenticator.Error -= OnAuthError;
 			}
 
-			Debug.WriteLine("Authentication error: " + e.Message);
+			DisplayAlert("Authentication error: " , e.Message, "OK");
 		}
 
+    public void SkipLoginClicked(object sender, EventArgs e)
+    {
+        accessToken = "ya29.Il-8B_UIoVMvB_uDjo6Kz275-s6UuGiYBPvudBBx8ohKKt5OXhZf4-n2xWhsNUNjMmG5eFx-cyKEVA8jkpYeNLR5D32bCO7aSAjvvfp33CwSL94DEeg3Jp7QNr2nZgIEsQ";
+        Navigation.PushAsync(new DailyViewPage());
+    }
+    }
 		async Task LoginGoogleAsync()
 		{
 			//try

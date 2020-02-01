@@ -4,6 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="False" 
              x:Class="ProjectCaitlin.LoginPage">
     <StackLayout
         VerticalOptions="Center"
@@ -20,7 +21,15 @@
         <Button
             Text="Login"
             Clicked="LoginClicked"
-            Margin="60, 40"
+            Margin="60, 10"
+            BackgroundColor="#4682B4"
+            TextColor="White"
+            />
+
+        <Button
+            Text="IO Dev Access"
+            Clicked="SkipLoginClicked"
+            Margin="60, 0"
             BackgroundColor="#4682B4"
             TextColor="White"
             />
