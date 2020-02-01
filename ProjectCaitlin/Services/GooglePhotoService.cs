@@ -10,7 +10,7 @@ namespace ProjectCaitlin.Services
     public class GooglePhotoService
     {
 
-        public async Task<string> GetPhotos()
+        public async Task<string[]> GetPhotos()
         {
 
             //Make HTTP Request
@@ -19,7 +19,8 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", GoogleAuthenticator.superToken);
+            string bearerString = string.Format("Bearer {0}", LoginPage.accessToken);
+
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
@@ -27,11 +28,11 @@ namespace ProjectCaitlin.Services
             HttpContent content = response.Content;
             var json = await content.ReadAsStringAsync();
 
-
-            Console.WriteLine("photo json" + json);
             //return json;
             //Deserialize JSON Result
             var result = JsonConvert.DeserializeObject<ProjectCaitlin.Methods.GetPhotoAlbumMethod>(json);
+
+            Console.WriteLine("json photo: " + json);
 
             //Create itemList
             var itemList = new List<string>();
@@ -44,20 +45,19 @@ namespace ProjectCaitlin.Services
             {
                 foreach (var product in result.MediaItems)
                 {
-                    //thumbNailAlbumUri = product.CoverPhotoBaseUrl.ToString();
+                    //thumbNailAlbumUri = product.baseUrl.ToString();
                     creationTime = product.MediaMetadata.CreationTime.ToString();
                     date = creationTime.Substring(0, 9);
-                    if (date == "1/24/2020")
-                    {
-                        itemList.Add(product.ProductUrl.ToString());
-                        storePicUri = product.ProductUrl.ToString();
-                        //System.Diagnostics.Debug.WriteLine(storePicUri);
-                        //System.Diagnostics.Debug.WriteLine(date);
+                    //string datePicker = DateTime.Now.ToString("dd'/'MM'/'yyyy");
+                    string datePicker = "5/26/2016";
+                    //if (date == datePicker)
+                    //{
+                    itemList.Add(product.BaseUrl.ToString());
+                    storePicUri = product.BaseUrl.ToString();
+                    //System.Diagnostics.Debug.WriteLine(storePicUri);
+                    //System.Diagnostics.Debug.WriteLine(date);
 
-                    };
-
-                    break;
-
+                    //};
                 }
             }
             catch (NullReferenceException e)
@@ -68,7 +68,7 @@ namespace ProjectCaitlin.Services
             //Compile these values in to a string list and return to be displayed
             string itemListString = String.Join(", ", itemList);
 
-            return storePicUri;
+            return itemList.ToArray();
         }
     }
 }

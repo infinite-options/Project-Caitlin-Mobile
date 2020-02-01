@@ -53,8 +53,6 @@ namespace ProjectCaitlin.Methods
 
                     user.goals.Add(goal);
                 }
-                //user.routines = userJsonFields["routines"]["stringValue"].ToString();
-
             }
             return user;
         }

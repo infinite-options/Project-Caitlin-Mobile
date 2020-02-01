@@ -23,8 +23,9 @@ namespace ProjectCaitlin
     {
 
 		Account account;
+		public static string accessToken;
 
-		user user = new user();
+		public static user user = new user();
 
 		FirestoreMethods FSMethods = new FirestoreMethods();
 
@@ -38,19 +39,22 @@ namespace ProjectCaitlin
         async Task LoadFirebaseUser()
         {
 			await FSMethods.LoadUser(user, "7R6hAVmDrNutRkG3sVRy");
+			OnPropertyChanged(nameof(user));
 			Console.WriteLine("user first name: " + user.firstName);
 			Console.WriteLine("user last name: " + user.lastName);
 
             foreach (routine routine in user.routines)
             {
+				OnPropertyChanged(nameof(routine));
 				Console.WriteLine("user routine title: " + routine.title);
 				Console.WriteLine("user routine id: " + routine.id);
 			}
 
-			foreach (routine routine in user.goals)
+			foreach (routine goal in user.goals)
 			{
-				Console.WriteLine("user goal title: " + routine.title);
-				Console.WriteLine("user goal id: " + routine.id);
+				OnPropertyChanged(nameof(goal));
+				Console.WriteLine("user goal title: " + goal.title);
+				Console.WriteLine("user goal id: " + goal.id);
 			}
 		}
 
@@ -124,6 +128,7 @@ namespace ProjectCaitlin
 				//await store.SaveAsync(account = e.Account, Constants.AppName);
 				await DisplayAlert("Login Successful", "", "OK");
 
+                accessToken = e.Account.Properties["access_token"];
                 LoginGoogleAsync();
 
 				await Navigation.PushAsync(new DailyPage());
