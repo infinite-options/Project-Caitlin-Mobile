@@ -1,0 +1,208 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ProjectCaitlin.DailyPage">
+    <Grid>
+        <ScrollView>
+            <StackLayout Orientation="Vertical">
+
+                <StackLayout Orientation="Vertical"
+                             BackgroundColor="#CFDAF0"
+                             HeightRequest="160"
+                             WidthRequest="700"
+                             HorizontalOptions="CenterAndExpand"
+                             >
+                    <Label x:Name="routineTitle"
+                           Text="You currently have no routines"
+                           Margin="0, 0, 0, 0"
+                           FontSize="25"
+                           TextColor="Black"
+                           Padding="0,10,0,0"
+                           HorizontalOptions="Center"
+                           >
+                    </Label>
+
+                    <ScrollView Orientation="Horizontal">
+                        <StackLayout x:Name="taskList"
+                            Orientation="Horizontal"
+                                     Padding="10,0,10,0">
+                            
+                        </StackLayout>
+                    </ScrollView>
+
+                </StackLayout>
+
+                <!--Right Top--> 
+
+                <Label Text="Todays Events"
+                       Margin="0, 30, 0, 0"
+                       FontSize="20"
+                       TextColor="#AC83CD"
+                       HorizontalOptions="Center"
+                       />
+
+                <Button Text="Click here to go to photos"
+                        Clicked="PhotosClicked"
+                        WidthRequest="170"
+                        HorizontalOptions="Center"
+                        Padding="0,0,0,0"
+                        FontSize="13"
+                        TextColor="#525252"
+                        BackgroundColor="#e6e6e6"
+                        Margin="0,25,10,0"
+                        />
+
+                <Button Text="Click here to pick another day"
+                    WidthRequest="170"
+                    HorizontalOptions="Center"
+                    Padding="0,0,0,0"
+                    FontSize="13"
+                    TextColor="#525252"
+                    BackgroundColor="#e6e6e6"
+                    Margin="0,25,10,0"
+                    />
+
+                <Button Text="Please Choose your day"
+                        WidthRequest="170"
+                        HorizontalOptions="Center"
+                        Padding="10,0,10,0"
+                        FontSize="13"
+                        TextColor="Black"
+                        BackgroundColor="#e6e6e6"
+                        Margin="-155,10,10,0"
+                        />
+
+                <Button Text="Please Choose your day"
+                        WidthRequest="170"
+                        HorizontalOptions="Center"
+                        Padding="10,0,10,0"
+                        FontSize="13"
+                        TextColor="Black"
+                        BackgroundColor="#e6e6e6"
+                        Margin="200,-55,10,0"
+                        />
+
+                <Button Text="Eat Breakfast"
+                        HeightRequest="160"
+                        WidthRequest="500"
+                        Padding="0,-30,0,0"
+                        HorizontalOptions="Center"
+                        FontSize="18"
+                        TextColor="Black"
+                        BackgroundColor="#DED8E7"
+                        Margin="30,30,30,0"
+                        />
+
+                <Image Source="forks.png"
+                       WidthRequest="50"
+                       HeightRequest="50"
+                       Margin="0,-20,0,0"
+                       HorizontalOptions="Center"
+
+                       />
+
+                <Label Text="Goals"
+                       Margin="0, 20, 0, 0"
+                       FontSize="22"
+                       TextColor="#4232B4"
+                       HorizontalOptions="Center"
+                       />
+
+                 <Image Source="running.jpg"
+                       WidthRequest="150"
+                       HeightRequest="150"
+                       Margin="-180,-10,0,0"
+                       HorizontalOptions="Center"
+                       />
+
+                <Image Source="painting.jpg"
+                       WidthRequest="150"
+                       HeightRequest="150"
+                       Margin="180,-150,0,0"
+                       HorizontalOptions="Center"
+                       />
+
+                <Label Text="Go for a run"
+                       Margin="-200, -20, 0, 0"
+                       FontSize="20"
+                       TextColor="#3C26DC"
+                       HorizontalOptions="Center"
+                       />
+
+                <Label Text="Paint"
+                       Margin="100, -30, 0, 0"
+                       FontSize="20"
+                       TextColor="#3C26DC"
+                       HorizontalOptions="Center"
+                       />
+
+                <Label Text="Read a Book"
+                       Margin="-200, 40, 0, 0"
+                       FontSize="20"
+                       TextColor="#3C26DC"
+                       HorizontalOptions="Center"
+                       />
+
+                <Image Source="readBook.jpg"
+                       WidthRequest="120"
+                       HeightRequest="120"
+                       Margin="180,-80,0,0"
+                       HorizontalOptions="Center"
+                       />
+
+                <Label Text="Work Out"
+                       Margin="-250, 30, 0, 0"
+                       FontSize="20"
+                       TextColor="#3C26DC"
+                       HorizontalOptions="Center"
+                       />
+
+                <Image Source="workOut.jpg"
+                       WidthRequest="120"
+                       HeightRequest="120"
+                       Margin="180,-100,0,0"
+                       HorizontalOptions="Center"
+                       />
+
+
+
+
+                <!--<Button Text="Product Design"
+                        WidthRequest="270"
+                        HorizontalOptions="Center"
+                        Padding="0,0,110,0"
+                        FontSize="13"
+                        TextColor="#525252"
+                        BackgroundColor="#e6e6e6"
+                        Margin="100,-55,10,0"
+                        />
+
+                <Label Text="07"
+                       Margin="30, 20, 20, 0"
+                       FontSize="30"
+                       />
+
+                <Label Text="WED"
+                       Margin="30, -10, 20, 0"
+                       FontSize="15"
+                       />
+
+                <Button Text="Product Design"
+                        WidthRequest="270"
+                        HorizontalOptions="Center"
+                        Padding="0,0,110,0"
+                        FontSize="13"
+                        TextColor="#525252"
+                        BackgroundColor="#e6e6e6"
+                        Margin="100,-55,10,0"
+                        />-->
+
+
+            </StackLayout>
+        </ScrollView>
+
+    </Grid>
+</ContentPage>

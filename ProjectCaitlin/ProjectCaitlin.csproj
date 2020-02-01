@@ -23,7 +23,6 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
-    <EmbeddedResource Remove="MainPage.xaml" />
-    <EmbeddedResource Remove="MainPage.xaml" />
+    <Folder Include="Models\" />
   </ItemGroup>
 </Project>

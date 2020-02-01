@@ -14,7 +14,10 @@ test-results/
 # Google Stuff
 credentials.json
 credentials.cs
+ProjectCaitlin/Constants.cs
 Constants.cs
+google-services.json
+GoogleService-Info.plist
 
 # Mac bundle stuff
 *.dmg
