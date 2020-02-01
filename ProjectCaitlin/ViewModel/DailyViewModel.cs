@@ -34,7 +34,7 @@ namespace ProjectCaitlin.ViewModel
         }
 
         public ICommand UpdateBtn1 =>
-            new Command(() => { Btn1Text = DailyViewPage.eventNameList[0]; });
+            new Command(() => { Btn1Text = ListViewPage.eventNameList[0]; });
 
 
         //--Change numLABEL COLOR to TRANSPARENT
@@ -125,7 +125,7 @@ namespace ProjectCaitlin.ViewModel
         }
 
         public ICommand UpdateBtn2 =>
-            new Command(() => { Btn2Text = DailyViewPage.eventNameList[1]; });
+            new Command(() => { Btn2Text = ListViewPage.eventNameList[1]; });
         //-------------------------------------------- 
 
     }

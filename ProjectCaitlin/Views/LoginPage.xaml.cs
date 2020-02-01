@@ -163,7 +163,7 @@ namespace ProjectCaitlin
 
     public void SkipLoginClicked(object sender, EventArgs e)
     {
-        accessToken = "ya29.Il-8B_UIoVMvB_uDjo6Kz275-s6UuGiYBPvudBBx8ohKKt5OXhZf4-n2xWhsNUNjMmG5eFx-cyKEVA8jkpYeNLR5D32bCO7aSAjvvfp33CwSL94DEeg3Jp7QNr2nZgIEsQ";
+        accessToken = "ya29.Il-8B-by4vlXw_GqupudQqOKGwhb6BlBzRGhAqoCcsYDlw4wEiXolfj0JejlAwOJvuAuLLRVdganTjZE6NRY42S66eGjjaxGh0e2kPe0pJfiwqSZwOe2zNRyyswg5pPXEw";
         Navigation.PushAsync(new DailyViewPage());
     }
     }
