@@ -60,7 +60,7 @@ namespace ProjectCaitlin.Services
 
             //Make HTTP Request
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://www.googleapis.com/calendar/v3/calendars/primary/events?orderBy=startTime&singleEvents=true&timeMax=2020-01-22T23%3A59%3A59%2B00%3A00&timeMin=2020-01-22T00%3A00%3A00%2B00%3A00");
+            request.RequestUri = new Uri("https://www.googleapis.com/calendar/v3/calendars/primary/events?orderBy=startTime&singleEvents=true&timeMax=2020-02-26T23%3A59%3A59%2B00%3A00&timeMin=2020-01-23T00%3A00%3A00%2B00%3A00");
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token

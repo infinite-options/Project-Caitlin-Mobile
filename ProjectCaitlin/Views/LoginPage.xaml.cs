@@ -21,7 +21,7 @@ namespace ProjectCaitlin
     {
 		Account account;
 
-        public static string accessToken = "ya29.Il-7B8r3xI0Tq6RAMn4qh5pNha875-JgmKEda7rEGYWDaRtNCrNXet7JwnwdQT_F1Sc1w5cPsYYyz5hTDnT4mt3c6seae3uDP8mnkytSLY7O6y5V0YGGkNU6EEtj9DF5Gg";
+        public static string accessToken;
         public static string refreshToken = "1//06wtEbpEnf3VBCgYIARAAGAYSNwF-L9IrTcpRa4IsqetNoVK3RQsX_FJHiPXso5sDweGSLW-N_7oB78Nu68vqFcAhacV9ZcbUAKY";
 
         public LoginPage()
@@ -86,7 +86,7 @@ namespace ProjectCaitlin
 				//await store.SaveAsync(account = e.Account, Constants.AppName);
 
                 //Display Successful Login Alert
-				await DisplayAlert("Login Successful", "", "OK");
+				//await DisplayAlert("Login Successful", "", "OK");
 
                 //Reset accessToken
                 accessToken = e.Account.Properties["access_token"];
@@ -117,6 +117,7 @@ namespace ProjectCaitlin
 
         public void SkipLoginClicked(object sender, EventArgs e)
         {
+            accessToken = "ya29.Il-8B_UIoVMvB_uDjo6Kz275-s6UuGiYBPvudBBx8ohKKt5OXhZf4-n2xWhsNUNjMmG5eFx-cyKEVA8jkpYeNLR5D32bCO7aSAjvvfp33CwSL94DEeg3Jp7QNr2nZgIEsQ";
             Navigation.PushAsync(new DailyViewPage());
         }
     }

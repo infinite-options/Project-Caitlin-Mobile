@@ -25,5 +25,14 @@
   <ItemGroup>
     <EmbeddedResource Remove="MainPage.xaml" />
     <EmbeddedResource Remove="MainPage.xaml" />
+    <EmbeddedResource Remove="DailyViewPage.xaml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Folder Include="ViewModel\" />
+    <Folder Include="Views\" />
+    <Folder Include="Converters\" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Remove="Converters\UniversalValueConverter.cs" />
   </ItemGroup>
 </Project>

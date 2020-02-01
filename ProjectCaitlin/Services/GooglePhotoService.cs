@@ -22,7 +22,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", GoogleAuthenticator.superToken);
+            string bearerString = string.Format("Bearer {0}", LoginPage.accessToken);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
