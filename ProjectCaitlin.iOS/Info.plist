@@ -46,6 +46,14 @@
 			<key>CFBundleTypeRole</key>
 			<string>Viewer</string>
 		</dict>
+		<dict>
+			<key>CFBundleURLName</key>
+			<string>Firebase.auth</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.711685546849-odo7bk7mr6db3r8hr2nmskrttlng6aj9</string>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>
