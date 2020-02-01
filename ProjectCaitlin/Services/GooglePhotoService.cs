@@ -1,24 +1,21 @@
 ﻿using Newtonsoft.Json;
+using ProjectCaitlin.Authentication;
 using System;
 using System.Collections.Generic;
-using System.Net;
 using System.Net.Http;
-using System.Net.Http.Headers;
 using System.Threading.Tasks;
-using ProjectCaitlin;
-using ProjectCaitlin.Authentication;
 
 namespace ProjectCaitlin.Services
 {
     public class GooglePhotoService
     {
 
-        public async Task<string> GetPhotos()
+        public async Task<string[]> GetPhotos()
         {
 
             //Make HTTP Request
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://photoslibrary.googleapis.com/v1/albums");
+            request.RequestUri = new Uri("https://photoslibrary.googleapis.com/v1/mediaItems");
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
@@ -30,21 +27,36 @@ namespace ProjectCaitlin.Services
             HttpContent content = response.Content;
             var json = await content.ReadAsStringAsync();
 
+            //return json;
             //Deserialize JSON Result
-            var result = JsonConvert.DeserializeObject<Methods.GetPhotoAlbumMethod>(json);
+            var result = JsonConvert.DeserializeObject<ProjectCaitlin.Methods.GetPhotoAlbumMethod>(json);
+
+            Console.WriteLine("json photo: " + json);
 
             //Create itemList
             var itemList = new List<string>();
-            String storeAlbumUri = "";
+            String creationTime = "";
+            String storePicUri = "";
+            String date = "";
             String thumbNailAlbumUri = "";
             //Try to add "Summary" Items to list from JSON. If null, redirect to Login prompt.
             try
             {
-                foreach (var product in result.Albums)
+                foreach (var product in result.MediaItems)
                 {
-                    itemList.Add(product.ProductUrl.ToString());
-                    storeAlbumUri = product.ProductUrl.ToString();
-                    thumbNailAlbumUri = product.CoverPhotoBaseUrl.ToString();
+                    //thumbNailAlbumUri = product.baseUrl.ToString();
+                    creationTime = product.MediaMetadata.CreationTime.ToString();
+                    date = creationTime.Substring(0, 9);
+                    //string datePicker = DateTime.Now.ToString("dd'/'MM'/'yyyy");
+                    string datePicker = "5/26/2016";
+                    //if (date == datePicker)
+                    //{
+                    itemList.Add(product.BaseUrl.ToString());
+                    storePicUri = product.BaseUrl.ToString();
+                    //System.Diagnostics.Debug.WriteLine(storePicUri);
+                    //System.Diagnostics.Debug.WriteLine(date);
+
+                    //};
                 }
             }
             catch (NullReferenceException e)
@@ -55,7 +67,7 @@ namespace ProjectCaitlin.Services
             //Compile these values in to a string list and return to be displayed
             string itemListString = String.Join(", ", itemList);
 
-            return storeAlbumUri;
+            return itemList.ToArray();
         }
     }
 }
