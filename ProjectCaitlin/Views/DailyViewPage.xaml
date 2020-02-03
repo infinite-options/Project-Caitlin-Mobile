@@ -22,20 +22,45 @@
     <Grid>
         <ScrollView>
             <StackLayout Orientation="Vertical">
-                
-                <Label Text="Get Ready"
-                       Margin="0, 0, 0, 0"
-                       FontSize="25"
-                       TextColor="Black"
-                       BackgroundColor="#CFDAF0"
-                       HeightRequest="160"
-                       WidthRequest="500"
-                       Padding="150,40,0,0"
-                       HorizontalOptions="Center"
-                       />
 
+                <StackLayout Orientation="Vertical"
+                             BackgroundColor="#CFDAF0"
+                             HeightRequest="160"
+                             WidthRequest="700"
+                             HorizontalOptions="CenterAndExpand"
+                             >
+                    <Label x:Name="routineTitle"
+                           Text="You currently have no routines"
+                           Margin="0, 0, 0, 0"
+                           FontSize="25"
+                           TextColor="Black"
+                           Padding="0,10,0,0"
+                           HorizontalOptions="Center"
+                           >
+                    </Label>
 
-                <!--Right Top--> 
+                    <ScrollView Orientation="Horizontal">
+                        <StackLayout x:Name="taskList"
+                                     Orientation="Horizontal"
+                                     Padding="10,0,10,0">
+                            
+                        </StackLayout>
+                    </ScrollView>
+
+                </StackLayout>
+
+                <!--Right Top-->
+
+                <Button Text="Click here to go to photos"
+                        Clicked="PhotosClicked"
+                        WidthRequest="170"
+                        HorizontalOptions="Center"
+                        Padding="0,0,0,0"
+                        FontSize="13"
+                        TextColor="#525252"
+                        BackgroundColor="#e6e6e6"
+                        Margin="0,25,10,0"
+                        />
 
                 <Label Text="Todays Events"
                        Margin="0, 30, 0, 0"
