@@ -27,7 +27,7 @@
 
                     <ScrollView Orientation="Horizontal">
                         <StackLayout x:Name="taskList"
-                            Orientation="Horizontal"
+                                     Orientation="Horizontal"
                                      Padding="10,0,10,0">
                             
                         </StackLayout>

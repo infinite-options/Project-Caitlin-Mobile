@@ -27,10 +27,11 @@ namespace ProjectCaitlin
 
 
 		FirestoreMethods FSMethods;
-
-        public static string accessToken;
         public static string refreshToken = "1//06wtEbpEnf3VBCgYIARAAGAYSNwF-L9IrTcpRa4IsqetNoVK3RQsX_FJHiPXso5sDweGSLW-N_7oB78Nu68vqFcAhacV9ZcbUAKY";
 
+        public LoginPage()
+        {
+			InitializeComponent();
 			FSMethods = new FirestoreMethods("7R6hAVmDrNutRkG3sVRy");
 			LoadFirebaseUser();
         }
@@ -129,7 +130,7 @@ namespace ProjectCaitlin
                 accessToken = e.Account.Properties["access_token"];
                 //await LoginGoogleAsync();
 
-				await Navigation.PushAsync(new DailyPage());
+				await Navigation.PushAsync(new DailyViewPage());
 
                 //Display Successful Login Alert
 				//await DisplayAlert("Login Successful", "", "OK");
@@ -161,12 +162,12 @@ namespace ProjectCaitlin
 			DisplayAlert("Authentication error: " , e.Message, "OK");
 		}
 
-    public void SkipLoginClicked(object sender, EventArgs e)
-    {
-        accessToken = "ya29.Il-8B-by4vlXw_GqupudQqOKGwhb6BlBzRGhAqoCcsYDlw4wEiXolfj0JejlAwOJvuAuLLRVdganTjZE6NRY42S66eGjjaxGh0e2kPe0pJfiwqSZwOe2zNRyyswg5pPXEw";
-        Navigation.PushAsync(new DailyViewPage());
-    }
-    }
+        public void SkipLoginClicked(object sender, EventArgs e)
+        {
+            accessToken = "ya29.Il-8B-by4vlXw_GqupudQqOKGwhb6BlBzRGhAqoCcsYDlw4wEiXolfj0JejlAwOJvuAuLLRVdganTjZE6NRY42S66eGjjaxGh0e2kPe0pJfiwqSZwOe2zNRyyswg5pPXEw";
+            Navigation.PushAsync(new DailyViewPage());
+        }
+
 		async Task LoginGoogleAsync()
 		{
 			//try
