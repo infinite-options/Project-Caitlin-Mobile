@@ -1,0 +1,13 @@
+C:\Users\J\source\repos\CalendarView\CalendarView\CalendarView\obj\Debug\netstandard2.0\CalendarView.csprojAssemblyReference.cache
+C:\Users\J\source\repos\CalendarView\CalendarView\CalendarView\bin\Debug\netstandard2.0\CalendarView.deps.json
+C:\Users\J\source\repos\CalendarView\CalendarView\CalendarView\bin\Debug\netstandard2.0\CalendarView.dll
+C:\Users\J\source\repos\CalendarView\CalendarView\CalendarView\bin\Debug\netstandard2.0\ref\CalendarView.dll
+C:\Users\J\source\repos\CalendarView\CalendarView\CalendarView\bin\Debug\netstandard2.0\CalendarView.pdb
+C:\Users\J\source\repos\CalendarView\CalendarView\CalendarView\obj\Debug\netstandard2.0\App.xaml.g.cs
+C:\Users\J\source\repos\CalendarView\CalendarView\CalendarView\obj\Debug\netstandard2.0\MainPage.xaml.g.cs
+C:\Users\J\source\repos\CalendarView\CalendarView\CalendarView\obj\Debug\netstandard2.0\CalendarView.AssemblyInfoInputs.cache
+C:\Users\J\source\repos\CalendarView\CalendarView\CalendarView\obj\Debug\netstandard2.0\CalendarView.AssemblyInfo.cs
+C:\Users\J\source\repos\CalendarView\CalendarView\CalendarView\obj\Debug\netstandard2.0\XamlC.stamp
+C:\Users\J\source\repos\CalendarView\CalendarView\CalendarView\obj\Debug\netstandard2.0\CalendarView.dll
+C:\Users\J\source\repos\CalendarView\CalendarView\CalendarView\obj\Debug\netstandard2.0\ref\CalendarView.dll
+C:\Users\J\source\repos\CalendarView\CalendarView\CalendarView\obj\Debug\netstandard2.0\CalendarView.pdb
