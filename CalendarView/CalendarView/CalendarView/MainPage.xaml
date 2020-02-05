@@ -6,14 +6,13 @@
              mc:Ignorable="d"
              x:Class="CalendarView.MainPage">
         <StackLayout>
-        <StackLayout Grid.Row="1" Orientation="Horizontal" Spacing="3">
+        <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center" Spacing="3">
+            <Button x:Name= "btn2" Text="Previous Month" />
             <Label x:Name ="yearLabel" Text=" " FontSize="20"/>
             <Label x:Name = "monthLabel" Text=" " FontSize="20"/>
-        </StackLayout>
-        <StackLayout Grid.Row="1" Orientation="Horizontal" Spacing="3">
             <Button x:Name ="btn1" Text="Next Month" />
-            <Button x:Name= "btn2" Text="Previous Month" />
         </StackLayout>
+        
         <Grid x:Name="StackLayoutMap" Grid.Column="7" Grid.Row="13">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="0.14285714285*" />
@@ -26,18 +25,19 @@
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="0.07692307692*" />
+                <RowDefinition Height="0.03*" />
                 <RowDefinition Height="0.07692307692*" />
+                <RowDefinition Height="0.03*" />
                 <RowDefinition Height="0.07692307692*" />
+                <RowDefinition Height="0.03*" />
                 <RowDefinition Height="0.07692307692*" />
+                <RowDefinition Height="0.03*" />
                 <RowDefinition Height="0.07692307692*" />
+                <RowDefinition Height="0.03*" />
                 <RowDefinition Height="0.07692307692*" />
+                <RowDefinition Height="0.03*" />
                 <RowDefinition Height="0.07692307692*" />
-                <RowDefinition Height="0.07692307692*" />
-                <RowDefinition Height="0.07692307692*" />
-                <RowDefinition Height="0.07692307692*" />
-                <RowDefinition Height="0.07692307692*" />
-                <RowDefinition Height="0.07692307692*" />
-                <RowDefinition Height="0.07692307692*" />
+
             </Grid.RowDefinitions>
             <Label Text="Sun" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="0" FontSize="20"/>
             <Label Text="Mon" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" FontSize="20"/>
