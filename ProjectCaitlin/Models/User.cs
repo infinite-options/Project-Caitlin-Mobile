@@ -17,7 +17,7 @@ namespace ProjectCaitlin.Models
 
 		public List<routine> routines { get; set; } = new List<routine>();
 
-		public List<routine> goals { get; set; } = new List<routine>();
+		public List<goal> goals { get; set; } = new List<goal>();
 
         public event PropertyChangedEventHandler PropertyChanged;
     }

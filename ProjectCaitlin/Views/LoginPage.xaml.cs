@@ -26,7 +26,7 @@ namespace ProjectCaitlin
 		public static string accessToken;
 
 
-		FirestoreMethods FSMethods;
+		public static FirestoreMethods FSMethods;
         public static string refreshToken = "1//06wtEbpEnf3VBCgYIARAAGAYSNwF-L9IrTcpRa4IsqetNoVK3RQsX_FJHiPXso5sDweGSLW-N_7oB78Nu68vqFcAhacV9ZcbUAKY";
 
         public LoginPage()
@@ -50,7 +50,7 @@ namespace ProjectCaitlin
 				Console.WriteLine("user routine id: " + routine.id);
 			}
 
-			foreach (routine goal in App.user.goals)
+			foreach (goal goal in App.user.goals)
 			{
 				OnPropertyChanged(nameof(goal));
 				Console.WriteLine("user goal title: " + goal.title);
