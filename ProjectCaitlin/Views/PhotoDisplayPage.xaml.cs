@@ -27,24 +27,24 @@ namespace ProjectCaitlin
             photoURIs = await GooglePhotoService.GetPhotos();
 
             int rowLength = 3;
-            double gridItemSize = Application.Current.MainPage.Width / rowLength;
+            double gridItemSize = (Application.Current.MainPage.Width / rowLength) - (1.2 * rowLength);
 
             var scrollView = new ScrollView();
             var controlGrid = new Grid
             {
-                HorizontalOptions = LayoutOptions.CenterAndExpand
+                HorizontalOptions = LayoutOptions.Center
             };
             controlGrid.RowDefinitions.Add(new RowDefinition { Height = gridItemSize });
 
             for (int i = 0; i < rowLength; i ++)
-                controlGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = gridItemSize });
+                controlGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = gridItemSize});
 
             var photoCount = 0;
             foreach (string photoURI in photoURIs)
             {
                 if (photoCount % rowLength == 0)
                 {
-                    controlGrid.RowDefinitions.Add(new RowDefinition { Height = gridItemSize });
+                    controlGrid.RowDefinitions.Add(new RowDefinition { Height = gridItemSize});
 
                 }
                 CachedImage webImage = new CachedImage
@@ -56,6 +56,11 @@ namespace ProjectCaitlin
 
                 };
 
+                var indicator = new ActivityIndicator { Color = Color.Gray, };
+                indicator.SetBinding(ActivityIndicator.IsRunningProperty, "IsLoading");
+                indicator.BindingContext = webImage;
+
+                controlGrid.Children.Add(indicator, photoCount % rowLength, photoCount / rowLength);
                 controlGrid.Children.Add(webImage, photoCount % rowLength, photoCount / rowLength);
                 photoCount++;
             }

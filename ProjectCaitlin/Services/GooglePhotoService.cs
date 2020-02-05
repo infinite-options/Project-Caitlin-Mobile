@@ -31,8 +31,6 @@ namespace ProjectCaitlin.Services
             //Deserialize JSON Result
             var result = JsonConvert.DeserializeObject<ProjectCaitlin.Methods.GetPhotoAlbumMethod>(json);
 
-            Console.WriteLine("json photo: " + json);
-
             //Create itemList
             var itemList = new List<string>();
             String creationTime = "";
