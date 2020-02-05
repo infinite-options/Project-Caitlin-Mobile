@@ -11,16 +11,14 @@
     </NavigationPage.TitleView>
 
     <ContentPage.ToolbarItems>
-    <ToolbarItem Text="List View"
+    <ToolbarItem Text="List View                                                           "
                  x:Name="listBtn"
-                 Clicked="ListBtnClicked"
-                 Order="Secondary"
-                 />
+                 Clicked="ListBtnClicked"/>
     <ToolbarItem Text="Monthly View"
                  x:Name="monthlyBtn"
-                 Clicked="MonthlyBtnClicked"
-                 Order="Secondary"
-                 />
+                 Clicked="MonthlyBtnClicked"/>
+
+
     </ContentPage.ToolbarItems>
 
     <Grid>
@@ -28,7 +26,7 @@
             <StackLayout Orientation="Vertical">
 
                 <StackLayout Orientation="Vertical"
-                             BackgroundColor="#CFDAF0"
+                             BackgroundColor="#4682B4"
                              HeightRequest="160"
                              WidthRequest="700"
                              HorizontalOptions="CenterAndExpand"
@@ -37,7 +35,7 @@
                            Text="You currently have no routines"
                            Margin="0, 0, 0, 0"
                            FontSize="25"
-                           TextColor="Black"
+                           TextColor="White"
                            Padding="0,10,0,0"
                            HorizontalOptions="Center"
                            >
@@ -57,19 +55,19 @@
 
                 <Button Text="Click here to go to photos"
                         Clicked="PhotosClicked"
-                        WidthRequest="170"
+                        WidthRequest="230"
                         HorizontalOptions="Center"
                         Padding="0,0,0,0"
                         FontSize="13"
-                        TextColor="#525252"
-                        BackgroundColor="#e6e6e6"
+                        TextColor="#4682B4"
+                        BackgroundColor="#d9d9d9"
                         Margin="0,25,10,0"
                         />
 
                 <Label Text="Todays Upcoming Events"
                        Margin="0, 30, 0, 0"
                        FontSize="20"
-                       TextColor="#AC83CD"
+                       TextColor="#4682B4"
                        HorizontalOptions="Center"
                        />
 
@@ -88,8 +86,8 @@
                         HorizontalOptions="Center"
                         Padding="10,0,10,0"
                         FontSize="13"
-                        TextColor="Black"
-                        BackgroundColor="#e6e6e6"
+                        TextColor="White"
+                        BackgroundColor="#4682B4"
                         Opacity="0"
                         IsVisible="false"
                         Margin="-170,10,10,0"
@@ -101,8 +99,8 @@
                         HorizontalOptions="Center"
                         Padding="10,0,10,0"
                         FontSize="13"
-                        TextColor="Black"
-                        BackgroundColor="#e6e6e6"
+                        TextColor="White"
+                        BackgroundColor="#4682B4"
                         Opacity="0"
                         IsVisible="false"
                         Margin="190,-54,10,0"
@@ -115,7 +113,7 @@
                         Padding="10,0,10,0"
                         FontSize="13"
                         TextColor="Black"
-                        BackgroundColor="#e6e6e6"
+                        BackgroundColor="#ffb3b3"
                         Opacity="0"
                         IsVisible="false"
                         Margin="0, 0, 0, 0"
@@ -129,8 +127,8 @@
                         HorizontalOptions="Center"
                         Padding="10,0,10,0"
                         FontSize="13"
-                        TextColor="Black"
-                        BackgroundColor="#e6e6e6"
+                        TextColor="#4682B4"
+                        BackgroundColor="#d9d9d9"
                         Margin="0, 0, 0, 0"
                         IsVisible="false"
                         Opacity="0"
@@ -143,8 +141,8 @@
                         Padding="0,-30,0,0"
                         HorizontalOptions="Center"
                         FontSize="18"
-                        TextColor="Black"
-                        BackgroundColor="#DED8E7"
+                        TextColor="White"
+                        BackgroundColor="#4682B4"
                         Margin="30,30,30,0"
                         />
 
@@ -159,7 +157,7 @@
                 <Label Text="Goals"
                        Margin="0, 20, 0, 0"
                        FontSize="22"
-                       TextColor="#4232B4"
+                       TextColor="#4682B4"
                        HorizontalOptions="Center"
                        />
 
@@ -180,21 +178,21 @@
                 <Label Text="Go for a run"
                        Margin="-200, -20, 0, 0"
                        FontSize="20"
-                       TextColor="#3C26DC"
+                       TextColor="#4682B4"
                        HorizontalOptions="Center"
                        />
 
                 <Label Text="Paint"
                        Margin="100, -30, 0, 0"
                        FontSize="20"
-                       TextColor="#3C26DC"
+                       TextColor="#4682B4"
                        HorizontalOptions="Center"
                        />
 
                 <Label Text="Read a Book"
                        Margin="-200, 40, 0, 0"
                        FontSize="20"
-                       TextColor="#3C26DC"
+                       TextColor="#4682B4"
                        HorizontalOptions="Center"
                        />
 
@@ -208,7 +206,7 @@
                 <Label Text="Work Out"
                        Margin="-250, 30, 0, 0"
                        FontSize="20"
-                       TextColor="#3C26DC"
+                       TextColor="#4682B4"
                        HorizontalOptions="Center"
                        />
 

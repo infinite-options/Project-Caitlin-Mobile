@@ -139,10 +139,10 @@ namespace ProjectCaitlin
                 accessToken = e.Account.Properties["access_token"];
 
                 //Write the Toekn to console, in case it changes
-                Console.WriteLine("HERE is the key");
+                Console.WriteLine("HERE is the key------------------------------------------------");
                 Console.WriteLine(e.Account.Properties["access_token"]);
-                Console.WriteLine(e.Account.Properties["refresh_token"]);
-                Console.WriteLine("----------------");
+                //Console.WriteLine(e.Account.Properties["refresh_token"]);
+                Console.WriteLine("----------------------------------------------------------------");
 
 
                 //Navigate to the Daily Page after Login
@@ -164,7 +164,7 @@ namespace ProjectCaitlin
 
         public void SkipLoginClicked(object sender, EventArgs e)
         {
-            accessToken = "ya29.Il-8B-Xz-Vu3Aud5DK6IraKDVdFDupf8xfQ_G3nfMUrKaeTKE5B9o4RQzwOgeSRaRggbYASXegms26yqHTSuHzvX2ap6UH9DnRXi47X_quUH8JlygszVjotVlm8i4K6zVw";
+            accessToken = "ya29.Il-8B7Ijlpi0NDzrO_06_IBgeFpLrxJkUNrKSzoN0nZrq5enFKU11-82StJJtEiGLz9bgj_OwFMB-T00mrbaTGHq1230kDzPLHfcx9NnkzQUGB7xWAkx7k4Dm8mMJFThLg";
             Navigation.PushAsync(new DailyViewPage());
         }
 

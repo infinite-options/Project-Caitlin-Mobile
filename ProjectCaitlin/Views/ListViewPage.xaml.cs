@@ -145,7 +145,7 @@ namespace ProjectCaitlin
                         }
 
                         button1.Text = eventNameList[0];
-                        button1.BackgroundColor = Color.FromHex("#56b880");
+                        button1.BackgroundColor = Color.FromHex("#a6567b");  ///#56b880 is that green color  ///#a6567b is that maroon
                         button1.TextColor = Color.White;
                         numLbl1.TextColor = Color.Default;
                         dayLbl1.TextColor = Color.Default;
@@ -217,7 +217,7 @@ namespace ProjectCaitlin
 
                         //Update Button Text
                         button2.Text = eventNameList[1];
-                        button2.BackgroundColor = Color.FromHex("#56b880");
+                        button2.BackgroundColor = Color.FromHex("#4682B4");
                         button2.TextColor = Color.White;
                     }
                 }
@@ -283,7 +283,7 @@ namespace ProjectCaitlin
                         }
 
                         button3.Text = eventNameList[2];
-                        button3.BackgroundColor = Color.FromHex("#56b880");
+                        button3.BackgroundColor = Color.FromHex("#4682B4");
                         button3.TextColor = Color.White;
                     }
                 }
@@ -349,7 +349,7 @@ namespace ProjectCaitlin
                         }
 
                         button4.Text = eventNameList[3];
-                        button4.BackgroundColor = Color.FromHex("#56b880");
+                        button4.BackgroundColor = Color.FromHex("#4682B4");
                         button4.TextColor = Color.White;
                     }
                 }
@@ -415,7 +415,7 @@ namespace ProjectCaitlin
                         }
 
                         button5.Text = eventNameList[4];
-                        button5.BackgroundColor = Color.FromHex("#e6e6e6");
+                        button5.BackgroundColor = Color.FromHex("#56b880");
                         button5.TextColor = Color.White;
                     }
                 }
@@ -481,7 +481,7 @@ namespace ProjectCaitlin
                         }
 
                         button6.Text = eventNameList[5];
-                        button6.BackgroundColor = Color.FromHex("a6567b");
+                        button6.BackgroundColor = Color.FromHex("#4682B4");
                         button6.TextColor = Color.White;
                     }
                 }
@@ -547,7 +547,7 @@ namespace ProjectCaitlin
                         }
 
                         button7.Text = eventNameList[6];
-                        button7.BackgroundColor = Color.FromHex("a6567b");
+                        button7.BackgroundColor = Color.FromHex("#56b880");
                         button7.TextColor = Color.White;
                     }
                 }
@@ -613,7 +613,7 @@ namespace ProjectCaitlin
                         }
 
                         button8.Text = eventNameList[7];
-                        button8.BackgroundColor = Color.FromHex("a6567b");
+                        button8.BackgroundColor = Color.FromHex("#56b880");
                         button8.TextColor = Color.White;
                     }
                 }
@@ -679,7 +679,7 @@ namespace ProjectCaitlin
                         }
 
                         button9.Text = eventNameList[8];
-                        button9.BackgroundColor = Color.FromHex("a6567b");
+                        button9.BackgroundColor = Color.FromHex("#4682B4");
                         button9.TextColor = Color.White;
                     }
                 }
@@ -745,7 +745,7 @@ namespace ProjectCaitlin
                         }
 
                         button10.Text = eventNameList[9];
-                        button10.BackgroundColor = Color.FromHex("a6567b");
+                        button10.BackgroundColor = Color.FromHex("#a6567b");
                         button10.TextColor = Color.White;
 
                     }

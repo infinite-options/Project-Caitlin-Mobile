@@ -124,7 +124,7 @@ namespace ProjectCaitlin.Services
 
             string fullURI = baseUri + timeMaxMin;
 
-            Console.WriteLine(fullURI);
+            //Console.WriteLine(fullURI);
 
             var request = new HttpRequestMessage();
             request.RequestUri = new Uri(fullURI);
@@ -214,7 +214,7 @@ namespace ProjectCaitlin.Services
 
             string fullURI = baseUri + timeMaxMin;
 
-            Console.WriteLine(fullURI);
+            //Console.WriteLine(fullURI);
 
             var request = new HttpRequestMessage();
             request.RequestUri = new Uri(fullURI);
