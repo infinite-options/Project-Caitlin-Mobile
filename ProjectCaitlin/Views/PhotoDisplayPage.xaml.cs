@@ -24,17 +24,21 @@ namespace ProjectCaitlin
 
             var layout = new StackLayout();
             var scrollView = new ScrollView();
+            var controlGrid = new Grid { RowSpacing = 1, ColumnSpacing = 1 };
 
             foreach (string photoURI in photoURIs)
             {
+                controlGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
                 var webImage = new Image
                 {
                     Source = ImageSource.FromUri(new Uri(photoURI))
                 };
 
+                controlGrid.Children.Add(webImage);
+
                 layout.Children.Add(webImage);
             }
-            scrollView.Content = layout;
+            scrollView.Content = controlGrid;
             Content = scrollView;
         }
     }

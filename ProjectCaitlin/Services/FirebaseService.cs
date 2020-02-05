@@ -7,11 +7,29 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using ProjectCaitlin;
 using ProjectCaitlin.Authentication;
+using Newtonsoft.Json.Linq;
 
 namespace ProjectCaitlin.Services
 {
     public class FirebaseService
     {
+        protected async Task LoadFirestore()
+        {
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://firestore.googleapis.com/v1/projects/project-caitlin-c71a9/databases/(default)/documents/users/7R6hAVmDrNutRkG3sVRy");
+            request.Method = HttpMethod.Get;
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                HttpContent content = response.Content;
+                var mealsString = await content.ReadAsStringAsync();
+                JObject meals = JObject.Parse(mealsString);
+                //Console.WriteLine("Firebase:" + meals["fields"]["last_name"]["stringValue"].ToString());
+            }
+
+
+        }
 
         public async Task<string> GetActivities()
         {
