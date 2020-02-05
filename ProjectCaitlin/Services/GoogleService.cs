@@ -29,30 +29,7 @@ namespace ProjectCaitlin.Services
             HttpResponseMessage response = await client.SendAsync(request);
             HttpContent content = response.Content;
             var json = await content.ReadAsStringAsync();
-
-            //Deserialize JSON Result
-            var result = JsonConvert.DeserializeObject<Methods.GetCalendarsMethod>(json);
-
-            //Create itemList
-            var itemList = new List<string>();
-
-            //Try to add "Summary" Items to list from JSON. If null, redirect to Login prompt.
-            try
-            {
-                foreach (var sum in result.Items)
-                {
-                    itemList.Add(sum.Summary);
-                }
-            }
-            catch(NullReferenceException e)
-            {
-                return null;
-            }
-
-            //Compile these values in to a string list and return to be displayed
-            string itemListString = String.Join(", ", itemList);
-
-            return itemListString;
+            return json;
         }
 
         public async Task<string> GetEventsList()
@@ -71,111 +48,187 @@ namespace ProjectCaitlin.Services
             HttpResponseMessage response = await client.SendAsync(request);
             HttpContent content = response.Content;
             var json = await content.ReadAsStringAsync();
-
-            //Deserialize JSON Result
-            var result = JsonConvert.DeserializeObject<Methods.GetEventsListMethod>(json);
-
-            //Create itemList
-            var itemList = new List<string>();
-            //var itemList1 = new List<string>();
-            //var itemList2 = new List<string>();
-
-            //Create DataTable
-            //DataTable table = new DataTable();
-
-            //Try to add "Summary" Items to list from JSON. If null, redirect to Login prompt.
-            try
-            {
-                foreach (var events in result.Items)
-                {
-                    itemList.Add(events.EventName);
-                    itemList.Add(events.Start.DateTime.ToString());
-                    itemList.Add(events.End.DateTime.ToString());
-                }
-
-                //foreach (var startTime in result.Items)
-                //{
-                //    itemList1.Add(startTime.Start.DateTime.ToString());
-                //}
-
-                //foreach (var endTime in result.Items)
-                //{
-                //    itemList1.Add(endTime.End.DateTime.ToString());
-                //}
-            }
-            catch (NullReferenceException e)
-            {
-                return (null);
-            }
-
-            //Compile these values in to a string list and return to be displayed
-            string eventNameString = String.Join(", ", itemList);
-            //string startTimeString = String.Join(", ", itemList1);
-            //string endTimeString = String.Join(", ", itemList2);
-
-            //System.Diagnostics.Debug.WriteLine(itemListString);
-            //System.Diagnostics.Debug.WriteLine(eventNameString);
-
-            //return (eventNameString, startTimeString, endTimeString);
             return (json);
         }
 
-        public async Task<string> GetSpecificEventsList(int publicYear, int publicMonth, int publicDay)
+        public async Task<string> GetSpecificEventsList(int publicYear, int publicMonth, int publicDay, int uTCHour, int currentLocalUTCMinute, int timeZoneNum)
         {
 
             //Make HTTP Request
             string baseUri = "https://www.googleapis.com/calendar/v3/calendars/primary/events?orderBy=startTime&singleEvents=true&";
 
-            string monthString = "";
+            string monthString;
+            string dayString;
+            string paddedHour;
+            string paddedMinute;
+            string paddedTimeZoneNum;
+
+
+            //----------  ADD ZERO PADDING AND UTC FIX
+
+            if (uTCHour < 0)
+            {
+                uTCHour = (24 + uTCHour);
+                //publicDay = (publicDay - 1);
+            }
+
+            if (timeZoneNum < 10)
+            {
+                paddedTimeZoneNum = timeZoneNum.ToString().PadLeft(2, '0');
+
+            }
 
             if (publicMonth < 10)
             {
                 monthString = publicMonth.ToString().PadLeft(2, '0');
                 
             }
+            else
+            {
+                monthString = publicMonth.ToString();
+            }
 
-            string timeMaxMin = String.Format("timeMax={0}-{1}-{2}T23%3A59%3A59%2B00%3A00&timeMin={0}-{1}-{2}T00%3A00%3A00%2B00%3A00", publicYear, monthString, publicDay);
+            if (publicDay < 10)
+            {
+                dayString = publicDay.ToString().PadLeft(2, '0');
+
+            }
+            else
+            {
+                dayString = publicMonth.ToString();
+            }
+
+            if (uTCHour < 10)
+            {
+                paddedHour = uTCHour.ToString().PadLeft(2, '0');
+
+            }
+            else
+            {
+                paddedHour = uTCHour.ToString();
+            }
+
+            if (currentLocalUTCMinute < 10)
+            {
+                paddedMinute = currentLocalUTCMinute.ToString().PadLeft(2, '0');
+
+            }
+            else
+            {
+                paddedMinute = currentLocalUTCMinute.ToString();
+            }
+
+            //------------------------------
+
+            string timeMaxMin = String.Format("timeMax={0}-{1}-{2}T23%3A59%3A59-08%3A00&timeMin={0}-{1}-{2}T{3}%3A{4}%3A00-08%3A00", publicYear, monthString, dayString, paddedHour, paddedMinute);
 
             string fullURI = baseUri + timeMaxMin;
+
+            Console.WriteLine(fullURI);
 
             var request = new HttpRequestMessage();
             request.RequestUri = new Uri(fullURI);
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", GoogleAuthenticator.superToken);
+            string bearerString = string.Format("Bearer {0}", LoginPage.accessToken);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
             HttpResponseMessage response = await client.SendAsync(request);
             HttpContent content = response.Content;
             var json = await content.ReadAsStringAsync();
+            return (json);
+        }
 
-            //Deserialize JSON Result
-            var result = JsonConvert.DeserializeObject<Methods.GetEventsListMethod>(json);
+        public async Task<string> GetListPageList(int publicYear, int publicMonth, int publicDay, int uTCHour, int currentLocalUTCMinute, int timeZoneNum)
+        {
 
-            //Create itemList
-            var itemList = new List<string>();
+            //Make HTTP Request
+            string baseUri = "https://www.googleapis.com/calendar/v3/calendars/primary/events?orderBy=startTime&singleEvents=true&";
+
+            string monthString;
+            string dayString;
+            string paddedHour;
+            string paddedMinute;
+            string paddedTimeZoneNum;
 
 
-            //Try to add "Summary" Items to list from JSON. If null, redirect to Login prompt.
-            try
+            //----------  ADD ZERO PADDING AND UTC FIX
+
+            if (uTCHour < 0)
             {
-                foreach (var events in result.Items)
-                {
-                    itemList.Add(events.EventName);
-                    itemList.Add(events.Start.DateTime.ToString());
-                    itemList.Add(events.End.DateTime.ToString());
-                }
+                uTCHour = (24 + uTCHour);
+                //publicDay = (publicDay - 1);
             }
-            catch (NullReferenceException e)
+
+            if (timeZoneNum < 10)
             {
-                return (null);
+                paddedTimeZoneNum = timeZoneNum.ToString().PadLeft(2, '0');
+
             }
 
-            string eventNameString = String.Join(", ", itemList);
+            if (publicMonth < 10)
+            {
+                monthString = publicMonth.ToString().PadLeft(2, '0');
 
-            return (eventNameString);
+            }
+            else
+            {
+                monthString = publicMonth.ToString();
+            }
+
+            if (publicDay < 10)
+            {
+                dayString = publicDay.ToString().PadLeft(2, '0');
+
+            }
+            else
+            {
+                dayString = publicMonth.ToString();
+            }
+
+            if (uTCHour < 10)
+            {
+                paddedHour = uTCHour.ToString().PadLeft(2, '0');
+
+            }
+            else
+            {
+                paddedHour = uTCHour.ToString();
+            }
+
+            if (currentLocalUTCMinute < 10)
+            {
+                paddedMinute = currentLocalUTCMinute.ToString().PadLeft(2, '0');
+
+            }
+            else
+            {
+                paddedMinute = currentLocalUTCMinute.ToString();
+            }
+
+            //------------------------------
+
+            string timeMaxMin = String.Format("timeMax={0}-03-{2}T23%3A59%3A59-08%3A00&timeMin={0}-{1}-{2}T{3}%3A{4}%3A00-08%3A00", publicYear, monthString, dayString, paddedHour, paddedMinute);
+
+            string fullURI = baseUri + timeMaxMin;
+
+            Console.WriteLine(fullURI);
+
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri(fullURI);
+            request.Method = HttpMethod.Get;
+
+            //Format Headers of Request with included Token
+            string bearerString = string.Format("Bearer {0}", LoginPage.accessToken);
+            request.Headers.Add("Authorization", bearerString);
+            request.Headers.Add("Accept", "application/json");
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+            HttpContent content = response.Content;
+            var json = await content.ReadAsStringAsync();
+            return (json);
         }
     }
 }

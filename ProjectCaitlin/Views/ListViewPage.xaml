@@ -10,10 +10,6 @@
              NavigationPage.HasNavigationBar="true"
              >
 
-        <ContentPage.BindingContext>
-        <local:DailyViewModel />
-        </ContentPage.BindingContext>
-
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:StringToColorConverter x:Key="StringToColorConverter"/>
@@ -24,6 +20,11 @@
     <ToolbarItem Text="Daily View"
                  x:Name="dailyBtn"
                  Clicked="DailyBtnClicked"/>
+    <ToolbarItem Text="Monthly View"
+                 x:Name="monthlyBtn"
+                 Clicked="MonthlyBtnClicked"/>
+
+
     </ContentPage.ToolbarItems>
 
  <Grid>
@@ -39,8 +40,7 @@
             />
 
         <Image x:Name="someImage"
-               HorizontalOptions="FillAndExpand"
-               VerticalOptions="FillAndExpand"/>
+                />
 
         <ScrollView>
 

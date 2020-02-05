@@ -125,7 +125,7 @@ namespace ProjectCaitlin
 				}
 
 				//await store.SaveAsync(account = e.Account, Constants.AppName);
-				await DisplayAlert("Login Successful", "", "OK");
+				//await DisplayAlert("Login Successful", "", "OK");
 
                 accessToken = e.Account.Properties["access_token"];
                 //await LoginGoogleAsync();
@@ -164,7 +164,7 @@ namespace ProjectCaitlin
 
         public void SkipLoginClicked(object sender, EventArgs e)
         {
-            accessToken = "ya29.Il-8B-by4vlXw_GqupudQqOKGwhb6BlBzRGhAqoCcsYDlw4wEiXolfj0JejlAwOJvuAuLLRVdganTjZE6NRY42S66eGjjaxGh0e2kPe0pJfiwqSZwOe2zNRyyswg5pPXEw";
+            accessToken = "ya29.Il-8B-Xz-Vu3Aud5DK6IraKDVdFDupf8xfQ_G3nfMUrKaeTKE5B9o4RQzwOgeSRaRggbYASXegms26yqHTSuHzvX2ap6UH9DnRXi47X_quUH8JlygszVjotVlm8i4K6zVw";
             Navigation.PushAsync(new DailyViewPage());
         }
 

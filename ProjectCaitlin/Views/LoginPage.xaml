@@ -6,6 +6,7 @@
              mc:Ignorable="d"
              NavigationPage.HasNavigationBar="False" 
              x:Class="ProjectCaitlin.LoginPage">
+
     <StackLayout
         VerticalOptions="Center"
         Margin="20">

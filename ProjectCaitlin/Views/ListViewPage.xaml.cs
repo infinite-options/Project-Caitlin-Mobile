@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using ProjectCaitlin.Services;
-using ProjectCaitlin.ViewModel;
+//using ProjectCaitlin.ViewModel;
 using Xamarin.Forms;
 using Newtonsoft.Json;
 
@@ -10,22 +10,31 @@ namespace ProjectCaitlin
 {
     public partial class ListViewPage : ContentPage
     {
-        public static List<string> eventNameList;
+        private static List<string> eventNameList;
         public int oldDate;
-        public DailyViewModel dailyViewModel;
+
+        public int publicYear;
+        public int publicMonth;
+        public int publicDay;
+        public int uTCHour;
+        public int currentLocalUTCMinute;
+
+        DateTime dateTimeNow;
+        //public DailyViewModel dailyViewModel;
 
         public ListViewPage()
         {
             InitializeComponent();
-            BindingContext = DailyViewModel.Instance;
+            //BindingContext = DailyViewModel.Instance;
             PrepareRefreshEvents();
 
-            dailyViewModel = (DailyViewModel)BindingContext;           
+            //dailyViewModel = (DailyViewModel)BindingContext;           
         }
 
         public async void PrepareRefreshEvents()
         {
             await Task.Delay(1000);
+            dateTimeNow = DateTime.Now;
             await RefreshEvents();
         }
 
@@ -34,7 +43,21 @@ namespace ProjectCaitlin
 
             //Call Google API
             var googleService = new GoogleService();
-            var jsonResult = await googleService.GetEventsList();
+
+            publicYear = dateTimeNow.Year;
+            publicMonth = (dateTimeNow.Month);
+            publicDay = dateTimeNow.Day;
+
+            string timeZoneOffset = DateTimeOffset.Now.ToString();
+            string[] timeZoneOffsetParsed = timeZoneOffset.Split('-');
+            int timeZoneNum = Int32.Parse(timeZoneOffsetParsed[1].Substring(0, 2));
+
+            var currentTimeinUTC = DateTime.Now.ToUniversalTime();
+            uTCHour = (currentTimeinUTC.Hour - timeZoneNum);
+            currentLocalUTCMinute = currentTimeinUTC.Minute;
+
+
+            var jsonResult = await googleService.GetListPageList(publicYear, publicMonth, publicDay, uTCHour, currentLocalUTCMinute, timeZoneNum);
 
             //Return error if result is empty
             if (jsonResult == null)
@@ -849,6 +872,12 @@ namespace ProjectCaitlin
         public async void DailyBtnClicked(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
+        }
+
+
+        public async void MonthlyBtnClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new MonthlyViewPage());
         }
 
         //Disable Android's back button

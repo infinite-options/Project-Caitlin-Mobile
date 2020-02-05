@@ -8,13 +8,17 @@
              NavigationPage.HasNavigationBar="true"
              >
     <NavigationPage.TitleView>
-        <Slider HeightRequest="44" WidthRequest="300" />
     </NavigationPage.TitleView>
 
     <ContentPage.ToolbarItems>
     <ToolbarItem Text="List View"
-                 x:Name="monthlyBtn"
+                 x:Name="listBtn"
                  Clicked="ListBtnClicked"
+                 Order="Secondary"
+                 />
+    <ToolbarItem Text="Monthly View"
+                 x:Name="monthlyBtn"
+                 Clicked="MonthlyBtnClicked"
                  Order="Secondary"
                  />
     </ContentPage.ToolbarItems>
@@ -62,41 +66,75 @@
                         Margin="0,25,10,0"
                         />
 
-                <Label Text="Todays Events"
+                <Label Text="Todays Upcoming Events"
                        Margin="0, 30, 0, 0"
                        FontSize="20"
                        TextColor="#AC83CD"
                        HorizontalOptions="Center"
                        />
 
-                <Button Text="Click here to pick another day"
-                    WidthRequest="170"
-                    HorizontalOptions="Center"
-                    Padding="0,0,0,0"
+                <DatePicker WidthRequest="170"
+                    HorizontalOptions="CenterAndExpand"
                     FontSize="13"
                     TextColor="#525252"
                     BackgroundColor="#e6e6e6"
-                    Margin="0,25,10,0"
+                    Margin="0,0,10,0"
+                    IsVisible="false"
                     />
 
-                <Button Text="Please Choose your day"
+                <Button Text=""
+                        x:Name="eventBtn1"
                         WidthRequest="170"
                         HorizontalOptions="Center"
                         Padding="10,0,10,0"
                         FontSize="13"
                         TextColor="Black"
                         BackgroundColor="#e6e6e6"
-                        Margin="-155,10,10,0"
+                        Opacity="0"
+                        IsVisible="false"
+                        Margin="-170,10,10,0"
                         />
 
-                <Button Text="Please Choose your day"
+                <Button Text=""
+                        x:Name="eventBtn2"
                         WidthRequest="170"
                         HorizontalOptions="Center"
                         Padding="10,0,10,0"
                         FontSize="13"
                         TextColor="Black"
                         BackgroundColor="#e6e6e6"
-                        Margin="200,-55,10,0"
+                        Opacity="0"
+                        IsVisible="false"
+                        Margin="190,-54,10,0"
+                        />
+
+                <Button Text="No Events Scheduled"
+                        x:Name="noEventsButton"
+                        WidthRequest="350"
+                        HorizontalOptions="Center"
+                        Padding="10,0,10,0"
+                        FontSize="13"
+                        TextColor="Black"
+                        BackgroundColor="#e6e6e6"
+                        Opacity="0"
+                        IsVisible="false"
+                        Margin="0, 0, 0, 0"
+                        />
+
+
+                <Button Text="Click to View all of todays events"
+                        x:Name="viewListEvents"
+                        Clicked="ListBtnClicked"
+                        WidthRequest="350"
+                        HorizontalOptions="Center"
+                        Padding="10,0,10,0"
+                        FontSize="13"
+                        TextColor="Black"
+                        BackgroundColor="#e6e6e6"
+                        Margin="0, 0, 0, 0"
+                        IsVisible="false"
+                        Opacity="0"
+                        
                         />
 
                 <Button Text="Eat Breakfast"
