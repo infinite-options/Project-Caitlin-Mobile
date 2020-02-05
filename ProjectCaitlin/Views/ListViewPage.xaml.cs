@@ -2,7 +2,7 @@
 using System.Threading.Tasks;
 using System.Collections.Generic;
 using ProjectCaitlin.Services;
-using ProjectCaitlin.ViewModel;
+//using ProjectCaitlin.ViewModel;
 using Xamarin.Forms;
 using Newtonsoft.Json;
 
@@ -10,22 +10,31 @@ namespace ProjectCaitlin
 {
     public partial class ListViewPage : ContentPage
     {
-        public static List<string> eventNameList;
+        private static List<string> eventNameList;
         public int oldDate;
-        public DailyViewModel dailyViewModel;
+
+        public int publicYear;
+        public int publicMonth;
+        public int publicDay;
+        public int uTCHour;
+        public int currentLocalUTCMinute;
+
+        DateTime dateTimeNow;
+        //public DailyViewModel dailyViewModel;
 
         public ListViewPage()
         {
             InitializeComponent();
-            BindingContext = DailyViewModel.Instance;
+            //BindingContext = DailyViewModel.Instance;
             PrepareRefreshEvents();
 
-            dailyViewModel = (DailyViewModel)BindingContext;           
+            //dailyViewModel = (DailyViewModel)BindingContext;           
         }
 
         public async void PrepareRefreshEvents()
         {
             await Task.Delay(1000);
+            dateTimeNow = DateTime.Now;
             await RefreshEvents();
         }
 
@@ -34,7 +43,21 @@ namespace ProjectCaitlin
 
             //Call Google API
             var googleService = new GoogleService();
-            var jsonResult = await googleService.GetEventsList();
+
+            publicYear = dateTimeNow.Year;
+            publicMonth = (dateTimeNow.Month);
+            publicDay = dateTimeNow.Day;
+
+            string timeZoneOffset = DateTimeOffset.Now.ToString();
+            string[] timeZoneOffsetParsed = timeZoneOffset.Split('-');
+            int timeZoneNum = Int32.Parse(timeZoneOffsetParsed[1].Substring(0, 2));
+
+            var currentTimeinUTC = DateTime.Now.ToUniversalTime();
+            uTCHour = (currentTimeinUTC.Hour - timeZoneNum);
+            currentLocalUTCMinute = currentTimeinUTC.Minute;
+
+
+            var jsonResult = await googleService.GetListPageList(publicYear, publicMonth, publicDay, uTCHour, currentLocalUTCMinute, timeZoneNum);
 
             //Return error if result is empty
             if (jsonResult == null)
@@ -122,7 +145,7 @@ namespace ProjectCaitlin
                         }
 
                         button1.Text = eventNameList[0];
-                        button1.BackgroundColor = Color.FromHex("#56b880");
+                        button1.BackgroundColor = Color.FromHex("#a6567b");  ///#56b880 is that green color  ///#a6567b is that maroon
                         button1.TextColor = Color.White;
                         numLbl1.TextColor = Color.Default;
                         dayLbl1.TextColor = Color.Default;
@@ -194,7 +217,7 @@ namespace ProjectCaitlin
 
                         //Update Button Text
                         button2.Text = eventNameList[1];
-                        button2.BackgroundColor = Color.FromHex("#56b880");
+                        button2.BackgroundColor = Color.FromHex("#4682B4");
                         button2.TextColor = Color.White;
                     }
                 }
@@ -260,7 +283,7 @@ namespace ProjectCaitlin
                         }
 
                         button3.Text = eventNameList[2];
-                        button3.BackgroundColor = Color.FromHex("#56b880");
+                        button3.BackgroundColor = Color.FromHex("#4682B4");
                         button3.TextColor = Color.White;
                     }
                 }
@@ -326,7 +349,7 @@ namespace ProjectCaitlin
                         }
 
                         button4.Text = eventNameList[3];
-                        button4.BackgroundColor = Color.FromHex("#56b880");
+                        button4.BackgroundColor = Color.FromHex("#4682B4");
                         button4.TextColor = Color.White;
                     }
                 }
@@ -392,7 +415,7 @@ namespace ProjectCaitlin
                         }
 
                         button5.Text = eventNameList[4];
-                        button5.BackgroundColor = Color.FromHex("#e6e6e6");
+                        button5.BackgroundColor = Color.FromHex("#56b880");
                         button5.TextColor = Color.White;
                     }
                 }
@@ -458,7 +481,7 @@ namespace ProjectCaitlin
                         }
 
                         button6.Text = eventNameList[5];
-                        button6.BackgroundColor = Color.FromHex("a6567b");
+                        button6.BackgroundColor = Color.FromHex("#4682B4");
                         button6.TextColor = Color.White;
                     }
                 }
@@ -524,7 +547,7 @@ namespace ProjectCaitlin
                         }
 
                         button7.Text = eventNameList[6];
-                        button7.BackgroundColor = Color.FromHex("a6567b");
+                        button7.BackgroundColor = Color.FromHex("#56b880");
                         button7.TextColor = Color.White;
                     }
                 }
@@ -590,7 +613,7 @@ namespace ProjectCaitlin
                         }
 
                         button8.Text = eventNameList[7];
-                        button8.BackgroundColor = Color.FromHex("a6567b");
+                        button8.BackgroundColor = Color.FromHex("#56b880");
                         button8.TextColor = Color.White;
                     }
                 }
@@ -656,7 +679,7 @@ namespace ProjectCaitlin
                         }
 
                         button9.Text = eventNameList[8];
-                        button9.BackgroundColor = Color.FromHex("a6567b");
+                        button9.BackgroundColor = Color.FromHex("#4682B4");
                         button9.TextColor = Color.White;
                     }
                 }
@@ -722,7 +745,7 @@ namespace ProjectCaitlin
                         }
 
                         button10.Text = eventNameList[9];
-                        button10.BackgroundColor = Color.FromHex("a6567b");
+                        button10.BackgroundColor = Color.FromHex("#a6567b");
                         button10.TextColor = Color.White;
 
                     }
@@ -849,6 +872,12 @@ namespace ProjectCaitlin
         public async void DailyBtnClicked(object sender, EventArgs e)
         {
             await Navigation.PopAsync();
+        }
+
+
+        public async void MonthlyBtnClicked(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new MonthlyViewPage());
         }
 
         //Disable Android's back button

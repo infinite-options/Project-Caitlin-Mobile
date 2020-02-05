@@ -137,5 +137,6 @@
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="GoogleService-Info.plist" />
+    <BundleResource Include="Resources\bear.jpg" />
   </ItemGroup>
 </Project>

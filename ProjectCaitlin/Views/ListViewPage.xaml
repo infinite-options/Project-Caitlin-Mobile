@@ -3,16 +3,11 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:local="clr-namespace:ProjectCaitlin.ViewModel" mc:Ignorable="d"
              xmlns:converters="clr-namespace:ProjectCaitlin.Converters"  
              x:Class="ProjectCaitlin.ListViewPage"
              NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="true"
              >
-
-        <ContentPage.BindingContext>
-        <local:DailyViewModel />
-        </ContentPage.BindingContext>
 
     <ContentPage.Resources>
         <ResourceDictionary>
@@ -21,9 +16,14 @@
     </ContentPage.Resources>
 
     <ContentPage.ToolbarItems>
-    <ToolbarItem Text="Daily View"
+    <ToolbarItem Text="Daily View                                                           "
                  x:Name="dailyBtn"
                  Clicked="DailyBtnClicked"/>
+    <ToolbarItem Text="Monthly View"
+                 x:Name="monthlyBtn"
+                 Clicked="MonthlyBtnClicked"/>
+
+
     </ContentPage.ToolbarItems>
 
  <Grid>
@@ -39,8 +39,7 @@
             />
 
         <Image x:Name="someImage"
-               HorizontalOptions="FillAndExpand"
-               VerticalOptions="FillAndExpand"/>
+                />
 
         <ScrollView>
 
@@ -354,7 +353,7 @@
                         FontSize="13"
                         TextColor="#525252"
                         BackgroundColor="#FAFAFA"
-                        Margin="100,-57,10,0"
+                        Margin="100,-57,10,60"
                         TranslationX="420"
                         />
 

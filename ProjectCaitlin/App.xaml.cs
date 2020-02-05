@@ -13,7 +13,11 @@ namespace ProjectCaitlin
         {
             InitializeComponent();
 
-            MainPage = new NavigationPage(new LoginPage());
+            MainPage = new NavigationPage(new LoginPage())
+            {
+                BarBackgroundColor = Color.FromHex("#4682B4"), 
+                BarTextColor = Color.White
+            };
 
         }
 

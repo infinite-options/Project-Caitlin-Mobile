@@ -26,6 +26,7 @@
     <EmbeddedResource Remove="MainPage.xaml" />
     <EmbeddedResource Remove="MainPage.xaml" />
     <EmbeddedResource Remove="DailyViewPage.xaml" />
+    <EmbeddedResource Remove="DailyPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModel\" />
@@ -34,5 +35,10 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Converters\UniversalValueConverter.cs" />
+    <Compile Remove="DailyPage.xaml.cs" />
+    <Compile Remove="ViewModel\DailyViewModel.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ViewModel\DailyViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
   </ItemGroup>
 </Project>

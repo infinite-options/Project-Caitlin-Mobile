@@ -125,7 +125,7 @@ namespace ProjectCaitlin
 				}
 
 				//await store.SaveAsync(account = e.Account, Constants.AppName);
-				await DisplayAlert("Login Successful", "", "OK");
+				//await DisplayAlert("Login Successful", "", "OK");
 
                 accessToken = e.Account.Properties["access_token"];
                 //await LoginGoogleAsync();
@@ -139,10 +139,10 @@ namespace ProjectCaitlin
                 accessToken = e.Account.Properties["access_token"];
 
                 //Write the Toekn to console, in case it changes
-                Console.WriteLine("HERE is the key");
+                Console.WriteLine("HERE is the key------------------------------------------------");
                 Console.WriteLine(e.Account.Properties["access_token"]);
-                Console.WriteLine(e.Account.Properties["refresh_token"]);
-                Console.WriteLine("----------------");
+                //Console.WriteLine(e.Account.Properties["refresh_token"]);
+                Console.WriteLine("----------------------------------------------------------------");
 
 
                 //Navigate to the Daily Page after Login
@@ -164,7 +164,7 @@ namespace ProjectCaitlin
 
         public void SkipLoginClicked(object sender, EventArgs e)
         {
-            accessToken = "ya29.Il-8B-by4vlXw_GqupudQqOKGwhb6BlBzRGhAqoCcsYDlw4wEiXolfj0JejlAwOJvuAuLLRVdganTjZE6NRY42S66eGjjaxGh0e2kPe0pJfiwqSZwOe2zNRyyswg5pPXEw";
+            accessToken = "ya29.Il-8B9wQJLqM5-t04SGNlv4j-7RMP_VCZx-U4ZK0YKK125ydbJB0prX9hCSOOfmQ-9X8dUT-K40RJq_jA8lcr_T3L4SoN0JX4rhTDfQEe0i2s_JGCbEtbqFRjA9mCbN2-Q";
             Navigation.PushAsync(new DailyViewPage());
         }
 
