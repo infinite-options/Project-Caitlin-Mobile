@@ -5,7 +5,7 @@ using Newtonsoft.Json;
 namespace ProjectCaitlin.Models
 {
 	[JsonObject]
-	public class routine : INotifyPropertyChanged
+	public class goal : INotifyPropertyChanged
 	{
 		public string id { get; set; }
 
@@ -13,10 +13,8 @@ namespace ProjectCaitlin.Models
 
 		public string photo { get; set; }
 
-		public bool isPersistent { get; set; }
+		public List<action> actions { get; set; } = new List<action>();
 
-		public List<task> tasks { get; set; } = new List<task>();
-
-        public event PropertyChangedEventHandler PropertyChanged;
-    }
+		public event PropertyChangedEventHandler PropertyChanged;
+	}
 }
