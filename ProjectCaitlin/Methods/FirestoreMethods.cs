@@ -118,11 +118,11 @@ namespace ProjectCaitlin.Methods
                             {
                                 action.photo = jsonAorT["mapValue"]["fields"]["photo"]["stringValue"].ToString();
                             }
+
                             App.user.goals[routineIdx].actions.Add(action);
 
                         }
                     }
-
                 }
             }
         }
