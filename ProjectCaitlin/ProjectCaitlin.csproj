@@ -16,6 +16,8 @@
     <PackageReference Include="Xamarin.Auth" Version="1.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
+    <PackageReference Include="DLToolkit.Forms.Controls.ImageCropView" Version="1.0.7" />
+    <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.iOS">
@@ -32,6 +34,7 @@
     <Folder Include="ViewModel\" />
     <Folder Include="Views\" />
     <Folder Include="Converters\" />
+    <Folder Include="Extensions\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Converters\UniversalValueConverter.cs" />

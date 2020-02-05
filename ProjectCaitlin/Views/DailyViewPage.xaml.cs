@@ -2,6 +2,10 @@
 using System.Collections.Generic;
 using System.Threading;
 using System.Threading.Tasks;
+using DLToolkit.Forms.Controls;
+using FFImageLoading.Forms;
+using FFImageLoading.Transformations;
+using FFImageLoading.Work;
 using Newtonsoft.Json;
 using ProjectCaitlin.Methods;
 using ProjectCaitlin.Models;
@@ -29,7 +33,7 @@ namespace ProjectCaitlin
             BindingContext = this;
             FSMethods = LoginPage.FSMethods;
             user = App.user;
-            setupUI();
+            SetupUI();
             StartTimer();
             PrepSetUpcomingEvents();
         }
@@ -91,6 +95,8 @@ namespace ProjectCaitlin
                             BackgroundColor = Color.WhiteSmoke,
                         };
 
+
+
                         routineTaskList.Children.Add(button);
                     }
                 }
@@ -100,21 +106,21 @@ namespace ProjectCaitlin
                     timedTitle.Text = routine.title;
                     foreach (task task in routine.tasks)
                     {
-                        Button button = new Button
+                        CachedImage image = new CachedImage
                         {
-                            Text = task.title,
-                            TextColor = Color.Black,
                             VerticalOptions = LayoutOptions.CenterAndExpand,
                             HorizontalOptions = LayoutOptions.Center,
-                            ImageSource = task.photo,
+                            Transformations = new List<ITransformation>() {
+                                new RoundedTransformation(30)
+                            },
+                            Source = task.photo,
                             WidthRequest = 60,
                             HeightRequest = 60,
-                            CornerRadius = 5,
-                            Margin = new Thickness(3, 20, 3, 10),
+                            Margin = new Thickness(4, 10, 4, 10),
                             BackgroundColor = Color.WhiteSmoke,
                         };
 
-                        timedTaskList.Children.Add(button);
+                        timedTaskList.Children.Add(image);
                     }
                 }
             }
@@ -162,7 +168,7 @@ namespace ProjectCaitlin
 
         internal void StartTimer()
         {
-            int seconds = 60 * 1000;
+            int seconds = 10 * 1000;
 
             var timer =
                 new Timer(TimerReset, null, 0, seconds);
@@ -300,9 +306,11 @@ namespace ProjectCaitlin
 
         public async void RefreshDatabase(object sender, EventArgs e)
         {
+            RefreshDatabaseButton.IsEnabled = false;
             await FSMethods.LoadUser();
             user = App.user;
             SetupUI();
+            RefreshDatabaseButton.IsEnabled = true;
         }
 
         async void PhotosClicked(object sender, EventArgs e)

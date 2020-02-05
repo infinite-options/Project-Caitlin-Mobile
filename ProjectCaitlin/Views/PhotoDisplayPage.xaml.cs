@@ -1,5 +1,9 @@
 ﻿using System;
 using System.Collections.Generic;
+using DLToolkit.Forms.Controls;
+using FFImageLoading.Forms;
+using FFImageLoading.Transformations;
+using FFImageLoading.Work;
 using ProjectCaitlin.Services;
 using Xamarin.Forms;
 
@@ -22,21 +26,38 @@ namespace ProjectCaitlin
         {
             photoURIs = await GooglePhotoService.GetPhotos();
 
-            var layout = new StackLayout();
-            var scrollView = new ScrollView();
-            var controlGrid = new Grid { RowSpacing = 1, ColumnSpacing = 1 };
+            int rowLength = 3;
+            double gridItemSize = Application.Current.MainPage.Width / rowLength;
 
+            var scrollView = new ScrollView();
+            var controlGrid = new Grid
+            {
+                HorizontalOptions = LayoutOptions.CenterAndExpand
+            };
+            controlGrid.RowDefinitions.Add(new RowDefinition { Height = gridItemSize });
+
+            for (int i = 0; i < rowLength; i ++)
+                controlGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = gridItemSize });
+
+            var photoCount = 0;
             foreach (string photoURI in photoURIs)
             {
-                controlGrid.RowDefinitions.Add(new RowDefinition { Height = new GridLength(1, GridUnitType.Star) });
-                var webImage = new Image
+                if (photoCount % rowLength == 0)
                 {
-                    Source = ImageSource.FromUri(new Uri(photoURI))
+                    controlGrid.RowDefinitions.Add(new RowDefinition { Height = gridItemSize });
+
+                }
+                CachedImage webImage = new CachedImage
+                {
+                    Source = Xamarin.Forms.ImageSource.FromUri(new Uri(photoURI)),
+                    Transformations = new List<ITransformation>() {
+                        new CropTransformation(),
+                    },
+
                 };
 
-                controlGrid.Children.Add(webImage);
-
-                layout.Children.Add(webImage);
+                controlGrid.Children.Add(webImage, photoCount % rowLength, photoCount / rowLength);
+                photoCount++;
             }
             scrollView.Content = controlGrid;
             Content = scrollView;
