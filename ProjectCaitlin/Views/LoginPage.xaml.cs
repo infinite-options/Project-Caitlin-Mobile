@@ -164,7 +164,7 @@ namespace ProjectCaitlin
 
         public void SkipLoginClicked(object sender, EventArgs e)
         {
-            accessToken = "ya29.Il-8B7Ijlpi0NDzrO_06_IBgeFpLrxJkUNrKSzoN0nZrq5enFKU11-82StJJtEiGLz9bgj_OwFMB-T00mrbaTGHq1230kDzPLHfcx9NnkzQUGB7xWAkx7k4Dm8mMJFThLg";
+            accessToken = "ya29.Il-8B9wQJLqM5-t04SGNlv4j-7RMP_VCZx-U4ZK0YKK125ydbJB0prX9hCSOOfmQ-9X8dUT-K40RJq_jA8lcr_T3L4SoN0JX4rhTDfQEe0i2s_JGCbEtbqFRjA9mCbN2-Q";
             Navigation.PushAsync(new DailyViewPage());
         }
 

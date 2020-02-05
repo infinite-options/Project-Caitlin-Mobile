@@ -353,7 +353,7 @@
                         FontSize="13"
                         TextColor="#525252"
                         BackgroundColor="#FAFAFA"
-                        Margin="100,-57,10,0"
+                        Margin="100,-57,10,60"
                         TranslationX="420"
                         />
 
