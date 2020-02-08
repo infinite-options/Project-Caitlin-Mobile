@@ -50,7 +50,7 @@ namespace ProjectCaitlin
 				Console.WriteLine("user routine id: " + routine.id);
 			}
 
-			foreach (routine goal in App.user.goals)
+			foreach (goal goal in App.user.goals)
 			{
 				OnPropertyChanged(nameof(goal));
 				Console.WriteLine("user goal title: " + goal.title);

@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-
+using FFImageLoading.Forms.Platform;
+using FFImageLoading.Transformations;
 using Foundation;
 using UIKit;
 
@@ -24,6 +25,10 @@ namespace ProjectCaitlin.iOS
         {
             global::Xamarin.Forms.Forms.Init();
             LoadApplication(new App());
+
+            CachedImageRenderer.Init();
+            var ignore = new CircleTransformation();
+            CachedImageRenderer.InitImageSourceHandler();
 
             global::Xamarin.Auth.Presenters.XamarinIOS.AuthenticationConfiguration.Init();
 
