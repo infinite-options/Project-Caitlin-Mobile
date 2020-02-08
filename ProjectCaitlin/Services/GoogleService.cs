@@ -7,11 +7,39 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using ProjectCaitlin;
 using ProjectCaitlin.Authentication;
+using Xamarin.Auth;
 
 namespace ProjectCaitlin.Services
 {
     public class GoogleService
     {
+        public async Task<string> RefreshToken(AuthenticatorCompletedEventArgs e, string client_Id)
+        {
+
+            Dictionary<string, string> dictionary = new Dictionary<string, string> {
+                { "refresh_token", LoginPage.refreshToken },
+                { "client_id", client_Id },
+                { "grant_type", "refresh_token" } };
+            var request = new OAuth2Request("POST", new Uri(Constants.AccessTokenUrl), dictionary, e.Account);
+            var response = await request.GetResponseAsync();
+            return response.ToString();
+
+
+            //Make HTTP Request
+            //var request = new HttpRequestMessage();
+            //request.RequestUri = new Uri(Constants.AccessTokenUrl);
+            //request.Method = HttpMethod.Post;
+
+            ////Format Headers of Request with included Token
+            ////string bearerString = string.Format("Bearer {0}", LoginPage.accessToken);
+            ////request.Headers.Add("Authorization", bearerString);
+            ////request.Headers.Add("Accept", "application/json");
+            //var client = new HttpClient();
+            //HttpResponseMessage response = await client.SendAsync(request);
+            //HttpContent content = response.Content;
+            //var json = await content.ReadAsStringAsync();
+            //return json;
+        }
 
         public async Task<string> GetCalendars()
         {

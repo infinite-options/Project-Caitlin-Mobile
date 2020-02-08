@@ -11,6 +11,7 @@ using Newtonsoft.Json.Linq;
 using ProjectCaitlin.Authentication;
 using ProjectCaitlin.Methods;
 using ProjectCaitlin.Models;
+using ProjectCaitlin.Services;
 using Xamarin.Auth;
 using Xamarin.Forms;
 
@@ -24,10 +25,9 @@ namespace ProjectCaitlin
 
 		Account account;
 		public static string accessToken;
-
-
-		FirestoreMethods FSMethods;
-        public static string refreshToken = "1//06wtEbpEnf3VBCgYIARAAGAYSNwF-L9IrTcpRa4IsqetNoVK3RQsX_FJHiPXso5sDweGSLW-N_7oB78Nu68vqFcAhacV9ZcbUAKY";
+        FirestoreMethods FSMethods;
+        public static string refreshToken = "1//069Xuswpe4A0DCgYIARAAGAYSNwF-L9IrKTPwpUkMvv6hoKunRuaDjlC07qZVrtdkaujl3aMRpWWqAk_1OLBp79ETPRtiyhiDI9U";
+        public string clientId;
 
         public LoginPage()
         {
@@ -60,7 +60,7 @@ namespace ProjectCaitlin
 
 		async void LoginClicked(object sender, EventArgs e)
         {
-			string clientId = null;
+			clientId = null;
 			string redirectUri = null;
 
 			switch (Device.RuntimePlatform)
@@ -139,9 +139,10 @@ namespace ProjectCaitlin
                 accessToken = e.Account.Properties["access_token"];
 
                 //Write the Toekn to console, in case it changes
-                Console.WriteLine("HERE is the key------------------------------------------------");
+                Console.WriteLine("HERE is the TOKEN------------------------------------------------");
                 Console.WriteLine(e.Account.Properties["access_token"]);
-                //Console.WriteLine(e.Account.Properties["refresh_token"]);
+                Console.WriteLine("HERE is the REFRESH TOKEN----------------------------------------");
+                Console.WriteLine(e.Account.Properties["refresh_token"]);
                 Console.WriteLine("----------------------------------------------------------------");
 
 
@@ -162,10 +163,33 @@ namespace ProjectCaitlin
 			DisplayAlert("Authentication error: " , e.Message, "OK");
 		}
 
-        public void SkipLoginClicked(object sender, EventArgs e)
+        public async void SkipLoginClicked(object sender, EventArgs e)
         {
-            accessToken = "ya29.Il-8B9wQJLqM5-t04SGNlv4j-7RMP_VCZx-U4ZK0YKK125ydbJB0prX9hCSOOfmQ-9X8dUT-K40RJq_jA8lcr_T3L4SoN0JX4rhTDfQEe0i2s_JGCbEtbqFRjA9mCbN2-Q";
-            Navigation.PushAsync(new DailyViewPage());
+            await RefreshAccessToken(null);
+        }
+
+        public async Task<string> RefreshAccessToken(AuthenticatorCompletedEventArgs e)
+        {
+
+            e.Account.Properties["refresh_token"] = refreshToken;
+
+            var googleService = new GoogleService();
+
+            switch (Device.RuntimePlatform)
+            {
+                case Device.iOS:
+                    clientId = Constants.iOSClientId;
+                    break;
+
+                case Device.Android:
+                    clientId = Constants.AndroidClientId;
+                    break;
+            }
+
+            var response = await googleService.RefreshToken(null, clientId);
+            Console.WriteLine(response);
+            await Navigation.PushAsync(new DailyViewPage());
+            return null;
         }
 
 		async Task LoginGoogleAsync()
