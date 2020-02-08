@@ -31,7 +31,6 @@ namespace ProjectCaitlin
         {
             InitializeComponent();
             BindingContext = this;
-            FSMethods = LoginPage.FSMethods;
             user = App.user;
             SetupUI();
             StartTimer();
@@ -106,21 +105,21 @@ namespace ProjectCaitlin
                     timedTitle.Text = routine.title;
                     foreach (task task in routine.tasks)
                     {
-                        CachedImage image = new CachedImage
-                        {
-                            VerticalOptions = LayoutOptions.CenterAndExpand,
-                            HorizontalOptions = LayoutOptions.Center,
-                            Transformations = new List<ITransformation>() {
-                                new RoundedTransformation(30)
-                            },
-                            Source = task.photo,
-                            WidthRequest = 60,
-                            HeightRequest = 60,
-                            Margin = new Thickness(4, 10, 4, 10),
-                            BackgroundColor = Color.WhiteSmoke,
-                        };
+                        //CachedImage image = new CachedImage
+                        //{
+                        //    VerticalOptions = LayoutOptions.CenterAndExpand,
+                        //    HorizontalOptions = LayoutOptions.Center,
+                        //    Transformations = new List<ITransformation>() {
+                        //        new RoundedTransformation(30)
+                        //    },
+                        //    Source = task.photo,
+                        //    WidthRequest = 60,
+                        //    HeightRequest = 60,
+                        //    Margin = new Thickness(4, 10, 4, 10),
+                        //    BackgroundColor = Color.WhiteSmoke,
+                        //};
 
-                        timedTaskList.Children.Add(image);
+                        //timedTaskList.Children.Add(image);
                     }
                 }
             }

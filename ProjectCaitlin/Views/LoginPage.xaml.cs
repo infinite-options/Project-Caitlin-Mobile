@@ -127,11 +127,6 @@ namespace ProjectCaitlin
 				//await store.SaveAsync(account = e.Account, Constants.AppName);
 				//await DisplayAlert("Login Successful", "", "OK");
 
-                accessToken = e.Account.Properties["access_token"];
-                //await LoginGoogleAsync();
-
-				await Navigation.PushAsync(new DailyViewPage());
-
                 //Display Successful Login Alert
 				//await DisplayAlert("Login Successful", "", "OK");
 
@@ -147,7 +142,7 @@ namespace ProjectCaitlin
 
 
                 //Navigate to the Daily Page after Login
-                // await Navigation.PushAsync(new DailyViewPage());
+                await Navigation.PushAsync(new DailyViewPage());
 			}
 		}
 
@@ -170,8 +165,6 @@ namespace ProjectCaitlin
 
         public async Task<string> RefreshAccessToken(AuthenticatorCompletedEventArgs e)
         {
-
-            e.Account.Properties["refresh_token"] = refreshToken;
 
             var googleService = new GoogleService();
 
