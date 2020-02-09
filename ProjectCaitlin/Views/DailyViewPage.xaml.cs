@@ -40,6 +40,10 @@ namespace ProjectCaitlin
 
         public void SetupUI()
         {
+            eventBtn1.WidthRequest = Application.Current.MainPage.Width / 2.4;
+            eventBtn2.WidthRequest = Application.Current.MainPage.Width / 2.4;
+            noEventsButton.WidthRequest = Application.Current.MainPage.Width / 1.18;
+
             Console.WriteLine("user.routines.Count: " + user.routines.Count);
 
             List<View> timedTaskListElements = new List<View>();
@@ -88,13 +92,12 @@ namespace ProjectCaitlin
                             VerticalOptions = LayoutOptions.CenterAndExpand,
                             HorizontalOptions = LayoutOptions.Center,
                             ImageSource = task.photo,
-                            WidthRequest = 80,
-                            HeightRequest = 80,
+                            WidthRequest = Application.Current.MainPage.Width / 5.175,
+                            HeightRequest = Application.Current.MainPage.Width / 5.175,
                             CornerRadius = 5,
                             Margin = new Thickness(5, 20, 5, 10),
                             BackgroundColor = Color.WhiteSmoke,
                         };
-
 
 
                         routineTaskList.Children.Add(button);
@@ -114,8 +117,8 @@ namespace ProjectCaitlin
                                 new RoundedTransformation(30)
                             },
                             Source = task.photo,
-                            WidthRequest = 60,
-                            HeightRequest = 60,
+                            WidthRequest = Application.Current.MainPage.Width / 6.9,
+                            HeightRequest = Application.Current.MainPage.Width / 6.9,
                             Margin = new Thickness(4, 10, 4, 10),
                             BackgroundColor = Color.WhiteSmoke,
                         };

@@ -33,6 +33,7 @@
             Margin="60, 0"
             BackgroundColor="#4682B4"
             TextColor="White"
+            IsVisible="false"
             />
         
     </StackLayout>
