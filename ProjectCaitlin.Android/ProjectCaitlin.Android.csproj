@@ -135,6 +135,11 @@
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
+    <AndroidResource Include="..\ProjectCaitlin\Icons\sunrisemid.png">
+      <Link>Resources\drawable\sunrisemid.png</Link>
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Resources\drawable\" />
@@ -144,6 +149,12 @@
       <Project>{A11D0612-A51D-412B-9564-23C7D605AF16}</Project>
       <Name>ProjectCaitlin</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidAsset Include="Assets\CircularStd-Black.otf" />
+    <AndroidAsset Include="Assets\CircularStd-Bold.otf" />
+    <AndroidAsset Include="Assets\CircularStd-Book.otf" />
+    <AndroidAsset Include="Assets\CircularStd-Medium.otf" />
   </ItemGroup>
  <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>

@@ -38,6 +38,7 @@
     <Folder Include="Views\" />
     <Folder Include="Converters\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Icons\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Converters\UniversalValueConverter.cs" />

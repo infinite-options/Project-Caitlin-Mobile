@@ -145,5 +145,12 @@
   <ItemGroup>
     <BundleResource Include="GoogleService-Info.plist" />
     <BundleResource Include="Resources\bear.jpg" />
+    <BundleResource Include="..\ProjectCaitlin\Icons\sunrisemid.png">
+      <Link>Resources\sunrisemid.png</Link>
+    </BundleResource>
+    <BundleResource Include="Resources\CircularStd-Black.otf" />
+    <BundleResource Include="Resources\CircularStd-Bold.otf" />
+    <BundleResource Include="Resources\CircularStd-Book.otf" />
+    <BundleResource Include="Resources\CircularStd-Medium.otf" />
   </ItemGroup>
 </Project>
