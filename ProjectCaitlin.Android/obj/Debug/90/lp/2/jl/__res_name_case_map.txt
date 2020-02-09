@@ -1,5 +1,0 @@
-values/Strings.xml;values/strings.xml
-values/vpi__attrs.xml;values/vpi__attrs.xml
-values/vpi__colors.xml;values/vpi__colors.xml
-values/vpi__defaults.xml;values/vpi__defaults.xml
-values/vpi__styles.xml;values/vpi__styles.xml
