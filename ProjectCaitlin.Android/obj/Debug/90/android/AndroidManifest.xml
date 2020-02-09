@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:versionCode="1" android:versionName="1.0" package="com.infiniteoptions.project_caitlin" android:installLocation="auto">
+  <uses-sdk android:minSdkVersion="21" android:targetSdkVersion="24" />
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+  <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+  <uses-permission android:name="android.permission.INTERNET" />
+  <application android:label="ProjectCaitlin.Android" android:name="android.app.Application" android:allowBackup="true" android:icon="@mipmap/icon" android:debuggable="true">
+    <activity android:configChanges="orientation|screenSize" android:icon="@mipmap/icon" android:label="ProjectCaitlin" android:theme="@style/MainTheme" android:name="crc6458b55327cf75c744.MainActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.MAIN" />
+        <category android:name="android.intent.category.LAUNCHER" />
+      </intent-filter>
+    </activity>
+    <activity android:label="CustomUrlSchemeInterceptorActivity" android:launchMode="singleTop" android:noHistory="true" android:name="crc6458b55327cf75c744.CustomUrlSchemeInterceptorActivity">
+      <intent-filter>
+        <action android:name="android.intent.action.VIEW" />
+        <category android:name="android.intent.category.DEFAULT" />
+        <category android:name="android.intent.category.BROWSABLE" />
+        <data android:path="/oauth2redirect" />
+        <data android:scheme="com.googleusercontent.apps.1009120542229-61dahtq9jolmhmf72b4v3boeehfjrs08" />
+      </intent-filter>
+    </activity>
+    <service android:name="crc64a98abb514ffad9f1.KeepAliveService" />
+    <activity android:label="Web Authenticator" android:name="crc64f98dd38067c0c88b.FormAuthenticatorActivity" />
+    <activity android:label="Web Authenticator" android:name="crc64f98dd38067c0c88b.WebAuthenticatorActivity" />
+    <activity android:label="@string/title_activity_webview" android:theme="@android:style/Theme.DeviceDefault" android:name="crc64f98dd38067c0c88b.WebViewActivity" />
+    <activity android:label="Web Authenticator Native Browser" android:launchMode="singleTop" android:name="crc64f98dd38067c0c88b.WebAuthenticatorNativeBrowserActivity" />
+    <receiver android:name="crc64f98dd38067c0c88b.CustomTabsActionsBroadcastReceiver" />
+    <receiver android:enabled="true" android:exported="false" android:label="Essentials Battery Broadcast Receiver" android:name="crc64a0e0a82d0db9a07d.BatteryBroadcastReceiver" />
+    <receiver android:enabled="true" android:exported="false" android:label="Essentials Energy Saver Broadcast Receiver" android:name="crc64a0e0a82d0db9a07d.EnergySaverBroadcastReceiver" />
+    <receiver android:enabled="true" android:exported="false" android:label="Essentials Connectivity Broadcast Receiver" android:name="crc64a0e0a82d0db9a07d.ConnectivityBroadcastReceiver" />
+    <provider android:authorities="com.infiniteoptions.project_caitlin.fileProvider" android:exported="false" android:grantUriPermissions="true" android:name="xamarin.essentials.fileProvider">
+      <meta-data android:name="android.support.FILE_PROVIDER_PATHS" android:resource="@xml/xamarin_essentials_fileprovider_file_paths" />
+    </provider>
+    <receiver android:enabled="true" android:exported="false" android:name="crc643f46942d9dd1fff9.PowerSaveModeBroadcastReceiver" />
+    <provider android:name="mono.MonoRuntimeProvider" android:exported="false" android:initOrder="1999999999" android:authorities="com.infiniteoptions.project_caitlin.mono.MonoRuntimeProvider.__mono_init__" />
+    <!--suppress ExportedReceiver-->
+    <receiver android:name="mono.android.Seppuku">
+      <intent-filter>
+        <action android:name="mono.android.intent.action.SEPPUKU" />
+        <category android:name="mono.android.intent.category.SEPPUKU.com.infiniteoptions.project_caitlin" />
+      </intent-filter>
+    </receiver>
+    <activity android:name="com.google.firebase.auth.internal.FederatedSignInActivity" android:excludeFromRecents="true" android:exported="true" android:launchMode="singleTask" android:permission="com.google.firebase.auth.api.gms.permission.LAUNCH_FEDERATED_SIGN_IN" android:theme="@android:style/Theme.Translucent.NoTitleBar" p6:replace="android:launchMode" xmlns:p6="http://schemas.android.com/tools" />
+    <service android:name="com.google.firebase.components.ComponentDiscoveryService" android:exported="false">
+      <meta-data android:name="com.google.firebase.components:com.google.firebase.auth.FirebaseAuthRegistrar" android:value="com.google.firebase.components.ComponentRegistrar" />
+    </service>
+    <provider android:name="com.google.firebase.provider.FirebaseInitProvider" android:authorities="com.infiniteoptions.project_caitlin.firebaseinitprovider" android:exported="false" android:initOrder="100" />
+    <activity android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity" android:excludeFromRecents="true" android:exported="false" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+    <!--
+            Service handling Google Sign-In user revocation. For apps that do not integrate with
+            Google Sign-In, this service will never be started.
+        -->
+    <service android:name="com.google.android.gms.auth.api.signin.RevocationBoundService" android:exported="true" android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION" />
+    <activity android:name="com.google.android.gms.common.api.GoogleApiActivity" android:exported="false" android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+    <meta-data android:name="com.google.android.gms.version" android:value="@integer/google_play_services_version" />
+  </application>
+</manifest>
