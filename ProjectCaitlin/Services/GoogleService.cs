@@ -95,7 +95,7 @@ namespace ProjectCaitlin.Services
             }
             else
             {
-                dayString = publicMonth.ToString();
+                dayString = publicDay.ToString();
             }
 
             if (uTCHour < 10)
@@ -185,7 +185,7 @@ namespace ProjectCaitlin.Services
             }
             else
             {
-                dayString = publicMonth.ToString();
+                dayString = publicDay.ToString();
             }
 
             if (uTCHour < 10)
