@@ -66,6 +66,9 @@
     <PackageReference Include="Xamarin.FFImageLoading.Transformations">
       <Version>2.4.11.982</Version>
     </PackageReference>
+    <PackageReference Include="CardsView">
+      <Version>2.4.2</Version>
+    </PackageReference>
   </ItemGroup>
   <ItemGroup>
     <Compile Include="MainActivity.cs" />
@@ -137,6 +140,11 @@
     </AndroidResource>
     <AndroidResource Include="..\ProjectCaitlin\Icons\sunrisemid.png">
       <Link>Resources\drawable\sunrisemid.png</Link>
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="..\ProjectCaitlin\Icons\toothbrushCircle.png">
+      <Link>Resources\drawable\toothbrushCircle.png</Link>
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>

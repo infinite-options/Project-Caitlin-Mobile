@@ -7,6 +7,7 @@ using Android.Views;
 using Android.Widget;
 using Android.OS;
 using FFImageLoading.Forms.Platform;
+using PanCardView.Droid;
 
 namespace ProjectCaitlin.Droid
 {
@@ -23,6 +24,10 @@ namespace ProjectCaitlin.Droid
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, savedInstanceState);
+            CardsViewRenderer.Preserve();
+
+            CachedImageRenderer.Init(true);
+            CardsViewRenderer.Preserve();
 
             CachedImageRenderer.InitImageViewHandler();
 
