@@ -39,9 +39,23 @@ namespace GoalsRoutinesTemplateViewModel.ViewModels
                     Length = "Takes from 10 to 30 minutes",
                     Text = "Click this card to start!"},
 
-                new { Source = CreateSource(), Ind = _imageCount++, Color = Color.FromHex("BBD8FF"), Title = "Browse Pinterest projects", Length = "" },
-                new { Source = CreateSource(), Ind = _imageCount++, Color = Color.Default, Title = "Eat dinner with mom", Length = "Takes about 30 minutes" },
-                new { Source = CreateSource(), Ind = _imageCount++, Color = Color.Default, Title = "Finish my chemistry homework", Length = "Could take up to 1 hour" }
+                new { Source = CreateSource(),
+                    Ind = _imageCount++,
+                    Color = Color.FromHex("BBD8FF"),
+                    Title = "Browse Pinterest projects",
+                    Length = "" },
+
+                new { Source = CreateSource(),
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Title = "Eat dinner with mom",
+                    Length = "Takes about 30 minutes" },
+
+                new { Source = CreateSource(),
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Title = "Finish my chemistry homework",
+                    Length = "Could take up to 1 hour" }
             };
 
             PanPositionChangedCommand = new Command(v =>

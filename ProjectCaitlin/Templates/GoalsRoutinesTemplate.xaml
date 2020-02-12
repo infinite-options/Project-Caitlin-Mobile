@@ -96,11 +96,12 @@
                                        
 
                                       <Button Text="Tap here to start"
-                                               TranslationY="330"
-                                               CornerRadius="10"
-                                               TextColor="#272E32"
-                                               BackgroundColor="Transparent"
-                                               BorderWidth="0" />
+                                              TranslationY="320"
+                                              Margin="73, 0, 0, 0"
+                                              CornerRadius="10"
+                                              TextColor="#272E32"
+                                              BackgroundColor="Transparent"
+                                              BorderWidth="3" />
 
                                        
 

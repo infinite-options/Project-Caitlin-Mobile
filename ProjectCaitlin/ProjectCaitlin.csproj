@@ -33,6 +33,7 @@
     <EmbeddedResource Remove="MainPage.xaml" />
     <EmbeddedResource Remove="DailyViewPage.xaml" />
     <EmbeddedResource Remove="DailyPage.xaml" />
+    <EmbeddedResource Remove="Views\GoalsRoutinesTemplate.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="ViewModel\" />
@@ -40,6 +41,7 @@
     <Folder Include="Converters\" />
     <Folder Include="Extensions\" />
     <Folder Include="Icons\" />
+    <Folder Include="Templates\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Converters\UniversalValueConverter.cs" />
