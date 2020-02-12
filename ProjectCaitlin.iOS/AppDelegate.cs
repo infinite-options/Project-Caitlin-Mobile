@@ -4,6 +4,7 @@ using System.Linq;
 using FFImageLoading.Forms.Platform;
 using FFImageLoading.Transformations;
 using Foundation;
+using PanCardView.iOS;
 using UIKit;
 
 namespace ProjectCaitlin.iOS
@@ -24,6 +25,7 @@ namespace ProjectCaitlin.iOS
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
             global::Xamarin.Forms.Forms.Init();
+            CardsViewRenderer.Preserve();
             LoadApplication(new App());
 
             CachedImageRenderer.Init();

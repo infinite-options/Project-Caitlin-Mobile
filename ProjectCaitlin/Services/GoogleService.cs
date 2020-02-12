@@ -123,7 +123,7 @@ namespace ProjectCaitlin.Services
             }
             else
             {
-                dayString = publicMonth.ToString();
+                dayString = publicDay.ToString();
             }
 
             if (uTCHour < 10)
@@ -166,6 +166,7 @@ namespace ProjectCaitlin.Services
             HttpResponseMessage response = await client.SendAsync(request);
             HttpContent content = response.Content;
             var json = await content.ReadAsStringAsync();
+            //Console.WriteLine(json);
             return (json);
         }
 
@@ -213,7 +214,7 @@ namespace ProjectCaitlin.Services
             }
             else
             {
-                dayString = publicMonth.ToString();
+                dayString = publicDay.ToString();
             }
 
             if (uTCHour < 10)
