@@ -6,7 +6,7 @@
              xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
              xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView"
              xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
-             x:Class="ProjectCaitlin.Views.GoalsRoutinesTemplate"
+             x:Class="ProjectCaitlin.Templates.GoalsRoutinesTemplate"
              BackgroundColor="#E9E8E8"
              NavigationPage.HasNavigationBar="False">
 
