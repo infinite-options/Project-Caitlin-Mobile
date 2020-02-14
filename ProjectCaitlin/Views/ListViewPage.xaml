@@ -7,372 +7,213 @@
              x:Class="ProjectCaitlin.ListViewPage"
              NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="true"
+             BackgroundColor="#E9E8E8"
              >
+    <StackLayout
+        x:Name="MainStackView"
+        Padding="15,30,15,10">
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converters:StringToColorConverter x:Key="StringToColorConverter"/>
-        </ResourceDictionary>
-    </ContentPage.Resources>
+        <Label
+            Text="Wednesday"
+            FontSize="30">
+            <Label.FontFamily>
+                <OnPlatform x:TypeArguments="x:String">
+                    <On Platform="iOS" Value="Lobster-Regular" />
+                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                </OnPlatform>
+            </Label.FontFamily>
+        </Label>
 
-    <ContentPage.ToolbarItems>
-    <ToolbarItem Text="Daily View                                                           "
-                 x:Name="dailyBtn"
-                 Clicked="DailyBtnClicked"/>
-    <ToolbarItem Text="Monthly View"
-                 x:Name="monthlyBtn"
-                 Clicked="MonthlyBtnClicked"/>
+        <StackLayout
+            x:Name="MorningStackView"
+            Padding="0,30,0,0">
 
+            <!-- Morning Label -->
+            <StackLayout
+                Orientation="Horizontal">
 
-    </ContentPage.ToolbarItems>
+                <Image
+                    Source="sunrisemid.png"
+                    WidthRequest="30"
+                    HeightRequest="30"/>
 
- <Grid>
-
-     
-        <BoxView
-            Color="#FAFAFA"
-            IsVisible="true"
-            VerticalOptions="Start"
-            HeightRequest="60"
-            Margin="0,0,0,0"
-            BackgroundColor="#FAFAFA"
-            />
-
-        <Image x:Name="someImage"
-                />
-
-        <ScrollView>
-
-            <StackLayout Orientation="Vertical">
-
-                <Label Text="DATE               EVENTS"
-                    x:Name="navDate"
-                    IsVisible="false"
-                    Margin="30, 20, 20, 0"
-                    FontSize="15"
-                        />
-
-                <Label Text="01"
-                       x:Name="numLbl1"
-                       Opacity="0"
-                       TextColor="#FAFAass"
-                       Margin="30, 20, 20, 0"
-                       FontSize="30"
-                       />
-
-                <Label Text="MON"
-                       x:Name="dayLbl1"
-                       Opacity="0"
-                       TextColor="#FAFAFA"
-                       Margin="30, -10, 20, 0"
-                       FontSize="15"
-                       />
-
-                <Button Text=""
-                        x:Name="button1"
-                        WidthRequest="270"
-                        Opacity="1"
-                        HorizontalOptions="Center"
-                        Padding="0,0,110,0"
-                        FontSize="13"
-                        TextColor="Gray"
-                        BackgroundColor="#FAFAFA"
-                        Margin="100,-55,10,0"
-                        TranslationX="420"
-                        />
-
-                <Label Text="02"
-                       x:Name="numLbl2"
-                       Opacity="0"
-                       TextColor="#FAFAFA"
-                       IsVisible="false"
-                       Margin="30, 5, 20, 0"
-                       FontSize="30"
-                       />
-
-                <Label Text="MON"
-                       x:Name="dayLbl2"
-                       Opacity="0"
-                       TextColor="#FAFAFA"
-                       Margin="30, -10, 20, 0"
-                       IsVisible="false"
-                       FontSize="15"
-                       />
-
-                <Button Text=""
-                        x:Name="button2"
-                        Opacity="0"
-                        WidthRequest="270"
-                        IsVisible="false"
-                        HorizontalOptions="Center"
-                        Padding="0,0,110,0"
-                        FontSize="13"
-                        TextColor="White"
-                        BackgroundColor="#FAFAFA"
-                        Margin="100,-57,10,0"
-                        TranslationX="420"
-                        />
-
-                <Label Text="03"
-                       Opacity="0"
-                       x:Name="numLbl3"
-                       IsVisible="false"
-                       TextColor="#FAFAFA"
-                       Margin="30, 5, 20, 0"
-                       FontSize="30"
-                       />
-
-                <Label Text="TUE"
-                       Opacity="0"
-                       x:Name="dayLbl3"
-                       IsVisible="false"
-                       TextColor="#FAFAFA"
-                       Margin="30, -10, 20, 0"
-                       FontSize="15"
-                       />
-
-
-                <Button Text=""
-                        x:Name="button3"
-                        Opacity="0"
-                        WidthRequest="270"
-                        IsVisible="false"
-                        HorizontalOptions="Center"
-                        Padding="0,0,110,0"
-                        FontSize="13"
-                        TextColor="White"
-                        BackgroundColor="#FAFAFA"
-                        Margin="100,-57,10,0"
-                        TranslationX="420"
-                        />
-
-                <Label Text="04"
-                       Opacity="0"
-                       x:Name="numLbl4"
-                       IsVisible="false"
-                       Margin="30, 5, 20, 0"
-                       FontSize="30"
-                       />
-
-                <Label Text="WED"
-                       Opacity="0"
-                       x:Name="dayLbl4"
-                       IsVisible="false"
-                       Margin="30, -10, 20, 0"
-                       FontSize="15"
-                       />
-
-                <Button Text=""
-                        x:Name="button4"
-                        Opacity="0"
-                        IsVisible="false"
-                        WidthRequest="270"
-                        HorizontalOptions="Center"
-                        Padding="0,0,110,0"
-                        FontSize="13"
-                        TextColor="White"
-                        BackgroundColor="#e6e6e6"
-                        Margin="100,-57,10,0"
-                        TranslationX="420"
-                        />
-
-                <Label Text="05"
-                       Opacity="0"
-                       x:Name="numLbl5"
-                       IsVisible="false"
-                       Margin="30, 5, 20, 0"
-                       FontSize="30"
-                       />
-
-                <Label Text="WED"
-                       Opacity="0"
-                       x:Name="dayLbl5"
-                       IsVisible="false"
-                       Margin="30, -10, 20, 0"
-                       FontSize="15"
-                       />
-
-                <Button Text=""
-                        Opacity="0"
-                        x:Name="button5"
-                        IsVisible="false"
-                        WidthRequest="270"
-                        HorizontalOptions="Center"
-                        Padding="0,0,110,0"
-                        FontSize="13"
-                        TextColor="White"
-                        BackgroundColor="#FAFAFA"
-                        Margin="100,-57,10,0"
-                        TranslationX="420"
-                        />
-
-                <Label Text="06"
-                       Opacity="0"
-                       x:Name="numLbl6"
-                       IsVisible="false"
-                       Margin="30, 5, 20, 0"
-                       FontSize="30"
-                       />
-
-                <Label Text="THU"
-                       Opacity="0"
-                       IsVisible="false"
-                       x:Name="dayLbl6"
-                       Margin="30, -10, 20, 0"
-                       FontSize="15"
-                       />
-
-
-                <Button Text=""
-                        Opacity="0"
-                        x:Name="button6"
-                        IsVisible="false"
-                        WidthRequest="270"
-                        HorizontalOptions="Center"
-                        Padding="0,0,110,0"
-                        FontSize="13"
-                        TextColor="#525252"
-                        BackgroundColor="#FAFAFA"
-                        Margin="100,-57,10,0"
-                        TranslationX="420"
-                        />
-
-                <Label Text="07"
-                       Opacity="0"
-                       IsVisible="false"
-                       x:Name="numLbl7"
-                       Margin="30, 5, 20, 0"
-                       FontSize="30"
-                       />
-
-                <Label Text="FRI"
-                       Opacity="0"
-                       IsVisible="false"
-                       x:Name="dayLbl7"
-                       Margin="30, -10, 20, 0"
-                       FontSize="15"
-                       />
-
-                <Button Text=""
-                        Opacity="0"
-                        x:Name="button7"
-                        IsVisible="false"
-                        WidthRequest="270"
-                        HorizontalOptions="Center"
-                        Padding="0,0,110,0"
-                        FontSize="13"
-                        TextColor="#525252"
-                        BackgroundColor="#e6e6e6"
-                        Margin="100,-57,10,0"
-                        TranslationX="420"
-                        />
-
-                <Label Text="08"
-                       Opacity="0"
-                       x:Name="numLbl8"
-                       IsVisible="false"
-                       Margin="30, 5, 20, 0"
-                       FontSize="30"
-                       />
-
-                <Label Text="SAT"
-                       Opacity="0"
-                       x:Name="dayLbl8"
-                       IsVisible="false"
-                       Margin="30, -10, 20, 0"
-                       FontSize="15"
-                       />
-
-                <Button Text=""
-                        Opacity="0"
-                        x:Name="button8"
-                        IsVisible="false"
-                        WidthRequest="270"
-                        HorizontalOptions="Center"
-                        Padding="0,0,110,0"
-                        FontSize="13"
-                        TextColor="#525252"
-                        BackgroundColor="#FAFAFA"
-                        Margin="100,-57,10,0"
-                        TranslationX="420"
-                        />
-
-                <Label Text="09"
-                       Opacity="0"
-                       x:Name="numLbl9"
-                       IsVisible="false"
-                       Margin="30, 5, 20, 0"
-                       FontSize="30"
-                       />
-
-                <Label Text="WED"
-                       Opacity="0"
-                       x:Name="dayLbl9"
-                       IsVisible="false"
-                       Margin="30, -10, 20, 0"
-                       FontSize="15"
-                       />
-
-                <Button Text=""
-                        Opacity="0"
-                        x:Name="button9"
-                        IsVisible="false"
-                        WidthRequest="270"
-                        HorizontalOptions="Center"
-                        Padding="0,0,110,0"
-                        FontSize="13"
-                        TextColor="#525252"
-                        BackgroundColor="#FAFAFA"
-                        Margin="100,-57,10,0"
-                        TranslationX="420"
-                        />
-
-                <Label Text="10"
-                       Opacity="0"
-                       x:Name="numLbl10"
-                       IsVisible="false"
-                       Margin="30, 5, 20, 0"
-                       FontSize="30"
-                       />
-
-                <Label Text="WED"
-                       Opacity="0"
-                       x:Name="dayLbl10"
-                       IsVisible="false"
-                       Margin="30, -10, 20, 0"
-                       FontSize="15"
-                       />
-
-                <Button Text=""
-                        Opacity="0"
-                        x:Name="button10"
-                        IsVisible="false"
-                        WidthRequest="270"
-                        HorizontalOptions="Center"
-                        Padding="0,0,110,0"
-                        FontSize="13"
-                        TextColor="#525252"
-                        BackgroundColor="#FAFAFA"
-                        Margin="100,-57,10,60"
-                        TranslationX="420"
-                        />
-
+                <Label
+                    Text="Morning"
+                    FontSize="14"
+                    VerticalOptions="Center">
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Lobster-Regular" />
+                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
 
             </StackLayout>
-        </ScrollView>
 
-        <BoxView
-            IsVisible="false"
-            x:Name="dividerLine"
-            WidthRequest="2"
-            HeightRequest="200"
-            HorizontalOptions="Start"
-            Color="Gray"
-            Margin="90,0,30,0"
-            />
+            <!-- Start Goals/Routines/Events -->
+
+            <Frame
+                CornerRadius="5"
+                HasShadow="False"
+                Padding="10,10,5,10">
+
+                <Image
+                    Source="toothbrushCircle"
+                    WidthRequest="60"
+                    HeightRequest="60"
+                    HorizontalOptions="End"/>
+
+            </Frame>
+
+            <!-- Morning Label -->
+            <StackLayout
+                Orientation="Vertical"
+                Padding="0,10,0,0">
+
+                <Label
+                    Text="Morning Goals"
+                    FontSize="14"
+                    VerticalOptions="Center">
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Lobster-Regular" />
+                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
+
+                <StackLayout
+                    Orientation="Horizontal"
+                    Padding="0,10,0,0">
+
+                    <StackLayout
+                        Orientation="Vertical"
+                        Padding="0,10,0,0">
 
 
-    </Grid>
+
+                    </StackLayout>
+                
+
+                </StackLayout>
+
+            </StackLayout>
+
+        </StackLayout>
+
+        <StackLayout
+            x:Name="AfternoonStackView"
+            Padding="0,30,0,0">
+
+        <!-- Afternoon Label -->
+            <StackLayout
+                Orientation="Horizontal">
+
+                <Image
+                    Source="sunrisemid.png"
+                    WidthRequest="30"
+                    HeightRequest="30"/>
+
+                <Label
+                    Text="Afternoon"
+                    FontSize="14"
+                    VerticalOptions="Center">
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Lobster-Regular" />
+                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
+
+            </StackLayout>
+
+            <!-- Start Goals/Routines/Events -->
+
+            <Frame
+                CornerRadius="5"
+                HasShadow="False">
+
+            </Frame>
+
+        </StackLayout>
+
+        <StackLayout
+            x:Name="EveningStackView"
+            Padding="0,30,0,0">
+
+        <!-- Afternoon Label -->
+            <StackLayout
+                Orientation="Horizontal">
+
+                <Image
+                    Source="sunrisemid.png"
+                    WidthRequest="30"
+                    HeightRequest="30"/>
+
+                <Label
+                    Text="Evening"
+                    FontSize="14"
+                    VerticalOptions="Center">
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Lobster-Regular" />
+                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
+
+            </StackLayout>
+
+            <!-- Start Goals/Routines/Events -->
+
+            <Frame
+                CornerRadius="5"
+                HasShadow="False">
+
+            </Frame>
+
+        </StackLayout>
+
+        <StackLayout
+            x:Name="NightStackView"
+            Padding="0,30,0,0">
+
+        <!-- Afternoon Label -->
+            <StackLayout
+                Orientation="Horizontal">
+
+                <Image
+                    Source="sunrisemid.png"
+                    WidthRequest="30"
+                    HeightRequest="30"/>
+
+                <Label
+                    Text="Night"
+                    FontSize="14"
+                    VerticalOptions="Center">
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Lobster-Regular" />
+                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
+
+            </StackLayout>
+
+            <!-- Start Goals/Routines/Events -->
+
+            <Frame
+                CornerRadius="5"
+                HasShadow="False">
+
+            </Frame>
+
+        </StackLayout>
+
+    </StackLayout>
 
 
 </ContentPage>
