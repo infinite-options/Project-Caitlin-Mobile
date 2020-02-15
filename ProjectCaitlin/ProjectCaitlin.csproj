@@ -11,6 +11,8 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <PackageReference Include="DLToolkit.Forms.Controls.FlowListView" Version="2.0.11" />
+    <PackageReference Include="ThriveGmbH.BottomNavigationBar.XF" Version="1.0.2" />
     <PackageReference Include="Xamarin.Forms" Version="4.4.0.991537" />
     <PackageReference Include="Xamarin.Essentials" Version="1.3.1" />
     <PackageReference Include="Xamarin.Auth" Version="1.7.0" />
@@ -18,6 +20,7 @@
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
     <PackageReference Include="DLToolkit.Forms.Controls.ImageCropView" Version="1.0.7" />
+    <PackageReference Include="CardsView" Version="2.4.2" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.iOS">
@@ -34,10 +37,9 @@
     <EmbeddedResource Remove="DailyPage.xaml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="ViewModel\" />
-    <Folder Include="Views\" />
     <Folder Include="Converters\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Icons\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Converters\UniversalValueConverter.cs" />
@@ -46,5 +48,21 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="ViewModel\DailyViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Update="Views\TaskCompletePage.xaml.cs">
+      <DependentUpon>TaskCompletePage.xaml</DependentUpon>
+    </Compile>
+    <Compile Update="Views\TaskPage.xaml.cs">
+      <DependentUpon>TaskPage.xaml</DependentUpon>
+    </Compile>
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Update="Views\TaskCompletePage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\TaskPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
   </ItemGroup>
 </Project>

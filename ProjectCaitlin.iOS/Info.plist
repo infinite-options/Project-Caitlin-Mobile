@@ -55,5 +55,12 @@
 			</array>
 		</dict>
 	</array>
+	<key>UIAppFonts</key>
+	<array>
+		<string>CircularStd-Black.otf</string>
+		<string>CircularStd-Bold.otf</string>
+		<string>CircularStd-Book.otf</string>
+		<string>CircularStd-Medium.otf</string>
+	</array>
 </dict>
 </plist>

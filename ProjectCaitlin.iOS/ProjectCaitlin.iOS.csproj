@@ -134,6 +134,9 @@
     <PackageReference Include="Xamarin.FFImageLoading.Transformations">
       <Version>2.4.11.982</Version>
     </PackageReference>
+    <PackageReference Include="CardsView">
+      <Version>2.4.2</Version>
+    </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
   <ItemGroup>
@@ -145,5 +148,15 @@
   <ItemGroup>
     <BundleResource Include="GoogleService-Info.plist" />
     <BundleResource Include="Resources\bear.jpg" />
+    <BundleResource Include="Resources\CircularStd-Black.otf" />
+    <BundleResource Include="Resources\CircularStd-Bold.otf" />
+    <BundleResource Include="Resources\CircularStd-Book.otf" />
+    <BundleResource Include="Resources\CircularStd-Medium.otf" />
+    <BundleResource Include="..\ProjectCaitlin\Icons\sunrisemid.png">
+      <Link>Resources\sunrisemid.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\ProjectCaitlin\Icons\toothbrushCircle.png">
+      <Link>Resources\toothbrushCircle.png</Link>
+    </BundleResource>
   </ItemGroup>
 </Project>

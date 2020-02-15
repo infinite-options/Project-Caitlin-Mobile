@@ -31,13 +31,12 @@ namespace ProjectCaitlin
         {
             InitializeComponent();
             BindingContext = this;
-            FSMethods = LoginPage.FSMethods;
             user = App.user;
             SetupUI();
             StartTimer();
             PrepSetUpcomingEvents();
         }
-        
+
         public void SetupUI()
         {
             Console.WriteLine("user.routines.Count: " + user.routines.Count);
@@ -106,21 +105,21 @@ namespace ProjectCaitlin
                     timedTitle.Text = routine.title;
                     foreach (task task in routine.tasks)
                     {
-                        CachedImage image = new CachedImage
-                        {
-                            VerticalOptions = LayoutOptions.CenterAndExpand,
-                            HorizontalOptions = LayoutOptions.Center,
-                            Transformations = new List<ITransformation>() {
-                                new RoundedTransformation(30)
-                            },
-                            Source = task.photo,
-                            WidthRequest = 60,
-                            HeightRequest = 60,
-                            Margin = new Thickness(4, 10, 4, 10),
-                            BackgroundColor = Color.WhiteSmoke,
-                        };
+                        //CachedImage image = new CachedImage
+                        //{
+                        //    VerticalOptions = LayoutOptions.CenterAndExpand,
+                        //    HorizontalOptions = LayoutOptions.Center,
+                        //    Transformations = new List<ITransformation>() {
+                        //        new RoundedTransformation(30)
+                        //    },
+                        //    Source = task.photo,
+                        //    WidthRequest = 60,
+                        //    HeightRequest = 60,
+                        //    Margin = new Thickness(4, 10, 4, 10),
+                        //    BackgroundColor = Color.WhiteSmoke,
+                        //};
 
-                        timedTaskList.Children.Add(image);
+                        //timedTaskList.Children.Add(image);
                     }
                 }
             }
@@ -193,7 +192,7 @@ namespace ProjectCaitlin
             //Call Google API
             var googleService = new GoogleService();
 
-            publicYear = dateTimeNow.Year; 
+            publicYear = dateTimeNow.Year;
             publicMonth = (dateTimeNow.Month);
             publicDay = dateTimeNow.Day;
 
@@ -222,14 +221,14 @@ namespace ProjectCaitlin
 
                 var parsedResult = JsonConvert.DeserializeObject<Methods.GetEventsListMethod>(jsonResult);
 
-                //Create Item List 
+                //Create Item List
                 var eventList = new List<string>();
                 var dateList = new List<string>();
                 var startTimeList = new List<string>();
                 var endTimeList = new List<string>();
 
 
-                //Separate out just the EventName 
+                //Separate out just the EventName
                 foreach (var events in parsedResult.Items)
                 {
                     eventList.Add(events.EventName);

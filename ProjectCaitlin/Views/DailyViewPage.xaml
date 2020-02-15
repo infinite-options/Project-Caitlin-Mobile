@@ -54,7 +54,7 @@
                         <StackLayout x:Name="routineTaskList"
                                      Orientation="Horizontal"
                                      Padding="10,0,10,0">
-                            
+
                         </StackLayout>
                     </ScrollView>
 
@@ -144,12 +144,12 @@
                             Margin="30, 0, 0, 0"
                             IsVisible="false"
                             Opacity="0"
-                        
+
                             />
 
                 </StackLayout>
 
-                <Frame CornerRadius="10"  
+                <Frame CornerRadius="10"
                        Padding="10,0,10,0"
                        Margin="10,10,10,10"
                        BackgroundColor="#DED8E7"
@@ -194,7 +194,7 @@
                                      Margin = "3, 20, 3, 10"
                                      BackgroundColor = "WhiteSmoke"
                                     />-->
-                            
+
                         </StackLayout>
 
                     </StackLayout>

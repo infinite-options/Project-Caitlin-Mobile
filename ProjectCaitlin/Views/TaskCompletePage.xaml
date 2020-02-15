@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:cv="http://xamarin.com/schemas/2014/forms"
+             mc:Ignorable="d"
+             x:Class="ProjectCaitlin.Views.TaskCompletePage">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="DarkSlateGray">
+            
+            <StackLayout>
+                <CarouselView x:Name="CarouselTasks" ItemsSource="{Binding Items}">
+                    <CarouselView.ItemTemplate>
+                        <DataTemplate>
+                            <StackLayout>
+
+
+                                <Image Source="{Binding Source}"
+                               Aspect="AspectFill"
+                               HeightRequest="300"
+                               WidthRequest="300"
+                               HorizontalOptions="Center" />
+
+                                <Label Text="{Binding Text}"
+                               FontAttributes="Bold"
+                               FontSize="30"
+                               HorizontalOptions="Start"
+                               TextColor="White"
+                               VerticalOptions="Center" />
+
+                                <Label Text="Place it next to the sink"
+                               FontAttributes="Bold"
+                               FontSize="Small"
+                               HorizontalOptions="Start"
+                                TextColor="White"
+                               VerticalOptions="Center" />
+
+                            </StackLayout>
+                        </DataTemplate>
+                    </CarouselView.ItemTemplate>
+                </CarouselView>
+                <StackLayout>
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.5*" />
+                        </Grid.ColumnDefinitions>
+                        <Button x:Name="previous" Grid.Column="0" Text="pre" HorizontalOptions="Start" VerticalOptions="Center" Clicked="prepage"></Button>
+                        <Button x:Name="next" Grid.Column="1" Text="next"  HorizontalOptions="End" VerticalOptions="Center" Clicked="nextpage"></Button>
+                    </Grid>
+                </StackLayout>
+            </StackLayout>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
