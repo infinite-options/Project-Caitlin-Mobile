@@ -14,13 +14,13 @@ namespace ProjectCaitlin
             InitializeComponent();
             // MainPage = new NavigationPage(new Views.TaskPage());
 
+            //MainPage = new NavigationPage(new ListViewPage());
             MainPage = new NavigationPage(new LoginPage());
-            /*MainPage = new NavigationPage(new Views.GoalsRoutinesTemplate())
-            {
-                BarBackgroundColor = Color.FromHex("#4682B4"),
-                BarTextColor = Color.White
-            };
-            */
+            //MainPage = new NavigationPage(new Templates.GoalsRoutinesTemplate())
+            //{
+            //    BarBackgroundColor = Color.FromHex("#4682B4"),
+            //    BarTextColor = Color.White
+            //};
 
         }
 

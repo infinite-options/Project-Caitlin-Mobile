@@ -175,6 +175,20 @@
       <Generator>
       </Generator>
     </AndroidResource>
+    <AndroidResource Include="..\ProjectCaitlin\Icons\sunrisemid.png">
+      <Link>Resources\drawable\sunrisemid.png</Link>
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="..\ProjectCaitlin\Icons\toothbrushCircle.png">
+      <Link>Resources\drawable\toothbrushCircle.png</Link>
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="Resources\drawable\goalRun.png">
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <AndroidResource Include="Resources\drawable\Airplane.png" />

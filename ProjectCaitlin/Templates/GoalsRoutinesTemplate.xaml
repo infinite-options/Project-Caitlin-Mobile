@@ -1,0 +1,169 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:viewModels="clr-namespace:GoalsRoutinesTemplateViewModel.ViewModels"
+             xmlns:controls="clr-namespace:PanCardView.Controls;assembly=PanCardView"
+             xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
+             xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView"
+             xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="ProjectCaitlin.Templates.GoalsRoutinesTemplate"
+             BackgroundColor="#E9E8E8"
+             NavigationPage.HasNavigationBar="False">
+
+<ContentPage.Resources>
+   <ResourceDictionary>
+       <Style x:Key="ActiveIndicator" TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="#3D4346" />
+       </Style>
+       <Style x:Key="InactiveIndicator" TargetType="Frame">
+            <Setter Property="BackgroundColor" Value="Transparent" />
+            <Setter Property="OutlineColor" Value="#3D4346" />
+       </Style>
+   </ResourceDictionary>
+</ContentPage.Resources>
+
+ <ContentPage.BindingContext>
+    <viewModels:GoalsRoutinesTemplateViewModel/>
+ </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+
+        <StackLayout>
+
+            <StackLayout>
+
+
+                <StackLayout HeightRequest="10" x:Name="TopDivider"></StackLayout>
+
+
+                    <StackLayout Orientation="Horizontal"
+                                 HeightRequest="58">
+                           <Image Source="sunrisemid.png"
+                               VerticalOptions="Center"
+                               HorizontalOptions="CenterAndExpand"/>    
+                    </StackLayout>
+
+                    <StackLayout>
+                        <Label Text="Monday&#10;Morning"
+                               FontSize="35"
+                               TextColor="#272E32"
+                               HorizontalTextAlignment="Center"
+                               Padding="0, 0, 0, 0"
+                               Margin="0, -10, 0, 20">
+                            <Label.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                </OnPlatform>
+                            </Label.FontFamily>
+                        </Label>
+                    </StackLayout>
+
+                    <StackLayout>
+                        <cards:CoverFlowView 
+                            PositionShiftValue="90"
+                            IsCyclical="false"
+                            SelectedIndex="{Binding CurrentIndex}"
+                            ItemsSource="{Binding Items}">
+
+                            <x:Arguments>
+                                <proc:BaseCoverFlowFrontViewProcessor ScaleFactor="0.75" OpacityFactor=".9" RotationFactor="-0.009" />
+                                <proc:BaseCoverFlowBackViewProcessor  ScaleFactor="0.75" OpacityFactor=".9" RotationFactor="-0.009" />
+                            </x:Arguments>
+
+                        <cards:CoverFlowView.ItemTemplate>
+                            <DataTemplate>
+                               <Frame
+                                   Margin="0, 0, 0, 45"
+                                   HeightRequest="385"
+                                   WidthRequest="305"
+                                   VerticalOptions="Center"
+                                   HorizontalOptions="Center"
+                                   Padding="0" 
+                                   HasShadow="true"
+                                   IsClippedToBounds="true"
+                                   CornerRadius="10"
+                                   BackgroundColor="{Binding Color}">
+
+
+                                   <AbsoluteLayout Margin="0, 0, 0, 0">
+                                      <ffimage:CachedImage Source="{Binding Source}"
+                                                           Margin="0, -35, 0, 0"
+                                                           VerticalOptions="Center"
+                                                           HorizontalOptions="Center"
+                                                           Scale=".4"/>
+
+                                       
+
+                                      <Button Text="Tap here to start"
+                                              TranslationY="320"
+                                              Margin="73, 0, 0, 0"
+                                              CornerRadius="10"
+                                              TextColor="#272E32"
+                                              BackgroundColor="Transparent"
+                                              BorderWidth="3" />
+
+                                       
+
+
+                                   <StackLayout Margin="0, 195, 0, 0">
+                                       <Label Text="{Binding Title}"
+                                               FontSize="35"
+                                               TextColor="#272E32"
+                                               HorizontalTextAlignment="Center"
+                                               Padding="20, 0, 20, 0"
+                                               Margin="0, -55, 0, 0">
+                                            <Label.FontFamily>
+                                                <OnPlatform x:TypeArguments="x:String">
+                                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                                </OnPlatform>
+                                            </Label.FontFamily>
+                                       </Label>
+
+                                       <Label Text="{Binding Length}"
+                                               FontSize="15"
+                                               TextColor="#6C7072"
+                                               HorizontalTextAlignment="Center"
+                                               Padding="0, 0, 0, 0"
+                                               Margin="0, 0, 0, 0">
+                                            <Label.FontFamily>
+                                                <OnPlatform x:TypeArguments="x:String">
+                                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                                    <On Platform="Android" Value="CircularStd-Book.otf#Circular Std"/>
+                                                </OnPlatform>
+                                            </Label.FontFamily>
+                                       </Label>
+                                   </StackLayout>
+
+                                   </AbsoluteLayout>
+
+
+                       
+                               </Frame>
+                            </DataTemplate>
+                        </cards:CoverFlowView.ItemTemplate>
+
+                        <controls:IndicatorsControl ToFadeDuration="3000"
+                                                        SelectedIndicatorStyle="{StaticResource ActiveIndicator}"
+                                                        UnselectedIndicatorStyle="{StaticResource InactiveIndicator}"/>
+
+                    </cards:CoverFlowView>
+        
+                </StackLayout>
+
+                <StackLayout>
+                    <Frame HeightRequest="30"
+                           WidthRequest="50"
+                           BackgroundColor="White"
+                           HasShadow="True"
+                           Margin="0, -10, -0, 0">
+
+                    </Frame>
+                </StackLayout>
+            </StackLayout>
+
+        </StackLayout>
+
+    </ContentPage.Content>
+</ContentPage>

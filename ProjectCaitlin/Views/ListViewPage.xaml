@@ -6,373 +6,526 @@
              xmlns:converters="clr-namespace:ProjectCaitlin.Converters"  
              x:Class="ProjectCaitlin.ListViewPage"
              NavigationPage.HasBackButton="False"
-             NavigationPage.HasNavigationBar="true"
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#E9E8E8"
              >
+    <ScrollView>
 
-    <ContentPage.Resources>
-        <ResourceDictionary>
-            <converters:StringToColorConverter x:Key="StringToColorConverter"/>
-        </ResourceDictionary>
-    </ContentPage.Resources>
+        <StackLayout
+            x:Name="MainStackLayout"
+            Padding="15,30,15,10">
 
-    <ContentPage.ToolbarItems>
-    <ToolbarItem Text="Daily View                                                           "
-                 x:Name="dailyBtn"
-                 Clicked="DailyBtnClicked"/>
-    <ToolbarItem Text="Monthly View"
-                 x:Name="monthlyBtn"
-                 Clicked="MonthlyBtnClicked"/>
+            <Label
+                Text="Wednesday"
+                FontSize="30">
+                <Label.FontFamily>
+                    <OnPlatform x:TypeArguments="x:String">
+                        <On Platform="iOS" Value="Lobster-Regular" />
+                        <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                    </OnPlatform>
+                </Label.FontFamily>
+            </Label>
 
+            <StackLayout
+                x:Name="MorningREStackLayout"
+                Padding="0,30,0,0">
 
-    </ContentPage.ToolbarItems>
+                <!-- Morning Label -->
+                <StackLayout
+                    Orientation="Horizontal">
 
- <Grid>
-
-     
-        <BoxView
-            Color="#FAFAFA"
-            IsVisible="true"
-            VerticalOptions="Start"
-            HeightRequest="60"
-            Margin="0,0,0,0"
-            BackgroundColor="#FAFAFA"
-            />
-
-        <Image x:Name="someImage"
-                />
-
-        <ScrollView>
-
-            <StackLayout Orientation="Vertical">
-
-                <Label Text="DATE               EVENTS"
-                    x:Name="navDate"
-                    IsVisible="false"
-                    Margin="30, 20, 20, 0"
-                    FontSize="15"
-                        />
-
-                <Label Text="01"
-                       x:Name="numLbl1"
-                       Opacity="0"
-                       TextColor="#FAFAass"
-                       Margin="30, 20, 20, 0"
-                       FontSize="30"
-                       />
-
-                <Label Text="MON"
-                       x:Name="dayLbl1"
-                       Opacity="0"
-                       TextColor="#FAFAFA"
-                       Margin="30, -10, 20, 0"
-                       FontSize="15"
-                       />
-
-                <Button Text=""
-                        x:Name="button1"
-                        WidthRequest="270"
-                        Opacity="1"
-                        HorizontalOptions="Center"
-                        Padding="0,0,110,0"
-                        FontSize="13"
-                        TextColor="Gray"
-                        BackgroundColor="#FAFAFA"
-                        Margin="100,-55,10,0"
-                        TranslationX="420"
-                        />
-
-                <Label Text="02"
-                       x:Name="numLbl2"
-                       Opacity="0"
-                       TextColor="#FAFAFA"
-                       IsVisible="false"
-                       Margin="30, 5, 20, 0"
-                       FontSize="30"
-                       />
-
-                <Label Text="MON"
-                       x:Name="dayLbl2"
-                       Opacity="0"
-                       TextColor="#FAFAFA"
-                       Margin="30, -10, 20, 0"
-                       IsVisible="false"
-                       FontSize="15"
-                       />
-
-                <Button Text=""
-                        x:Name="button2"
-                        Opacity="0"
-                        WidthRequest="270"
-                        IsVisible="false"
-                        HorizontalOptions="Center"
-                        Padding="0,0,110,0"
-                        FontSize="13"
-                        TextColor="White"
-                        BackgroundColor="#FAFAFA"
-                        Margin="100,-57,10,0"
-                        TranslationX="420"
-                        />
-
-                <Label Text="03"
-                       Opacity="0"
-                       x:Name="numLbl3"
-                       IsVisible="false"
-                       TextColor="#FAFAFA"
-                       Margin="30, 5, 20, 0"
-                       FontSize="30"
-                       />
-
-                <Label Text="TUE"
-                       Opacity="0"
-                       x:Name="dayLbl3"
-                       IsVisible="false"
-                       TextColor="#FAFAFA"
-                       Margin="30, -10, 20, 0"
-                       FontSize="15"
-                       />
+                    <Image
+                        Source="sunrisemid.png"
+                        WidthRequest="40"
+                        HeightRequest="40"/>
 
 
-                <Button Text=""
-                        x:Name="button3"
-                        Opacity="0"
-                        WidthRequest="270"
-                        IsVisible="false"
-                        HorizontalOptions="Center"
-                        Padding="0,0,110,0"
-                        FontSize="13"
-                        TextColor="White"
-                        BackgroundColor="#FAFAFA"
-                        Margin="100,-57,10,0"
-                        TranslationX="420"
-                        />
+                    <Label
+                        Text="Morning"
+                        FontSize="14"
+                        VerticalOptions="Center">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Lobster-Regular" />
+                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
 
-                <Label Text="04"
-                       Opacity="0"
-                       x:Name="numLbl4"
-                       IsVisible="false"
-                       Margin="30, 5, 20, 0"
-                       FontSize="30"
-                       />
+                </StackLayout>
 
-                <Label Text="WED"
-                       Opacity="0"
-                       x:Name="dayLbl4"
-                       IsVisible="false"
-                       Margin="30, -10, 20, 0"
-                       FontSize="15"
-                       />
+                <!-- Start Goals/Routines/Events -->
 
-                <Button Text=""
-                        x:Name="button4"
-                        Opacity="0"
-                        IsVisible="false"
-                        WidthRequest="270"
-                        HorizontalOptions="Center"
-                        Padding="0,0,110,0"
-                        FontSize="13"
-                        TextColor="White"
-                        BackgroundColor="#e6e6e6"
-                        Margin="100,-57,10,0"
-                        TranslationX="420"
-                        />
-
-                <Label Text="05"
-                       Opacity="0"
-                       x:Name="numLbl5"
-                       IsVisible="false"
-                       Margin="30, 5, 20, 0"
-                       FontSize="30"
-                       />
-
-                <Label Text="WED"
-                       Opacity="0"
-                       x:Name="dayLbl5"
-                       IsVisible="false"
-                       Margin="30, -10, 20, 0"
-                       FontSize="15"
-                       />
-
-                <Button Text=""
-                        Opacity="0"
-                        x:Name="button5"
-                        IsVisible="false"
-                        WidthRequest="270"
-                        HorizontalOptions="Center"
-                        Padding="0,0,110,0"
-                        FontSize="13"
-                        TextColor="White"
-                        BackgroundColor="#FAFAFA"
-                        Margin="100,-57,10,0"
-                        TranslationX="420"
-                        />
-
-                <Label Text="06"
-                       Opacity="0"
-                       x:Name="numLbl6"
-                       IsVisible="false"
-                       Margin="30, 5, 20, 0"
-                       FontSize="30"
-                       />
-
-                <Label Text="THU"
-                       Opacity="0"
-                       IsVisible="false"
-                       x:Name="dayLbl6"
-                       Margin="30, -10, 20, 0"
-                       FontSize="15"
-                       />
+                <!-- Morning Routine Item -->
+                <Frame
+                    CornerRadius="10"
+                    HasShadow="False"
+                    Padding="10,10,5,10"
+                    Margin="0,2,0,2">
 
 
-                <Button Text=""
-                        Opacity="0"
-                        x:Name="button6"
-                        IsVisible="false"
-                        WidthRequest="270"
-                        HorizontalOptions="Center"
-                        Padding="0,0,110,0"
-                        FontSize="13"
-                        TextColor="#525252"
-                        BackgroundColor="#FAFAFA"
-                        Margin="100,-57,10,0"
-                        TranslationX="420"
-                        />
+                    <StackLayout
+                        Orientation="Horizontal">
 
-                <Label Text="07"
-                       Opacity="0"
-                       IsVisible="false"
-                       x:Name="numLbl7"
-                       Margin="30, 5, 20, 0"
-                       FontSize="30"
-                       />
+                        <StackLayout
+                            HorizontalOptions="StartAndExpand">
 
-                <Label Text="FRI"
-                       Opacity="0"
-                       IsVisible="false"
-                       x:Name="dayLbl7"
-                       Margin="30, -10, 20, 0"
-                       FontSize="15"
-                       />
+                            <Label
+                                Text="Get ready for my day"
+                                FontSize="20"
+                                VerticalOptions="StartAndExpand">
+                                <Label.FontFamily>
+                                    <OnPlatform x:TypeArguments="x:String">
+                                        <On Platform="iOS" Value="Lobster-Regular" />
+                                        <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                    </OnPlatform>
+                                </Label.FontFamily>
+                            </Label>
 
-                <Button Text=""
-                        Opacity="0"
-                        x:Name="button7"
-                        IsVisible="false"
-                        WidthRequest="270"
-                        HorizontalOptions="Center"
-                        Padding="0,0,110,0"
-                        FontSize="13"
-                        TextColor="#525252"
-                        BackgroundColor="#e6e6e6"
-                        Margin="100,-57,10,0"
-                        TranslationX="420"
-                        />
+                            <Label
+                                Text="Takes me 5 min"
+                                FontSize="10"
+                                TextColor="DimGray"
+                                VerticalOptions="End">
+                                <Label.FontFamily>
+                                    <OnPlatform x:TypeArguments="x:String">
+                                        <On Platform="iOS" Value="Lobster-Regular" />
+                                        <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                    </OnPlatform>
+                                </Label.FontFamily>
+                            </Label>
 
-                <Label Text="08"
-                       Opacity="0"
-                       x:Name="numLbl8"
-                       IsVisible="false"
-                       Margin="30, 5, 20, 0"
-                       FontSize="30"
-                       />
+                        </StackLayout>
 
-                <Label Text="SAT"
-                       Opacity="0"
-                       x:Name="dayLbl8"
-                       IsVisible="false"
-                       Margin="30, -10, 20, 0"
-                       FontSize="15"
-                       />
+                        <Image
+                            Source="toothbrushCircle"
+                            WidthRequest="60"
+                            HeightRequest="60"
+                            HorizontalOptions="End"/>
+                    </StackLayout>
 
-                <Button Text=""
-                        Opacity="0"
-                        x:Name="button8"
-                        IsVisible="false"
-                        WidthRequest="270"
-                        HorizontalOptions="Center"
-                        Padding="0,0,110,0"
-                        FontSize="13"
-                        TextColor="#525252"
-                        BackgroundColor="#FAFAFA"
-                        Margin="100,-57,10,0"
-                        TranslationX="420"
-                        />
 
-                <Label Text="09"
-                       Opacity="0"
-                       x:Name="numLbl9"
-                       IsVisible="false"
-                       Margin="30, 5, 20, 0"
-                       FontSize="30"
-                       />
+                </Frame>
 
-                <Label Text="WED"
-                       Opacity="0"
-                       x:Name="dayLbl9"
-                       IsVisible="false"
-                       Margin="30, -10, 20, 0"
-                       FontSize="15"
-                       />
+                <!-- Morning Event -->
+                <Frame
+                    CornerRadius="5"
+                    HasShadow="False"
+                    Padding="10,10,5,10"
+                    Margin="0,2,0,2"
+                    BackgroundColor="Goldenrod">
 
-                <Button Text=""
-                        Opacity="0"
-                        x:Name="button9"
-                        IsVisible="false"
-                        WidthRequest="270"
-                        HorizontalOptions="Center"
-                        Padding="0,0,110,0"
-                        FontSize="13"
-                        TextColor="#525252"
-                        BackgroundColor="#FAFAFA"
-                        Margin="100,-57,10,0"
-                        TranslationX="420"
-                        />
 
-                <Label Text="10"
-                       Opacity="0"
-                       x:Name="numLbl10"
-                       IsVisible="false"
-                       Margin="30, 5, 20, 0"
-                       FontSize="30"
-                       />
+                    <StackLayout
+                        Orientation="Horizontal">
 
-                <Label Text="WED"
-                       Opacity="0"
-                       x:Name="dayLbl10"
-                       IsVisible="false"
-                       Margin="30, -10, 20, 0"
-                       FontSize="15"
-                       />
+                        <StackLayout
+                            HorizontalOptions="StartAndExpand"
+                            Orientation="Vertical">
 
-                <Button Text=""
-                        Opacity="0"
-                        x:Name="button10"
-                        IsVisible="false"
-                        WidthRequest="270"
-                        HorizontalOptions="Center"
-                        Padding="0,0,110,0"
-                        FontSize="13"
-                        TextColor="#525252"
-                        BackgroundColor="#FAFAFA"
-                        Margin="100,-57,10,60"
-                        TranslationX="420"
-                        />
+                            <Label
+                                Text="9:21 AM"
+                                FontSize="10"
+                                TextColor="White"
+                                VerticalOptions="Start">
+                                <Label.FontFamily>
+                                    <OnPlatform x:TypeArguments="x:String">
+                                        <On Platform="iOS" Value="Lobster-Regular" />
+                                        <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                    </OnPlatform>
+                                </Label.FontFamily>
+                            </Label>
+
+                            <Label
+                                Text="Leave for the bus stop"
+                                FontSize="20"
+                                VerticalOptions="StartAndExpand">
+                                <Label.FontFamily>
+                                    <OnPlatform x:TypeArguments="x:String">
+                                        <On Platform="iOS" Value="Lobster-Regular" />
+                                        <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                    </OnPlatform>
+                                </Label.FontFamily>
+                            </Label>
+
+                            <Label
+                                Text="Takes 10 min walk"
+                                FontSize="10"
+                                VerticalOptions="End">
+                                <Label.FontFamily>
+                                    <OnPlatform x:TypeArguments="x:String">
+                                        <On Platform="iOS" Value="Lobster-Regular" />
+                                        <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                    </OnPlatform>
+                                </Label.FontFamily>
+                            </Label>
+
+                        </StackLayout>
+
+                        <Image
+                            Source="toothbrushCircle"
+                            WidthRequest="60"
+                            HeightRequest="60"
+                            HorizontalOptions="End"/>
+                    </StackLayout>
+
+
+                </Frame>
+
+                <!-- Morning Goals Sections -->
+                <StackLayout
+                    Orientation="Vertical"
+                    Padding="0,20,0,0">
+
+                    <!-- Morning Goals Label -->
+                    <Label
+                        Text="Morning Goals"
+                        FontSize="14"
+                        VerticalOptions="Center">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Lobster-Regular" />
+                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+
+                    <ScrollView
+                        Orientation="Horizontal"
+                        HorizontalOptions="Start"
+                        Padding="0,15,0,0">
+
+                        <StackLayout
+                            x:Name="MorningGoalsStackLayout"
+                            Orientation="Horizontal">
+
+                            <StackLayout
+                                Margin="0,0,10,0">
+
+                                <Image
+                                    Source="toothbrushCircle"
+                                    WidthRequest="120"
+                                    HeightRequest="90"/>
+
+                                <Label
+                                    Text="Exercise"
+                                    TextColor="DimGray">
+                                    <Label.FontFamily>
+                                        <OnPlatform x:TypeArguments="x:String">
+                                            <On Platform="iOS" Value="Lobster-Regular" />
+                                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                        </OnPlatform>
+                                    </Label.FontFamily>
+                                </Label>
+
+                            </StackLayout>
+
+                            <StackLayout
+                                Margin="0,0,10,0">
+
+                                <Image
+                                    Source="toothbrushCircle"
+                                    WidthRequest="120"
+                                    HeightRequest="90"/>
+
+                                <Label
+                                    Text="Exercise for 15 minutes"
+                                    TextColor="Gray">
+                                    <Label.FontFamily>
+                                        <OnPlatform x:TypeArguments="x:String">
+                                            <On Platform="iOS" Value="Lobster-Regular" />
+                                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                        </OnPlatform>
+                                    </Label.FontFamily>
+                                </Label>
+
+                            </StackLayout>
+                            <StackLayout>
+
+                                <Image
+                                    Source="toothbrushCircle"
+                                    WidthRequest="120"
+                                    HeightRequest="90"/>
+
+                                <Label
+                                    Text="Exercise for 15 minutes"
+                                    TextColor="Gray">
+                                    <Label.FontFamily>
+                                        <OnPlatform x:TypeArguments="x:String">
+                                            <On Platform="iOS" Value="Lobster-Regular" />
+                                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                        </OnPlatform>
+                                    </Label.FontFamily>
+                                </Label>
+
+                            </StackLayout><StackLayout>
+
+                                <Image
+                                    Source="toothbrushCircle"
+                                    WidthRequest="120"
+                                    HeightRequest="90"/>
+
+                                <Label
+                                    Text="Exercise for 15 minutes"
+                                    TextColor="Gray">
+                                    <Label.FontFamily>
+                                        <OnPlatform x:TypeArguments="x:String">
+                                            <On Platform="iOS" Value="Lobster-Regular" />
+                                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                        </OnPlatform>
+                                    </Label.FontFamily>
+                                </Label>
+
+                            </StackLayout>
+                            <StackLayout
+                                Margin="0,0,10,0">
+
+                                <Image
+                                    Source="toothbrushCircle"
+                                    WidthRequest="120"
+                                    HeightRequest="90"/>
+
+                                <Label
+                                    Text="Exercise for 15 minutes"
+                                    TextColor="Gray">
+                                    <Label.FontFamily>
+                                        <OnPlatform x:TypeArguments="x:String">
+                                            <On Platform="iOS" Value="Lobster-Regular" />
+                                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                        </OnPlatform>
+                                    </Label.FontFamily>
+                                </Label>
+
+                            </StackLayout>
+                
+                        </StackLayout>
+
+                    </ScrollView>
+
+                </StackLayout>
 
 
             </StackLayout>
-        </ScrollView>
 
-        <BoxView
-            IsVisible="false"
-            x:Name="dividerLine"
-            WidthRequest="2"
-            HeightRequest="200"
-            HorizontalOptions="Start"
-            Color="Gray"
-            Margin="90,0,30,0"
-            />
+            <StackLayout
+                x:Name="AfternoonREStackLayout"
+                Padding="0,30,0,0">
+
+            <!-- Afternoon Label -->
+                <StackLayout
+                    Orientation="Horizontal">
+
+                    <Image
+                        Source="sunrisemid.png"
+                        WidthRequest="30"
+                        HeightRequest="30"/>
+
+                    <Label
+                        Text="Afternoon"
+                        FontSize="14"
+                        VerticalOptions="Center">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Lobster-Regular" />
+                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+
+                </StackLayout>
+
+                <!-- Start Afternoon Routines/Events -->
+
+                <StackLayout
+                    Orientation="Vertical"
+                    Padding="0,20,0,0">
+                    <Label
+                        Text="Afternoon Goals"
+                        FontSize="14"
+                        VerticalOptions="Center">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Lobster-Regular" />
+                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+
+                    <ScrollView
+                            Orientation="Horizontal"
+                            HorizontalOptions="Start"
+                            Padding="0,15,0,0">
+
+                            <StackLayout
+                                x:Name="AfternoonGoalsStackLayout"
+                                Orientation="Horizontal">
+
+                                <!-- Start Afternoon Goals -->
+                            </StackLayout>
+                    </ScrollView>
+
+                </StackLayout>
+
+            </StackLayout>
+
+            <StackLayout
+                x:Name="EveningREStackLayout"
+                Padding="0,30,0,0">
+
+            <!-- Afternoon Label -->
+                <StackLayout
+                    Orientation="Horizontal">
+
+                    <Image
+                        Source="sunrisemid.png"
+                        WidthRequest="30"
+                        HeightRequest="30"/>
+
+                    <Label
+                        Text="Evening"
+                        FontSize="14"
+                        VerticalOptions="Center">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Lobster-Regular" />
+                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+
+                </StackLayout>
+
+                <!-- Start Routines/Events -->
+                <!--Here-->
 
 
-    </Grid>
+                <!--Evening Goals-->
+                <StackLayout
+                    Orientation="Vertical"
+                    Padding="0,20,0,0">
+                    <Label
+                        Text="Evening Goals"
+                        FontSize="14"
+                        VerticalOptions="Center">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Lobster-Regular" />
+                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
 
+                    <ScrollView
+                            Orientation="Horizontal"
+                            HorizontalOptions="Start"
+                            Padding="0,15,0,0">
+
+                            <StackLayout
+                                x:Name="EveningGoalsStackLayout"
+                                Orientation="Horizontal">
+
+                                <!-- Start Evening Goals -->
+                            </StackLayout>
+                    </ScrollView>
+
+                </StackLayout>
+
+            </StackLayout>
+
+            <StackLayout
+                x:Name="NightREStackLayout"
+                Padding="0,30,0,0">
+
+             <!--Afternoon Label--> 
+                <StackLayout
+                    Orientation="Horizontal">
+
+                    <Image
+                        Source="sunrisemid.png"
+                        WidthRequest="30"
+                        HeightRequest="30"/>
+
+                    <Label
+                        Text="Night"
+                        FontSize="14"
+                        VerticalOptions="Center">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Lobster-Regular" />
+                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+
+                </StackLayout>
+
+                <!--Start Afternoon Routines/Events-->
+                <!--Here-->
+
+
+                <!--Night Goals-->
+                <StackLayout
+                    Orientation="Vertical"
+                    Padding="0,20,0,0">
+                    <Label
+                        Text="Night Goals"
+                        FontSize="14"
+                        VerticalOptions="Center">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Lobster-Regular" />
+                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+
+                    <ScrollView
+                            Orientation="Horizontal"
+                            HorizontalOptions="Start"
+                            Padding="0,15,0,0">
+
+                            <StackLayout
+                                x:Name="NightGoalsStackLayout"
+                                Orientation="Horizontal">
+
+                                <!-- Start Night Goals -->
+                            </StackLayout>
+                    </ScrollView>
+
+                </StackLayout>
+
+            </StackLayout>
+
+
+            <StackLayout
+                Padding="0,30,0,0">
+
+                <Label
+                    Text="How was your day?"
+                    HorizontalOptions="Center">
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Lobster-Regular" />
+                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
+
+                <StackLayout
+                    x:Name="HWYDButtons"
+                    Padding="0,30,0,0"
+                    Orientation="Horizontal">
+                
+
+                </StackLayout>
+
+
+
+            </StackLayout>
+
+
+        </StackLayout>
+
+    </ScrollView>
 
 </ContentPage>
