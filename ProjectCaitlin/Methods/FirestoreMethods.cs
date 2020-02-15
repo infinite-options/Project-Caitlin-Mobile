@@ -90,9 +90,9 @@ namespace ProjectCaitlin.Methods
                 var routineResponse = await content.ReadAsStringAsync();
                 JObject taskJson = JObject.Parse(routineResponse);
 
-                JToken jsonActionsAndTasks = taskJson["fields"]["goals&routines"];
+                JToken jsonActionsAndTasks = taskJson["fields"]["actions&tasks"];
                 if (jsonActionsAndTasks != null)
-                    jsonActionsAndTasks = taskJson["fields"]["goals&routines"]["arrayValue"]["values"];
+                    jsonActionsAndTasks = taskJson["fields"]["actions&tasks"]["arrayValue"]["values"];
                 else
                     return;
 
@@ -138,7 +138,7 @@ namespace ProjectCaitlin.Methods
         public async Task LoadSteps(string routineID, string taskID, int routineIdx, int taskIdx, string routineType)
         {
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://firestore.googleapis.com/v1/projects/project-caitlin-c71a9/databases/(default)/documents/users/" + uid + "/goals&routines/" + routineID + "/instructions&steps/" + taskID);
+            request.RequestUri = new Uri("https://firestore.googleapis.com/v1/projects/project-caitlin-c71a9/databases/(default)/documents/users/" + uid + "/goals&routines/" + routineID + "/actions&tasks/" + taskID);
             request.Method = HttpMethod.Get;
             var client = new HttpClient();
             HttpResponseMessage response = await client.SendAsync(request);
@@ -148,14 +148,22 @@ namespace ProjectCaitlin.Methods
                 var routineResponse = await content.ReadAsStringAsync();
                 JObject stepJson = JObject.Parse(routineResponse);
 
+                Console.WriteLine("here 1");
+
                 JToken jsonInstructionsAndSteps = stepJson["fields"]["instructions&steps"];
                 if (jsonInstructionsAndSteps != null)
                     jsonInstructionsAndSteps = stepJson["fields"]["instructions&steps"]["arrayValue"]["values"];
                 else
                     return;
 
+                Console.WriteLine("here 2");
+
+
                 foreach (JToken jsonIorS in jsonInstructionsAndSteps)
                 {
+                    Console.WriteLine(jsonIorS["mapValue"]["fields"]["is_available"] + " " + taskID);
+
+
                     if ((bool)jsonIorS["mapValue"]["fields"]["is_available"]["booleanValue"])
                     {
                         if (routineType == "routine")
