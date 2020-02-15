@@ -7,6 +7,7 @@ namespace ProjectCaitlin.Models
 	public class step : INotifyPropertyChanged
 	{
 		public string title { get; set; }
+
 		public string photo { get; set; }
 
 		public string status { get; set; }

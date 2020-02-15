@@ -172,10 +172,8 @@ namespace ProjectCaitlin.Methods
                             instruction instruction = new instruction();
                             instruction.title = jsonIorS["mapValue"]["fields"]["title"]["stringValue"].ToString();
                             if (jsonIorS["mapValue"]["fields"]["photo"] != null)
-                            {
                                 instruction.photo = jsonIorS["mapValue"]["fields"]["photo"]["stringValue"].ToString();
-                            }
-
+                            
                             App.user.goals[routineIdx].actions[taskIdx].instructions.Add(instruction);
 
                         }

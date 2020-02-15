@@ -8,6 +8,8 @@ namespace ProjectCaitlin.Models
 	{
 		public string title { get; set; }
 
+		public string photo { get; set; }
+
 		public string status { get; set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
