@@ -208,6 +208,11 @@ namespace ProjectCaitlin
             return null;
         }
 
+		public async void ListViewClicked(object sender, EventArgs e)
+		{
+			await Navigation.PushAsync(new ListViewPage());
+		}
+
 		async Task LoginGoogleAsync()
 		{
 			//try
