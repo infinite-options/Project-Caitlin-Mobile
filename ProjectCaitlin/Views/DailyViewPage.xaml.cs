@@ -74,7 +74,7 @@ namespace ProjectCaitlin
 
             foreach (routine routine in user.routines)
             {
-                if (routine.isPersistent && routine.title == "Get Ready")
+                if (routine.title == "Get Ready")
                 {
                     routineTitle.Text = routine.title;
                     foreach (task task in routine.tasks)
