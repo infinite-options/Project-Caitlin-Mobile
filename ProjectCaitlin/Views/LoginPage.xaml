@@ -50,5 +50,13 @@
             TextColor="White"
             />
 
+        <Button
+            Text="List View Page"
+            Clicked="ListViewClicked"
+            Margin="60, 0"
+            BackgroundColor="#4682B4"
+            TextColor="White"
+            />
+
     </StackLayout>
 </ContentPage>
