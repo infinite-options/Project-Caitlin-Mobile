@@ -148,22 +148,14 @@ namespace ProjectCaitlin.Methods
                 var routineResponse = await content.ReadAsStringAsync();
                 JObject stepJson = JObject.Parse(routineResponse);
 
-                Console.WriteLine("here 1");
-
                 JToken jsonInstructionsAndSteps = stepJson["fields"]["instructions&steps"];
                 if (jsonInstructionsAndSteps != null)
                     jsonInstructionsAndSteps = stepJson["fields"]["instructions&steps"]["arrayValue"]["values"];
                 else
                     return;
 
-                Console.WriteLine("here 2");
-
-
                 foreach (JToken jsonIorS in jsonInstructionsAndSteps)
                 {
-                    Console.WriteLine(jsonIorS["mapValue"]["fields"]["is_available"] + " " + taskID);
-
-
                     if ((bool)jsonIorS["mapValue"]["fields"]["is_available"]["booleanValue"])
                     {
                         if (routineType == "routine")
