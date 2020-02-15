@@ -12,6 +12,7 @@ using ProjectCaitlin.Authentication;
 using ProjectCaitlin.Methods;
 using ProjectCaitlin.Models;
 using ProjectCaitlin.Services;
+using ProjectCaitlin.Views;
 using Xamarin.Auth;
 using Xamarin.Forms;
 
@@ -93,6 +94,20 @@ namespace ProjectCaitlin
 
 			var presenter = new Xamarin.Auth.Presenters.OAuthLoginPresenter();
 			presenter.Login(authenticator);
+
+		}
+
+		async void TaskPageClicked(object sender, EventArgs e)
+		{
+
+			await Navigation.PushAsync(new TaskPage());
+
+		}
+
+		async void TaskCompletePageClicked(object sender, EventArgs e)
+		{
+
+			await Navigation.PushAsync(new TaskCompletePage());
 
 		}
 

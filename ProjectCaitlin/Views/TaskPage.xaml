@@ -24,22 +24,21 @@
                 HasUnevenRows="False"
                 Margin="3"
                 RowHeight ="250"
-                FlowItemTappedCommand="{Binding ItemTappedCommand}"
                 FlowItemsSource="{Binding Items}">
 
                     <flv:FlowListView.FlowColumnTemplate>
                         <DataTemplate>
-                            <Frame BackgroundColor="White"  
+                            <Frame 
                                     Margin="3"
                                    Padding="1">
                                 <StackLayout>
                                     <Image Source="{Binding Source}" WidthRequest = "100"
-                HeightRequest = "100"
-                VerticalOptions = "FillAndExpand"
-                HorizontalOptions = "FillAndExpand"
-                Aspect = "AspectFill"/>
-                                    
-                                    <Label Text="{Binding Text}"/>
+                                            HeightRequest = "100"
+                                            VerticalOptions = "FillAndExpand"
+                                            HorizontalOptions = "FillAndExpand"
+                                            Aspect = "AspectFill"/>
+
+                                    <Label Text="{Binding Text}" />
                                 </StackLayout>
                             </Frame>
                         </DataTemplate>
