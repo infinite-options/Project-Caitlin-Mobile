@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using Newtonsoft.Json;
 
@@ -13,7 +14,9 @@ namespace ProjectCaitlin.Models
 
 		public string photo { get; set; }
 
-		public bool isPersistent { get; set; }
+		public bool is_complete { get; set; }
+
+		public DateTime datetime_completed { get; set; }
 
 		public List<task> tasks { get; set; } = new List<task>();
 
