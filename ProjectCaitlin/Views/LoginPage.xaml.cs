@@ -77,7 +77,6 @@ namespace ProjectCaitlin
 						Console.WriteLine("user instruction title: " + instruction.title);
 					}
 				}
-
 			}
 		}
 

@@ -82,12 +82,23 @@ namespace ProjectCaitlin
 
                 Label expectedTimeLabel = new Label
                 {
-                    Text = routine.title,
-                    FontSize = 20,
+                    Text = "Takes me " + 5.ToString() + " minutes",
+                    FontSize = 10,
+                    TextColor = Color.DimGray,
                     VerticalOptions = LayoutOptions.StartAndExpand,
                     FontFamily = labelFont
 
                 };
+
+                Image image = new Image()
+                {
+                    Source = routine.photo,
+                    WidthRequest = 60,
+                    HeightRequest = 60,
+                    HorizontalOptions = LayoutOptions.End
+                };
+
+                //frame.(stackLayoutOuter);
 
             }
         }

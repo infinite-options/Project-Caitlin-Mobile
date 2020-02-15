@@ -85,7 +85,7 @@
                             <Label
                                 Text="Takes me 5 min"
                                 FontSize="10"
-                                TextColor="gray"
+                                TextColor="DimGray"
                                 VerticalOptions="End">
                                 <Label.FontFamily>
                                     <OnPlatform x:TypeArguments="x:String">
