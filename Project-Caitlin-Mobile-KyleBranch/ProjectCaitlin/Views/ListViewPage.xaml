@@ -1,0 +1,378 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:converters="clr-namespace:ProjectCaitlin.Converters"  
+             x:Class="ProjectCaitlin.ListViewPage"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="true"
+             >
+
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:StringToColorConverter x:Key="StringToColorConverter"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+
+    <ContentPage.ToolbarItems>
+    <ToolbarItem Text="Daily View                                                           "
+                 x:Name="dailyBtn"
+                 Clicked="DailyBtnClicked"/>
+    <ToolbarItem Text="Monthly View"
+                 x:Name="monthlyBtn"
+                 Clicked="MonthlyBtnClicked"/>
+
+
+    </ContentPage.ToolbarItems>
+
+ <Grid>
+
+     
+        <BoxView
+            Color="#FAFAFA"
+            IsVisible="true"
+            VerticalOptions="Start"
+            HeightRequest="60"
+            Margin="0,0,0,0"
+            BackgroundColor="#FAFAFA"
+            />
+
+        <Image x:Name="someImage"
+                />
+
+        <ScrollView>
+
+            <StackLayout Orientation="Vertical">
+
+                <Label Text="DATE               EVENTS"
+                    x:Name="navDate"
+                    IsVisible="false"
+                    Margin="30, 20, 20, 0"
+                    FontSize="15"
+                        />
+
+                <Label Text="01"
+                       x:Name="numLbl1"
+                       Opacity="0"
+                       TextColor="#FAFAass"
+                       Margin="30, 20, 20, 0"
+                       FontSize="30"
+                       />
+
+                <Label Text="MON"
+                       x:Name="dayLbl1"
+                       Opacity="0"
+                       TextColor="#FAFAFA"
+                       Margin="30, -10, 20, 0"
+                       FontSize="15"
+                       />
+
+                <Button Text=""
+                        x:Name="button1"
+                        WidthRequest="270"
+                        Opacity="1"
+                        HorizontalOptions="Center"
+                        Padding="0,0,110,0"
+                        FontSize="13"
+                        TextColor="Gray"
+                        BackgroundColor="#FAFAFA"
+                        Margin="100,-55,10,0"
+                        TranslationX="420"
+                        />
+
+                <Label Text="02"
+                       x:Name="numLbl2"
+                       Opacity="0"
+                       TextColor="#FAFAFA"
+                       IsVisible="false"
+                       Margin="30, 5, 20, 0"
+                       FontSize="30"
+                       />
+
+                <Label Text="MON"
+                       x:Name="dayLbl2"
+                       Opacity="0"
+                       TextColor="#FAFAFA"
+                       Margin="30, -10, 20, 0"
+                       IsVisible="false"
+                       FontSize="15"
+                       />
+
+                <Button Text=""
+                        x:Name="button2"
+                        Opacity="0"
+                        WidthRequest="270"
+                        IsVisible="false"
+                        HorizontalOptions="Center"
+                        Padding="0,0,110,0"
+                        FontSize="13"
+                        TextColor="White"
+                        BackgroundColor="#FAFAFA"
+                        Margin="100,-57,10,0"
+                        TranslationX="420"
+                        />
+
+                <Label Text="03"
+                       Opacity="0"
+                       x:Name="numLbl3"
+                       IsVisible="false"
+                       TextColor="#FAFAFA"
+                       Margin="30, 5, 20, 0"
+                       FontSize="30"
+                       />
+
+                <Label Text="TUE"
+                       Opacity="0"
+                       x:Name="dayLbl3"
+                       IsVisible="false"
+                       TextColor="#FAFAFA"
+                       Margin="30, -10, 20, 0"
+                       FontSize="15"
+                       />
+
+
+                <Button Text=""
+                        x:Name="button3"
+                        Opacity="0"
+                        WidthRequest="270"
+                        IsVisible="false"
+                        HorizontalOptions="Center"
+                        Padding="0,0,110,0"
+                        FontSize="13"
+                        TextColor="White"
+                        BackgroundColor="#FAFAFA"
+                        Margin="100,-57,10,0"
+                        TranslationX="420"
+                        />
+
+                <Label Text="04"
+                       Opacity="0"
+                       x:Name="numLbl4"
+                       IsVisible="false"
+                       Margin="30, 5, 20, 0"
+                       FontSize="30"
+                       />
+
+                <Label Text="WED"
+                       Opacity="0"
+                       x:Name="dayLbl4"
+                       IsVisible="false"
+                       Margin="30, -10, 20, 0"
+                       FontSize="15"
+                       />
+
+                <Button Text=""
+                        x:Name="button4"
+                        Opacity="0"
+                        IsVisible="false"
+                        WidthRequest="270"
+                        HorizontalOptions="Center"
+                        Padding="0,0,110,0"
+                        FontSize="13"
+                        TextColor="White"
+                        BackgroundColor="#e6e6e6"
+                        Margin="100,-57,10,0"
+                        TranslationX="420"
+                        />
+
+                <Label Text="05"
+                       Opacity="0"
+                       x:Name="numLbl5"
+                       IsVisible="false"
+                       Margin="30, 5, 20, 0"
+                       FontSize="30"
+                       />
+
+                <Label Text="WED"
+                       Opacity="0"
+                       x:Name="dayLbl5"
+                       IsVisible="false"
+                       Margin="30, -10, 20, 0"
+                       FontSize="15"
+                       />
+
+                <Button Text=""
+                        Opacity="0"
+                        x:Name="button5"
+                        IsVisible="false"
+                        WidthRequest="270"
+                        HorizontalOptions="Center"
+                        Padding="0,0,110,0"
+                        FontSize="13"
+                        TextColor="White"
+                        BackgroundColor="#FAFAFA"
+                        Margin="100,-57,10,0"
+                        TranslationX="420"
+                        />
+
+                <Label Text="06"
+                       Opacity="0"
+                       x:Name="numLbl6"
+                       IsVisible="false"
+                       Margin="30, 5, 20, 0"
+                       FontSize="30"
+                       />
+
+                <Label Text="THU"
+                       Opacity="0"
+                       IsVisible="false"
+                       x:Name="dayLbl6"
+                       Margin="30, -10, 20, 0"
+                       FontSize="15"
+                       />
+
+
+                <Button Text=""
+                        Opacity="0"
+                        x:Name="button6"
+                        IsVisible="false"
+                        WidthRequest="270"
+                        HorizontalOptions="Center"
+                        Padding="0,0,110,0"
+                        FontSize="13"
+                        TextColor="#525252"
+                        BackgroundColor="#FAFAFA"
+                        Margin="100,-57,10,0"
+                        TranslationX="420"
+                        />
+
+                <Label Text="07"
+                       Opacity="0"
+                       IsVisible="false"
+                       x:Name="numLbl7"
+                       Margin="30, 5, 20, 0"
+                       FontSize="30"
+                       />
+
+                <Label Text="FRI"
+                       Opacity="0"
+                       IsVisible="false"
+                       x:Name="dayLbl7"
+                       Margin="30, -10, 20, 0"
+                       FontSize="15"
+                       />
+
+                <Button Text=""
+                        Opacity="0"
+                        x:Name="button7"
+                        IsVisible="false"
+                        WidthRequest="270"
+                        HorizontalOptions="Center"
+                        Padding="0,0,110,0"
+                        FontSize="13"
+                        TextColor="#525252"
+                        BackgroundColor="#e6e6e6"
+                        Margin="100,-57,10,0"
+                        TranslationX="420"
+                        />
+
+                <Label Text="08"
+                       Opacity="0"
+                       x:Name="numLbl8"
+                       IsVisible="false"
+                       Margin="30, 5, 20, 0"
+                       FontSize="30"
+                       />
+
+                <Label Text="SAT"
+                       Opacity="0"
+                       x:Name="dayLbl8"
+                       IsVisible="false"
+                       Margin="30, -10, 20, 0"
+                       FontSize="15"
+                       />
+
+                <Button Text=""
+                        Opacity="0"
+                        x:Name="button8"
+                        IsVisible="false"
+                        WidthRequest="270"
+                        HorizontalOptions="Center"
+                        Padding="0,0,110,0"
+                        FontSize="13"
+                        TextColor="#525252"
+                        BackgroundColor="#FAFAFA"
+                        Margin="100,-57,10,0"
+                        TranslationX="420"
+                        />
+
+                <Label Text="09"
+                       Opacity="0"
+                       x:Name="numLbl9"
+                       IsVisible="false"
+                       Margin="30, 5, 20, 0"
+                       FontSize="30"
+                       />
+
+                <Label Text="WED"
+                       Opacity="0"
+                       x:Name="dayLbl9"
+                       IsVisible="false"
+                       Margin="30, -10, 20, 0"
+                       FontSize="15"
+                       />
+
+                <Button Text=""
+                        Opacity="0"
+                        x:Name="button9"
+                        IsVisible="false"
+                        WidthRequest="270"
+                        HorizontalOptions="Center"
+                        Padding="0,0,110,0"
+                        FontSize="13"
+                        TextColor="#525252"
+                        BackgroundColor="#FAFAFA"
+                        Margin="100,-57,10,0"
+                        TranslationX="420"
+                        />
+
+                <Label Text="10"
+                       Opacity="0"
+                       x:Name="numLbl10"
+                       IsVisible="false"
+                       Margin="30, 5, 20, 0"
+                       FontSize="30"
+                       />
+
+                <Label Text="WED"
+                       Opacity="0"
+                       x:Name="dayLbl10"
+                       IsVisible="false"
+                       Margin="30, -10, 20, 0"
+                       FontSize="15"
+                       />
+
+                <Button Text=""
+                        Opacity="0"
+                        x:Name="button10"
+                        IsVisible="false"
+                        WidthRequest="270"
+                        HorizontalOptions="Center"
+                        Padding="0,0,110,0"
+                        FontSize="13"
+                        TextColor="#525252"
+                        BackgroundColor="#FAFAFA"
+                        Margin="100,-57,10,60"
+                        TranslationX="420"
+                        />
+
+
+            </StackLayout>
+        </ScrollView>
+
+        <BoxView
+            IsVisible="false"
+            x:Name="dividerLine"
+            WidthRequest="2"
+            HeightRequest="200"
+            HorizontalOptions="Start"
+            Color="Gray"
+            Margin="90,0,30,0"
+            />
+
+
+    </Grid>
+
+
+</ContentPage>

@@ -1,0 +1,65 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             x:Class="ProjectCaitlin.MonthlyViewPage"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="true">
+
+
+    <ContentPage.ToolbarItems>
+    <ToolbarItem Text="Daily View                                                                       "
+                 x:Name="dailyBtn"
+                 Clicked="DailyBtnClicked"/>
+    <ToolbarItem Text="List View"
+                 x:Name="listBtn"
+                 Clicked="ListBtnClicked"/>
+
+
+    </ContentPage.ToolbarItems>
+
+<StackLayout>
+        <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center" Spacing="3">
+            <Button x:Name= "btn2" Text="Previous Month" />
+            <Label x:Name ="yearLabel" Text=" " FontSize="20"/>
+            <Label x:Name = "monthLabel" Text=" " FontSize="20"/>
+            <Button x:Name ="btn1" Text="Next Month" />
+        </StackLayout>
+        
+        <Grid x:Name="StackLayoutMap" Grid.Column="7" Grid.Row="13">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.14285714285*" />
+                <ColumnDefinition Width="0.14285714285*" />
+                <ColumnDefinition Width="0.14285714285*" />
+                <ColumnDefinition Width="0.14285714285*" />
+                <ColumnDefinition Width="0.14285714285*" />
+                <ColumnDefinition Width="0.14285714285*" />
+                <ColumnDefinition Width="0.14285714285*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="0.07692307692*" />
+                <RowDefinition Height="0.03*" />
+                <RowDefinition Height="0.07692307692*" />
+                <RowDefinition Height="0.03*" />
+                <RowDefinition Height="0.07692307692*" />
+                <RowDefinition Height="0.03*" />
+                <RowDefinition Height="0.07692307692*" />
+                <RowDefinition Height="0.03*" />
+                <RowDefinition Height="0.07692307692*" />
+                <RowDefinition Height="0.03*" />
+                <RowDefinition Height="0.07692307692*" />
+                <RowDefinition Height="0.03*" />
+                <RowDefinition Height="0.07692307692*" />
+
+            </Grid.RowDefinitions>
+            <Label Text="Sun" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="0" FontSize="20"/>
+            <Label Text="Mon" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" FontSize="20"/>
+            <Label Text="Tue" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="2" FontSize="20" />
+            <Label Text="Wed" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="3" FontSize="20"/>
+            <Label Text="Thu" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="4" FontSize="20"/>
+            <Label Text="Fri" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="5" FontSize="20"/>
+            <Label Text="Sat" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="6" FontSize="20"/>
+        </Grid>
+    </StackLayout>
+</ContentPage>
