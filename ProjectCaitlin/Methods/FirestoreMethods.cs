@@ -37,9 +37,9 @@ namespace ProjectCaitlin.Methods
                 JToken userJsonFields = userJson["fields"];
                 JToken userJsonGoalsAndRoutines = userJsonFields["goals&routines"];
                 if (userJsonGoalsAndRoutines != null)
-                {
                     userJsonGoalsAndRoutines = userJsonFields["goals&routines"]["arrayValue"]["values"];
-                }
+                else
+                    return;
 
                 App.user.firstName = userJsonFields["first_name"]["stringValue"].ToString();
                 App.user.lastName = userJsonFields["last_name"]["stringValue"].ToString();
@@ -50,19 +50,18 @@ namespace ProjectCaitlin.Methods
                 {
                     if ((bool)jsonGoalOrRoutine["mapValue"]["fields"]["is_available"]["booleanValue"])
                     {
-                        if (jsonGoalOrRoutine["mapValue"]["fields"]["category"]["stringValue"].ToString() == "Routine")
+                        if ((bool)jsonGoalOrRoutine["mapValue"]["fields"]["is_persistent"]["booleanValue"])
                         {
                             routine routine = new routine();
                             routine.title = jsonGoalOrRoutine["mapValue"]["fields"]["title"]["stringValue"].ToString();
                             routine.id = jsonGoalOrRoutine["mapValue"]["fields"]["id"]["stringValue"].ToString();
-                            routine.isPersistent = (bool)jsonGoalOrRoutine["mapValue"]["fields"]["is_persistent"]["booleanValue"];
                             routine.photo = jsonGoalOrRoutine["mapValue"]["fields"]["photo"]["stringValue"].ToString();
 
                             App.user.routines.Add(routine);
                             await LoadTasks(routine.id, routineIdx, "routine");
                             routineIdx++;
                         }
-                        else if (jsonGoalOrRoutine["mapValue"]["fields"]["category"]["stringValue"].ToString() == "Goal")
+                        else
                         {
                             goal goal = new goal();
                             goal.title = jsonGoalOrRoutine["mapValue"]["fields"]["title"]["stringValue"].ToString();
@@ -89,10 +88,16 @@ namespace ProjectCaitlin.Methods
             {
                 HttpContent content = response.Content;
                 var routineResponse = await content.ReadAsStringAsync();
-                JObject routineJson = JObject.Parse(routineResponse);
+                JObject taskJson = JObject.Parse(routineResponse);
 
-                JToken jsonActionsAndTasks = routineJson["fields"]["actions&tasks"]["arrayValue"]["values"];
+                JToken jsonActionsAndTasks = taskJson["fields"]["goals&routines"];
+                if (jsonActionsAndTasks != null)
+                    jsonActionsAndTasks = taskJson["fields"]["goals&routines"]["arrayValue"]["values"];
+                else
+                    return;
 
+                int taskIdx = 0;
+                int actionIdx = 0;
                 foreach (JToken jsonAorT in jsonActionsAndTasks)
                 {
                     if ((bool)jsonAorT["mapValue"]["fields"]["is_available"]["booleanValue"])
@@ -107,6 +112,8 @@ namespace ProjectCaitlin.Methods
                                 task.photo = jsonAorT["mapValue"]["fields"]["photo"]["stringValue"].ToString();
                             }
                             App.user.routines[routineIdx].tasks.Add(task);
+                            await LoadSteps(routineID, task.id, routineIdx, taskIdx, routineType);
+                            taskIdx++;
 
                         }
                         else if (routineType == "goal")
@@ -120,6 +127,56 @@ namespace ProjectCaitlin.Methods
                             }
 
                             App.user.goals[routineIdx].actions.Add(action);
+                            await LoadSteps(routineID, action.id, routineIdx, actionIdx, routineType);
+                            actionIdx++;
+                        }
+                    }
+                }
+            }
+        }
+
+        public async Task LoadSteps(string routineID, string taskID, int routineIdx, int taskIdx, string routineType)
+        {
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://firestore.googleapis.com/v1/projects/project-caitlin-c71a9/databases/(default)/documents/users/" + uid + "/goals&routines/" + routineID + "/instructions&steps/" + taskID);
+            request.Method = HttpMethod.Get;
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                HttpContent content = response.Content;
+                var routineResponse = await content.ReadAsStringAsync();
+                JObject stepJson = JObject.Parse(routineResponse);
+
+                JToken jsonInstructionsAndSteps = stepJson["fields"]["instructions&steps"];
+                if (jsonInstructionsAndSteps != null)
+                    jsonInstructionsAndSteps = stepJson["fields"]["instructions&steps"]["arrayValue"]["values"];
+                else
+                    return;
+
+                foreach (JToken jsonIorS in jsonInstructionsAndSteps)
+                {
+                    if ((bool)jsonIorS["mapValue"]["fields"]["is_available"]["booleanValue"])
+                    {
+                        if (routineType == "routine")
+                        {
+                            step step = new step();
+                            step.title = jsonIorS["mapValue"]["fields"]["title"]["stringValue"].ToString();
+                            if (jsonIorS["mapValue"]["fields"]["photo"] != null)
+                                step.photo = jsonIorS["mapValue"]["fields"]["photo"]["stringValue"].ToString();
+                            App.user.routines[routineIdx].tasks[taskIdx].steps.Add(step);
+
+                        }
+                        else if (routineType == "goal")
+                        {
+                            instruction instruction = new instruction();
+                            instruction.title = jsonIorS["mapValue"]["fields"]["title"]["stringValue"].ToString();
+                            if (jsonIorS["mapValue"]["fields"]["photo"] != null)
+                            {
+                                instruction.photo = jsonIorS["mapValue"]["fields"]["photo"]["stringValue"].ToString();
+                            }
+
+                            App.user.goals[routineIdx].actions[taskIdx].instructions.Add(instruction);
 
                         }
                     }
