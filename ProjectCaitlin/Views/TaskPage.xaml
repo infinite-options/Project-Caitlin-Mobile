@@ -4,16 +4,19 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+             xmlns:local="clr-namespace:ProjectCaitlin.Views"
              mc:Ignorable="d"
              x:Class="ProjectCaitlin.Views.TaskPage">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout >
             <StackLayout Orientation="Horizontal"
                                  HeightRequest="60">
-                <Image Source="toothbrushCircle.png"
+                <Image Source="{Binding RoutineImage}"
                                VerticalOptions="Center"
-                               HorizontalOptions="Start"/>
-                <Label Text="Get Ready" 
+                               HorizontalOptions="Start"
+                               HeightRequest="50"
+                               WidthRequest="50"/>
+                <Label Text="{Binding RoutineLabel}" 
                        VerticalOptions="Center"
                        FontSize="20"/>
             </StackLayout>
@@ -32,7 +35,9 @@
                                     Margin="3"
                                    Padding="1">
                                 <StackLayout>
-                                    <Image Source="{Binding Source}" WidthRequest = "100"
+                                    <ImageButton Source="{Binding Source}" WidthRequest = "100"
+                                                 Command="{Binding Navigate}"
+                                               CommandParameter="{x:Type local:TaskCompletePage}"
                                             HeightRequest = "100"
                                             VerticalOptions = "FillAndExpand"
                                             HorizontalOptions = "FillAndExpand"

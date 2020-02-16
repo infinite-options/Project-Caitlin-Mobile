@@ -50,5 +50,21 @@
             TextColor="White"
             />
 
+        <Button
+            Text="Greeting Page"
+            Clicked="GreetingPageClicked"
+            Margin="60, 0"
+            BackgroundColor="#4682B4"
+            TextColor="White"
+            />
+
+        <Button
+            Text="CardView Page"
+            Clicked="CardViewPageClicked"
+            Margin="60, 0"
+            BackgroundColor="#4682B4"
+            TextColor="White"
+            />
+
     </StackLayout>
 </ContentPage>

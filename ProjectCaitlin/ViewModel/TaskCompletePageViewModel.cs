@@ -6,7 +6,7 @@ using ProjectCaitlin.Models;
 using System;
 using System.ComponentModel;
 
-namespace FlowListViewSample
+namespace ProjectCaitlin.ViewModel
 {
     public class TaskCompletePageViewModel : BindableObject
     {
@@ -19,10 +19,10 @@ namespace FlowListViewSample
 
 
         private ObservableCollection<object> _items = new ObservableCollection<object>() { };
-        public TaskCompletePageViewModel(TaskCompletePage mainPage)
+        public TaskCompletePageViewModel(TaskCompletePage mainPage,int routineNum, int taskNum)
         {
             this.mainPage = mainPage;
-            foreach (task step in App.user.routines[0].tasks)
+            foreach (step step in App.user.routines[routineNum].tasks[taskNum].steps)
             {
                 _items.Add(new { Source = step.photo, Text = step.title });
                 OnPropertyChanged(nameof(step));
@@ -30,18 +30,7 @@ namespace FlowListViewSample
                 Console.WriteLine("user routine title: " + step.title);
                 count++;
             }
-            _items.Add(new { Source = "WateringThePlant.png", Text = "Pour water into the plant" });
-            count++;
-
-            _items.Add(new { Source = "WateringThePlant.png", Text = "Pour water into the plant" });
-            count++;
-
-            _items.Add(new { Source = "WateringThePlant.png", Text = "Pour water into the plant" });
-            count++;
-
-            _items.Add(new { Source = "WateringThePlant.png", Text = "Pour water into the plant" });
-            count++;
-
+            
 
         }
 
