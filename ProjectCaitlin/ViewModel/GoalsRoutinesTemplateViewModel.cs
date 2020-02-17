@@ -73,12 +73,12 @@ namespace ProjectCaitlin.ViewModel
             });
             Items.Add(new
             {
-                Source = "Martha.png",
-                Title = "About Me",
+                Source = "caitlinheadshot.jpg",
+                Title = "Hi, Caitlin",
+                Length = "This app is here to help you                          manage your day. Have questions?",
                 Ind = _imageCount++,
-                Color = Color.Default,
-                Text = "Click this card to start!",
-                ButtonText = "Click for More About Me",
+                Color = Color.FromHex("#FFE5DF"),
+                Text = "Click here for more info",
                 Navigate = AboutMeCommand
             });
 

@@ -8,7 +8,7 @@
     <ContentPage.Content>
         <StackLayout BackgroundColor="#1A1827">
             <StackLayout>
-                <Image Source="Martha.png" HeightRequest="200" WidthRequest="200" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Image Source="caitlinheadshot.jpg" HeightRequest="200" WidthRequest="200" HorizontalOptions="Center" VerticalOptions="Center"/>
             </StackLayout>
             <StackLayout>
                 <Label Text="Good Morning," TextColor="White" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center"/>
