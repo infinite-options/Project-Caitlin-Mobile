@@ -51,40 +51,100 @@
                 </StackLayout>
 
                 <StackLayout>
-                    <cards:CoverFlowView 
-                            PositionShiftValue="90"
+                    <cards:CoverFlowView
+                            PositionShiftValue="50"
                             IsCyclical="false"
                             SelectedIndex="{Binding CurrentIndex}"
                             ItemsSource="{Binding Items}">
 
                         <x:Arguments>
-                            <proc:BaseCoverFlowFrontViewProcessor ScaleFactor="0.75" OpacityFactor=".4" RotationFactor="-0.009" />
-                            <proc:BaseCoverFlowBackViewProcessor  ScaleFactor="0.75" OpacityFactor=".4" RotationFactor="-0.009" />
+                            <proc:BaseCoverFlowFrontViewProcessor ScaleFactor="0.75" OpacityFactor=".9" RotationFactor="-0.009" />
+                            <proc:BaseCoverFlowBackViewProcessor  ScaleFactor="0.75" OpacityFactor=".9" RotationFactor="-0.009" />
                         </x:Arguments>
 
                         <cards:CoverFlowView.ItemTemplate>
                             <DataTemplate>
+                                <!-- Card Definition-->
                                 <Frame
                                    Margin="0, 0, 0, 45"
                                    HeightRequest="385"
                                    WidthRequest="305"
                                    VerticalOptions="Center"
                                    HorizontalOptions="Center"
-                                   Padding="0" 
+                                   Padding="0"
                                    HasShadow="true"
                                    IsClippedToBounds="true"
                                    CornerRadius="10"
                                    BackgroundColor="{Binding Color}">
 
+                                    <StackLayout TranslationY="10">
 
-                                    <AbsoluteLayout Margin="0, 0, 0, 0">
-                                        <Frame CornerRadius="100" 
+                                         <Frame CornerRadius="50"
                                            HeightRequest="100"
                                            WidthRequest="100"
-                                           HorizontalOptions="Center"
                                            Padding="0"
+                                           
+                                           HorizontalOptions="Center"
                                            IsClippedToBounds="True"
-                                           Margin="100, 30, 0, 0"    >
+                                           >
+                                            <ffimage:CachedImage Source="{Binding Source}"
+                                                             
+                                                             Aspect="AspectFill"
+                                                             HeightRequest="140"
+                                                             WidthRequest="140"
+                                                                 />
+                                        </Frame>
+                                           
+                                        <Label Text="{Binding Title}"
+                                            FontSize="35"
+                                            TextColor="#272E32"
+                                            HorizontalOptions="Center"
+                                            HorizontalTextAlignment="Center">
+                                           
+                                            <Label.FontFamily>
+                                                <OnPlatform x:TypeArguments="x:String">
+                                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                                </OnPlatform>
+                                            </Label.FontFamily>
+                                        </Label>
+
+                                           
+                                        <Label Text="{Binding Length}"
+                                            FontSize="15"
+                                            TextColor="#6C7072"
+                                            HorizontalOptions="Center"
+                                            HorizontalTextAlignment="Center">
+                                           
+                                            <Label.FontFamily>
+                                                <OnPlatform x:TypeArguments="x:String">
+                                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                                    <On Platform="Android" Value="CircularStd-Book.otf#Circular Std"/>
+                                                </OnPlatform>
+                                            </Label.FontFamily>
+                                         </Label>
+
+                                         <Button Text="{Binding Text}"
+                                               Command="{Binding Navigate}"
+                                             
+                                               CornerRadius="10"
+                                               TextColor="#272E32"
+                                               BorderWidth="0" />
+
+                                     </StackLayout>
+
+
+
+
+                                    <!--<AbsoluteLayout Margin="0, 0, 0, 0">
+                                         Image Definition
+                                        <Frame CornerRadius="50"
+                                           HeightRequest="100"
+                                           WidthRequest="100"
+                                           Padding="0"
+                                         
+                                           IsClippedToBounds="True"
+                                           >
                                             <ffimage:CachedImage Source="{Binding Source}"
                                                              
                                                              Aspect="AspectFill"
@@ -93,7 +153,9 @@
                                                                  />
                                         </Frame>
 
+                                     
 
+                                         Button
                                         <Button Text="{Binding Text}"
                                                Command="{Binding Navigate}"
                                                TranslationY="330"
@@ -104,38 +166,42 @@
                                         <Label Text=""/>
 
 
-
+                                       
                                         <StackLayout Margin="0, 195, 0, 0">
+                                              Card Title
                                             <Label Text="{Binding Title}"
                                                FontSize="35"
                                                TextColor="#272E32"
-                                               HorizontalTextAlignment="Center"
+                                               HorizontalOptions="Center"
+                                               HorizontalTextAlignment="Center">
                                                Padding="20, 0, 20, 0"
-                                               Margin="0, -55, 0, 0">
+                                               Margin="100, -55, 0, 0">  
                                                 <Label.FontFamily>
                                                     <OnPlatform x:TypeArguments="x:String">
-                                                        <On Platform="iOS" Value="CircularStd-Medium.otf" />
+                                                        <On Platform="iOS" Value="Lobster-Regular" />
                                                         <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
                                                     </OnPlatform>
                                                 </Label.FontFamily>
                                             </Label>
 
+                                              Card Sub-Title
                                             <Label Text="{Binding Length}"
                                                FontSize="15"
                                                TextColor="#6C7072"
-                                               HorizontalTextAlignment="Center"
+                                               HorizontalOptions="Center"
+                                               HorizontalTextAlignment="Center">
                                                Padding="0, 0, 0, 0"
                                                Margin="0, 0, 0, 0">
                                                 <Label.FontFamily>
                                                     <OnPlatform x:TypeArguments="x:String">
-                                                        <On Platform="iOS" Value="CircularStd-Book.otf" />
+                                                        <On Platform="iOS" Value="Lobster-Regular" />
                                                         <On Platform="Android" Value="CircularStd-Book.otf#Circular Std"/>
                                                     </OnPlatform>
                                                 </Label.FontFamily>
                                             </Label>
                                         </StackLayout>
 
-                                    </AbsoluteLayout>
+                                    </AbsoluteLayout>-->
 
 
 
