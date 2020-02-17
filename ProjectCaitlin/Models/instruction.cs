@@ -1,5 +1,4 @@
-﻿using System;
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using Newtonsoft.Json;
 
 namespace ProjectCaitlin.Models
@@ -9,11 +8,9 @@ namespace ProjectCaitlin.Models
 	{
 		public string title { get; set; }
 
+		public string status { get; set; }
 		public string photo { get; set; }
 
-		public bool is_complete { get; set; }
-
-		public DateTime datetime_completed { get; set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 	}

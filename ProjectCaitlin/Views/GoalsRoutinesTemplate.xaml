@@ -1,12 +1,13 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
-             xmlns:viewModels="clr-namespace:GoalsRoutinesTemplateViewModel.ViewModels"
+             xmlns:viewModels="clr-namespace:ProjectCaitlin.ViewModel"
              xmlns:controls="clr-namespace:PanCardView.Controls;assembly=PanCardView"
              xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
              xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView"
              xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="ProjectCaitlin.Views.GoalsRoutinesTemplate"
+             xmlns:local="clr-namespace:ProjectCaitlin.Views"
              BackgroundColor="#E9E8E8"
              NavigationPage.HasNavigationBar="False">
 
@@ -22,27 +23,17 @@
         </ResourceDictionary>
     </ContentPage.Resources>
 
-    <ContentPage.BindingContext>
-        <viewModels:GoalsRoutinesTemplateViewModel/>
-    </ContentPage.BindingContext>
 
     <ContentPage.Content>
-
         <StackLayout>
-
             <StackLayout>
-
-
                 <StackLayout HeightRequest="10" x:Name="TopDivider"></StackLayout>
-
-
                 <StackLayout Orientation="Horizontal"
                                  HeightRequest="58">
                     <Image Source="sunrisemid.png"
                                VerticalOptions="Center"
                                HorizontalOptions="CenterAndExpand"/>
                 </StackLayout>
-
                 <StackLayout>
                     <Label Text="Monday&#10;Morning"
                                FontSize="35"
@@ -67,8 +58,8 @@
                             ItemsSource="{Binding Items}">
 
                         <x:Arguments>
-                            <proc:BaseCoverFlowFrontViewProcessor ScaleFactor="0.75" OpacityFactor=".9" RotationFactor="-0.009" />
-                            <proc:BaseCoverFlowBackViewProcessor  ScaleFactor="0.75" OpacityFactor=".9" RotationFactor="-0.009" />
+                            <proc:BaseCoverFlowFrontViewProcessor ScaleFactor="0.75" OpacityFactor=".4" RotationFactor="-0.009" />
+                            <proc:BaseCoverFlowBackViewProcessor  ScaleFactor="0.75" OpacityFactor=".4" RotationFactor="-0.009" />
                         </x:Arguments>
 
                         <cards:CoverFlowView.ItemTemplate>
@@ -87,21 +78,30 @@
 
 
                                     <AbsoluteLayout Margin="0, 0, 0, 0">
-                                        <ffimage:CachedImage Source="{Binding Source}"
-                                                           Margin="0, -35, 0, 0"
-                                                           VerticalOptions="Center"
-                                                           HorizontalOptions="Center"
-                                                           Scale=".4"/>
+                                        <Frame CornerRadius="100" 
+                                           HeightRequest="100"
+                                           WidthRequest="100"
+                                           HorizontalOptions="Center"
+                                           Padding="0"
+                                           IsClippedToBounds="True"
+                                           Margin="100, 30, 0, 0"    >
+                                            <ffimage:CachedImage Source="{Binding Source}"
+                                                             
+                                                             Aspect="AspectFill"
+                                                             HeightRequest="140"
+                                                             WidthRequest="140"
+                                                                 />
+                                        </Frame>
 
 
-
-                                        <Button Text="Tap here to start"
+                                        <Button Text="{Binding Text}"
+                                               Command="{Binding Navigate}"
                                                TranslationY="330"
                                                CornerRadius="10"
                                                TextColor="#272E32"
-                                               BackgroundColor="Transparent"
                                                BorderWidth="0" />
 
+                                        <Label Text=""/>
 
 
 

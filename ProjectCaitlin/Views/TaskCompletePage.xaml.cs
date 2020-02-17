@@ -1,4 +1,4 @@
-﻿using FlowListViewSample;
+﻿using ProjectCaitlin.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -17,10 +17,10 @@ namespace ProjectCaitlin.Views
         private int itemcount;
 
         readonly TaskCompletePageViewModel pageModel;
-        public TaskCompletePage()
+        public TaskCompletePage(int routineNum,int taskNum)
         {
             InitializeComponent();
-            pageModel = new TaskCompletePageViewModel(this);
+            pageModel = new TaskCompletePageViewModel(this, routineNum, taskNum);
             BindingContext = pageModel;
             itemcount = pageModel.count;
 

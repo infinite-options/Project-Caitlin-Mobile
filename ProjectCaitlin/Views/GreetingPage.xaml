@@ -1,0 +1,30 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="ProjectCaitlin.Views.GreetingPage">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor="#1A1827">
+            <StackLayout>
+                <Image Source="Martha.png" HeightRequest="200" WidthRequest="200" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </StackLayout>
+            <StackLayout>
+                <Label Text="Good Morning," TextColor="White" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text="Caitlin"  TextColor="White" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text="You are safe, and you are loved."  TextColor="White" FontSize="Small" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text="It's ok to ask questions."  TextColor="White" FontSize="Small" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text="Your family and friends want to help."  TextColor="White" FontSize="Small" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text="This app will help you manage your day."  TextColor="White" FontSize="Small" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text=" "  TextColor="White" FontSize="Small" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label Text=" "  TextColor="White" FontSize="Small" HorizontalOptions="Center" VerticalOptions="Center"/>
+            </StackLayout>
+            <StackLayout>
+                <Button Text="View My Info" Clicked ="btn1Clicked" TextColor="White" WidthRequest="20" HeightRequest="50" BackgroundColor="#59556D" />
+                <Button Text="Manage My Day " Clicked="btn2Clicked" TextColor="White" WidthRequest="20" HeightRequest="50" BackgroundColor="#59556D"/>
+            </StackLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

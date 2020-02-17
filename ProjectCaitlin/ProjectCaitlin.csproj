@@ -51,6 +51,9 @@
     <None Include="ViewModel\DailyViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Views\GreetingPage.xaml.cs">
+      <DependentUpon>GreetingPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\TaskCompletePage.xaml.cs">
       <DependentUpon>TaskCompletePage.xaml</DependentUpon>
     </Compile>
@@ -59,6 +62,9 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <EmbeddedResource Update="Views\GreetingPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Views\TaskCompletePage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>

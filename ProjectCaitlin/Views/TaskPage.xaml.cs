@@ -1,4 +1,4 @@
-﻿using FlowListViewSample;
+﻿using ProjectCaitlin.ViewModel;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -15,10 +15,10 @@ namespace ProjectCaitlin.Views
     public partial class TaskPage : ContentPage
     {
         readonly TaskGridViewModel pageModel;
-        public TaskPage()
+        public TaskPage(int routineNum)
         {
             InitializeComponent();
-            pageModel = new TaskGridViewModel(this);
+            pageModel = new TaskGridViewModel(this, routineNum);
             BindingContext = pageModel;
 
         }
