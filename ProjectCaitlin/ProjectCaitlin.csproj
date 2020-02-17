@@ -45,7 +45,7 @@
     <Compile Remove="Converters\UniversalValueConverter.cs" />
     <Compile Remove="DailyPage.xaml.cs" />
     <Compile Remove="ViewModel\DailyViewModel.cs" />
-    <Compile Remove="Views\GoalsRoutinesTemplate.xaml.cs" />
+
   </ItemGroup>
   <ItemGroup>
     <None Include="ViewModel\DailyViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />

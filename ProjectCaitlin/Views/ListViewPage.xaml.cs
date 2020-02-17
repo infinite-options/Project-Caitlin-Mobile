@@ -6,6 +6,9 @@ using ProjectCaitlin.Services;
 using Xamarin.Forms;
 using Newtonsoft.Json;
 using ProjectCaitlin.Models;
+using FFImageLoading.Forms;
+using FFImageLoading.Transformations;
+using FFImageLoading.Work;
 
 namespace ProjectCaitlin
 {
@@ -39,7 +42,8 @@ namespace ProjectCaitlin
             //BindingContext = DailyViewModel.Instance;
             PrepareRefreshEvents();
             SetupUI();
-            //dailyViewModel = (DailyViewModel)BindingContext;           
+            //dailyViewModel = (DailyViewModel)BindingContext;
+
         }
 
         void SetupUI()
@@ -56,7 +60,7 @@ namespace ProjectCaitlin
                 {
                     CornerRadius = 10,
                     HasShadow = false,
-                    Padding = new Thickness(10, 10, 5, 10),
+                    Padding = new Thickness(10, 10, 10, 10),
                     Margin = new Thickness(0, 2, 0, 2)
                 };
 
@@ -68,7 +72,6 @@ namespace ProjectCaitlin
                 StackLayout stackLayoutInner = new StackLayout
                 {
                     HorizontalOptions = LayoutOptions.StartAndExpand,
-
                 };
 
                 Label routineTitleLabel = new Label
@@ -85,21 +88,32 @@ namespace ProjectCaitlin
                     Text = "Takes me " + 5.ToString() + " minutes",
                     FontSize = 10,
                     TextColor = Color.DimGray,
-                    VerticalOptions = LayoutOptions.StartAndExpand,
+                    VerticalOptions = LayoutOptions.EndAndExpand,
                     FontFamily = labelFont
 
                 };
 
-                Image image = new Image()
+                CachedImage image = new CachedImage()
                 {
                     Source = routine.photo,
-                    WidthRequest = 60,
-                    HeightRequest = 60,
-                    HorizontalOptions = LayoutOptions.End
-                };
+                    WidthRequest = 50,
+                    HeightRequest = 50,
+                    HorizontalOptions = LayoutOptions.End,
+                    Transformations = new List<ITransformation>()
+                    {
+                        new CircleTransformation(),
+                    },
+                    };
 
-                //frame.(stackLayoutOuter);
+                stackLayoutInner.Children.Add(routineTitleLabel);
+                stackLayoutInner.Children.Add(expectedTimeLabel);
 
+                stackLayoutOuter.Children.Add(stackLayoutInner);
+                stackLayoutOuter.Children.Add(image);
+
+                frame.Content = stackLayoutOuter;
+
+                MorningREStackLayout.Children.Add(frame);
             }
         }
 
