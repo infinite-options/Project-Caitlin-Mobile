@@ -49,6 +49,17 @@ namespace ProjectCaitlin
 				OnPropertyChanged(nameof(routine));
 				Console.WriteLine("user routine title: " + routine.title);
 				Console.WriteLine("user routine id: " + routine.id);
+				foreach (task task in routine.tasks)
+				{
+					OnPropertyChanged(nameof(task));
+					Console.WriteLine("user task title: " + task.title);
+					Console.WriteLine("user task id: " + task.id);
+					foreach (step step in task.steps)
+					{
+						OnPropertyChanged(nameof(step));
+						Console.WriteLine("user step title: " + step.title);
+					}
+				}
 			}
 
 			foreach (goal goal in App.user.goals)
@@ -56,6 +67,17 @@ namespace ProjectCaitlin
 				OnPropertyChanged(nameof(goal));
 				Console.WriteLine("user goal title: " + goal.title);
 				Console.WriteLine("user goal id: " + goal.id);
+				foreach (action action in goal.actions)
+				{
+					OnPropertyChanged(nameof(goal));
+					Console.WriteLine("user action title: " + goal.title);
+					Console.WriteLine("user action id: " + goal.id);
+					foreach (instruction instruction in action.instructions)
+					{
+						OnPropertyChanged(nameof(instruction));
+						Console.WriteLine("user instruction title: " + instruction.title);
+					}
+				}
 			}
 		}
 
@@ -215,6 +237,11 @@ namespace ProjectCaitlin
             await Navigation.PushAsync(new DailyViewPage());
             return null;
         }
+
+		public async void ListViewClicked(object sender, EventArgs e)
+		{
+			await Navigation.PushAsync(new ListViewPage());
+		}
 
 		async Task LoginGoogleAsync()
 		{

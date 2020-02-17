@@ -4,13 +4,13 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             NavigationPage.HasNavigationBar="False" 
+             NavigationPage.HasNavigationBar="False"
              x:Class="ProjectCaitlin.LoginPage">
 
     <StackLayout
         VerticalOptions="Center"
         Margin="20">
-        
+
         <Label
             Text="Project Caitlin"
             HorizontalOptions="Center"
@@ -18,7 +18,7 @@
             FontSize="35"
             Margin="0, 23"
             />
-        
+
         <Button
             Text="Login"
             Clicked="LoginClicked"
