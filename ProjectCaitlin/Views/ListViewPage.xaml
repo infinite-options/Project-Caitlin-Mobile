@@ -7,24 +7,36 @@
              x:Class="ProjectCaitlin.ListViewPage"
              NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="#E9E8E8"
-             >
+             BackgroundColor="#E9E8E8">
     <ScrollView>
 
         <StackLayout
             x:Name="MainStackLayout"
             Padding="15,30,15,10">
 
-            <Label
-                Text="Wednesday"
-                FontSize="30">
-                <Label.FontFamily>
-                    <OnPlatform x:TypeArguments="x:String">
-                        <On Platform="iOS" Value="Lobster-Regular" />
-                        <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                    </OnPlatform>
-                </Label.FontFamily>
-            </Label>
+            <StackLayout
+            Orientation="Horizontal">
+             
+                <Label
+                    Text="Wednesday"
+                    FontSize="30"
+                    HorizontalOptions="StartAndExpand">
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Lobster-Regular" />
+                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
+
+                <Image
+                    x:Name="ReloadButton"
+                    Source="Icons/redo.png"
+                    WidthRequest="20"
+                    HeightRequest="20"
+                    HorizontalOptions="EndAndExpand"/>
+
+            </StackLayout>
 
             <StackLayout
                 x:Name="MorningREStackLayout"
@@ -172,8 +184,11 @@
 
                 </Frame>
 
-                <!-- Morning Goals Sections -->
-                <StackLayout
+            </StackLayout>
+
+            <!-- Morning Goals Sections -->
+
+            <StackLayout
                     Orientation="Vertical"
                     Padding="0,20,0,0">
 
@@ -203,7 +218,7 @@
                                 Margin="0,0,10,0">
 
                                 <Image
-                                    Source="toothbrushCircle"
+                                    Source="goalRun"
                                     WidthRequest="120"
                                     HeightRequest="90"/>
 
@@ -224,7 +239,7 @@
                                 Margin="0,0,10,0">
 
                                 <Image
-                                    Source="toothbrushCircle"
+                                    Source="goalRun"
                                     WidthRequest="120"
                                     HeightRequest="90"/>
 
@@ -304,9 +319,6 @@
 
                 </StackLayout>
 
-
-            </StackLayout>
-
             <StackLayout
                 x:Name="AfternoonREStackLayout"
                 Padding="0,30,0,0">
@@ -336,7 +348,9 @@
 
                 <!-- Start Afternoon Routines/Events -->
 
-                <StackLayout
+            </StackLayout>
+
+            <StackLayout
                     Orientation="Vertical"
                     Padding="0,20,0,0">
                     <Label
@@ -365,8 +379,6 @@
                     </ScrollView>
 
                 </StackLayout>
-
-            </StackLayout>
 
             <StackLayout
                 x:Name="EveningREStackLayout"
@@ -398,8 +410,9 @@
                 <!-- Start Routines/Events -->
                 <!--Here-->
 
+            </StackLayout>
 
-                <!--Evening Goals-->
+            <!--Evening Goals-->
                 <StackLayout
                     Orientation="Vertical"
                     Padding="0,20,0,0">
@@ -429,8 +442,6 @@
                     </ScrollView>
 
                 </StackLayout>
-
-            </StackLayout>
 
             <StackLayout
                 x:Name="NightREStackLayout"
@@ -462,8 +473,9 @@
                 <!--Start Afternoon Routines/Events-->
                 <!--Here-->
 
+            </StackLayout>
 
-                <!--Night Goals-->
+            <!--Night Goals-->
                 <StackLayout
                     Orientation="Vertical"
                     Padding="0,20,0,0">
@@ -494,9 +506,6 @@
 
                 </StackLayout>
 
-            </StackLayout>
-
-
             <StackLayout
                 Padding="0,30,0,0">
 
@@ -519,10 +528,7 @@
 
                 </StackLayout>
 
-
-
             </StackLayout>
-
 
         </StackLayout>
 
