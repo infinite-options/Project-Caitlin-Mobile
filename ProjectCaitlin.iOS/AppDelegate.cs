@@ -5,7 +5,6 @@ using FFImageLoading.Forms.Platform;
 using FFImageLoading.Transformations;
 using Foundation;
 using PanCardView.iOS;
-using Refractored.XamForms.PullToRefresh.iOS;
 using UIKit;
 
 namespace ProjectCaitlin.iOS

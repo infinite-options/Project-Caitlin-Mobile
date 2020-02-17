@@ -185,7 +185,7 @@
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\goalRun.png">
+    <AndroidResource Include="Resources\drawable\redo.png">
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
