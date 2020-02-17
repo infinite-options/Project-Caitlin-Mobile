@@ -65,7 +65,7 @@ namespace ProjectCaitlin.ViewModel
                 new { Source = CreateSource(), Ind = _imageCount++, Color = Color.Default, Title = "Eat dinner with mom", Length = "Takes about 30 minutes" },
                 new { Source = CreateSource(), Ind = _imageCount++, Color = Color.Default, Title = "Finish my chemistry homework", Length = "Could take up to 1 hour" }
             };*/
-            
+
             AboutMeCommand = new Command(
             async () =>
             {
@@ -115,7 +115,7 @@ namespace ProjectCaitlin.ViewModel
                      {
                          await mainPage.Navigation.PushAsync(new TaskPage(1));
                      })
-            }); 
+            });
 
             if (App.user.routines.Count >= 3)
                 Items.Add(new

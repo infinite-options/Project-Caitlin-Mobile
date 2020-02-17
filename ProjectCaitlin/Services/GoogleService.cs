@@ -109,7 +109,7 @@ namespace ProjectCaitlin.Services
             if (publicMonth < 10)
             {
                 monthString = publicMonth.ToString().PadLeft(2, '0');
-                
+
             }
             else
             {
