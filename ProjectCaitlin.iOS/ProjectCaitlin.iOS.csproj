@@ -149,7 +149,6 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <BundleResource Include="GoogleService-Info.plist" />
     <BundleResource Include="Resources\bear.jpg" />
     <BundleResource Include="Resources\CircularStd-Black.otf" />
     <BundleResource Include="Resources\CircularStd-Bold.otf" />
