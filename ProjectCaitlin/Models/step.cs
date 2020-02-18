@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using Newtonsoft.Json;
 
 namespace ProjectCaitlin.Models
@@ -7,10 +8,17 @@ namespace ProjectCaitlin.Models
 	public class step : INotifyPropertyChanged
 	{
 		public string title { get; set; }
+
 		public string photo { get; set; }
 
-		public string status { get; set; }
+		public bool isComplete { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
+		public DateTime dateTimeCompleted { get; set; }
+
+		public DateTime availableStartTime { get; set; }
+
+		public DateTime availableEndTime { get; set; }
+
+		public event PropertyChangedEventHandler PropertyChanged;
     }
 }

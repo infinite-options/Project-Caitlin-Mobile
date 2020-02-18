@@ -162,5 +162,6 @@
       <Link>Resources\toothbrushCircle.png</Link>
     </BundleResource>
     <BundleResource Include="Resources\redo.png" />
+    <BundleResource Include="Resources\redoGray.png" />
   </ItemGroup>
 </Project>

@@ -18,7 +18,8 @@
             Orientation="Horizontal">
              
                 <Label
-                    Text="Wednesday"
+                    x:Name="DayOfWeekLabel"
+                    Text=""
                     FontSize="30"
                     HorizontalOptions="StartAndExpand">
                     <Label.FontFamily>
@@ -30,7 +31,7 @@
                 </Label>
 
                 <Image
-                    x:Name="ReloadButton"
+                    x:Name="ReloadImage"
                     Source="Icons/redo.png"
                     WidthRequest="20"
                     HeightRequest="20"
@@ -42,7 +43,7 @@
                 x:Name="MorningREStackLayout"
                 Padding="0,30,0,0">
 
-                <!-- Morning Label -->
+                 <!--Morning Label--> 
                 <StackLayout
                     Orientation="Horizontal">
 
@@ -66,123 +67,7 @@
 
                 </StackLayout>
 
-                <!-- Start Goals/Routines/Events -->
-
-                <!-- Morning Routine Item -->
-                <Frame
-                    CornerRadius="10"
-                    HasShadow="False"
-                    Padding="10,10,5,10"
-                    Margin="0,2,0,2">
-
-
-                    <StackLayout
-                        Orientation="Horizontal">
-
-                        <StackLayout
-                            HorizontalOptions="StartAndExpand">
-
-                            <Label
-                                Text="Get ready for my day"
-                                FontSize="20"
-                                VerticalOptions="StartAndExpand">
-                                <Label.FontFamily>
-                                    <OnPlatform x:TypeArguments="x:String">
-                                        <On Platform="iOS" Value="Lobster-Regular" />
-                                        <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                    </OnPlatform>
-                                </Label.FontFamily>
-                            </Label>
-
-                            <Label
-                                Text="Takes me 5 min"
-                                FontSize="10"
-                                TextColor="DimGray"
-                                VerticalOptions="End">
-                                <Label.FontFamily>
-                                    <OnPlatform x:TypeArguments="x:String">
-                                        <On Platform="iOS" Value="Lobster-Regular" />
-                                        <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                    </OnPlatform>
-                                </Label.FontFamily>
-                            </Label>
-
-                        </StackLayout>
-
-                        <Image
-                            Source="toothbrushCircle"
-                            WidthRequest="60"
-                            HeightRequest="60"
-                            HorizontalOptions="End"/>
-                    </StackLayout>
-
-
-                </Frame>
-
-                <!-- Morning Event -->
-                <Frame
-                    CornerRadius="5"
-                    HasShadow="False"
-                    Padding="10,10,5,10"
-                    Margin="0,2,0,2"
-                    BackgroundColor="Goldenrod">
-
-
-                    <StackLayout
-                        Orientation="Horizontal">
-
-                        <StackLayout
-                            HorizontalOptions="StartAndExpand"
-                            Orientation="Vertical">
-
-                            <Label
-                                Text="9:21 AM"
-                                FontSize="10"
-                                TextColor="White"
-                                VerticalOptions="Start">
-                                <Label.FontFamily>
-                                    <OnPlatform x:TypeArguments="x:String">
-                                        <On Platform="iOS" Value="Lobster-Regular" />
-                                        <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                    </OnPlatform>
-                                </Label.FontFamily>
-                            </Label>
-
-                            <Label
-                                Text="Leave for the bus stop"
-                                FontSize="20"
-                                VerticalOptions="StartAndExpand">
-                                <Label.FontFamily>
-                                    <OnPlatform x:TypeArguments="x:String">
-                                        <On Platform="iOS" Value="Lobster-Regular" />
-                                        <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                    </OnPlatform>
-                                </Label.FontFamily>
-                            </Label>
-
-                            <Label
-                                Text="Takes 10 min walk"
-                                FontSize="10"
-                                VerticalOptions="End">
-                                <Label.FontFamily>
-                                    <OnPlatform x:TypeArguments="x:String">
-                                        <On Platform="iOS" Value="Lobster-Regular" />
-                                        <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                    </OnPlatform>
-                                </Label.FontFamily>
-                            </Label>
-
-                        </StackLayout>
-
-                        <Image
-                            Source="toothbrushCircle"
-                            WidthRequest="60"
-                            HeightRequest="60"
-                            HorizontalOptions="End"/>
-                    </StackLayout>
-
-
-                </Frame>
+                 <!-- Start Goals/Routines/Events -->
 
             </StackLayout>
 
@@ -214,104 +99,7 @@
                             x:Name="MorningGoalsStackLayout"
                             Orientation="Horizontal">
 
-                            <StackLayout
-                                Margin="0,0,10,0">
-
-                                <Image
-                                    Source="goalRun"
-                                    WidthRequest="120"
-                                    HeightRequest="90"/>
-
-                                <Label
-                                    Text="Exercise"
-                                    TextColor="DimGray">
-                                    <Label.FontFamily>
-                                        <OnPlatform x:TypeArguments="x:String">
-                                            <On Platform="iOS" Value="Lobster-Regular" />
-                                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                        </OnPlatform>
-                                    </Label.FontFamily>
-                                </Label>
-
-                            </StackLayout>
-
-                            <StackLayout
-                                Margin="0,0,10,0">
-
-                                <Image
-                                    Source="goalRun"
-                                    WidthRequest="120"
-                                    HeightRequest="90"/>
-
-                                <Label
-                                    Text="Exercise for 15 minutes"
-                                    TextColor="Gray">
-                                    <Label.FontFamily>
-                                        <OnPlatform x:TypeArguments="x:String">
-                                            <On Platform="iOS" Value="Lobster-Regular" />
-                                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                        </OnPlatform>
-                                    </Label.FontFamily>
-                                </Label>
-
-                            </StackLayout>
-                            <StackLayout>
-
-                                <Image
-                                    Source="toothbrushCircle"
-                                    WidthRequest="120"
-                                    HeightRequest="90"/>
-
-                                <Label
-                                    Text="Exercise for 15 minutes"
-                                    TextColor="Gray">
-                                    <Label.FontFamily>
-                                        <OnPlatform x:TypeArguments="x:String">
-                                            <On Platform="iOS" Value="Lobster-Regular" />
-                                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                        </OnPlatform>
-                                    </Label.FontFamily>
-                                </Label>
-
-                            </StackLayout><StackLayout>
-
-                                <Image
-                                    Source="toothbrushCircle"
-                                    WidthRequest="120"
-                                    HeightRequest="90"/>
-
-                                <Label
-                                    Text="Exercise for 15 minutes"
-                                    TextColor="Gray">
-                                    <Label.FontFamily>
-                                        <OnPlatform x:TypeArguments="x:String">
-                                            <On Platform="iOS" Value="Lobster-Regular" />
-                                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                        </OnPlatform>
-                                    </Label.FontFamily>
-                                </Label>
-
-                            </StackLayout>
-                            <StackLayout
-                                Margin="0,0,10,0">
-
-                                <Image
-                                    Source="toothbrushCircle"
-                                    WidthRequest="120"
-                                    HeightRequest="90"/>
-
-                                <Label
-                                    Text="Exercise for 15 minutes"
-                                    TextColor="Gray">
-                                    <Label.FontFamily>
-                                        <OnPlatform x:TypeArguments="x:String">
-                                            <On Platform="iOS" Value="Lobster-Regular" />
-                                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                        </OnPlatform>
-                                    </Label.FontFamily>
-                                </Label>
-
-                            </StackLayout>
+                            <!--Start Morning Goals-->
                 
                         </StackLayout>
 
