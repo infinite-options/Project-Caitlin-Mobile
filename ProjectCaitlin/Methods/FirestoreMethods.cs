@@ -74,7 +74,7 @@ namespace ProjectCaitlin.Methods
 
                             App.user.goals.Add(goal);
 
-                            //Console.WriteLine("on Goal: " + goal.id);
+                            //Console.WriteLine("Loading Complete");
                         }
                     }
                 }

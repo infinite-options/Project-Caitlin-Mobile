@@ -101,12 +101,6 @@
     <AndroidResource Include="Resources\mipmap-xxhdpi\launcher_foreground.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\icon.png" />
     <AndroidResource Include="Resources\mipmap-xxxhdpi\launcher_foreground.png" />
-    <AndroidResource Include="Resources\drawable\refresh.png">
-      <SubType>
-      </SubType>
-      <Generator>
-      </Generator>
-    </AndroidResource>
     <AndroidResource Include="Resources\mipmap-hdpi\appsunset.png">
       <SubType>
       </SubType>
@@ -143,49 +137,43 @@
       <Generator>
       </Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\appsunset.png">
-      <SubType>
-      </SubType>
-      <Generator>
-      </Generator>
-    </AndroidResource>
-    <AndroidResource Include="Resources\drawable\appmountains.png">
-      <SubType>
-      </SubType>
-      <Generator>
-      </Generator>
-    </AndroidResource>
-    <AndroidResource Include="Resources\drawable\bear.jpg">
-      <SubType>
-      </SubType>
-      <Generator>
-      </Generator>
-    </AndroidResource>
-    <AndroidResource Include="..\ProjectCaitlin\Icons\sunrisemid.png">
-      <Link>Resources\drawable\sunrisemid.png</Link>
-      <SubType>
-      </SubType>
-      <Generator>
-      </Generator>
-    </AndroidResource>
-    <AndroidResource Include="..\ProjectCaitlin\Icons\toothbrushCircle.png">
-      <Link>Resources\drawable\toothbrushCircle.png</Link>
-      <SubType>
-      </SubType>
-      <Generator>
-      </Generator>
-    </AndroidResource>
-    <AndroidResource Include="..\ProjectCaitlin\Icons\sunrisemid.png">
-      <Link>Resources\drawable\sunrisemid.png</Link>
+    <AndroidResource Include="..\ProjectCaitlin\Icons\myphotosicon.png">
+      <Link>Resources\drawable\myphotosicon.png</Link>
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
-    <AndroidResource Include="..\ProjectCaitlin\Icons\toothbrushCircle.png">
-      <Link>Resources\drawable\toothbrushCircle.png</Link>
+    <AndroidResource Include="..\ProjectCaitlin\Icons\mydayiconselected.png">
+      <Link>Resources\drawable\mydayiconselected.png</Link>
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
-    <AndroidResource Include="Resources\drawable\redo.png">
+    <AndroidResource Include="..\ProjectCaitlin\Icons\mydayicon.png">
+      <Link>Resources\drawable\mydayicon.png</Link>
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="..\ProjectCaitlin\Icons\listviewicon.png">
+      <Link>Resources\drawable\listviewicon.png</Link>
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="..\ProjectCaitlin\Icons\myphotosiconselected.png">
+      <Link>Resources\drawable\myphotosiconselected.png</Link>
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="..\ProjectCaitlin\Icons\listviewiconselected.png">
+      <Link>Resources\drawable\listviewiconselected.png</Link>
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="..\ProjectCaitlin\Icons\fullsun.png">
+      <Link>Resources\drawable\fullsun.png</Link>
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="..\ProjectCaitlin\Icons\aboutmeiconselected.png">
+      <Link>Resources\drawable\aboutmeiconselected.png</Link>
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
@@ -194,9 +182,31 @@
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Airplane.png" />
+    <AndroidResource Include="..\ProjectCaitlin\Icons\sunrisemid.png">
+      <Link>Resources\drawable\sunrisemid.png</Link>
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="..\ProjectCaitlin\Icons\aboutmeicon.png">
+      <Link>Resources\drawable\aboutmeicon.png</Link>
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="..\ProjectCaitlin\Icons\toothbrushCircle.png">
+      <Link>Resources\drawable\toothbrushCircle.png</Link>
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="..\ProjectCaitlin\Icons\redo.png">
+      <Link>Resources\drawable\redo.png</Link>
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
+    <AndroidResource Include="..\ProjectCaitlin\Icons\sunriselow.png">
+      <Link>Resources\drawable\sunriselow.png</Link>
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProjectCaitlin\ProjectCaitlin.csproj">
@@ -211,28 +221,7 @@
     <AndroidAsset Include="Assets\CircularStd-Medium.otf" />
   </ItemGroup>
   <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Face.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\ManOnMountain.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Martha.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Oranges.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\Scale.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\WateringCan.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\WateringPlant.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <AndroidResource Include="Resources\drawable\WateringThePlant.png" />
+    <Folder Include="Resources\drawable\" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\Android\Xamarin.Android.CSharp.targets" />
 </Project>
