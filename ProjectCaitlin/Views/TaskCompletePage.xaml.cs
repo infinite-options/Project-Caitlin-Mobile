@@ -17,10 +17,10 @@ namespace ProjectCaitlin.Views
         private int itemcount;
 
         readonly TaskCompletePageViewModel pageModel;
-        public TaskCompletePage(int routineNum,int taskNum)
+        public TaskCompletePage(int a,int b,bool isRoutine)
         {
             InitializeComponent();
-            pageModel = new TaskCompletePageViewModel(this, routineNum, taskNum);
+            pageModel = new TaskCompletePageViewModel(this, a, b,isRoutine);
             BindingContext = pageModel;
             itemcount = pageModel.count;
 

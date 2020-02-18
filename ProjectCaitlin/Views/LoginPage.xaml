@@ -34,29 +34,6 @@
             BackgroundColor="#4682B4"
             TextColor="White"
             />
-        <Button
-            Text="Task Page"
-            Clicked="TaskPageClicked"
-            Margin="60, 0"
-            BackgroundColor="#4682B4"
-            TextColor="White"
-            />
-
-        <Button
-            Text="Task Complete Page"
-            Clicked="TaskCompletePageClicked"
-            Margin="60, 0"
-            BackgroundColor="#4682B4"
-            TextColor="White"
-            />
-
-        <Button
-            Text="Greeting Page"
-            Clicked="GreetingPageClicked"
-            Margin="60, 0"
-            BackgroundColor="#4682B4"
-            TextColor="White"
-            />
 
         <Button
             Text="CardView Page"

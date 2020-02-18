@@ -26,8 +26,7 @@ namespace ProjectCaitlin.Views
 
         async void btn2Clicked(object sender, EventArgs e)
         {
-
-            await Navigation.PushAsync(new GreetingPage());
+            await Navigation.PushAsync(new GoalsRoutinesTemplate());
 
         }
     }

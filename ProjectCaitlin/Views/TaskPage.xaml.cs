@@ -15,10 +15,10 @@ namespace ProjectCaitlin.Views
     public partial class TaskPage : ContentPage
     {
         readonly TaskGridViewModel pageModel;
-        public TaskPage(int routineNum)
+        public TaskPage(int routineNum, bool isRoutine)
         {
             InitializeComponent();
-            pageModel = new TaskGridViewModel(this, routineNum);
+            pageModel = new TaskGridViewModel(this, routineNum, isRoutine);
             BindingContext = pageModel;
 
         }

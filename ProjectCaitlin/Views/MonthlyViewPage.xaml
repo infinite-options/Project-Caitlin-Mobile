@@ -18,48 +18,74 @@
 
 
     </ContentPage.ToolbarItems>
+    <StackLayout>
+        <ScrollView>
+            <StackLayout>
+                <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center" Spacing="3">
+                    <Button x:Name= "month1" Text="Previous Month" />
+                    <Label x:Name ="yearLabel" Text=" " FontSize="20"/>
+                    <Label x:Name = "monthLabel" Text=" " FontSize="20"/>
+                    <Button x:Name ="month2" Text="Next Month" />
+                </StackLayout>
+                <Grid x:Name="StackLayoutMap" Grid.Column="7" Grid.Row="13">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.14285714285*" />
+                        <ColumnDefinition Width="0.14285714285*" />
+                        <ColumnDefinition Width="0.14285714285*" />
+                        <ColumnDefinition Width="0.14285714285*" />
+                        <ColumnDefinition Width="0.14285714285*" />
+                        <ColumnDefinition Width="0.14285714285*" />
+                        <ColumnDefinition Width="0.14285714285*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="0.07692307692*" />
+                        <RowDefinition Height="0.03*" />
+                        <RowDefinition Height="0.07692307692*" />
+                        <RowDefinition Height="0.03*" />
+                        <RowDefinition Height="0.07692307692*" />
+                        <RowDefinition Height="0.03*" />
+                        <RowDefinition Height="0.07692307692*" />
+                        <RowDefinition Height="0.03*" />
+                        <RowDefinition Height="0.07692307692*" />
+                        <RowDefinition Height="0.03*" />
+                        <RowDefinition Height="0.07692307692*" />
+                        <RowDefinition Height="0.03*" />
+                        <RowDefinition Height="0.07692307692*" />
 
-<StackLayout>
-        <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center" Spacing="3">
-            <Button x:Name= "btn2" Text="Previous Month" />
-            <Label x:Name ="yearLabel" Text=" " FontSize="20"/>
-            <Label x:Name = "monthLabel" Text=" " FontSize="20"/>
-            <Button x:Name ="btn1" Text="Next Month" />
+                    </Grid.RowDefinitions>
+                    <Label Text="Sun" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="0" FontSize="20"/>
+                    <Label Text="Mon" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" FontSize="20"/>
+                    <Label Text="Tue" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="2" FontSize="20" />
+                    <Label Text="Wed" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="3" FontSize="20"/>
+                    <Label Text="Thu" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="4" FontSize="20"/>
+                    <Label Text="Fri" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="5" FontSize="20"/>
+                    <Label Text="Sat" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="6" FontSize="20"/>
+                </Grid>
+
+                <StackLayout HeightRequest="100" WidthRequest="100">
+                    <Label Text=""/>
+                </StackLayout>
+
+            </StackLayout>
+        </ScrollView>
+
+        <StackLayout HeightRequest="80" WidthRequest="80">
+            <Grid Grid.Row="1" Grid.Column="4" Padding="10" HeightRequest="60" WidthRequest="60">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="0.25*" />
+                    <ColumnDefinition Width="0.25*" />
+                    <ColumnDefinition Width="0.25*" />
+                    <ColumnDefinition Width="0.25*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="1*" />
+                </Grid.RowDefinitions>
+                <ImageButton BackgroundColor="Transparent" Source="aboutmeicon.png" Grid.Column="0" Clicked="btn1" />
+                <ImageButton BackgroundColor="Transparent" Source="listviewicon.png" Grid.Column="1" Clicked="btn2" />
+                <ImageButton BackgroundColor="Transparent" Source="myphotosiconselected.png" Grid.Column="2" Clicked="btn3" />
+                <ImageButton BackgroundColor="Transparent" Source="mydayicon.png" Grid.Column="3" Clicked="btn4" />
+            </Grid>
         </StackLayout>
-        
-        <Grid x:Name="StackLayoutMap" Grid.Column="7" Grid.Row="13">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition Width="0.14285714285*" />
-                <ColumnDefinition Width="0.14285714285*" />
-                <ColumnDefinition Width="0.14285714285*" />
-                <ColumnDefinition Width="0.14285714285*" />
-                <ColumnDefinition Width="0.14285714285*" />
-                <ColumnDefinition Width="0.14285714285*" />
-                <ColumnDefinition Width="0.14285714285*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition Height="0.07692307692*" />
-                <RowDefinition Height="0.03*" />
-                <RowDefinition Height="0.07692307692*" />
-                <RowDefinition Height="0.03*" />
-                <RowDefinition Height="0.07692307692*" />
-                <RowDefinition Height="0.03*" />
-                <RowDefinition Height="0.07692307692*" />
-                <RowDefinition Height="0.03*" />
-                <RowDefinition Height="0.07692307692*" />
-                <RowDefinition Height="0.03*" />
-                <RowDefinition Height="0.07692307692*" />
-                <RowDefinition Height="0.03*" />
-                <RowDefinition Height="0.07692307692*" />
-
-            </Grid.RowDefinitions>
-            <Label Text="Sun" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="0" FontSize="20"/>
-            <Label Text="Mon" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" FontSize="20"/>
-            <Label Text="Tue" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="2" FontSize="20" />
-            <Label Text="Wed" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="3" FontSize="20"/>
-            <Label Text="Thu" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="4" FontSize="20"/>
-            <Label Text="Fri" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="5" FontSize="20"/>
-            <Label Text="Sat" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="6" FontSize="20"/>
-        </Grid>
     </StackLayout>
+
 </ContentPage>

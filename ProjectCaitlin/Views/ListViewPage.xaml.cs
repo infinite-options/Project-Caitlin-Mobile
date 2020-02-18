@@ -9,6 +9,7 @@ using ProjectCaitlin.Models;
 using FFImageLoading.Forms;
 using FFImageLoading.Transformations;
 using FFImageLoading.Work;
+using ProjectCaitlin.Views;
 
 namespace ProjectCaitlin
 {
@@ -34,8 +35,8 @@ namespace ProjectCaitlin
         {
             InitializeComponent();
 
-            labelFont = Device.RuntimePlatform == Device.iOS ? "Lobster-Regular" :
-                Device.RuntimePlatform == Device.Android ? "Lobster-Regular.ttf#Lobster-Regular" : "Assets/Fonts/Lobster-Regular.ttf#Lobster";
+            /*labelFont = Device.RuntimePlatform == Device.iOS ? "Lobster-Regular" :
+                Device.RuntimePlatform == Device.Android ? "Lobster-Regular.ttf#Lobster-Regular" : "Assets/Fonts/Lobster-Regular.ttf#Lobster";*/
 
             user = App.user;
 
@@ -127,6 +128,23 @@ namespace ProjectCaitlin
         public async Task RefreshEvents()
         {
 
+        }
+
+        public async void btn1(object sender, EventArgs args)
+        {
+            await Navigation.PushAsync(new GreetingPage());
+        }
+        public async void btn2(object sender, EventArgs args)
+        {
+            await Navigation.PushAsync(new ListViewPage());
+        }
+        public async void btn3(object sender, EventArgs args)
+        {
+            await Navigation.PushAsync(new MonthlyViewPage());
+        }
+        public async void btn4(object sender, EventArgs args)
+        {
+            await Navigation.PushAsync(new GoalsRoutinesTemplate());
         }
     }
 }

@@ -11,12 +11,12 @@
         <StackLayout >
             <StackLayout Orientation="Horizontal"
                                  HeightRequest="60">
-                <Image Source="{Binding RoutineImage}"
+                <Image Source="{Binding TopImage}"
                                VerticalOptions="Center"
                                HorizontalOptions="Start"
                                HeightRequest="50"
                                WidthRequest="50"/>
-                <Label Text="{Binding RoutineLabel}" 
+                <Label Text="{Binding TopLabel}" 
                        VerticalOptions="Center"
                        FontSize="20"/>
             </StackLayout>

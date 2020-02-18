@@ -8,7 +8,8 @@
              NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#E9E8E8">
-    <ScrollView>
+    <StackLayout>
+        <ScrollView>
 
         <StackLayout
             x:Name="MainStackLayout"
@@ -534,4 +535,22 @@
 
     </ScrollView>
 
+    <StackLayout HeightRequest="80" WidthRequest="80">
+        <Grid Grid.Row="1" Grid.Column="4" Padding="10" HeightRequest="60" WidthRequest="60">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="0.25*" />
+                <ColumnDefinition Width="0.25*" />
+                <ColumnDefinition Width="0.25*" />
+                <ColumnDefinition Width="0.25*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="1*" />
+            </Grid.RowDefinitions>
+                <ImageButton BackgroundColor="Transparent" Source="aboutmeicon.png" Grid.Column="0" Clicked="btn1" />
+                <ImageButton BackgroundColor="Transparent" Source="listviewiconselected.png" Grid.Column="1" Clicked="btn2" />
+                <ImageButton BackgroundColor="Transparent" Source="myphotosicon.png" Grid.Column="2" Clicked="btn3" />
+                <ImageButton BackgroundColor="Transparent" Source="mydayicon.png" Grid.Column="3" Clicked="btn4" />
+        </Grid>
+    </StackLayout>
+    </StackLayout>
 </ContentPage>

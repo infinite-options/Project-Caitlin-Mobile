@@ -11,7 +11,7 @@ using ProjectCaitlin;
 using ProjectCaitlin.Models;
 using System.Collections.Generic;
 using ProjectCaitlin.Views;
-
+using System.Globalization;
 
 namespace ProjectCaitlin.ViewModel
 {
@@ -28,44 +28,17 @@ namespace ProjectCaitlin.ViewModel
         public ICommand AboutMeCommand { private set; get; }
         public ICommand RoutineCommand { private set; get; }
 
+        public string DayLabel { get; set; }
+        public string TimeLabel { get; set; }
 
+        
         public GoalsRoutinesTemplateViewModel(GoalsRoutinesTemplate mainPage)
         {
             this.mainPage = mainPage;
 
+            setUpTime();
+            
             Items = new ObservableCollection<object>();
-
-            /*Items = new ObservableCollection<object>
-            {
-                new { Source = "toothbrushCircle.png",
-                    Ind = _imageCount++,
-                    Color = Color.Default,
-                    Title = "Good Morning, Caitlin,",
-                    Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
-                    ButtonText = "Click for More About Me"
-                     },
-
-                new { Source = "toothbrushCircle",
-                    Ind = _imageCount++,
-                    Color = Color.FromHex("FFBBBB"),
-                    Title = "Meeting with Not Impossible Labs",
-                    Length = "Should take about 1 hour",
-                    ButtonText = "Click for More About Me"},
-
-                new { Source = CreateSource(),
-                    Ind = _imageCount++,
-                    Color = Color.Default,
-                    Title = "Make myself some lunch",
-                    Length = "Takes from 10 to 30 minutes",
-                    Text = "Click this card to start!",
-                    ButtonText = "Click for More About Me"},
-
-                new { Source = CreateSource(), Ind = _imageCount++, Color = Color.FromHex("BBD8FF"), Title = "Browse Pinterest projects", Length = "" },
-                new { Source = CreateSource(), Ind = _imageCount++, Color = Color.Default, Title = "Eat dinner with mom", Length = "Takes about 30 minutes" },
-                new { Source = CreateSource(), Ind = _imageCount++, Color = Color.Default, Title = "Finish my chemistry homework", Length = "Could take up to 1 hour" }
-            };*/
-
             AboutMeCommand = new Command(
             async () =>
             {
@@ -96,7 +69,7 @@ namespace ProjectCaitlin.ViewModel
                 Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(0));
+                         await mainPage.Navigation.PushAsync(new TaskPage(0,true));
                      })
             });
 
@@ -113,7 +86,7 @@ namespace ProjectCaitlin.ViewModel
                 Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(1));
+                         await mainPage.Navigation.PushAsync(new TaskPage(1, true));
                      })
             });
 
@@ -130,7 +103,7 @@ namespace ProjectCaitlin.ViewModel
                 Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(2));
+                         await mainPage.Navigation.PushAsync(new TaskPage(2, true));
                      })
             });
 
@@ -147,7 +120,7 @@ namespace ProjectCaitlin.ViewModel
                 Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(3));
+                         await mainPage.Navigation.PushAsync(new TaskPage(3, true));
                      })
             });
 
@@ -164,7 +137,7 @@ namespace ProjectCaitlin.ViewModel
                 Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(4));
+                         await mainPage.Navigation.PushAsync(new TaskPage(4, true));
                      })
             });
 
@@ -182,7 +155,7 @@ namespace ProjectCaitlin.ViewModel
                 Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(5));
+                         await mainPage.Navigation.PushAsync(new TaskPage(5, true));
                      })
             });
 
@@ -200,7 +173,7 @@ namespace ProjectCaitlin.ViewModel
                 Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(6));
+                         await mainPage.Navigation.PushAsync(new TaskPage(6, true));
                      })
             });
 
@@ -218,7 +191,7 @@ namespace ProjectCaitlin.ViewModel
                 Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(7));
+                         await mainPage.Navigation.PushAsync(new TaskPage(7, true));
                      })
             });
 
@@ -236,7 +209,7 @@ namespace ProjectCaitlin.ViewModel
                 Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(8));
+                         await mainPage.Navigation.PushAsync(new TaskPage(8, true));
                      })
             });
 
@@ -254,7 +227,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(9));
+                             await mainPage.Navigation.PushAsync(new TaskPage(9, true));
                          })
                 });
 
@@ -272,7 +245,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(10));
+                         await mainPage.Navigation.PushAsync(new TaskPage(10, true));
                      })
                 });
 
@@ -289,7 +262,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(11));
+                         await mainPage.Navigation.PushAsync(new TaskPage(11, true));
                      })
                 });
 
@@ -306,7 +279,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(12));
+                         await mainPage.Navigation.PushAsync(new TaskPage(12, true));
                      })
                 });
 
@@ -323,7 +296,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(13));
+                         await mainPage.Navigation.PushAsync(new TaskPage(13, true));
                      })
                 });
 
@@ -340,7 +313,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(14));
+                         await mainPage.Navigation.PushAsync(new TaskPage(14, true));
                      })
                 });
 
@@ -358,7 +331,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(15));
+                         await mainPage.Navigation.PushAsync(new TaskPage(15, true));
                      })
                 });
 
@@ -376,7 +349,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(16));
+                         await mainPage.Navigation.PushAsync(new TaskPage(16, true));
                      })
                 });
 
@@ -394,7 +367,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(17));
+                         await mainPage.Navigation.PushAsync(new TaskPage(17, true));
                      })
                 });
 
@@ -412,7 +385,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(18));
+                             await mainPage.Navigation.PushAsync(new TaskPage(18, true));
                          })
                 });
 
@@ -430,9 +403,363 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(19));
+                             await mainPage.Navigation.PushAsync(new TaskPage(19, true));
                          })
                 });
+
+
+
+
+
+
+
+
+
+
+
+            if (App.user.goals.Count >= 1)
+                Items.Add(new
+                {
+                    Source = App.user.goals[0].photo,
+                    Title = App.user.goals[0].title,
+
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
+                         async () =>
+                         {
+                             await mainPage.Navigation.PushAsync(new TaskPage(0,false));
+                         })
+                });
+
+
+            if (App.user.goals.Count >= 2)
+                Items.Add(new
+                {
+                    Source = App.user.goals[1].photo,
+                    Title = App.user.goals[1].title,
+
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
+                         async () =>
+                         {
+                             await mainPage.Navigation.PushAsync(new TaskPage(1, false));
+                         })
+                });
+            if (App.user.goals.Count >= 3)
+                Items.Add(new
+                {
+                    Source = App.user.goals[2].photo,
+                    Title = App.user.goals[2].title,
+
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
+                         async () =>
+                         {
+                             await mainPage.Navigation.PushAsync(new TaskPage(2, false));
+                         })
+                });
+            if (App.user.goals.Count >= 4)
+                Items.Add(new
+                {
+                    Source = App.user.goals[3].photo,
+                    Title = App.user.goals[3].title,
+
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
+                         async () =>
+                         {
+                             await mainPage.Navigation.PushAsync(new TaskPage(3, false));
+                         })
+                });
+            if (App.user.goals.Count >= 5)
+                Items.Add(new
+                {
+                    Source = App.user.goals[4].photo,
+                    Title = App.user.goals[4].title,
+
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
+                         async () =>
+                         {
+                             await mainPage.Navigation.PushAsync(new TaskPage(4, false));
+                         })
+                });
+            if (App.user.goals.Count >= 6)
+                Items.Add(new
+                {
+                    Source = App.user.goals[5].photo,
+                    Title = App.user.goals[5].title,
+
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
+                         async () =>
+                         {
+                             await mainPage.Navigation.PushAsync(new TaskPage(5, false));
+                         })
+                });
+            if (App.user.goals.Count >= 7)
+                Items.Add(new
+                {
+                    Source = App.user.goals[6].photo,
+                    Title = App.user.goals[6].title,
+
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
+                         async () =>
+                         {
+                             await mainPage.Navigation.PushAsync(new TaskPage(6, false));
+                         })
+                });
+            if (App.user.goals.Count >= 8)
+                Items.Add(new
+                {
+                    Source = App.user.goals[7].photo,
+                    Title = App.user.goals[7].title,
+
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
+                         async () =>
+                         {
+                             await mainPage.Navigation.PushAsync(new TaskPage(7, false));
+                         })
+                });
+            if (App.user.goals.Count >= 9)
+                Items.Add(new
+                {
+                    Source = App.user.goals[8].photo,
+                    Title = App.user.goals[8].title,
+
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
+                         async () =>
+                         {
+                             await mainPage.Navigation.PushAsync(new TaskPage(8, false));
+                         })
+                });
+            if (App.user.goals.Count >= 10)
+                Items.Add(new
+                {
+                    Source = App.user.goals[9].photo,
+                    Title = App.user.goals[9].title,
+
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
+                         async () =>
+                         {
+                             await mainPage.Navigation.PushAsync(new TaskPage(9, false));
+                         })
+                });
+            if (App.user.goals.Count >= 11)
+                Items.Add(new
+                {
+                    Source = App.user.goals[10].photo,
+                    Title = App.user.goals[10].title,
+
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
+                         async () =>
+                         {
+                             await mainPage.Navigation.PushAsync(new TaskPage(10, false));
+                         })
+                });
+            if (App.user.goals.Count >= 12)
+                Items.Add(new
+                {
+                    Source = App.user.goals[11].photo,
+                    Title = App.user.goals[11].title,
+
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
+                         async () =>
+                         {
+                             await mainPage.Navigation.PushAsync(new TaskPage(11, false));
+                         })
+                });
+            if (App.user.goals.Count >= 13)
+                Items.Add(new
+                {
+                    Source = App.user.goals[12].photo,
+                    Title = App.user.goals[12].title,
+
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
+                         async () =>
+                         {
+                             await mainPage.Navigation.PushAsync(new TaskPage(12, false));
+                         })
+                });
+            if (App.user.goals.Count >= 14)
+                Items.Add(new
+                {
+                    Source = App.user.goals[13].photo,
+                    Title = App.user.goals[13].title,
+
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
+                         async () =>
+                         {
+                             await mainPage.Navigation.PushAsync(new TaskPage(13, false));
+                         })
+                });
+            if (App.user.goals.Count >= 15)
+                Items.Add(new
+                {
+                    Source = App.user.goals[14].photo,
+                    Title = App.user.goals[14].title,
+
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
+                         async () =>
+                         {
+                             await mainPage.Navigation.PushAsync(new TaskPage(14, false));
+                         })
+                });
+            if (App.user.goals.Count >= 16)
+                Items.Add(new
+                {
+                    Source = App.user.goals[15].photo,
+                    Title = App.user.goals[15].title,
+
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
+                         async () =>
+                         {
+                             await mainPage.Navigation.PushAsync(new TaskPage(15, false));
+                         })
+                });
+            if (App.user.goals.Count >= 17)
+                Items.Add(new
+                {
+                    Source = App.user.goals[16].photo,
+                    Title = App.user.goals[16].title,
+
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
+                         async () =>
+                         {
+                             await mainPage.Navigation.PushAsync(new TaskPage(16, false));
+                         })
+                });
+            if (App.user.goals.Count >= 18)
+                Items.Add(new
+                {
+                    Source = App.user.goals[17].photo,
+                    Title = App.user.goals[17].title,
+
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
+                         async () =>
+                         {
+                             await mainPage.Navigation.PushAsync(new TaskPage(17, false));
+                         })
+                });
+            if (App.user.goals.Count >= 19)
+                Items.Add(new
+                {
+                    Source = App.user.goals[18].photo,
+                    Title = App.user.goals[18].title,
+
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
+                         async () =>
+                         {
+                             await mainPage.Navigation.PushAsync(new TaskPage(18, false));
+                         })
+                });
+            if (App.user.goals.Count >= 20)
+                Items.Add(new
+                {
+                    Source = App.user.goals[19].photo,
+                    Title = App.user.goals[19].title,
+
+                    Ind = _imageCount++,
+                    Color = Color.Default,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
+                         async () =>
+                         {
+                             await mainPage.Navigation.PushAsync(new TaskPage(19, false));
+                         })
+                });
+
             /*int routineNum = 0;
             foreach (routine routine in App.user.routines)
             {
@@ -501,17 +828,23 @@ namespace ProjectCaitlin.ViewModel
                 //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(nameof(CurrentIndex)));
             }
         }
-
+        public void setUpTime()
+        {
+            DateTime localDate = DateTime.Now;
+            // Uses the default calendar of the InvariantCulture.
+            Calendar myCal = CultureInfo.InvariantCulture.Calendar;
+            DayLabel = myCal.GetDayOfWeek(localDate) + "";
+            int time = localDate.Hour;
+            
+            if (time >= 6 && time <= 12) TimeLabel = "Good Morning";
+            else if (time >= 12 && time <= 18) TimeLabel = "Good Afternoon";
+            else TimeLabel = "Good Evening";
+        }
         public bool IsAutoAnimationRunning { get; set; }
 
         public bool IsUserInteractionRunning { get; set; }
 
         public ObservableCollection<object> Items { get; }
 
-        private string CreateSource()
-        {
-            var source = $"toothbrushCircle.png";
-            return source;
-        }
     }
 }

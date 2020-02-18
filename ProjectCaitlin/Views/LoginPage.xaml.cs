@@ -119,25 +119,7 @@ namespace ProjectCaitlin
 
 		}
 
-		async void TaskPageClicked(object sender, EventArgs e)
-		{
 
-			await Navigation.PushAsync(new TaskPage(0));
-
-		}
-
-		async void TaskCompletePageClicked(object sender, EventArgs e)
-		{
-
-			await Navigation.PushAsync(new TaskCompletePage(0,0));
-
-		}
-		async void GreetingPageClicked(object sender, EventArgs e)
-		{
-
-			await Navigation.PushAsync(new GreetingPage());
-
-		}
 
 		async void CardViewPageClicked(object sender, EventArgs e)
 		{

@@ -6,6 +6,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using ProjectCaitlin;
+using ProjectCaitlin.Views;
 using Xamarin.Forms;
 
 namespace ProjectCaitlin
@@ -54,6 +55,8 @@ namespace ProjectCaitlin
             {
                 images[i] = new Image();
                 images[i].Source = "bear.jpg";
+                images[i].HeightRequest = 20;
+                images[i].WidthRequest = 20;
 
                 Grid.SetRow(images[i], row2);
                 Grid.SetColumn(images[i], col);
@@ -70,10 +73,10 @@ namespace ProjectCaitlin
             }
 
 
-            var button1 = this.FindByName<Button>("btn1");
+            var button1 = this.FindByName<Button>("month2");
             button1.Clicked += ButtonOne;
 
-            var button2 = this.FindByName<Button>("btn2");
+            var button2 = this.FindByName<Button>("month1");
             button2.Clicked += ButtonTwo;
 
             DateTime localDate = DateTime.Now;
@@ -264,5 +267,24 @@ namespace ProjectCaitlin
         {
             await Navigation.PushAsync(new ListViewPage());
         }
+
+
+        public async void btn1(object sender, EventArgs args)
+        {
+            await Navigation.PushAsync(new GreetingPage());
+        }
+        public async void btn2(object sender, EventArgs args)
+        {
+            await Navigation.PushAsync(new ListViewPage());
+        }
+        public async void btn3(object sender, EventArgs args)
+        {
+            await Navigation.PushAsync(new MonthlyViewPage());
+        }
+        public async void btn4(object sender, EventArgs args)
+        {
+            await Navigation.PushAsync(new GoalsRoutinesTemplate());
+        }
+
     }
 }
