@@ -29,13 +29,5 @@ namespace ProjectCaitlin.Views
         {
             await Navigation.PushAsync(new PhotoDisplayPage());
         }
-
-
-
-
-
-
-
-        }
     }
 }
