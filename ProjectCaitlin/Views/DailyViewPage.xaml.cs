@@ -205,7 +205,7 @@ namespace ProjectCaitlin
             currentLocalUTCMinute = currentTimeinUTC.Minute;
 
 
-            var jsonResult = await googleService.GetSpecificEventsList(publicYear, publicMonth, publicDay, uTCHour, currentLocalUTCMinute, timeZoneNum);
+            var jsonResult = await googleService.GetAllTodaysEventsList(publicYear, publicMonth, publicDay, timeZoneNum);
 
 
             //Return error if result is empty

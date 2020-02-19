@@ -39,29 +39,34 @@ namespace ProjectCaitlin
         public ListViewPage()
         {
             InitializeComponent();
+            dateTimeNow = DateTime.Now;
 
-            LoadDataAsync();
+            SetupUIAsync();
 
             labelFont = Device.RuntimePlatform == Device.iOS ? "Lobster-Regular" :
                 Device.RuntimePlatform == Device.Android ? "Lobster-Regular.ttf#Lobster-Regular" : "Assets/Fonts/Lobster-Regular.ttf#Lobster";
 
             user = App.user;
-            dateTimeNow = DateTime.Now;
             FSMethods = new FirestoreMethods("7R6hAVmDrNutRkG3sVRy");
 
             StartTimer();
 
             //BindingContext = DailyViewModel.Instance;
-            SetupUI();
+            
             //dailyViewModel = (DailyViewModel)BindingContext;
 
         }
 
-        void SetupUI()
+        async Task SetupUIAsync()
         {
+            await LoadDataAsync();
             DayOfWeekLabel.Text = dateTimeNow.DayOfWeek.ToString();
 
-            MorningGoalsPopulate();
+            foreach (StackLayout stackLayout in assignTimeofDay(user.routines[routineIdx].availableStartTime.TimeOfDay, user.routines[routineIdx].availableEndTime.TimeOfDay))
+                PopulateMorningGoals();
+            PopulatePage(0,0);
+
+            Console.WriteLine("get here?");
 
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += async (s, e) => {
@@ -76,26 +81,31 @@ namespace ProjectCaitlin
 
         private async Task LoadDataAsync()
         {
-            await MorningEventsLoad();
+            await EventsLoad();
             sortData();
         }
 
         private void sortData()
         {
-            user.routines.Sort((x, y) => DateTime.Compare(x.availableStartTime, y.availableStartTime));
-            //eventsList.Sort((x, y) => DateTime.Compare(x.Start, y.Start));
+            user.routines.Sort((x, y) => TimeSpan.Compare(x.availableStartTime.TimeOfDay, y.availableStartTime.TimeOfDay));
+
+            for (int i = 0; i < user.routines.Count; i++)
+                Console.WriteLine("routine " + (i + 1) + ": " + user.routines[i].title);
+            //eventsList.Sort((x, y) => TimeSpan.Compare(x.Start.DateTime.DateTime.TimeOfDay, y.Start.DateTime.DateTime.TimeOfDay));
         }
 
         public async Task RefreshPage()
         {
-            DeleteRoutinePageElements();
+            DeletePageElements();
             await FSMethods.LoadUser();
-            SetupUI();
+            await SetupUIAsync();
 
         }
 
-        void DeleteRoutinePageElements()
+        void DeletePageElements()
         {
+            // Empty events
+            eventsList = new List<EventsItems>();
             List<View> MorningREElements = new List<View>();
             List<View> MorningGoalsListElements = new List<View>();
 
@@ -119,72 +129,191 @@ namespace ProjectCaitlin
             
         }
 
-        private void MorningRoutinesPopulate()
+        private void PopulatePage(int eventIdx, int routineIdx)
         {
-            foreach (routine routine in user.routines)
+
+            Console.WriteLine("eventIdx: " + eventIdx);
+            Console.WriteLine("routineIdx: " + routineIdx);
+
+
+            if (eventsList.Count == eventIdx && user.routines.Count == routineIdx)
+                return;
+
+            if (eventsList.Count == eventIdx)
             {
-                Frame frame = new Frame
-                {
-                    CornerRadius = 10,
-                    HasShadow = false,
-                    Padding = new Thickness(10, 10, 10, 10),
-                    Margin = new Thickness(0, 2, 0, 2)
-                };
+                foreach (StackLayout stackLayout in assignTimeofDay(user.routines[routineIdx].availableStartTime.TimeOfDay, user.routines[routineIdx].availableEndTime.TimeOfDay))
+                    PopulateRoutine(user.routines[routineIdx], stackLayout);
 
-                StackLayout stackLayoutOuter = new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal
-                };
+                PopulatePage(eventIdx, ++routineIdx);
 
-                StackLayout stackLayoutInner = new StackLayout
-                {
-                    HorizontalOptions = LayoutOptions.StartAndExpand,
-                };
+            }
+            if (user.routines.Count == routineIdx)
+            {
+                foreach (StackLayout stackLayout in assignTimeofDay(eventsList[eventIdx].Start.DateTime.DateTime.TimeOfDay, eventsList[eventIdx].End.DateTime.DateTime.TimeOfDay))
+                    PopulateEvent(eventsList[eventIdx], stackLayout);
 
-                Label routineTitleLabel = new Label
-                {
-                    Text = routine.title,
-                    FontSize = 20,
-                    VerticalOptions = LayoutOptions.StartAndExpand,
-                    FontFamily = labelFont
+                PopulatePage(++eventIdx, routineIdx);
+            }
 
-                };
+            if (user.routines[routineIdx].availableStartTime.TimeOfDay < eventsList[eventIdx].Start.DateTime.TimeOfDay)
+            {
+                foreach (StackLayout stackLayout in assignTimeofDay(user.routines[routineIdx].availableStartTime.TimeOfDay, user.routines[routineIdx].availableEndTime.TimeOfDay))
+                    PopulateRoutine(user.routines[routineIdx], stackLayout);
 
-                Label expectedTimeLabel = new Label
-                {
-                    Text = "Takes me " + 5.ToString() + " minutes",
-                    FontSize = 10,
-                    TextColor = Color.DimGray,
-                    VerticalOptions = LayoutOptions.EndAndExpand,
-                    FontFamily = labelFont
+                PopulatePage(eventIdx, ++routineIdx);
+            }
+            else if (user.routines[routineIdx].availableStartTime.TimeOfDay == eventsList[eventIdx].Start.DateTime.TimeOfDay)
+            {
+                foreach (StackLayout stackLayout in assignTimeofDay(eventsList[eventIdx].Start.DateTime.DateTime.TimeOfDay, eventsList[eventIdx].End.DateTime.DateTime.TimeOfDay))
+                    PopulateEvent(eventsList[eventIdx], stackLayout);
 
-                };
+                PopulatePage(++eventIdx, routineIdx);
+            }
+            else
+            {
+                foreach (StackLayout stackLayout in assignTimeofDay(eventsList[eventIdx].Start.DateTime.DateTime.TimeOfDay, eventsList[eventIdx].End.DateTime.DateTime.TimeOfDay))
+                    PopulateEvent(eventsList[eventIdx], stackLayout);
 
-                CachedImage image = new CachedImage()
-                {
-                    Source = routine.photo,
-                    WidthRequest = 50,
-                    HeightRequest = 50,
-                    HorizontalOptions = LayoutOptions.End,
-                    Transformations = new List<ITransformation>()
-                    {
-                        new CircleTransformation(),
-                    },
-                    };
-
-                stackLayoutInner.Children.Add(routineTitleLabel);
-                stackLayoutInner.Children.Add(expectedTimeLabel);
-
-                stackLayoutOuter.Children.Add(stackLayoutInner);
-                stackLayoutOuter.Children.Add(image);
-
-                frame.Content = stackLayoutOuter;
-
-                MorningREStackLayout.Children.Add(frame);
+                PopulatePage(++eventIdx, routineIdx);
             }
         }
 
-        private void MorningGoalsPopulate()
+        private void PopulateRoutine(routine routine, StackLayout stackLayout)
+        {
+            Frame frame = new Frame
+            {
+                CornerRadius = 10,
+                HasShadow = false,
+                Padding = new Thickness(10, 10, 10, 10),
+                Margin = new Thickness(0, 2, 0, 2)
+            };
+
+            StackLayout stackLayoutOuter = new StackLayout
+            {
+                Orientation = StackOrientation.Horizontal
+            };
+
+            StackLayout stackLayoutInner = new StackLayout
+            {
+                HorizontalOptions = LayoutOptions.StartAndExpand,
+            };
+
+            Label routineTitleLabel = new Label
+            {
+                Text = routine.title,
+                FontSize = 20,
+                VerticalOptions = LayoutOptions.StartAndExpand,
+                FontFamily = labelFont
+
+            };
+
+            Label expectedTimeLabel = new Label
+            {
+                Text = "Takes me " + 5.ToString() + " minutes",
+                FontSize = 10,
+                TextColor = Color.DimGray,
+                VerticalOptions = LayoutOptions.EndAndExpand,
+                FontFamily = labelFont
+
+            };
+
+            CachedImage image = new CachedImage()
+            {
+                Source = routine.photo,
+                WidthRequest = 50,
+                HeightRequest = 50,
+                HorizontalOptions = LayoutOptions.End,
+                Transformations = new List<ITransformation>()
+                {
+                    new CircleTransformation(),
+                },
+            };
+
+            stackLayoutInner.Children.Add(routineTitleLabel);
+            stackLayoutInner.Children.Add(expectedTimeLabel);
+
+            stackLayoutOuter.Children.Add(stackLayoutInner);
+            stackLayoutOuter.Children.Add(image);
+
+            frame.Content = stackLayoutOuter;
+
+            stackLayout.Children.Add(frame);
+        }
+
+        private void PopulateEvent(EventsItems event_, StackLayout stackLayout)
+        {
+            Frame frame = new Frame
+            {
+                CornerRadius = 10,
+                HasShadow = false,
+                Padding = new Thickness(10, 10, 10, 10),
+                Margin = new Thickness(0, 2, 0, 2),
+                BackgroundColor = Color.Goldenrod
+            };
+
+            StackLayout stackLayoutOuter = new StackLayout
+            {
+                Orientation = StackOrientation.Horizontal
+            };
+
+            StackLayout stackLayoutInner = new StackLayout
+            {
+                HorizontalOptions = LayoutOptions.StartAndExpand,
+            };
+
+            Label EventTimeLabel = new Label
+            {
+                Text = event_.Start.DateTime.ToString("h:mm tt") + " - " + event_.End.DateTime.ToString("h:mm tt"),
+                FontSize = 10,
+                TextColor = Color.White,
+                VerticalOptions = LayoutOptions.Start,
+                FontFamily = labelFont
+            };
+
+            Label EventTitleLabel = new Label
+            {
+                Text = event_.EventName,
+                FontSize = 20,
+                VerticalOptions = LayoutOptions.StartAndExpand,
+                FontFamily = labelFont
+
+            };
+
+            Label expectedTimeLabel = new Label
+            {
+                Text = event_.EventName,
+                FontSize = 10,
+                TextColor = Color.DimGray,
+                VerticalOptions = LayoutOptions.EndAndExpand,
+                FontFamily = labelFont
+
+            };
+
+            CachedImage image = new CachedImage()
+            {
+                Source = Xamarin.Forms.ImageSource.FromResource("https://image.freepik.com/free-vector/calendar-with-clock-as-waiting-scheduled-event-icon-symbol-isolated-flat-cartoon_101884-758.jpg"),
+                WidthRequest = 50,
+                HeightRequest = 50,
+                HorizontalOptions = LayoutOptions.End,
+                Transformations = new List<ITransformation>()
+                    {
+                        new CircleTransformation(),
+                    },
+            };
+
+            stackLayoutInner.Children.Add(EventTimeLabel);
+            stackLayoutInner.Children.Add(EventTitleLabel);
+            stackLayoutInner.Children.Add(expectedTimeLabel);
+
+            stackLayoutOuter.Children.Add(stackLayoutInner);
+            stackLayoutOuter.Children.Add(image);
+
+            frame.Content = stackLayoutOuter;
+
+            stackLayout.Children.Add(frame);
+        }
+
+        private void PopulateMorningGoals()
         {
             foreach (goal goal in user.goals)
             {
@@ -237,13 +366,13 @@ namespace ProjectCaitlin
             //});
         }
 
-        public async Task MorningEventsLoad()
+        public async Task EventsLoad()
         {
             //Call Google API
             var googleService = new GoogleService();
 
             publicYear = dateTimeNow.Year;
-            publicMonth = (dateTimeNow.Month);
+            publicMonth = dateTimeNow.Month;
             publicDay = dateTimeNow.Day;
 
             string timeZoneOffset = DateTimeOffset.Now.ToString();
@@ -255,8 +384,10 @@ namespace ProjectCaitlin
             currentLocalUTCMinute = currentTimeinUTC.Minute;
 
 
-            var jsonResult = await googleService.GetSpecificEventsList(publicYear, publicMonth, publicDay, 0, 0, timeZoneNum);
+            var jsonResult = await googleService.GetAllTodaysEventsList(publicYear, publicMonth, publicDay, timeZoneNum);
+            //var jsonResult = await googleService.GetEventsList();
 
+            Console.WriteLine("jsonResult event: " + jsonResult);
 
             //Return error if result is empty
             if (jsonResult == null)
@@ -275,6 +406,7 @@ namespace ProjectCaitlin
                 foreach (var events in parsedResult.Items)
                 {
                     eventsList.Add(events);
+                    Console.WriteLine(events.EventName.ToString());
                 }
             }
             catch (ArgumentNullException e)
@@ -285,81 +417,50 @@ namespace ProjectCaitlin
             }
         }
 
-        void PopulateEvents()
+        private List<StackLayout> assignTimeofDay(TimeSpan startTime, TimeSpan endTime)
         {
+            List<StackLayout> result = new List<StackLayout>();
+            TimeSpan morningStart = new TimeSpan(6, 0, 0);
+            TimeSpan morningEnd = new TimeSpan(11, 0, 0);
+            TimeSpan afternoonStart = new TimeSpan(11, 0, 0);
+            TimeSpan afternoonEnd = new TimeSpan(18, 0, 0);
+            TimeSpan eveningStart = new TimeSpan(18, 0, 0);
+            TimeSpan eveningEnd = new TimeSpan(23, 59, 59);
+            TimeSpan nightStart = new TimeSpan(0, 0, 0);
+            TimeSpan nightEnd = new TimeSpan(6, 0, 0);
 
-            foreach (var events in eventsList)
+            Console.WriteLine("startTime: " + startTime.ToString());
+            Console.WriteLine("endTime: " + endTime.ToString());
+            if ((startTime < morningEnd && morningStart < endTime)
+                ||startTime == morningStart || morningEnd == endTime)
             {
-                Frame frame = new Frame
-                {
-                    CornerRadius = 10,
-                    HasShadow = false,
-                    Padding = new Thickness(10, 10, 10, 10),
-                    Margin = new Thickness(0, 2, 0, 2),
-                    BackgroundColor = Color.Goldenrod
-                };
+                Console.WriteLine("Morning");
 
-                StackLayout stackLayoutOuter = new StackLayout
-                {
-                    Orientation = StackOrientation.Horizontal
-                };
-
-                StackLayout stackLayoutInner = new StackLayout
-                {
-                    HorizontalOptions = LayoutOptions.StartAndExpand,
-                };
-
-                Label EventTimeLabel = new Label
-                {
-                    Text = events.Start.DateTime.ToString("h:mm tt"),
-                    FontSize = 10,
-                    TextColor = Color.White,
-                    VerticalOptions = LayoutOptions.Start,
-                    FontFamily = labelFont
-                };
-
-                Label EventTitleLabel = new Label
-                {
-                    Text = events.EventName,
-                    FontSize = 20,
-                    VerticalOptions = LayoutOptions.StartAndExpand,
-                    FontFamily = labelFont
-
-                };
-
-                Label expectedTimeLabel = new Label
-                {
-                    Text = events.EventName,
-                    FontSize = 10,
-                    TextColor = Color.DimGray,
-                    VerticalOptions = LayoutOptions.EndAndExpand,
-                    FontFamily = labelFont
-
-                };
-
-                CachedImage image = new CachedImage()
-                {
-                    Source = Xamarin.Forms.ImageSource.FromResource("https://image.freepik.com/free-vector/calendar-with-clock-as-waiting-scheduled-event-icon-symbol-isolated-flat-cartoon_101884-758.jpg"),
-                    WidthRequest = 50,
-                    HeightRequest = 50,
-                    HorizontalOptions = LayoutOptions.End,
-                    Transformations = new List<ITransformation>()
-                    {
-                        new CircleTransformation(),
-                    },
-                };
-
-                stackLayoutInner.Children.Add(EventTimeLabel);
-                stackLayoutInner.Children.Add(EventTitleLabel);
-                stackLayoutInner.Children.Add(expectedTimeLabel);
-
-                stackLayoutOuter.Children.Add(stackLayoutInner);
-                stackLayoutOuter.Children.Add(image);
-
-                frame.Content = stackLayoutOuter;
-
-                MorningREStackLayout.Children.Add(frame);
+                result.Add(MorningREStackLayout);
             }
+            if ((startTime < afternoonEnd && afternoonStart < endTime)
+                || startTime == afternoonStart || afternoonEnd == endTime)
+            {
+                Console.WriteLine("Afternoon");
+
+                result.Add(AfternoonREStackLayout);
+            }
+            if ((startTime < eveningEnd && eveningStart < endTime)
+                || startTime == eveningStart || eveningEnd == endTime)
+            {
+                Console.WriteLine("Evening");
+
+                result.Add(EveningREStackLayout);
+            }
+            if ((startTime < nightEnd && nightStart < endTime)
+                || startTime == nightStart || nightEnd == endTime)
+            {
+                Console.WriteLine("Night");
+
+                result.Add(NightREStackLayout);
+            }
+
+            return result;
         }
 
         public async void PrepareRefreshEvents()

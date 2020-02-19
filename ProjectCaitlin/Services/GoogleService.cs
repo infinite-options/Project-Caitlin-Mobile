@@ -79,7 +79,7 @@ namespace ProjectCaitlin.Services
             return (json);
         }
 
-        public async Task<string> GetSpecificEventsList(int publicYear, int publicMonth, int publicDay, int uTCHour, int currentLocalUTCMinute, int timeZoneNum)
+        public async Task<string> GetTodaysEventsList(int publicYear, int publicMonth, int publicDay, int uTCHour, int currentLocalUTCMinute, int timeZoneNum)
         {
 
             //Make HTTP Request
@@ -149,6 +149,73 @@ namespace ProjectCaitlin.Services
             //------------------------------
 
             string timeMaxMin = String.Format("timeMax={0}-{1}-{2}T23%3A59%3A59-08%3A00&timeMin={0}-{1}-{2}T{3}%3A{4}%3A00-08%3A00", publicYear, monthString, dayString, paddedHour, paddedMinute);
+
+            string fullURI = baseUri + timeMaxMin;
+
+            //Console.WriteLine(fullURI);
+
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri(fullURI);
+            request.Method = HttpMethod.Get;
+
+            //Format Headers of Request with included Token
+            string bearerString = string.Format("Bearer {0}", LoginPage.accessToken);
+            request.Headers.Add("Authorization", bearerString);
+            request.Headers.Add("Accept", "application/json");
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+            HttpContent content = response.Content;
+            var json = await content.ReadAsStringAsync();
+            //Console.WriteLine(json);
+            return (json);
+        }
+
+        public async Task<string> GetAllTodaysEventsList(int publicYear, int publicMonth, int publicDay, int timeZoneNum)
+        {
+
+            //Make HTTP Request
+            string baseUri = "https://www.googleapis.com/calendar/v3/calendars/primary/events?orderBy=startTime&singleEvents=true&";
+
+            string monthString;
+            string dayString;
+            string paddedTimeZoneNum;
+
+            //----------  ADD ZERO PADDING AND UTC FIX
+
+
+            if (timeZoneNum < 10)
+            {
+                paddedTimeZoneNum = timeZoneNum.ToString().PadLeft(2, '0');
+
+            }
+            else
+            {
+                paddedTimeZoneNum = timeZoneNum.ToString();
+            }
+
+            if (publicMonth < 10)
+            {
+                monthString = publicMonth.ToString().PadLeft(2, '0');
+
+            }
+            else
+            {
+                monthString = publicMonth.ToString();
+            }
+
+            if (publicDay < 10)
+            {
+                dayString = publicDay.ToString().PadLeft(2, '0');
+
+            }
+            else
+            {
+                dayString = publicDay.ToString();
+            }
+
+            string timeMaxMin = String.Format("timeMax={0}-{1}-{2}T23%3A59%3A59-{3}%3A00&timeMin={0}-{1}-{2}T00%3A00%3A01-{3}%3A00", publicYear, monthString, dayString, paddedTimeZoneNum);
+
+            Console.WriteLine("timeMaxMin: " + timeMaxMin);
 
             string fullURI = baseUri + timeMaxMin;
 

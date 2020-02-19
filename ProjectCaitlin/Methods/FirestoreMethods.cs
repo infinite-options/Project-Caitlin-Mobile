@@ -57,7 +57,12 @@ namespace ProjectCaitlin.Methods
                     {
                         JToken jsonMapGorR = jsonGorR["mapValue"]["fields"];
 
-                        if ((bool)jsonMapGorR["is_available"]["booleanValue"])
+                        var isDeleted = false;
+                        if (jsonMapGorR["deleted"] != null)
+                            if ((bool)jsonMapGorR["deleted"]["booleanValue"])
+                                isDeleted = true;
+
+                        if ((bool)jsonMapGorR["is_available"]["booleanValue"] && !isDeleted)
                         {
                             if ((bool)jsonMapGorR["is_persistent"]["booleanValue"])
                             {
@@ -68,9 +73,9 @@ namespace ProjectCaitlin.Methods
                                 routine.isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"]
                                     && IsDateToday(jsonMapGorR["datetime_completed"]["stringValue"].ToString());
                                 routine.availableStartTime = DateTime.ParseExact(jsonMapGorR["available_start_time"]["stringValue"].ToString(),
-                                    "hh:mm:ss", CultureInfo.InvariantCulture);
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
                                 routine.availableEndTime = DateTime.ParseExact(jsonMapGorR["available_end_time"]["stringValue"].ToString(),
-                                    "hh:mm:ss", CultureInfo.InvariantCulture);
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
 
                                 App.user.routines.Add(routine);
 
@@ -85,9 +90,9 @@ namespace ProjectCaitlin.Methods
                                 goal.isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"]
                                     && IsDateToday(jsonMapGorR["datetime_completed"]["stringValue"].ToString());
                                 goal.availableStartTime = DateTime.ParseExact(jsonMapGorR["available_start_time"]["stringValue"].ToString(),
-                                    "hh:mm:ss", CultureInfo.InvariantCulture);
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
                                 goal.availableEndTime = DateTime.ParseExact(jsonMapGorR["available_end_time"]["stringValue"].ToString(),
-                                    "hh:mm:ss", CultureInfo.InvariantCulture);
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
 
                                 App.user.goals.Add(goal);
 
@@ -160,9 +165,9 @@ namespace ProjectCaitlin.Methods
                                 task.isComplete = (bool)jsonMapAorT["is_complete"]["booleanValue"]
                                     && IsDateToday(jsonMapAorT["datetime_completed"]["stringValue"].ToString());
                                 task.availableStartTime = DateTime.ParseExact(jsonMapAorT["available_start_time"]["stringValue"].ToString(),
-                                    "hh:mm:ss", CultureInfo.InvariantCulture);
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
                                 task.availableEndTime = DateTime.ParseExact(jsonMapAorT["available_end_time"]["stringValue"].ToString(),
-                                    "hh:mm:ss", CultureInfo.InvariantCulture);
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
 
                                 App.user.routines[routineIdx].tasks.Add(task);
 
@@ -178,9 +183,9 @@ namespace ProjectCaitlin.Methods
                                 action.isComplete = (bool)jsonMapAorT["is_complete"]["booleanValue"]
                                     && IsDateToday(jsonMapAorT["datetime_completed"]["stringValue"].ToString());
                                 action.availableStartTime = DateTime.ParseExact(jsonMapAorT["available_start_time"]["stringValue"].ToString(),
-                                    "hh:mm:ss", CultureInfo.InvariantCulture);
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
                                 action.availableEndTime = DateTime.ParseExact(jsonMapAorT["available_end_time"]["stringValue"].ToString(),
-                                    "hh:mm:ss", CultureInfo.InvariantCulture);
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
 
                                 App.user.goals[routineIdx].actions.Add(action);
 
@@ -262,9 +267,9 @@ namespace ProjectCaitlin.Methods
                                 step.isComplete = (bool)jsonMapIorS["is_complete"]["booleanValue"]
                                     && IsDateToday(jsonMapIorS["datetime_completed"]["stringValue"].ToString());
                                 step.availableStartTime = DateTime.ParseExact(jsonMapIorS["available_start_time"]["stringValue"].ToString(),
-                                    "hh:mm:ss", CultureInfo.InvariantCulture);
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
                                 step.availableEndTime = DateTime.ParseExact(jsonMapIorS["available_end_time"]["stringValue"].ToString(),
-                                    "hh:mm:ss", CultureInfo.InvariantCulture);
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
 
                                 Console.WriteLine("on Step: " + step.isComplete);
 
@@ -278,9 +283,9 @@ namespace ProjectCaitlin.Methods
                                 instruction.isComplete = (bool)jsonMapIorS["is_complete"]["booleanValue"]
                                     && IsDateToday(jsonMapIorS["datetime_completed"]["stringValue"].ToString());
                                 instruction.availableStartTime = DateTime.ParseExact(jsonMapIorS["available_start_time"]["stringValue"].ToString(),
-                                    "hh:mm:ss", CultureInfo.InvariantCulture);
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
                                 instruction.availableEndTime = DateTime.ParseExact(jsonMapIorS["available_end_time"]["stringValue"].ToString(),
-                                    "hh:mm:ss", CultureInfo.InvariantCulture);
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
 
 
 
