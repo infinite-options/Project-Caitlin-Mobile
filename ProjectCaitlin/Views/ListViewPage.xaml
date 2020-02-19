@@ -74,38 +74,39 @@
             <!-- Morning Goals Sections -->
 
             <StackLayout
-                    Orientation="Vertical"
-                    Padding="0,20,0,0">
+                x:Name="MorningGoalsSection"
+                Orientation="Vertical"
+                Padding="0,20,0,0">
 
-                    <!-- Morning Goals Label -->
-                    <Label
-                        Text="Morning Goals"
-                        FontSize="14"
-                        VerticalOptions="Center">
-                        <Label.FontFamily>
-                            <OnPlatform x:TypeArguments="x:String">
-                                <On Platform="iOS" Value="Lobster-Regular" />
-                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                            </OnPlatform>
-                        </Label.FontFamily>
-                    </Label>
+                <!-- Morning Goals Label -->
+                <Label
+                    Text="Morning Goals"
+                    FontSize="14"
+                    VerticalOptions="Center">
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Lobster-Regular" />
+                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
 
-                    <ScrollView
-                        Orientation="Horizontal"
-                        HorizontalOptions="Start"
-                        Padding="0,15,0,0">
+                <ScrollView
+                    Orientation="Horizontal"
+                    HorizontalOptions="Start"
+                    Padding="0,15,0,0">
 
-                        <StackLayout
-                            x:Name="MorningGoalsStackLayout"
-                            Orientation="Horizontal">
+                    <StackLayout
+                        x:Name="MorningGoalsStackLayout"
+                        Orientation="Horizontal">
 
-                            <!--Start Morning Goals-->
+                        <!--Start Morning Goals-->
                 
-                        </StackLayout>
+                    </StackLayout>
 
-                    </ScrollView>
+                </ScrollView>
 
-                </StackLayout>
+            </StackLayout>
 
             <StackLayout
                 x:Name="AfternoonREStackLayout"
@@ -139,34 +140,35 @@
             </StackLayout>
 
             <StackLayout
-                    Orientation="Vertical"
-                    Padding="0,20,0,0">
-                    <Label
-                        Text="Afternoon Goals"
-                        FontSize="14"
-                        VerticalOptions="Center">
-                        <Label.FontFamily>
-                            <OnPlatform x:TypeArguments="x:String">
-                                <On Platform="iOS" Value="Lobster-Regular" />
-                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                            </OnPlatform>
-                        </Label.FontFamily>
-                    </Label>
+                x:Name="AfternoonGoalsSection"
+                Orientation="Vertical"
+                Padding="0,20,0,0">
+                <Label
+                    Text="Afternoon Goals"
+                    FontSize="14"
+                    VerticalOptions="Center">
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Lobster-Regular" />
+                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
 
-                    <ScrollView
-                            Orientation="Horizontal"
-                            HorizontalOptions="Start"
-                            Padding="0,15,0,0">
+                <ScrollView
+                        Orientation="Horizontal"
+                        HorizontalOptions="Start"
+                        Padding="0,15,0,0">
 
-                            <StackLayout
-                                x:Name="AfternoonGoalsStackLayout"
-                                Orientation="Horizontal">
+                        <StackLayout
+                            x:Name="AfternoonGoalsStackLayout"
+                            Orientation="Horizontal">
 
-                                <!-- Start Afternoon Goals -->
-                            </StackLayout>
-                    </ScrollView>
+                            <!-- Start Afternoon Goals -->
+                        </StackLayout>
+                </ScrollView>
 
-                </StackLayout>
+            </StackLayout>
 
             <StackLayout
                 x:Name="EveningREStackLayout"
@@ -201,35 +203,36 @@
             </StackLayout>
 
             <!--Evening Goals-->
-                <StackLayout
-                    Orientation="Vertical"
-                    Padding="0,20,0,0">
-                    <Label
-                        Text="Evening Goals"
-                        FontSize="14"
-                        VerticalOptions="Center">
-                        <Label.FontFamily>
-                            <OnPlatform x:TypeArguments="x:String">
-                                <On Platform="iOS" Value="Lobster-Regular" />
-                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                            </OnPlatform>
-                        </Label.FontFamily>
-                    </Label>
+            <StackLayout
+                x:Name="EveningGoalsSection"
+                Orientation="Vertical"
+                Padding="0,20,0,0">
+                <Label
+                    Text="Evening Goals"
+                    FontSize="14"
+                    VerticalOptions="Center">
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Lobster-Regular" />
+                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
 
-                    <ScrollView
-                            Orientation="Horizontal"
-                            HorizontalOptions="Start"
-                            Padding="0,15,0,0">
+                <ScrollView
+                        Orientation="Horizontal"
+                        HorizontalOptions="Start"
+                        Padding="0,15,0,0">
 
-                            <StackLayout
-                                x:Name="EveningGoalsStackLayout"
-                                Orientation="Horizontal">
+                        <StackLayout
+                            x:Name="EveningGoalsStackLayout"
+                            Orientation="Horizontal">
 
-                                <!-- Start Evening Goals -->
-                            </StackLayout>
-                    </ScrollView>
+                            <!-- Start Evening Goals -->
+                        </StackLayout>
+                </ScrollView>
 
-                </StackLayout>
+            </StackLayout>
 
             <StackLayout
                 x:Name="NightREStackLayout"
@@ -264,35 +267,36 @@
             </StackLayout>
 
             <!--Night Goals-->
-                <StackLayout
-                    Orientation="Vertical"
-                    Padding="0,20,0,0">
-                    <Label
-                        Text="Night Goals"
-                        FontSize="14"
-                        VerticalOptions="Center">
-                        <Label.FontFamily>
-                            <OnPlatform x:TypeArguments="x:String">
-                                <On Platform="iOS" Value="Lobster-Regular" />
-                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                            </OnPlatform>
-                        </Label.FontFamily>
-                    </Label>
+            <StackLayout
+                x:Name="NightGoalsSection"
+                Orientation="Vertical"
+                Padding="0,20,0,0">
+                <Label
+                    Text="Night Goals"
+                    FontSize="14"
+                    VerticalOptions="Center">
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Lobster-Regular" />
+                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
 
-                    <ScrollView
-                            Orientation="Horizontal"
-                            HorizontalOptions="Start"
-                            Padding="0,15,0,0">
+                <ScrollView
+                        Orientation="Horizontal"
+                        HorizontalOptions="Start"
+                        Padding="0,15,0,0">
 
-                            <StackLayout
-                                x:Name="NightGoalsStackLayout"
-                                Orientation="Horizontal">
+                        <StackLayout
+                            x:Name="NightGoalsStackLayout"
+                            Orientation="Horizontal">
 
-                                <!-- Start Night Goals -->
-                            </StackLayout>
-                    </ScrollView>
+                            <!-- Start Night Goals -->
+                        </StackLayout>
+                </ScrollView>
 
-                </StackLayout>
+            </StackLayout>
 
             <StackLayout
                 Padding="0,30,0,0">

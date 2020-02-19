@@ -154,7 +154,12 @@ namespace ProjectCaitlin.Methods
                     {
                         JToken jsonMapAorT = jsonAorT["mapValue"]["fields"];
 
-                        if ((bool)jsonAorT["mapValue"]["fields"]["is_available"]["booleanValue"])
+                        var isDeleted = false;
+                        if (jsonMapAorT["deleted"] != null)
+                            if ((bool)jsonMapAorT["deleted"]["booleanValue"])
+                                isDeleted = true;
+
+                        if ((bool)jsonAorT["mapValue"]["fields"]["is_available"]["booleanValue"] && !isDeleted)
                         {
                             if (routineType == "routine")
                             {
@@ -255,9 +260,12 @@ namespace ProjectCaitlin.Methods
                     {
                         JToken jsonMapIorS = jsonIorS["mapValue"]["fields"];
 
-                        //Console.WriteLine(IsDateToday(jsonMapIorS["datetime_completed"]["stringValue"].ToString()));
+                        var isDeleted = false;
+                        if (jsonMapIorS["deleted"] != null)
+                            if ((bool)jsonMapIorS["deleted"]["booleanValue"])
+                                isDeleted = true;
 
-                        if ((bool)jsonMapIorS["is_available"]["booleanValue"])
+                        if ((bool)jsonMapIorS["is_available"]["booleanValue"] && !isDeleted)
                         {
                             if (routineType == "routine")
                             {

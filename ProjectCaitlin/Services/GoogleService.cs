@@ -215,8 +215,6 @@ namespace ProjectCaitlin.Services
 
             string timeMaxMin = String.Format("timeMax={0}-{1}-{2}T23%3A59%3A59-{3}%3A00&timeMin={0}-{1}-{2}T00%3A00%3A01-{3}%3A00", publicYear, monthString, dayString, paddedTimeZoneNum);
 
-            Console.WriteLine("timeMaxMin: " + timeMaxMin);
-
             string fullURI = baseUri + timeMaxMin;
 
             //Console.WriteLine(fullURI);
