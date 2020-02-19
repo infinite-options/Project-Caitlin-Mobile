@@ -11,16 +11,17 @@ namespace ProjectCaitlin.Views
         readonly GoalsRoutinesTemplateViewModel pageModel;
 
         public GoalsRoutinesTemplate()
-        { 
+        {
             InitializeComponent();
             pageModel = new GoalsRoutinesTemplateViewModel(this);
             BindingContext = pageModel;
-
         }
 
-       
+        protected override async void OnAppearing()
+        {
+            var googleService = new Services.GoogleService();
+            await googleService.RefreshToken();
 
-
-
+        }
     }
 }

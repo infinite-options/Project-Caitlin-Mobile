@@ -9,6 +9,7 @@ using ProjectCaitlin;
 using ProjectCaitlin.Authentication;
 using ProjectCaitlin.Methods;
 using Xamarin.Auth;
+using Xamarin.Forms;
 
 namespace ProjectCaitlin.Services
 {
@@ -18,7 +19,7 @@ namespace ProjectCaitlin.Services
         public async Task<string> SaveAccessTokenToFireBase(string accessToken)
         {
 
-            //Make HTTP Request
+            //Make HTTP POST Request
             var request = new HttpRequestMessage();
             request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/SetUserGoogleAuthToken");
             request.Method = HttpMethod.Post;
@@ -36,7 +37,7 @@ namespace ProjectCaitlin.Services
         public async Task<string> SaveRefreshTokenToFireBase(string refreshToken)
         {
 
-            //Make HTTP Request
+            //Make HTTP POST Request
             var request = new HttpRequestMessage();
             request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/SetUserGoogleRefreshToken");
             request.Method = HttpMethod.Post;
@@ -51,16 +52,49 @@ namespace ProjectCaitlin.Services
             return json;
         }
 
-        public async Task<string> RefreshToken(AuthenticatorCompletedEventArgs e, string client_Id)
+        //Use REFRESH TOKEN to receive another ACCESS TOKEN...and UPDATE App.user.access_token.
+        public async Task<string> RefreshToken()
         {
+            string clientId = null;
 
-            Dictionary<string, string> dictionary = new Dictionary<string, string> {
-                { "refresh_token", LoginPage.refreshToken },
-                { "client_id", client_Id },
-                { "grant_type", "refresh_token" } };
-            var request = new OAuth2Request("POST", new Uri(Constants.AccessTokenUrl), dictionary, e.Account);
-            var response = await request.GetResponseAsync();
-            return response.ToString();
+            switch (Device.RuntimePlatform)
+            {
+                case Device.iOS:
+                    clientId = Constants.iOSClientId;
+                    break;
+
+                case Device.Android:
+                    clientId = Constants.AndroidClientId;
+                    break;
+            }
+
+            var values = new Dictionary<string, string> {
+                { "refresh_token", App.user.refresh_token + "&" },
+                { "client_id", clientId + "&" },
+                { "grant_type", "refresh_token" }
+                };
+
+            var content = new FormUrlEncodedContent(values);
+            var client = new HttpClient();
+            var response = await client.PostAsync(Constants.AccessTokenUrl, content);
+            var json = await response.Content.ReadAsStringAsync();
+
+            //var request = new HttpRequestMessage();
+            //request.RequestUri = new Uri(Constants.AccessTokenUrl);
+            //request.Method = HttpMethod.Post;
+
+            //var client = new HttpClient();
+            //HttpResponseMessage response = await client.PostAsync(request);
+            //HttpContent content = response.Content;
+            //var json = await content.ReadAsStringAsync();
+
+            Console.WriteLine(json);
+
+            return json;
+
+            //var request = new OAuth2Request("POST", new Uri(Constants.AccessTokenUrl), dictionary, e.Account);
+            //var response = await request.GetResponseAsync();
+            //return response.ToString();
 
 
             //Make HTTP Request

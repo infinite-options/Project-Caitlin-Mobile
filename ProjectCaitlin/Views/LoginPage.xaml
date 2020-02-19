@@ -29,7 +29,6 @@
 
         <Button
             Text="IO Dev Access"
-            Clicked="SkipLoginClicked"
             Margin="60, 0"
             BackgroundColor="#4682B4"
             TextColor="White"

@@ -214,35 +214,6 @@ namespace ProjectCaitlin
 			DisplayAlert("Authentication error: " , e.Message, "OK");
 		}
 
-        public async void SkipLoginClicked(object sender, EventArgs e)
-        {
-            await RefreshAccessToken(null);
-        }
-
-
-
-        public async Task<string> RefreshAccessToken(AuthenticatorCompletedEventArgs e)
-        {
-
-            var googleService = new GoogleService();
-
-            switch (Device.RuntimePlatform)
-            {
-                case Device.iOS:
-                    clientId = Constants.iOSClientId;
-                    break;
-
-                case Device.Android:
-                    clientId = Constants.AndroidClientId;
-                    break;
-            }
-
-            var response = await googleService.RefreshToken(null, clientId);
-            Console.WriteLine(response);
-            await Navigation.PushAsync(new DailyViewPage());
-            return null;
-        }
-
 		public async void ListViewClicked(object sender, EventArgs e)
 		{
 			await Navigation.PushAsync(new ListViewPage());
