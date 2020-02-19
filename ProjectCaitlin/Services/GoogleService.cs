@@ -122,7 +122,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", LoginPage.accessToken);
+            string bearerString = string.Format("Bearer {0}", App.user.access_token);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept" , "application/json");
             var client = new HttpClient();
@@ -141,7 +141,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", LoginPage.accessToken);
+            string bearerString = string.Format("Bearer {0}", App.user.access_token);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
@@ -231,7 +231,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", LoginPage.accessToken);
+            string bearerString = string.Format("Bearer {0}", App.user.access_token);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
@@ -296,7 +296,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", LoginPage.accessToken);
+            string bearerString = string.Format("Bearer {0}", App.user.access_token);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
@@ -304,6 +304,20 @@ namespace ProjectCaitlin.Services
             HttpContent content = response.Content;
             var json = await content.ReadAsStringAsync();
             //Console.WriteLine(json);
+
+            JObject jsonParsed = JObject.Parse(json);
+
+            try
+            {
+                var test = jsonParsed["items"];
+            }
+            catch (NullReferenceException e)
+            {
+                var googleService = new GoogleService();
+                await RefreshToken();
+                return await googleService.GetAllTodaysEventsList(publicYear, publicMonth, publicDay, timeZoneNum);
+            }
+
             return (json);
         }
 
@@ -387,7 +401,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", LoginPage.accessToken);
+            string bearerString = string.Format("Bearer {0}", App.user.access_token);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
@@ -395,6 +409,7 @@ namespace ProjectCaitlin.Services
             HttpContent content = response.Content;
             var json = await content.ReadAsStringAsync();
             return (json);
+
         }
     }
 }

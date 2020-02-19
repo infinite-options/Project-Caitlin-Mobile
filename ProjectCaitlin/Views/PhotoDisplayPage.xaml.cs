@@ -40,30 +40,41 @@ namespace ProjectCaitlin
                 controlGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = gridItemSize});
 
             var photoCount = 0;
-            foreach (string photoURI in photoURIs)
-            {
-                if (photoCount % rowLength == 0)
-                {
-                    controlGrid.RowDefinitions.Add(new RowDefinition { Height = gridItemSize});
 
-                }
-                CachedImage webImage = new CachedImage
+            try
+            {
+                foreach (string photoURI in photoURIs)
                 {
-                    Source = Xamarin.Forms.ImageSource.FromUri(new Uri(photoURI)),
-                    Transformations = new List<ITransformation>() {
+                    if (photoCount % rowLength == 0)
+                    {
+                        controlGrid.RowDefinitions.Add(new RowDefinition { Height = gridItemSize });
+
+                    }
+                    CachedImage webImage = new CachedImage
+                    {
+                        Source = Xamarin.Forms.ImageSource.FromUri(new Uri(photoURI)),
+                        Transformations = new List<ITransformation>() {
                         new CropTransformation(),
                     },
 
-                };
+                    };
 
-                var indicator = new ActivityIndicator { Color = Color.Gray, };
-                indicator.SetBinding(ActivityIndicator.IsRunningProperty, "IsLoading");
-                indicator.BindingContext = webImage;
+                    var indicator = new ActivityIndicator { Color = Color.Gray, };
+                    indicator.SetBinding(ActivityIndicator.IsRunningProperty, "IsLoading");
+                    indicator.BindingContext = webImage;
 
-                controlGrid.Children.Add(indicator, photoCount % rowLength, photoCount / rowLength);
-                controlGrid.Children.Add(webImage, photoCount % rowLength, photoCount / rowLength);
-                photoCount++;
+                    controlGrid.Children.Add(indicator, photoCount % rowLength, photoCount / rowLength);
+                    controlGrid.Children.Add(webImage, photoCount % rowLength, photoCount / rowLength);
+                    photoCount++;
+                }
             }
+            catch (NullReferenceException e)
+            {
+                var googleService = new GoogleService();
+                await googleService.RefreshToken();
+                SetupUI();
+            }
+
             scrollView.Content = controlGrid;
             Content = scrollView;
         }

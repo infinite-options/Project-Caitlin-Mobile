@@ -50,7 +50,7 @@ namespace ProjectCaitlin
         {
             InitializeComponent();
 
-            SetupUIAsync();
+            user = App.user;
 
             //dateTimeNow = DateTime.Now;
             dateTimeNow = new DateTime(2020, 2, 19, 10, 0, 0);
@@ -58,10 +58,10 @@ namespace ProjectCaitlin
             labelFont = Device.RuntimePlatform == Device.iOS ? "Lobster-Regular" :
                 Device.RuntimePlatform == Device.Android ? "Lobster-Regular.ttf#Lobster-Regular" : "Assets/Fonts/Lobster-Regular.ttf#Lobster";
 
-            user = App.user;
             FSMethods = new FirestoreMethods("7R6hAVmDrNutRkG3sVRy");
 
             StartTimer();
+            SetupUIAsync();
         }
 
         async Task SetupUIAsync()
