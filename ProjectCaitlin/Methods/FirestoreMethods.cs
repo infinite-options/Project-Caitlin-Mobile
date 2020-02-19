@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
@@ -41,6 +42,8 @@ namespace ProjectCaitlin.Methods
                 }
                 catch
                 {
+                    Console.WriteLine("Error with json goal/routine token:");
+                    Console.WriteLine(userJson);
                     return;
                 }
 
@@ -52,48 +55,73 @@ namespace ProjectCaitlin.Methods
                 App.user.refresh_token = userJson["fields"]["google_refresh_token"]["stringValue"].ToString();
 
 
-                foreach (JToken jsonGoalOrRoutine in userJsonGoalsAndRoutines)
+                foreach (JToken jsonGorR in userJsonGoalsAndRoutines)
                 {
-                    JToken jsonMapGorR = jsonGoalOrRoutine["mapValue"]["fields"];
-
-                    if ((bool)jsonMapGorR["is_available"]["booleanValue"])
+                    try
                     {
-                        if ((bool)jsonMapGorR["is_persistent"]["booleanValue"])
+                        JToken jsonMapGorR = jsonGorR["mapValue"]["fields"];
+
+                        var isDeleted = false;
+                        if (jsonMapGorR["deleted"] != null)
+                            if ((bool)jsonMapGorR["deleted"]["booleanValue"])
+                                isDeleted = true;
+
+                        if ((bool)jsonMapGorR["is_available"]["booleanValue"] && !isDeleted)
                         {
-                            routine routine = new routine();
-                            routine.title = jsonMapGorR["title"]["stringValue"].ToString();
-                            routine.id = jsonMapGorR["id"]["stringValue"].ToString();
-                            routine.photo = jsonMapGorR["photo"]["stringValue"].ToString();
+                            if ((bool)jsonMapGorR["is_persistent"]["booleanValue"])
+                            {
+                                routine routine = new routine();
+                                routine.title = jsonMapGorR["title"]["stringValue"].ToString();
+                                routine.id = jsonMapGorR["id"]["stringValue"].ToString();
+                                routine.photo = jsonMapGorR["photo"]["stringValue"].ToString();
+                                routine.isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"]
+                                    && IsDateToday(jsonMapGorR["datetime_completed"]["stringValue"].ToString());
+                                routine.availableStartTime = DateTime.ParseExact(jsonMapGorR["available_start_time"]["stringValue"].ToString(),
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
+                                routine.availableEndTime = DateTime.ParseExact(jsonMapGorR["available_end_time"]["stringValue"].ToString(),
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
 
-                            App.user.routines.Add(routine);
+                                App.user.routines.Add(routine);
 
-                            //Console.WriteLine("on Routine: " + routine.id);
+                                Console.WriteLine("on Routine: " + routine.id);
+                            }
+                            else
+                            {
+                                goal goal = new goal();
+                                goal.title = jsonMapGorR["title"]["stringValue"].ToString();
+                                goal.id = jsonMapGorR["id"]["stringValue"].ToString();
+                                goal.photo = jsonMapGorR["photo"]["stringValue"].ToString();
+                                goal.isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"]
+                                    && IsDateToday(jsonMapGorR["datetime_completed"]["stringValue"].ToString());
+                                goal.availableStartTime = DateTime.ParseExact(jsonMapGorR["available_start_time"]["stringValue"].ToString(),
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
+                                goal.availableEndTime = DateTime.ParseExact(jsonMapGorR["available_end_time"]["stringValue"].ToString(),
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
+
+                                App.user.goals.Add(goal);
+
+                                Console.WriteLine("on Goal: " + goal.id);
+                            }
                         }
-                        else
-                        {
-                            goal goal = new goal();
-                            goal.title = jsonMapGorR["title"]["stringValue"].ToString();
-                            goal.id = jsonMapGorR["id"]["stringValue"].ToString();
-                            goal.photo = jsonMapGorR["photo"]["stringValue"].ToString();
-
-                            App.user.goals.Add(goal);
-
-                            //Console.WriteLine("Loading Complete");
-                        }
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Error with json goal/routine token:");
+                        Console.WriteLine(jsonGorR);
                     }
                 }
 
                 int routineIdx = 0;
                 foreach (routine routine in App.user.routines)
                 {
-                    LoadTasks(routine.id, routineIdx, "routine");
+                    _ = LoadTasks(routine.id, routineIdx, "routine");
                     routineIdx++;
                 }
 
                 int goalIdx = 0;
                 foreach (goal goal in App.user.goals)
                 {
-                    LoadTasks(goal.id, goalIdx, "goal");
+                    _ = LoadTasks(goal.id, goalIdx, "goal");
                     goalIdx++;
                 }
             }
@@ -119,53 +147,87 @@ namespace ProjectCaitlin.Methods
                 }
                 catch
                 {
+                    Console.WriteLine("Error with json action/task token:");
+                    Console.WriteLine(taskJson);
                     return;
                 }
 
                 foreach (JToken jsonAorT in jsonActionsAndTasks)
                 {
-                    JToken jsonMapAorT = jsonAorT["mapValue"]["fields"];
-
-                    if ((bool)jsonAorT["mapValue"]["fields"]["is_available"]["booleanValue"])
+                    try
                     {
-                        if (routineType == "routine")
+                        JToken jsonMapAorT = jsonAorT["mapValue"]["fields"];
+
+                        var isDeleted = false;
+                        if (jsonMapAorT["deleted"] != null)
+                            if ((bool)jsonMapAorT["deleted"]["booleanValue"])
+                                isDeleted = true;
+
+                        if ((bool)jsonAorT["mapValue"]["fields"]["is_available"]["booleanValue"] && !isDeleted)
                         {
-                            task task = new task();
-                            task.title = jsonMapAorT["title"]["stringValue"].ToString();
-                            task.id = jsonMapAorT["id"]["stringValue"].ToString();
-                            task.photo = jsonMapAorT["photo"]["stringValue"].ToString();
+                            if (routineType == "routine")
+                            {
+                                task task = new task();
+                                task.title = jsonMapAorT["title"]["stringValue"].ToString();
+                                task.id = jsonMapAorT["id"]["stringValue"].ToString();
+                                task.photo = jsonMapAorT["photo"]["stringValue"].ToString();
+                                task.isComplete = (bool)jsonMapAorT["is_complete"]["booleanValue"]
+                                    && IsDateToday(jsonMapAorT["datetime_completed"]["stringValue"].ToString());
+                                task.availableStartTime = DateTime.ParseExact(jsonMapAorT["available_start_time"]["stringValue"].ToString(),
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
+                                task.availableEndTime = DateTime.ParseExact(jsonMapAorT["available_end_time"]["stringValue"].ToString(),
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
 
-                            App.user.routines[routineIdx].tasks.Add(task);
+                                App.user.routines[routineIdx].tasks.Add(task);
 
-                            //Console.WriteLine("on Task: " + task.id);
+                                Console.WriteLine("on Task: " + task.id);
 
+                            }
+                            else if (routineType == "goal")
+                            {
+                                action action = new action();
+                                action.title = jsonMapAorT["title"]["stringValue"].ToString();
+                                action.id = jsonMapAorT["id"]["stringValue"].ToString();
+                                action.photo = jsonMapAorT["photo"]["stringValue"].ToString();
+                                action.isComplete = (bool)jsonMapAorT["is_complete"]["booleanValue"]
+                                    && IsDateToday(jsonMapAorT["datetime_completed"]["stringValue"].ToString());
+                                action.availableStartTime = DateTime.ParseExact(jsonMapAorT["available_start_time"]["stringValue"].ToString(),
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
+                                action.availableEndTime = DateTime.ParseExact(jsonMapAorT["available_end_time"]["stringValue"].ToString(),
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
+
+                                App.user.goals[routineIdx].actions.Add(action);
+
+                                Console.WriteLine("on Action: " + action.id);
+                            }
                         }
-                        else if (routineType == "goal")
-                        {
-                            action action = new action();
-                            action.title = jsonMapAorT["title"]["stringValue"].ToString();
-                            action.id = jsonMapAorT["id"]["stringValue"].ToString();
-                            action.photo = jsonMapAorT["photo"]["stringValue"].ToString();
-
-                            App.user.goals[routineIdx].actions.Add(action);
-
-                            //Console.WriteLine("on Action: " + action.id);
-                        }
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Error with json action/task token:");
+                        Console.WriteLine(jsonAorT);
                     }
                 }
 
-                int taskIdx = 0;
-                foreach (task task in App.user.routines[routineIdx].tasks)
+                if (routineType == "routine")
                 {
-                    LoadSteps(routineID, task.id, routineIdx, taskIdx, routineType);
-                    taskIdx++;
+                    int taskIdx = 0;
+                    foreach (task task in App.user.routines[routineIdx].tasks)
+                    {
+                        Console.WriteLine("on Task step load: " + task.id);
+                        _ = LoadSteps(routineID, task.id, routineIdx, taskIdx, routineType);
+                        taskIdx++;
+                    }
                 }
-
-                int actionIdx = 0;
-                foreach (action action in App.user.goals[routineIdx].actions)
+                else
                 {
-                    LoadSteps(routineID, action.id, routineIdx, actionIdx, routineType);
-                    actionIdx++;
+                    int actionIdx = 0;
+                    foreach (action action in App.user.goals[routineIdx].actions)
+                    {
+                        Console.WriteLine("on action step load: " + action.id);
+                        _ = LoadSteps(routineID, action.id, routineIdx, actionIdx, routineType);
+                        actionIdx++;
+                    }
                 }
             }
         }
@@ -191,38 +253,80 @@ namespace ProjectCaitlin.Methods
                 }
                 catch
                 {
+                    Console.WriteLine("Error with json action/task token:");
+                    Console.WriteLine(stepJson);
                     return;
                 }
 
                 foreach (JToken jsonIorS in jsonInstructionsAndSteps)
                 {
-                    JToken jsonMapIorS = jsonIorS["mapValue"]["fields"];
-
-                    if ((bool)jsonIorS["mapValue"]["fields"]["is_available"]["booleanValue"])
+                    try
                     {
-                        if (routineType == "routine")
+                        JToken jsonMapIorS = jsonIorS["mapValue"]["fields"];
+
+                        var isDeleted = false;
+                        if (jsonMapIorS["deleted"] != null)
+                            if ((bool)jsonMapIorS["deleted"]["booleanValue"])
+                                isDeleted = true;
+
+                        if ((bool)jsonMapIorS["is_available"]["booleanValue"] && !isDeleted)
                         {
-                            step step = new step();
-                            step.title = jsonMapIorS["title"]["stringValue"].ToString();
-                            step.photo = jsonIorS["mapValue"]["fields"]["photo"]["stringValue"].ToString();
+                            if (routineType == "routine")
+                            {
+                                step step = new step();
+                                step.title = jsonMapIorS["title"]["stringValue"].ToString();
+                                step.photo = jsonMapIorS["photo"]["stringValue"].ToString();
+                                step.isComplete = (bool)jsonMapIorS["is_complete"]["booleanValue"]
+                                    && IsDateToday(jsonMapIorS["datetime_completed"]["stringValue"].ToString());
+                                step.availableStartTime = DateTime.ParseExact(jsonMapIorS["available_start_time"]["stringValue"].ToString(),
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
+                                step.availableEndTime = DateTime.ParseExact(jsonMapIorS["available_end_time"]["stringValue"].ToString(),
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
 
-                            //Console.WriteLine("on Step: " + step.title);
+                                Console.WriteLine("on Step: " + step.isComplete);
 
-                            App.user.routines[routineIdx].tasks[taskIdx].steps.Add(step);
+                                App.user.routines[routineIdx].tasks[taskIdx].steps.Add(step);
+                            }
+                            else if (routineType == "goal")
+                            {
+                                instruction instruction = new instruction();
+                                instruction.title = jsonMapIorS["title"]["stringValue"].ToString();
+                                instruction.photo = jsonMapIorS["photo"]["stringValue"].ToString();
+                                instruction.isComplete = (bool)jsonMapIorS["is_complete"]["booleanValue"]
+                                    && IsDateToday(jsonMapIorS["datetime_completed"]["stringValue"].ToString());
+                                instruction.availableStartTime = DateTime.ParseExact(jsonMapIorS["available_start_time"]["stringValue"].ToString(),
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
+                                instruction.availableEndTime = DateTime.ParseExact(jsonMapIorS["available_end_time"]["stringValue"].ToString(),
+                                    "HH:mm:ss", CultureInfo.InvariantCulture);
+
+
+
+                                App.user.goals[routineIdx].actions[taskIdx].instructions.Add(instruction);
+
+                                Console.WriteLine("on Instruction: " + instruction.isComplete);
+                            }
                         }
-                        else if (routineType == "goal")
-                        {
-                            instruction instruction = new instruction();
-                            instruction.title = jsonMapIorS["title"]["stringValue"].ToString();
-                            instruction.photo = jsonMapIorS["photo"]["stringValue"].ToString();
-
-                            App.user.goals[routineIdx].actions[taskIdx].instructions.Add(instruction);
-
-                            //Console.WriteLine("on Instruction: " + instruction.title);
-                        }
+                    }
+                    catch
+                    {
+                        Console.WriteLine("Error with json action/task token:");
+                        Console.WriteLine(jsonIorS);
                     }
                 }
             }
+        }
+
+        private bool IsDateToday(string dateTimeString)
+        {
+            //Console.WriteLine("checkDatestring: " + dateTimeString);
+
+            DateTime today = DateTime.Now;
+            DateTime checkDate = DateTime.Parse(dateTimeString);
+
+            //Console.WriteLine("checkDate: " + checkDate.ToString());
+            //Console.WriteLine("checkDate result: " + (today.Date == checkDate.Date).ToString());
+
+            return (today.Date == checkDate.Date) ? true : false;
         }
     }
 }

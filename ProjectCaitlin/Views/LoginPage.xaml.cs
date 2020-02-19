@@ -193,7 +193,7 @@ namespace ProjectCaitlin
                 await googleService.SaveRefreshTokenToFireBase(refreshToken);
 
                 //Navigate to the Daily Page after Login
-                await Navigation.PushAsync(new GoalsRoutinesTemplate());
+                await Navigation.PushAsync(new ListViewPage());
 			}
 		}
 
