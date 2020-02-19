@@ -46,6 +46,8 @@
     <Compile Remove="DailyPage.xaml.cs" />
     <Compile Remove="ViewModel\DailyViewModel.cs" />
 
+    <Compile Remove="Models\tokens.cs" />
+    <Compile Remove="Views\LoadingPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ViewModel\DailyViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />

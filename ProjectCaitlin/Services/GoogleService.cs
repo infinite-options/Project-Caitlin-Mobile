@@ -7,12 +7,50 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using ProjectCaitlin;
 using ProjectCaitlin.Authentication;
+using ProjectCaitlin.Methods;
 using Xamarin.Auth;
 
 namespace ProjectCaitlin.Services
 {
     public class GoogleService
     {
+
+        public async Task<string> SaveAccessTokenToFireBase(string accessToken)
+        {
+
+            //Make HTTP Request
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/SetUserGoogleAuthToken");
+            request.Method = HttpMethod.Post;
+
+            //Format Headers of Request with included Token
+            request.Headers.Add("userID", "7R6hAVmDrNutRkG3sVRy");
+            request.Headers.Add("token", accessToken);
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+            HttpContent content = response.Content;
+            var json = await content.ReadAsStringAsync();
+            return json;
+        }
+
+        public async Task<string> SaveRefreshTokenToFireBase(string refreshToken)
+        {
+
+            //Make HTTP Request
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/SetUserGoogleRefreshToken");
+            request.Method = HttpMethod.Post;
+
+            //Format Headers of Request with included Token
+            request.Headers.Add("userID", "7R6hAVmDrNutRkG3sVRy");
+            request.Headers.Add("token", refreshToken);
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+            HttpContent content = response.Content;
+            var json = await content.ReadAsStringAsync();
+            return json;
+        }
+
         public async Task<string> RefreshToken(AuthenticatorCompletedEventArgs e, string client_Id)
         {
 
@@ -79,7 +117,7 @@ namespace ProjectCaitlin.Services
             return (json);
         }
 
-        public async Task<string> GetSpecificEventsList(int publicYear, int publicMonth, int publicDay, int uTCHour, int currentLocalUTCMinute, int timeZoneNum)
+        public async Task<string> GetTodaysEventsList(int publicYear, int publicMonth, int publicDay, int uTCHour, int currentLocalUTCMinute, int timeZoneNum)
         {
 
             //Make HTTP Request

@@ -15,7 +15,11 @@ namespace ProjectCaitlin.Models
 
 		public string lastName { get; set; }
 
-		public List<routine> routines { get; set; } = new List<routine>();
+        public string access_token { get; set; }
+
+        public string refresh_token { get; set; }
+
+        public List<routine> routines { get; set; } = new List<routine>();
 
 		public List<goal> goals { get; set; } = new List<goal>();
 

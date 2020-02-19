@@ -27,7 +27,7 @@ namespace ProjectCaitlin
 		Account account;
 		public static string accessToken;
         FirestoreMethods FSMethods;
-        public static string refreshToken = "1//069Xuswpe4A0DCgYIARAAGAYSNwF-L9IrKTPwpUkMvv6hoKunRuaDjlC07qZVrtdkaujl3aMRpWWqAk_1OLBp79ETPRtiyhiDI9U";
+        public static string refreshToken;
         public string clientId;
 
         public LoginPage()
@@ -183,6 +183,7 @@ namespace ProjectCaitlin
 
                 //Reset accessToken
                 accessToken = e.Account.Properties["access_token"];
+                refreshToken = e.Account.Properties["refresh_token"];
 
                 //Write the Toekn to console, in case it changes
                 Console.WriteLine("HERE is the TOKEN------------------------------------------------");
@@ -191,6 +192,10 @@ namespace ProjectCaitlin
                 Console.WriteLine(e.Account.Properties["refresh_token"]);
                 Console.WriteLine("----------------------------------------------------------------");
 
+                //Save to App.User AND Update Firebase with pertitnent info
+                var googleService = new GoogleService();
+                await googleService.SaveAccessTokenToFireBase(accessToken);
+                await googleService.SaveRefreshTokenToFireBase(refreshToken);
 
                 //Navigate to the Daily Page after Login
                 await Navigation.PushAsync(new GoalsRoutinesTemplate());

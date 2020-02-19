@@ -10,7 +10,7 @@ namespace ProjectCaitlin.Methods
 {
     public class FirestoreMethods
     {
-        string uid;
+        public string uid;
 
         public FirestoreMethods(string _uid)
         {
@@ -47,6 +47,10 @@ namespace ProjectCaitlin.Methods
 
                 App.user.firstName = userJson["fields"]["first_name"]["stringValue"].ToString();
                 App.user.lastName = userJson["fields"]["last_name"]["stringValue"].ToString();
+
+                App.user.access_token = userJson["fields"]["google_auth_token"]["stringValue"].ToString();
+                App.user.refresh_token = userJson["fields"]["google_refresh_token"]["stringValue"].ToString();
+
 
                 foreach (JToken jsonGoalOrRoutine in userJsonGoalsAndRoutines)
                 {
