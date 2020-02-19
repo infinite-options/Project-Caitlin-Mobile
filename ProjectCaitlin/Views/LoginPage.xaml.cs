@@ -26,7 +26,7 @@ namespace ProjectCaitlin
 
 		Account account;
 		public static string accessToken;
-        FirestoreMethods FSMethods;
+		FirestoreService firestoreService;
         public static string refreshToken;
         public string clientId;
 
@@ -37,8 +37,8 @@ namespace ProjectCaitlin
 
         protected override async void OnAppearing()
         {
-            var FSMethods = new FirestoreMethods("7R6hAVmDrNutRkG3sVRy");
-            await FSMethods.LoadUser();
+            var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
+            await firestoreService.LoadUser();
 
             if (App.user.old_refresh_token != App.user.refresh_token)
             {
@@ -54,7 +54,7 @@ namespace ProjectCaitlin
 
         async Task LoadFirebaseUser()
         {
-			await FSMethods.LoadUser();
+			await firestoreService.LoadUser();
 			OnPropertyChanged(nameof(App.user));
 			Console.WriteLine("user first name: " + App.user.firstName);
 			Console.WriteLine("user last name: " + App.user.lastName);

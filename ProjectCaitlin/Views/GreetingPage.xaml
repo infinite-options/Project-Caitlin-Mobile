@@ -4,7 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="ProjectCaitlin.Views.GreetingPage">
+             x:Class="ProjectCaitlin.Views.GreetingPage"
+             NavigationPage.HasNavigationBar="True">
     <ContentPage.Content>
         <StackLayout BackgroundColor="#1A1827">
             <StackLayout>
@@ -33,7 +34,7 @@
                 <Label Text=" "  TextColor="White" FontSize="Small" HorizontalOptions="Center" VerticalOptions="Center"/>
             </StackLayout>
             <StackLayout>
-                <Button Text="View My Info" CornerRadius="10" Margin="20" Clicked ="btn1Clicked" TextColor="White"  BackgroundColor="#59556D" />
+                <!--<Button Text="View My Info" CornerRadius="10" Margin="20" Clicked ="btn1Clicked" TextColor="White"  BackgroundColor="#59556D" />-->
                 <Button Text="Manage My Day " CornerRadius="10" Margin="20" Clicked="btn2Clicked" TextColor="White" BackgroundColor="#59556D"/>
             </StackLayout>
 

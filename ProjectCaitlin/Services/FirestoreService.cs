@@ -9,11 +9,11 @@ using ProjectCaitlin.Models;
 
 namespace ProjectCaitlin.Methods
 {
-    public class FirestoreMethods
+    public class FirestoreService
     {
         public string uid;
 
-        public FirestoreMethods(string _uid)
+        public FirestoreService(string _uid)
         {
             uid = _uid;
         }

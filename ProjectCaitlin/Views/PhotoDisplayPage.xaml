@@ -1,7 +1,86 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="ProjectCaitlin.PhotoDisplayPage"
-             Title="Photos">
+             BackgroundColor="#E9E8E8"
+             Title="Photos"
+             NavigationPage.HasBackButton="False"
+             NavigationPage.HasNavigationBar="False">
+    <StackLayout>
+        <ScrollView
+            x:Name="photoScrollView">
+            <Grid
+                    x:Name="controlGrid"
+                    VerticalOptions="StartAndExpand">
 
+            </Grid>
+        </ScrollView>
+
+        <Grid
+            Grid.Row="1"
+            Grid.Column="4"
+            HeightRequest="150"
+            HorizontalOptions="FillAndExpand"
+            VerticalOptions="EndAndExpand">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition
+                    Width="0.25*" />
+                <ColumnDefinition
+                    Width="0.25*" />
+                <ColumnDefinition
+                    Width="0.25*" />
+                <ColumnDefinition
+                    Width="0.25*" />
+            </Grid.ColumnDefinitions>
+            <Grid.RowDefinitions>
+                <RowDefinition
+                    Height="1*" />
+            </Grid.RowDefinitions>
+            <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="0">
+                <forms:CachedImage x:Name="MyDayButton" DownsampleWidth="35" BackgroundColor="Transparent" Source="mydayiconnotext.png" />
+                <Label Text="My Day" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Lobster-Regular" />
+                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
+            </StackLayout>
+            <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="1">
+                <forms:CachedImage x:Name="ListViewButton" DownsampleWidth="35" BackgroundColor="Transparent" Source="listviewiconnotext.png" />
+                <Label Text="Today's List" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Lobster-Regular" />
+                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
+                </StackLayout>
+            <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="2">
+                <forms:CachedImage DownsampleWidth="35" BackgroundColor="Transparent" Source="myphotosiconselectednotext.png" />
+                <Label Text="My Photos" FontSize="12" TextColor="#d6a14b" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Lobster-Regular" />
+                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
+                </StackLayout>
+            <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="3">
+                <forms:CachedImage x:Name="AboutMeButton" DownsampleWidth="35" BackgroundColor="Transparent" Source="aboutmeiconnotext.png" />
+                <Label Text="About Me" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="Lobster-Regular" />
+                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
+            </StackLayout>
+        </Grid>
+    </StackLayout>
 </ContentPage>

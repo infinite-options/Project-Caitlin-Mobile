@@ -432,16 +432,6 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
 
-
-
-
-
-
-
-
-
-
-
             if (App.user.goals.Count >= 1)
                 Items.Add(new
                 {

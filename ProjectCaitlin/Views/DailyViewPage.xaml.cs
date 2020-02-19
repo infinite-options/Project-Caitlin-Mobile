@@ -17,7 +17,7 @@ namespace ProjectCaitlin
     public partial class DailyViewPage : ContentPage
     {
         user user;
-        FirestoreMethods FSMethods;
+        FirestoreService firestoreService;
 
         public int publicYear;
         public int publicMonth;
@@ -306,7 +306,7 @@ namespace ProjectCaitlin
         public async void RefreshDatabase(object sender, EventArgs e)
         {
             RefreshDatabaseButton.IsEnabled = false;
-            await FSMethods.LoadUser();
+            await firestoreService.LoadUser();
             user = App.user;
             SetupUI();
             RefreshDatabaseButton.IsEnabled = true;

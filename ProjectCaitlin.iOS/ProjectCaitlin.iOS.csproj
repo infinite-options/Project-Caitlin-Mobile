@@ -197,5 +197,14 @@
     <BundleResource Include="..\ProjectCaitlin\Icons\moon.png">
       <Link>Resources\moon.png</Link>
     </BundleResource>
+    <BundleResource Include="Resources\eventIcon.jpg" />
+    <BundleResource Include="Resources\aboutmeiconnotext.png" />
+    <BundleResource Include="Resources\aboutmeiconselectednotext.png" />
+    <BundleResource Include="Resources\listviewiconnotext.png" />
+    <BundleResource Include="Resources\listviewiconselectednotext.png" />
+    <BundleResource Include="Resources\mydayiconnotext.png" />
+    <BundleResource Include="Resources\mydayiconselectednotext.png" />
+    <BundleResource Include="Resources\myphotosiconnotext.png" />
+    <BundleResource Include="Resources\myphotosiconselectednotext.png" />
   </ItemGroup>
 </Project>

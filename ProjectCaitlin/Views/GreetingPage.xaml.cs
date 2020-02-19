@@ -15,6 +15,9 @@ namespace ProjectCaitlin.Views
         public GreetingPage()
         {
             InitializeComponent();
+            var navigationPage = Application.Current.MainPage as NavigationPage;
+            navigationPage.BarBackgroundColor = Color.FromHex("#E9E8E8");
+
         }
 
         async void btn1Clicked(object sender, EventArgs e)

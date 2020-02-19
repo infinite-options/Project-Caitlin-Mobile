@@ -5,6 +5,7 @@ using FFImageLoading.Forms;
 using FFImageLoading.Transformations;
 using FFImageLoading.Work;
 using ProjectCaitlin.Services;
+using ProjectCaitlin.Views;
 using Xamarin.Forms;
 
 namespace ProjectCaitlin
@@ -26,14 +27,11 @@ namespace ProjectCaitlin
         {
             photoURIs = await GooglePhotoService.GetPhotos();
 
+            AddTapGestures();
+
             int rowLength = 3;
             double gridItemSize = (Application.Current.MainPage.Width / rowLength) - (1.2 * rowLength);
 
-            var scrollView = new ScrollView();
-            var controlGrid = new Grid
-            {
-                HorizontalOptions = LayoutOptions.Center
-            };
             controlGrid.RowDefinitions.Add(new RowDefinition { Height = gridItemSize });
 
             for (int i = 0; i < rowLength; i ++)
@@ -75,8 +73,31 @@ namespace ProjectCaitlin
                 SetupUI();
             }
 
-            scrollView.Content = controlGrid;
-            Content = scrollView;
+            photoScrollView.Content = controlGrid;
+
+        }
+
+        private void AddTapGestures()
+        {
+
+
+            var tapGestureRecognizer1 = new TapGestureRecognizer();
+            tapGestureRecognizer1.Tapped += async (s, e) => {
+                await Navigation.PushAsync(new GreetingPage());
+            };
+            AboutMeButton.GestureRecognizers.Add(tapGestureRecognizer1);
+
+            var tapGestureRecognizer2 = new TapGestureRecognizer();
+            tapGestureRecognizer2.Tapped += async (s, e) => {
+                await Navigation.PushAsync(new ListViewPage());
+            };
+            ListViewButton.GestureRecognizers.Add(tapGestureRecognizer2);
+
+            var tapGestureRecognizer3 = new TapGestureRecognizer();
+            tapGestureRecognizer3.Tapped += async (s, e) => {
+                await Navigation.PushAsync(new GoalsRoutinesTemplate());
+            };
+            MyDayButton.GestureRecognizers.Add(tapGestureRecognizer3);
         }
     }
 }

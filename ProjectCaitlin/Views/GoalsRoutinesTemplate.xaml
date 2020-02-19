@@ -1,6 +1,7 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:viewModels="clr-namespace:ProjectCaitlin.ViewModel"
              xmlns:controls="clr-namespace:PanCardView.Controls;assembly=PanCardView"
              xmlns:cards="clr-namespace:PanCardView;assembly=PanCardView"
@@ -153,26 +154,73 @@
 
                 </StackLayout>
 
-                <StackLayout HeightRequest="80" WidthRequest="80">
-            <Grid Grid.Row="1" Grid.Column="4" Padding="10" HeightRequest="60" WidthRequest="60">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.25*" />
-                    <ColumnDefinition Width="0.25*" />
-                    <ColumnDefinition Width="0.25*" />
-                    <ColumnDefinition Width="0.25*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition Height="1*" />
-                </Grid.RowDefinitions>
-                        <ImageButton BackgroundColor="Transparent" Source="aboutmeicon.png" Grid.Column="0" Clicked="btn1" />
-                        <ImageButton BackgroundColor="Transparent" Source="listviewicon.png" Grid.Column="1" Clicked="btn2" />
-                        <ImageButton BackgroundColor="Transparent" Source="myphotosicon.png" Grid.Column="2" Clicked="btn3" />
-                        <ImageButton BackgroundColor="Transparent" Source="mydayiconselected.png" Grid.Column="3" />
-                    </Grid>
-        </StackLayout>
+                <Grid
+                    Grid.Row="1"
+                    Grid.Column="4"
+                    HeightRequest="150"
+                    HorizontalOptions="FillAndExpand"
+                    VerticalOptions="End">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition
+                            Width="0.25*" />
+                        <ColumnDefinition
+                            Width="0.25*" />
+                        <ColumnDefinition
+                            Width="0.25*" />
+                        <ColumnDefinition
+                            Width="0.25*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition
+                            Height="1*" />
+                    </Grid.RowDefinitions>
+                    <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="0">
+                        <forms:CachedImage DownsampleWidth="35" BackgroundColor="Transparent" Source="mydayiconselectednotext.png" />
+                        <Label Text="My Day" FontSize="12" TextColor="#d6a14b" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                            <Label.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                </OnPlatform>
+                            </Label.FontFamily>
+                        </Label>
+                     </StackLayout>
+                    <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="1">
+                        <forms:CachedImage x:Name="ListViewButton" DownsampleWidth="35" BackgroundColor="Transparent" Source="listviewiconnotext.png" />
+                        <Label Text="Today's List" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                            <Label.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                </OnPlatform>
+                            </Label.FontFamily>
+                        </Label>
+                     </StackLayout>
+                    <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="2">
+                        <forms:CachedImage DownsampleWidth="35" x:Name="MyPhotosButton" BackgroundColor="Transparent" Source="myphotosiconnotext.png" />
+                        <Label Text="My Photos" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                            <Label.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                </OnPlatform>
+                            </Label.FontFamily>
+                        </Label>
+                    </StackLayout>
+
+                    <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="3">
+                        <forms:CachedImage DownsampleWidth="35" x:Name="AboutMeButton" BackgroundColor="Transparent" Source="aboutmeiconnotext.png" />
+                        <Label Text="About Me" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                            <Label.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                </OnPlatform>
+                            </Label.FontFamily>
+                        </Label>
+                     </StackLayout>
+                </Grid>
             </StackLayout>
-
         </StackLayout>
-
     </ContentPage.Content>
 </ContentPage>
