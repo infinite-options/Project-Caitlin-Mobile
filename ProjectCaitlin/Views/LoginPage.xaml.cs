@@ -33,8 +33,21 @@ namespace ProjectCaitlin
         public LoginPage()
         {
 			InitializeComponent();
-			FSMethods = new FirestoreMethods("7R6hAVmDrNutRkG3sVRy");
-			LoadFirebaseUser();
+        }
+
+        protected override async void OnAppearing()
+        {
+            var FSMethods = new FirestoreMethods("7R6hAVmDrNutRkG3sVRy");
+            await FSMethods.LoadUser();
+
+            if (App.user.old_refresh_token != App.user.refresh_token)
+            {
+                if(App.user.access_token != null)
+                {
+                    await Navigation.PushAsync(new GoalsRoutinesTemplate());
+                }
+            }
+
         }
 
         async Task LoadFirebaseUser()

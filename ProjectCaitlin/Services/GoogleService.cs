@@ -10,11 +10,14 @@ using ProjectCaitlin.Authentication;
 using ProjectCaitlin.Methods;
 using Xamarin.Auth;
 using Xamarin.Forms;
+using Newtonsoft.Json.Linq;
 
 namespace ProjectCaitlin.Services
 {
     public class GoogleService
     {
+
+        public INavigation Navigation;
 
         public async Task<string> SaveAccessTokenToFireBase(string accessToken)
         {
@@ -56,37 +59,49 @@ namespace ProjectCaitlin.Services
         public async Task<string> RefreshToken()
         {
             string clientId = null;
+            string redirectUri = null;
 
             switch (Device.RuntimePlatform)
             {
                 case Device.iOS:
                     clientId = Constants.iOSClientId;
+                    redirectUri = Constants.iOSRedirectUrl;
                     break;
 
                 case Device.Android:
                     clientId = Constants.AndroidClientId;
+                    redirectUri = Constants.AndroidRedirectUrl;
                     break;
             }
 
             var values = new Dictionary<string, string> {
-                { "refresh_token", App.user.refresh_token + "&" },
-                { "client_id", clientId + "&" },
-                { "grant_type", "refresh_token" }
-                };
+            { "refresh_token", App.user.refresh_token },
+            { "client_id", clientId },
+            { "grant_type", "refresh_token"}
+            };
 
             var content = new FormUrlEncodedContent(values);
+
+            Console.WriteLine(content);
+
             var client = new HttpClient();
             var response = await client.PostAsync(Constants.AccessTokenUrl, content);
             var json = await response.Content.ReadAsStringAsync();
 
-            //var request = new HttpRequestMessage();
-            //request.RequestUri = new Uri(Constants.AccessTokenUrl);
-            //request.Method = HttpMethod.Post;
+            JObject jsonParsed = JObject.Parse(json);
 
-            //var client = new HttpClient();
-            //HttpResponseMessage response = await client.PostAsync(request);
-            //HttpContent content = response.Content;
-            //var json = await content.ReadAsStringAsync();
+            try
+            {
+                App.user.access_token = jsonParsed["access_token"].ToString();
+            }
+            catch(NullReferenceException e)
+            {
+                App.user.old_refresh_token = App.user.refresh_token;
+                await Application.Current.MainPage.DisplayAlert("Alert", "Please re-login to continue", "OK");
+                await Application.Current.MainPage.Navigation.PopToRootAsync();
+            }
+
+            await SaveAccessTokenToFireBase(App.user.access_token);
 
             Console.WriteLine(json);
 
@@ -95,22 +110,7 @@ namespace ProjectCaitlin.Services
             //var request = new OAuth2Request("POST", new Uri(Constants.AccessTokenUrl), dictionary, e.Account);
             //var response = await request.GetResponseAsync();
             //return response.ToString();
-
-
-            //Make HTTP Request
-            //var request = new HttpRequestMessage();
-            //request.RequestUri = new Uri(Constants.AccessTokenUrl);
-            //request.Method = HttpMethod.Post;
-
-            ////Format Headers of Request with included Token
-            ////string bearerString = string.Format("Bearer {0}", LoginPage.accessToken);
-            ////request.Headers.Add("Authorization", bearerString);
-            ////request.Headers.Add("Accept", "application/json");
-            //var client = new HttpClient();
-            //HttpResponseMessage response = await client.SendAsync(request);
-            //HttpContent content = response.Content;
-            //var json = await content.ReadAsStringAsync();
-            //return json;
+          
         }
 
         public async Task<string> GetCalendars()
