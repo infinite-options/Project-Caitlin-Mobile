@@ -8,7 +8,19 @@
     <ContentPage.Content>
         <StackLayout BackgroundColor="#1A1827">
             <StackLayout>
-                <Image Source="Martha.png" HeightRequest="200" WidthRequest="200" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Frame CornerRadius="100" 
+                                           HeightRequest="150"
+                                           WidthRequest="150"
+                                           Padding="0"
+                                           Margin="20"
+                                           HorizontalOptions="Center"
+                                           IsClippedToBounds="True"
+                                           >
+
+                    <Image  Source="caitlinheadshot.jpg" Aspect="AspectFill"
+                                                             HeightRequest="140"
+                                                             WidthRequest="140"/>
+                </Frame>
             </StackLayout>
             <StackLayout>
                 <Label Text="Good Morning," TextColor="White" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center"/>
@@ -21,8 +33,8 @@
                 <Label Text=" "  TextColor="White" FontSize="Small" HorizontalOptions="Center" VerticalOptions="Center"/>
             </StackLayout>
             <StackLayout>
-                <Button Text="View My Info" Clicked ="btn1Clicked" TextColor="White" WidthRequest="20" HeightRequest="50" BackgroundColor="#59556D" />
-                <Button Text="Manage My Day " Clicked="btn2Clicked" TextColor="White" WidthRequest="20" HeightRequest="50" BackgroundColor="#59556D"/>
+                <Button Text="View My Info" CornerRadius="10" Margin="20" Clicked ="btn1Clicked" TextColor="White"  BackgroundColor="#59556D" />
+                <Button Text="Manage My Day " CornerRadius="10" Margin="20" Clicked="btn2Clicked" TextColor="White" BackgroundColor="#59556D"/>
             </StackLayout>
 
         </StackLayout>

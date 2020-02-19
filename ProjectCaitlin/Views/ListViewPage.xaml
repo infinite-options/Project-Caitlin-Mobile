@@ -547,7 +547,7 @@
                 <RowDefinition Height="1*" />
             </Grid.RowDefinitions>
                 <ImageButton BackgroundColor="Transparent" Source="aboutmeicon.png" Grid.Column="0" Clicked="btn1" />
-                <ImageButton BackgroundColor="Transparent" Source="listviewiconselected.png" Grid.Column="1" Clicked="btn2" />
+                <ImageButton BackgroundColor="Transparent" Source="listviewiconselected.png" Grid.Column="1" />
                 <ImageButton BackgroundColor="Transparent" Source="myphotosicon.png" Grid.Column="2" Clicked="btn3" />
                 <ImageButton BackgroundColor="Transparent" Source="mydayicon.png" Grid.Column="3" Clicked="btn4" />
         </Grid>

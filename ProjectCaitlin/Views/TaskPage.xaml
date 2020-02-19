@@ -35,15 +35,14 @@
                                     Margin="3"
                                    Padding="1">
                                 <StackLayout>
-                                    <ImageButton Source="{Binding Source}" WidthRequest = "100"
+                                    <ImageButton Source="{Binding Source}" 
                                                  Command="{Binding Navigate}"
                                                CommandParameter="{x:Type local:TaskCompletePage}"
-                                            HeightRequest = "100"
                                             VerticalOptions = "FillAndExpand"
                                             HorizontalOptions = "FillAndExpand"
                                             Aspect = "AspectFill"/>
 
-                                    <Label Text="{Binding Text}" />
+                                    <Label Text="{Binding Text}" HeightRequest="35" />
                                 </StackLayout>
                             </Frame>
                         </DataTemplate>

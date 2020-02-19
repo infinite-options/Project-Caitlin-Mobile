@@ -28,15 +28,22 @@ namespace ProjectCaitlin.Views
         }
         public async void nextpage(object sender, EventArgs args)
         {
-            if (CarouselTasks.Position + 1 != itemcount)
-            {
+           
+           if (CarouselTasks.Position + 1 != itemcount)
+            {   
+                next.Text = "Next";
+                previous.Text = "Previous";
                 CarouselTasks.Position = CarouselTasks.Position + 1;
             }
+            else
+                next.Text = "Done";
+
         }
         public async void prepage(object sender, EventArgs args)
         {
             if (CarouselTasks.Position != 0)
             {
+                previous.Text = "Previous";
                 CarouselTasks.Position = CarouselTasks.Position - 1;
             }
         }

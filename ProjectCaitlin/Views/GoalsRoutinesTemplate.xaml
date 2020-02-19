@@ -30,7 +30,7 @@
                 <StackLayout HeightRequest="10" x:Name="TopDivider"></StackLayout>
                 <StackLayout Orientation="Horizontal"
                                  HeightRequest="58">
-                    <Image Source="sunrisemid.png"
+                    <Image Source= "{Binding DayImage}"
                                VerticalOptions="Center"
                                HorizontalOptions="CenterAndExpand"/>
                 </StackLayout>
@@ -83,7 +83,7 @@
                                    HasShadow="true"
                                    IsClippedToBounds="true"
                                    CornerRadius="10"
-                                   BackgroundColor="{Binding Color}">
+                                   BackgroundColor="{Binding BackgroundColor}">
 
                                     <StackLayout TranslationY="10">
 
@@ -104,8 +104,8 @@
                                         </Frame>
 
                                         <Label Text="{Binding Title}"
+                                               TextColor="{Binding TextColor}"
                                             FontSize="35"
-                                            TextColor="#272E32"
                                             HorizontalOptions="Center"
                                             HorizontalTextAlignment="Center">
 
@@ -134,8 +134,8 @@
 
                                         <Button Text="{Binding Text}"
                                                Command="{Binding Navigate}"
-                                              
                                                CornerRadius="10"
+                                                Margin="60"
                                                TextColor="#272E32"
                                                BorderWidth="0" />
 
@@ -167,7 +167,7 @@
                         <ImageButton BackgroundColor="Transparent" Source="aboutmeicon.png" Grid.Column="0" Clicked="btn1" />
                         <ImageButton BackgroundColor="Transparent" Source="listviewicon.png" Grid.Column="1" Clicked="btn2" />
                         <ImageButton BackgroundColor="Transparent" Source="myphotosicon.png" Grid.Column="2" Clicked="btn3" />
-                        <ImageButton BackgroundColor="Transparent" Source="mydayiconselected.png" Grid.Column="3" Clicked="btn4" />
+                        <ImageButton BackgroundColor="Transparent" Source="mydayiconselected.png" Grid.Column="3" />
                     </Grid>
         </StackLayout>
             </StackLayout>

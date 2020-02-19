@@ -28,12 +28,9 @@ namespace ProjectCaitlin.Views
         }
         public async void btn3(object sender, EventArgs args)
         {
-            await Navigation.PushAsync(new MonthlyViewPage());
+            await Navigation.PushAsync(new PhotoDisplayPage());
         }
-        public async void btn4(object sender, EventArgs args)
-        {
-            await Navigation.PushAsync(new GoalsRoutinesTemplate());
-        }
+        
 
 
 

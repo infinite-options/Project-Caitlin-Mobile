@@ -46,8 +46,8 @@
                             <ColumnDefinition Width="0.5*" />
                             <ColumnDefinition Width="0.5*" />
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="previous" Grid.Column="0" Text="pre" HorizontalOptions="Start" VerticalOptions="Center" Clicked="prepage"></Button>
-                        <Button x:Name="next" Grid.Column="1" Text="next"  HorizontalOptions="End" VerticalOptions="Center" Clicked="nextpage"></Button>
+                        <Button x:Name="previous" Grid.Column="0" Text="" BackgroundColor="Transparent" HorizontalOptions="Start" VerticalOptions="Center" Clicked="prepage"></Button>
+                        <Button x:Name="next" Grid.Column="1" Text="Start"  BackgroundColor="Transparent" HorizontalOptions="End" VerticalOptions="Center" Clicked="nextpage"></Button>
                     </Grid>
                 </StackLayout>
             </StackLayout>

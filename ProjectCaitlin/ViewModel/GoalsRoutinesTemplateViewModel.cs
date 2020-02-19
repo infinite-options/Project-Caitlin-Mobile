@@ -30,8 +30,10 @@ namespace ProjectCaitlin.ViewModel
 
         public string DayLabel { get; set; }
         public string TimeLabel { get; set; }
+        public string DayImage { get; set; }
 
-        
+
+
         public GoalsRoutinesTemplateViewModel(GoalsRoutinesTemplate mainPage)
         {
             this.mainPage = mainPage;
@@ -46,10 +48,12 @@ namespace ProjectCaitlin.ViewModel
             });
             Items.Add(new
             {
-                Source = "Martha.png",
+                Source = "caitlinheadshot.jpg",
                 Title = "About Me",
                 Ind = _imageCount++,
-                Color = Color.Default,
+                BackgroundColor = Color.Default,
+                TextColor = Color.Black,
+                Length = "You are a strong, independant person. \n This App helps you take control of your life!",
                 Text = "Click this card to start!",
                 ButtonText = "Click for More About Me",
                 Navigate = AboutMeCommand
@@ -62,8 +66,10 @@ namespace ProjectCaitlin.ViewModel
                 Source = App.user.routines[0].photo,
                 Title = App.user.routines[0].title,
                 Ind = _imageCount++,
-                Color = Color.Default,
-                Length = "Takes me 25 minutes",
+                    BackgroundColor = Color.Default,
+                    TextColor = Color.Black,
+
+                    Length = "Takes me 25 minutes",
                 Text = "Click this card to start!",
                 ButtonText = "Click for More About Me",
                 Navigate = new Command(
@@ -79,8 +85,9 @@ namespace ProjectCaitlin.ViewModel
                 Source = App.user.routines[1].photo,
                 Title = App.user.routines[1].title,
                 Ind = _imageCount++,
-                Color = Color.Default,
-                Length = "Takes me 25 minutes",
+                    BackgroundColor = Color.Default,
+                    TextColor = Color.Black,
+                    Length = "Takes me 25 minutes",
                 Text = "Click this card to start!",
                 ButtonText = "Click for More About Me",
                 Navigate = new Command(
@@ -96,8 +103,9 @@ namespace ProjectCaitlin.ViewModel
                 Source = App.user.routines[2].photo,
                 Title = App.user.routines[2].title,
                 Ind = _imageCount++,
-                Color = Color.Default,
-                Length = "Takes me 25 minutes",
+                    BackgroundColor = Color.Default,
+                    TextColor = Color.Black,
+                    Length = "Takes me 25 minutes",
                 Text = "Click this card to start!",
                 ButtonText = "Click for More About Me",
                 Navigate = new Command(
@@ -113,8 +121,9 @@ namespace ProjectCaitlin.ViewModel
                 Source = App.user.routines[3].photo,
                 Title = App.user.routines[3].title,
                 Ind = _imageCount++,
-                Color = Color.Default,
-                Length = "Takes me 25 minutes",
+                    BackgroundColor = Color.Default,
+                    TextColor = Color.Black,
+                    Length = "Takes me 25 minutes",
                 Text = "Click this card to start!",
                 ButtonText = "Click for More About Me",
                 Navigate = new Command(
@@ -130,8 +139,9 @@ namespace ProjectCaitlin.ViewModel
                 Source = App.user.routines[4].photo,
                 Title = App.user.routines[4].title,
                 Ind = _imageCount++,
-                Color = Color.Default,
-                Length = "Takes me 25 minutes",
+                    BackgroundColor = Color.Default,
+                    TextColor = Color.Black,
+                    Length = "Takes me 25 minutes",
                 Text = "Click this card to start!",
                 ButtonText = "Click for More About Me",
                 Navigate = new Command(
@@ -148,8 +158,9 @@ namespace ProjectCaitlin.ViewModel
                 Title = App.user.routines[5].title,
 
                 Ind = _imageCount++,
-                Color = Color.Default,
-                Length = "Takes me 25 minutes",
+                    BackgroundColor = Color.Default,
+                    TextColor = Color.Black,
+                    Length = "Takes me 25 minutes",
                 Text = "Click this card to start!",
                 ButtonText = "Click for More About Me",
                 Navigate = new Command(
@@ -166,8 +177,9 @@ namespace ProjectCaitlin.ViewModel
                 Title = App.user.routines[6].title,
 
                 Ind = _imageCount++,
-                Color = Color.Default,
-                Length = "Takes me 25 minutes",
+                    BackgroundColor = Color.Default,
+                    TextColor = Color.Black,
+                    Length = "Takes me 25 minutes",
                 Text = "Click this card to start!",
                 ButtonText = "Click for More About Me",
                 Navigate = new Command(
@@ -184,8 +196,9 @@ namespace ProjectCaitlin.ViewModel
                 Title = App.user.routines[7].title,
 
                 Ind = _imageCount++,
-                Color = Color.Default,
-                Length = "Takes me 25 minutes",
+                    BackgroundColor = Color.Default,
+                    TextColor = Color.Black,
+                    Length = "Takes me 25 minutes",
                 Text = "Click this card to start!",
                 ButtonText = "Click for More About Me",
                 Navigate = new Command(
@@ -202,7 +215,8 @@ namespace ProjectCaitlin.ViewModel
                 Title = App.user.routines[8].title,
 
                 Ind = _imageCount++,
-                Color = Color.Default,
+                BackgroundColor = Color.Default,
+                TextColor = Color.Black,
                 Length = "Takes me 25 minutes",
                 Text = "Click this card to start!",
                 ButtonText = "Click for More About Me",
@@ -220,7 +234,8 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.routines[9].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = Color.Default,
+                    TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -238,7 +253,8 @@ namespace ProjectCaitlin.ViewModel
                     Source = App.user.routines[10].photo,
                     Title = App.user.routines[10].title,
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = Color.Default,
+                    TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -255,7 +271,8 @@ namespace ProjectCaitlin.ViewModel
                     Source = App.user.routines[11].photo,
                     Title = App.user.routines[11].title,
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = Color.Default,
+                    TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -272,7 +289,8 @@ namespace ProjectCaitlin.ViewModel
                     Source = App.user.routines[12].photo,
                     Title = App.user.routines[12].title,
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = Color.Default,
+                    TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -289,7 +307,8 @@ namespace ProjectCaitlin.ViewModel
                     Source = App.user.routines[13].photo,
                     Title = App.user.routines[13].title,
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = Color.Default,
+                    TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -306,7 +325,8 @@ namespace ProjectCaitlin.ViewModel
                     Source = App.user.routines[14].photo,
                     Title = App.user.routines[14].title,
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = Color.Default,
+                    TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -324,7 +344,8 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.routines[15].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = Color.Default,
+                    TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -342,7 +363,8 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.routines[16].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = Color.Default,
+                    TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -360,7 +382,8 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.routines[17].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = Color.Default,
+                    TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -378,7 +401,8 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.routines[18].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = Color.Default,
+                    TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -396,7 +420,8 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.routines[19].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = Color.Default,
+                    TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -424,7 +449,8 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.goals[0].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    TextColor = Color.White,
+                    BackgroundColor = "#272E32",
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -443,7 +469,9 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.goals[1].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = "#272E32",
+                    TextColor = Color.White,
+
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -460,7 +488,9 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.goals[2].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = "#272E32",
+                    TextColor = Color.White,
+
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -477,7 +507,9 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.goals[3].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = "#272E32",
+                    TextColor = Color.White,
+
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -494,7 +526,9 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.goals[4].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = "#272E32",
+                    TextColor = Color.White,
+
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -511,7 +545,9 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.goals[5].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = "#272E32",
+                    TextColor = Color.White,
+
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -528,7 +564,9 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.goals[6].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = "#272E32",
+                    TextColor = Color.White,
+
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -545,7 +583,9 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.goals[7].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = "#272E32",
+                    TextColor = Color.White,
+
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -562,7 +602,9 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.goals[8].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = "#272E32",
+                    TextColor = Color.White,
+
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -579,7 +621,9 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.goals[9].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = "#272E32",
+                    TextColor = Color.White,
+
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -596,7 +640,9 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.goals[10].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = "#272E32",
+                    TextColor = Color.White,
+
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -613,7 +659,9 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.goals[11].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = "#272E32",
+                    TextColor = Color.White,
+
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -630,7 +678,9 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.goals[12].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = "#272E32",
+                    TextColor = Color.White,
+
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -647,7 +697,9 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.goals[13].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = "#272E32",
+                    TextColor = Color.White,
+
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -664,7 +716,9 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.goals[14].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = "#272E32",
+                    TextColor = Color.White,
+
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -681,7 +735,9 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.goals[15].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = "#272E32",
+                    TextColor = Color.White,
+
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -698,7 +754,9 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.goals[16].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = "#272E32",
+                    TextColor = Color.White,
+
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -715,7 +773,9 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.goals[17].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = "#272E32",
+                    TextColor = Color.White,
+
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -732,7 +792,9 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.goals[18].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = "#272E32",
+                    TextColor = Color.White,
+
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -749,7 +811,9 @@ namespace ProjectCaitlin.ViewModel
                     Title = App.user.goals[19].title,
 
                     Ind = _imageCount++,
-                    Color = Color.Default,
+                    BackgroundColor = "#272E32",
+                    TextColor = Color.White,
+
                     Length = "Takes me 25 minutes",
                     Text = "Click this card to start!",
                     ButtonText = "Click for More About Me",
@@ -835,10 +899,10 @@ namespace ProjectCaitlin.ViewModel
             Calendar myCal = CultureInfo.InvariantCulture.Calendar;
             DayLabel = myCal.GetDayOfWeek(localDate) + "";
             int time = localDate.Hour;
-            
-            if (time >= 6 && time <= 12) TimeLabel = "Good Morning";
-            else if (time >= 12 && time <= 18) TimeLabel = "Good Afternoon";
-            else TimeLabel = "Good Evening";
+
+            if (time >= 6 && time < 12) { TimeLabel = "Good Morning"; DayImage = "sunrisemid.png"; }
+            else if (time >= 12 && time < 18) { TimeLabel = "Good Afternoon"; DayImage = "fullsun.png"; }
+            else { TimeLabel = "Good Evening"; DayImage = "sunriselow.png"; }
         }
         public bool IsAutoAnimationRunning { get; set; }
 

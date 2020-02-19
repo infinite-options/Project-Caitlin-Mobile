@@ -134,13 +134,10 @@ namespace ProjectCaitlin
         {
             await Navigation.PushAsync(new GreetingPage());
         }
-        public async void btn2(object sender, EventArgs args)
-        {
-            await Navigation.PushAsync(new ListViewPage());
-        }
+        
         public async void btn3(object sender, EventArgs args)
         {
-            await Navigation.PushAsync(new MonthlyViewPage());
+            await Navigation.PushAsync(new PhotoDisplayPage());
         }
         public async void btn4(object sender, EventArgs args)
         {
