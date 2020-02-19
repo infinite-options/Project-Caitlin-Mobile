@@ -21,7 +21,9 @@
 
         <Button
             Text="Login"
+            x:Name="loginButton"
             Clicked="LoginClicked"
+            IsVisible="false"
             Margin="60, 10"
             BackgroundColor="#4682B4"
             TextColor="White"

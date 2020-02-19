@@ -48,6 +48,8 @@ namespace ProjectCaitlin
                 }
             }
 
+            loginButton.IsVisible = true;
+
         }
 
         async Task LoadFirebaseUser()
