@@ -35,6 +35,7 @@
     <EmbeddedResource Remove="MainPage.xaml" />
     <EmbeddedResource Remove="DailyViewPage.xaml" />
     <EmbeddedResource Remove="DailyPage.xaml" />
+    <EmbeddedResource Remove="Views\LoadingPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
@@ -45,6 +46,9 @@
     <Compile Remove="DailyPage.xaml.cs" />
     <Compile Remove="ViewModel\DailyViewModel.cs" />
 
+    <Compile Remove="Models\tokens.cs" />
+    <Compile Remove="Views\LoadingPage.cs" />
+    <Compile Remove="Views\LoadingPage.xaml.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ViewModel\DailyViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />

@@ -27,14 +27,27 @@ namespace ProjectCaitlin
 		Account account;
 		public static string accessToken;
         FirestoreMethods FSMethods;
-        public static string refreshToken = "1//069Xuswpe4A0DCgYIARAAGAYSNwF-L9IrKTPwpUkMvv6hoKunRuaDjlC07qZVrtdkaujl3aMRpWWqAk_1OLBp79ETPRtiyhiDI9U";
+        public static string refreshToken;
         public string clientId;
 
         public LoginPage()
         {
 			InitializeComponent();
-			FSMethods = new FirestoreMethods("7R6hAVmDrNutRkG3sVRy");
-			LoadFirebaseUser();
+        }
+
+        protected override async void OnAppearing()
+        {
+            var FSMethods = new FirestoreMethods("7R6hAVmDrNutRkG3sVRy");
+            await FSMethods.LoadUser();
+
+            if (App.user.old_refresh_token != App.user.refresh_token)
+            {
+                if(App.user.access_token != null)
+                {
+                    await Navigation.PushAsync(new GoalsRoutinesTemplate());
+                }
+            }
+
         }
 
         async Task LoadFirebaseUser()
@@ -165,6 +178,7 @@ namespace ProjectCaitlin
 
                 //Reset accessToken
                 accessToken = e.Account.Properties["access_token"];
+                refreshToken = e.Account.Properties["refresh_token"];
 
                 //Write the Toekn to console, in case it changes
                 Console.WriteLine("HERE is the TOKEN------------------------------------------------");
@@ -173,6 +187,10 @@ namespace ProjectCaitlin
                 Console.WriteLine(e.Account.Properties["refresh_token"]);
                 Console.WriteLine("----------------------------------------------------------------");
 
+                //Save to App.User AND Update Firebase with pertitnent info
+                var googleService = new GoogleService();
+                await googleService.SaveAccessTokenToFireBase(accessToken);
+                await googleService.SaveRefreshTokenToFireBase(refreshToken);
 
                 //Navigate to the Daily Page after Login
                 await Navigation.PushAsync(new GoalsRoutinesTemplate());
@@ -190,35 +208,6 @@ namespace ProjectCaitlin
 
 			DisplayAlert("Authentication error: " , e.Message, "OK");
 		}
-
-        public async void SkipLoginClicked(object sender, EventArgs e)
-        {
-            await RefreshAccessToken(null);
-        }
-
-
-
-        public async Task<string> RefreshAccessToken(AuthenticatorCompletedEventArgs e)
-        {
-
-            var googleService = new GoogleService();
-
-            switch (Device.RuntimePlatform)
-            {
-                case Device.iOS:
-                    clientId = Constants.iOSClientId;
-                    break;
-
-                case Device.Android:
-                    clientId = Constants.AndroidClientId;
-                    break;
-            }
-
-            var response = await googleService.RefreshToken(null, clientId);
-            Console.WriteLine(response);
-            await Navigation.PushAsync(new DailyViewPage());
-            return null;
-        }
 
 		public async void ListViewClicked(object sender, EventArgs e)
 		{

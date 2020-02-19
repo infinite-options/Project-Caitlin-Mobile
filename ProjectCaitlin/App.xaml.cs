@@ -1,7 +1,9 @@
 ﻿using System;
 using ProjectCaitlin.Models;
+using ProjectCaitlin.Methods;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Threading.Tasks;
 
 namespace ProjectCaitlin
 {
@@ -12,11 +14,9 @@ namespace ProjectCaitlin
         public App()
         {
             InitializeComponent();
-            // MainPage = new NavigationPage(new Views.TaskPage());
 
-            //MainPage = new NavigationPage(new ListViewPage());
             MainPage = new NavigationPage(new LoginPage());
-            //MainPage = new NavigationPage(new Templates.GoalsRoutinesTemplate())
+
             //{
             //    BarBackgroundColor = Color.FromHex("#4682B4"),
             //    BarTextColor = Color.White

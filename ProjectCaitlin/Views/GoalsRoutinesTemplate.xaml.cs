@@ -11,11 +11,10 @@ namespace ProjectCaitlin.Views
         readonly GoalsRoutinesTemplateViewModel pageModel;
 
         public GoalsRoutinesTemplate()
-        { 
+        {
             InitializeComponent();
             pageModel = new GoalsRoutinesTemplateViewModel(this);
             BindingContext = pageModel;
-
         }
 
         public async void btn1(object sender, EventArgs args)
@@ -30,12 +29,13 @@ namespace ProjectCaitlin.Views
         {
             await Navigation.PushAsync(new PhotoDisplayPage());
         }
-        
 
 
 
 
 
 
+
+        }
     }
 }

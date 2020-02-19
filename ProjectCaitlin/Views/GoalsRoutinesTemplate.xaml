@@ -42,7 +42,7 @@
                                HorizontalTextAlignment="Center"
                                Padding="0, 0, 0, 0"
                                Margin="0, -10, 0, 20">
-                        
+
                         <Label.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
                                 <On Platform="iOS" Value="CircularStd-Medium.otf" />
@@ -59,7 +59,7 @@
                 </StackLayout>
 
                 <StackLayout>
-                    <cards:CoverFlowView 
+                    <cards:CoverFlowView
                             PositionShiftValue="50"
                             IsCyclical="false"
                             SelectedIndex="{Binding CurrentIndex}"
@@ -79,7 +79,7 @@
                                    WidthRequest="305"
                                    VerticalOptions="Center"
                                    HorizontalOptions="Center"
-                                   Padding="0" 
+                                   Padding="0"
                                    HasShadow="true"
                                    IsClippedToBounds="true"
                                    CornerRadius="10"
@@ -87,51 +87,25 @@
 
                                     <StackLayout TranslationY="10">
 
-                                        <Frame CornerRadius="50" 
+                                        <Frame CornerRadius="50"
                                            HeightRequest="100"
                                            WidthRequest="100"
                                            Padding="0"
-                                           
+
                                            HorizontalOptions="Center"
                                            IsClippedToBounds="True"
                                            >
                                             <ffimage:CachedImage Source="{Binding Source}"
-                                                             
+
                                                              Aspect="AspectFill"
                                                              HeightRequest="140"
                                                              WidthRequest="140"
                                                                  />
                                         </Frame>
 
-                                        <Label Text="{Binding Title}"
-                                               TextColor="{Binding TextColor}"
-                                            FontSize="35"
-                                            HorizontalOptions="Center"
-                                            HorizontalTextAlignment="Center">
-
-                                            <Label.FontFamily>
-                                                <OnPlatform x:TypeArguments="x:String">
-                                                    <On Platform="iOS" Value="Lobster-Regular" />
-                                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                                </OnPlatform>
-                                            </Label.FontFamily>
-                                        </Label>
 
 
-                                        <Label Text="{Binding Length}"
-                                            FontSize="15"
-                                            TextColor="#6C7072"
-                                            HorizontalOptions="Center"
-                                            HorizontalTextAlignment="Center">
-
-                                            <Label.FontFamily>
-                                                <OnPlatform x:TypeArguments="x:String">
-                                                    <On Platform="iOS" Value="Lobster-Regular" />
-                                                    <On Platform="Android" Value="CircularStd-Book.otf#Circular Std"/>
-                                                </OnPlatform>
-                                            </Label.FontFamily>
-                                        </Label>
-
+                                         Button
                                         <Button Text="{Binding Text}"
                                                Command="{Binding Navigate}"
                                                CornerRadius="10"

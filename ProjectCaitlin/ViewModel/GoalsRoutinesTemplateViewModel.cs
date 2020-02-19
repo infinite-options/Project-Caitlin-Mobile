@@ -39,7 +39,7 @@ namespace ProjectCaitlin.ViewModel
             this.mainPage = mainPage;
 
             setUpTime();
-            
+
             Items = new ObservableCollection<object>();
             AboutMeCommand = new Command(
             async () =>

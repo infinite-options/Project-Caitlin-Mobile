@@ -8,7 +8,7 @@
     <ContentPage.Content>
         <StackLayout BackgroundColor="#1A1827">
             <StackLayout>
-                <Frame CornerRadius="100" 
+                <Frame CornerRadius="100"
                                            HeightRequest="150"
                                            WidthRequest="150"
                                            Padding="0"

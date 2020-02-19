@@ -161,5 +161,41 @@
       <Link>Resources\toothbrushCircle.png</Link>
     </BundleResource>
     <BundleResource Include="Resources\redo.png" />
+    <BundleResource Include="..\ProjectCaitlin\Icons\caitlinheadshot.jpg">
+      <Link>Resources\caitlinheadshot.jpg</Link>
+    </BundleResource>
+    <BundleResource Include="..\ProjectCaitlin\Icons\myphotosicon.png">
+      <Link>Resources\myphotosicon.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\ProjectCaitlin\Icons\mydayiconselected.png">
+      <Link>Resources\mydayiconselected.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\ProjectCaitlin\Icons\mydayicon.png">
+      <Link>Resources\mydayicon.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\ProjectCaitlin\Icons\listviewicon.png">
+      <Link>Resources\listviewicon.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\ProjectCaitlin\Icons\myphotosiconselected.png">
+      <Link>Resources\myphotosiconselected.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\ProjectCaitlin\Icons\listviewiconselected.png">
+      <Link>Resources\listviewiconselected.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\ProjectCaitlin\Icons\fullsun.png">
+      <Link>Resources\fullsun.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\ProjectCaitlin\Icons\aboutmeiconselected.png">
+      <Link>Resources\aboutmeiconselected.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\ProjectCaitlin\Icons\aboutmeicon.png">
+      <Link>Resources\aboutmeicon.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\ProjectCaitlin\Icons\sunriselow.png">
+      <Link>Resources\sunriselow.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\ProjectCaitlin\Icons\moon.png">
+      <Link>Resources\moon.png</Link>
+    </BundleResource>
   </ItemGroup>
 </Project>

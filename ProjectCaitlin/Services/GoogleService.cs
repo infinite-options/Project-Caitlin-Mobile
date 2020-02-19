@@ -7,38 +7,110 @@ using System.Net.Http.Headers;
 using System.Threading.Tasks;
 using ProjectCaitlin;
 using ProjectCaitlin.Authentication;
+using ProjectCaitlin.Methods;
 using Xamarin.Auth;
+using Xamarin.Forms;
+using Newtonsoft.Json.Linq;
 
 namespace ProjectCaitlin.Services
 {
     public class GoogleService
     {
-        public async Task<string> RefreshToken(AuthenticatorCompletedEventArgs e, string client_Id)
+
+        public INavigation Navigation;
+
+        public async Task<string> SaveAccessTokenToFireBase(string accessToken)
         {
 
-            Dictionary<string, string> dictionary = new Dictionary<string, string> {
-                { "refresh_token", LoginPage.refreshToken },
-                { "client_id", client_Id },
-                { "grant_type", "refresh_token" } };
-            var request = new OAuth2Request("POST", new Uri(Constants.AccessTokenUrl), dictionary, e.Account);
-            var response = await request.GetResponseAsync();
-            return response.ToString();
+            //Make HTTP POST Request
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/SetUserGoogleAuthToken");
+            request.Method = HttpMethod.Post;
 
+            //Format Headers of Request with included Token
+            request.Headers.Add("userID", "7R6hAVmDrNutRkG3sVRy");
+            request.Headers.Add("token", accessToken);
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+            HttpContent content = response.Content;
+            var json = await content.ReadAsStringAsync();
+            return json;
+        }
 
-            //Make HTTP Request
-            //var request = new HttpRequestMessage();
-            //request.RequestUri = new Uri(Constants.AccessTokenUrl);
-            //request.Method = HttpMethod.Post;
+        public async Task<string> SaveRefreshTokenToFireBase(string refreshToken)
+        {
 
-            ////Format Headers of Request with included Token
-            ////string bearerString = string.Format("Bearer {0}", LoginPage.accessToken);
-            ////request.Headers.Add("Authorization", bearerString);
-            ////request.Headers.Add("Accept", "application/json");
-            //var client = new HttpClient();
-            //HttpResponseMessage response = await client.SendAsync(request);
-            //HttpContent content = response.Content;
-            //var json = await content.ReadAsStringAsync();
-            //return json;
+            //Make HTTP POST Request
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/SetUserGoogleRefreshToken");
+            request.Method = HttpMethod.Post;
+
+            //Format Headers of Request with included Token
+            request.Headers.Add("userID", "7R6hAVmDrNutRkG3sVRy");
+            request.Headers.Add("token", refreshToken);
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+            HttpContent content = response.Content;
+            var json = await content.ReadAsStringAsync();
+            return json;
+        }
+
+        //Use REFRESH TOKEN to receive another ACCESS TOKEN...and UPDATE App.user.access_token.
+        public async Task<string> RefreshToken()
+        {
+            string clientId = null;
+            string redirectUri = null;
+
+            switch (Device.RuntimePlatform)
+            {
+                case Device.iOS:
+                    clientId = Constants.iOSClientId;
+                    redirectUri = Constants.iOSRedirectUrl;
+                    break;
+
+                case Device.Android:
+                    clientId = Constants.AndroidClientId;
+                    redirectUri = Constants.AndroidRedirectUrl;
+                    break;
+            }
+
+            var values = new Dictionary<string, string> {
+            { "refresh_token", App.user.refresh_token },
+            { "client_id", clientId },
+            { "grant_type", "refresh_token"}
+            };
+
+            var content = new FormUrlEncodedContent(values);
+
+            Console.WriteLine(content);
+
+            var client = new HttpClient();
+            var response = await client.PostAsync(Constants.AccessTokenUrl, content);
+            var json = await response.Content.ReadAsStringAsync();
+
+            JObject jsonParsed = JObject.Parse(json);
+
+            try
+            {
+                App.user.access_token = jsonParsed["access_token"].ToString();
+            }
+            catch(NullReferenceException e)
+            {
+                App.user.old_refresh_token = App.user.refresh_token;
+                await Application.Current.MainPage.DisplayAlert("Alert", "Please re-login to continue", "OK");
+                await Application.Current.MainPage.Navigation.PopToRootAsync();
+            }
+
+            await SaveAccessTokenToFireBase(App.user.access_token);
+
+            Console.WriteLine(json);
+
+            return json;
+
+            //var request = new OAuth2Request("POST", new Uri(Constants.AccessTokenUrl), dictionary, e.Account);
+            //var response = await request.GetResponseAsync();
+            //return response.ToString();
+          
         }
 
         public async Task<string> GetCalendars()
@@ -79,7 +151,7 @@ namespace ProjectCaitlin.Services
             return (json);
         }
 
-        public async Task<string> GetSpecificEventsList(int publicYear, int publicMonth, int publicDay, int uTCHour, int currentLocalUTCMinute, int timeZoneNum)
+        public async Task<string> GetTodaysEventsList(int publicYear, int publicMonth, int publicDay, int uTCHour, int currentLocalUTCMinute, int timeZoneNum)
         {
 
             //Make HTTP Request
