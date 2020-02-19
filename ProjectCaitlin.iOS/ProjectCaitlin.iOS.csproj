@@ -194,5 +194,8 @@
     <BundleResource Include="..\ProjectCaitlin\Icons\sunriselow.png">
       <Link>Resources\sunriselow.png</Link>
     </BundleResource>
+    <BundleResource Include="..\ProjectCaitlin\Icons\moon.png">
+      <Link>Resources\moon.png</Link>
+    </BundleResource>
   </ItemGroup>
 </Project>

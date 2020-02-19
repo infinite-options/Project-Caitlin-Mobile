@@ -207,6 +207,11 @@
       <SubType></SubType>
       <Generator></Generator>
     </AndroidResource>
+    <AndroidResource Include="..\ProjectCaitlin\Icons\moon.png">
+      <Link>Resources\drawable\moon.png</Link>
+      <SubType></SubType>
+      <Generator></Generator>
+    </AndroidResource>
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\ProjectCaitlin\ProjectCaitlin.csproj">
