@@ -19,8 +19,6 @@ namespace ProjectCaitlin.Views
 
         protected override async void OnAppearing()
         {
-            var googleService = new Services.GoogleService();
-            await googleService.RefreshToken();
 
         }
     }

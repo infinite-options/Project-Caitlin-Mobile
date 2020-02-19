@@ -27,7 +27,7 @@
             TextColor="White"
             />
 
-        <Button
+        <!--<Button
             Text="IO Dev Access"
             Margin="60, 0"
             BackgroundColor="#4682B4"
@@ -63,7 +63,7 @@
             Margin="60, 0"
             BackgroundColor="#4682B4"
             TextColor="White"
-            />
+            />-->
 
     </StackLayout>
 </ContentPage>
