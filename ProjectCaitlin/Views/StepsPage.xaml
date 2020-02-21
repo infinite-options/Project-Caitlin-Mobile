@@ -1,5 +1,38 @@
 ﻿<?xml version="1.0" encoding="UTF-8"?>
-<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="ProjectCaitlin.Views.StepsPage">
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             x:Class="ProjectCaitlin.Views.StepsPage"
+             NavigationPage.HasNavigationBar="False">
+
     <ContentPage.Content>
     </ContentPage.Content>
+
+    <Grid>
+        <ScrollView>
+            <StackLayout Orientation="Vertical">
+
+                <Frame CornerRadius="10" 
+                       HeightRequest="290"
+                       WidthRequest="355"
+                       Padding="0"                  
+                       HorizontalOptions="Center"
+                       IsClippedToBounds="True">
+                          <ffimage:CachedImage Source="caitlinheadshot.png" Aspect="AspectFill"/>
+                </Frame>
+
+                <Label Text="Brush and floss my teeth please"
+                       HorizontalOptions="Center"
+                       HorizontalTextAlignment="Start"
+                       FontSize="40"
+                       Padding="28, 0, 28, 0"
+                       TextColor="#272E32"/>
+
+                
+
+            </StackLayout>
+        </ScrollView>
+
+    </Grid>
+
 </ContentPage>
