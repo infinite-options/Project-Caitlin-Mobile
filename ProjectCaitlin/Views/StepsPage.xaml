@@ -17,7 +17,8 @@
                        WidthRequest="355"
                        Padding="0"                  
                        HorizontalOptions="Center"
-                       IsClippedToBounds="True">
+                       IsClippedToBounds="True"
+                       HasShadow="True">
                           <ffimage:CachedImage Source="{Binding TopImage}" Aspect="AspectFill"/>
                 </Frame>
 
