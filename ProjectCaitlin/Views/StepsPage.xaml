@@ -18,10 +18,10 @@
                        Padding="0"                  
                        HorizontalOptions="Center"
                        IsClippedToBounds="True">
-                          <ffimage:CachedImage Source="caitlinheadshot.png" Aspect="AspectFill"/>
+                          <ffimage:CachedImage Source="{Binding TopImage}" Aspect="AspectFill"/>
                 </Frame>
 
-                <Label Text="Brush and floss my teeth please"
+                <Label Text="{Binding TopLabel}"
                        HorizontalOptions="Center"
                        HorizontalTextAlignment="Start"
                        FontSize="40"

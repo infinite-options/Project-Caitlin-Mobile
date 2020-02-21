@@ -44,7 +44,7 @@ namespace ProjectCaitlin
             {
                 if(App.user.access_token != null)
                 {
-                    await Navigation.PushAsync(new StepsPage());
+                    await Navigation.PushAsync(new GoalsRoutinesTemplate());
                 }
             }
 
