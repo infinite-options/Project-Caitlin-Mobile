@@ -5,23 +5,30 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:cv="http://xamarin.com/schemas/2014/forms"
              mc:Ignorable="d"
-             x:Class="ProjectCaitlin.Views.TaskCompletePage">
+             x:Class="ProjectCaitlin.Views.TaskCompletePage"
+             NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout BackgroundColor="DarkSlateGray">
-            
-            <StackLayout>
-                <CarouselView x:Name="CarouselTasks" ItemsSource="{Binding Items}">
+
+            <StackLayout Margin="10">
+                <Grid>
+                    <ImageButton x:Name="previous" Clicked="prepage" Grid.Column ="0" Source="waveformicon.png" BackgroundColor="Transparent" HeightRequest="50" HorizontalOptions="Start" VerticalOptions="Center"/>
+                    <ImageButton Clicked="close" Grid.Column ="1" Source="waveformicon.png" BackgroundColor="Transparent" HeightRequest="50" HorizontalOptions="End" VerticalOptions="Center"/>
+                </Grid>
+            </StackLayout>
+            <StackLayout Margin="15">
+                <CarouselView x:Name="CarouselTasks" HeightRequest="400" ItemsSource="{Binding Items}">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout>
 
-
-                                <Image Source="{Binding Source}"
+                                <Frame  CornerRadius="30" HeightRequest="300" WidthRequest="300" Margin="10" Padding="0" HorizontalOptions="Center" IsClippedToBounds="True">
+                                    <Image Source="{Binding Source}"
                                Aspect="AspectFill"
                                HeightRequest="300"
                                WidthRequest="300"
                                HorizontalOptions="Center" />
-
+                                </Frame>
                                 <Label Text="{Binding Text}"
                                FontAttributes="Bold"
                                FontSize="30"
@@ -29,12 +36,7 @@
                                TextColor="White"
                                VerticalOptions="Center" />
 
-                                <Label Text="Place it next to the sink"
-                               FontAttributes="Bold"
-                               FontSize="Small"
-                               HorizontalOptions="Start"
-                                TextColor="White"
-                               VerticalOptions="Center" />
+                                
 
                             </StackLayout>
                         </DataTemplate>
@@ -44,10 +46,12 @@
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="0.5*" />
-                            <ColumnDefinition Width="0.5*" />
+                            <ColumnDefinition Width="0.2*" />
                         </Grid.ColumnDefinitions>
-                        <Button x:Name="previous" Grid.Column="0" Text="" BackgroundColor="Transparent" HorizontalOptions="Start" VerticalOptions="Center" Clicked="prepage"></Button>
-                        <Button x:Name="next" Grid.Column="1" Text="Start"  BackgroundColor="Transparent" HorizontalOptions="End" VerticalOptions="Center" Clicked="nextpage"></Button>
+                        <ImageButton Grid.Column="0" Source="waveformiconwhite.png" BackgroundColor="Transparent" HeightRequest="50" HorizontalOptions="Start" VerticalOptions="Center" />
+                        <Frame  Grid.Column="1"  CornerRadius="20" Padding="0" HeightRequest="40" HorizontalOptions="Center" >
+                            <Button x:Name="next" Grid.Column="1" Text="Start"  BackgroundColor="#42B971" Clicked="nextpage"/>
+                        </Frame>
                     </Grid>
                 </StackLayout>
             </StackLayout>
