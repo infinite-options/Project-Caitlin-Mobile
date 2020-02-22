@@ -229,6 +229,9 @@ namespace ProjectCaitlin.Methods
                         actionIdx++;
                     }
                 }
+                App.user.routines.Sort((x, y) => TimeSpan.Compare(x.availableStartTime.TimeOfDay, y.availableStartTime.TimeOfDay));
+                App.user.goals.Sort((x, y) => TimeSpan.Compare(x.availableStartTime.TimeOfDay, y.availableStartTime.TimeOfDay));
+
             }
         }
 

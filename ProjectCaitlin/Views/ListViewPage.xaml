@@ -8,10 +8,11 @@
              NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#E9E8E8">
-    <StackLayout>
+    <StackLayout
+        VerticalOptions="EndAndExpand">
 
         <ScrollView
-            VerticalOptions="Start">
+            x:Name="mainScrollView">
 
             <StackLayout
                 x:Name="MainStackLayout"
@@ -330,10 +331,10 @@
 
         </ScrollView>
         <Grid
+            x:Name="NavBar"
             Grid.Row="1"
             Grid.Column="4"
-            HeightRequest="150"
-            HorizontalOptions="FillAndExpand"
+            HeightRequest="65"
             VerticalOptions="End">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition
@@ -351,7 +352,7 @@
             </Grid.RowDefinitions>
             <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="0">
                 <forms:CachedImage DownsampleWidth="35" x:Name="MyDayButton" BackgroundColor="Transparent" Source="mydayiconnotext.png" />
-                <Label Text="My Day" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                <Label Text="My Day" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 3">
                     <Label.FontFamily>
                         <OnPlatform x:TypeArguments="x:String">
                             <On Platform="iOS" Value="Lobster-Regular" />
@@ -362,7 +363,7 @@
              </StackLayout>
             <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="1">
                 <forms:CachedImage DownsampleWidth="35" BackgroundColor="Transparent" Source="listviewiconselectednotext.png" />
-                <Label Text="Today's List" FontSize="12" TextColor="#d6a14b" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                <Label Text="Today's List" FontSize="12" TextColor="#d6a14b" HorizontalOptions="Center" Margin="0, -3, 0, 3">
                     <Label.FontFamily>
                         <OnPlatform x:TypeArguments="x:String">
                             <On Platform="iOS" Value="Lobster-Regular" />
@@ -373,7 +374,7 @@
              </StackLayout>
             <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="2">
                 <forms:CachedImage DownsampleWidth="35" x:Name="MyPhotosButton" BackgroundColor="Transparent" Source="myphotosiconnotext.png" />
-                <Label Text="My Photos" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                <Label Text="My Photos" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 3">
                     <Label.FontFamily>
                         <OnPlatform x:TypeArguments="x:String">
                             <On Platform="iOS" Value="Lobster-Regular" />
@@ -384,7 +385,7 @@
             </StackLayout>
             <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="3">
                 <forms:CachedImage DownsampleWidth="35" x:Name="AboutMeButton" BackgroundColor="Transparent" Source="aboutmeiconnotext.png" />
-                <Label Text="About Me" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                <Label Text="About Me" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 3">
                     <Label.FontFamily>
                         <OnPlatform x:TypeArguments="x:String">
                             <On Platform="iOS" Value="Lobster-Regular" />

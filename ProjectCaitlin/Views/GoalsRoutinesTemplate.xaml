@@ -76,9 +76,8 @@
                                 <!-- Card Definition-->
                                 <Frame
                                    Margin="0, 0, 0, 45"
-                                   HeightRequest="385"
                                    WidthRequest="305"
-                                   VerticalOptions="Center"
+                                   VerticalOptions="FillAndExpand"
                                    HorizontalOptions="Center"
                                    Padding="0" 
                                    HasShadow="true"
@@ -157,8 +156,7 @@
                 <Grid
                     Grid.Row="1"
                     Grid.Column="4"
-                    HeightRequest="150"
-                    HorizontalOptions="FillAndExpand"
+                    HeightRequest="65"
                     VerticalOptions="End">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition

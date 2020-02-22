@@ -10,7 +10,7 @@ namespace ProjectCaitlin.Services
     public class GooglePhotoService
     {
 
-        public async Task<string[]> GetPhotos()
+        public async Task<List<string>> GetPhotos()
         {
 
             //Make HTTP Request
@@ -62,10 +62,10 @@ namespace ProjectCaitlin.Services
                 return null;
             }
 
-            //Compile these values in to a string list and return to be displayed
-            string itemListString = String.Join(", ", itemList);
-
-            return itemList.ToArray();
+            if (itemList.Count == 0)
+                return new List<string>();
+            else
+                return itemList;
         }
     }
 }

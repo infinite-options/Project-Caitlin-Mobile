@@ -307,11 +307,7 @@ namespace ProjectCaitlin.Services
 
             JObject jsonParsed = JObject.Parse(json);
 
-            try
-            {
-                var test = jsonParsed["items"];
-            }
-            catch (NullReferenceException e)
+            if (jsonParsed.ContainsKey("error"))
             {
                 var googleService = new GoogleService();
                 await RefreshToken();
