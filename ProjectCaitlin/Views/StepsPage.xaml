@@ -24,8 +24,8 @@
                                          Margin="20, 0, 0, 0"
                                          Source="arrowicon.png"
                                          BackgroundColor="Transparent"
-                                         HeightRequest="25"
-                                         WidthRequest="25"
+                                         HeightRequest="23"
+                                         WidthRequest="23"
                                          HorizontalOptions="Start"
                                          VerticalOptions="Center"
                                          Clicked="close"/>
@@ -83,16 +83,22 @@
                                   SelectionMode="None">  
                           <ListView.ItemTemplate>  
                                    <DataTemplate>  
-                                       <ViewCell>  
-                                           <StackLayout Padding="30, 15, 30, 0"
-                                                        Orientation="Horizontal">
+                                       <ViewCell>
+                                           <ViewCell.ContextActions>
+                                                <MenuItem Clicked="ChangeIcon"
+                                                          CommandParameter="{Binding ChangeIcon}"
+                                                          Text="Complete"
+                                                          />
+                                             </ViewCell.ContextActions>
+
                                                <Grid>
                                                    <Grid.ColumnDefinitions>
-                                                        <!--<ColumnDefinition Width="0.4*" />
-                                                        <ColumnDefinition Width="0.5*" />-->
+                                                       <ColumnDefinition Width="5*" />
+                                                        
                                                    </Grid.ColumnDefinitions>
 
                                                    <Label Text="{Binding Text}"
+                                                          Padding="30, 15, 10, 15"
                                                           Grid.Column="0"
                                                           VerticalOptions="Center"
                                                           HorizontalOptions="Start"
@@ -101,11 +107,10 @@
                                                           TextColor="#272E32"/>
                                                    <ffimage:CachedImage Source="{Binding CheckmarkIcon}"
                                                                         Grid.Column="1"
-                                                                        WidthRequest="25"
-                                                                        HeightRequest="25"
-                                                                        HorizontalOptions="End"/>
-                                               </Grid>
-                                           </StackLayout>  
+                                                                        WidthRequest="33"
+                                                                        HeightRequest="33"
+                                                                        HorizontalOptions="Start"/>
+                                               </Grid> 
                                        </ViewCell>  
                                    </DataTemplate>  
                                </ListView.ItemTemplate>  

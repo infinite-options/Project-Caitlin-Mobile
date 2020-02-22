@@ -33,6 +33,11 @@ namespace ProjectCaitlin.Views
             itemcount = pageModel.count;
         }
 
+        public void ChangeIcon(object sender, EventArgs e)
+        {
+            var mi = ((MenuItem)sender);
+        }
+
         public async void close(object sender, EventArgs args)
         {
             await Navigation.PopAsync();
