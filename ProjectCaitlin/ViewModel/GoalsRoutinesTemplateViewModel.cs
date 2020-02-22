@@ -12,13 +12,14 @@ using ProjectCaitlin.Models;
 using System.Collections.Generic;
 using ProjectCaitlin.Views;
 using System.Globalization;
+using System.Collections.Generic;
 
 namespace ProjectCaitlin.ViewModel
 {
     public class GoalsRoutinesTemplateViewModel : BindableObject
     {
         private GoalsRoutinesTemplate mainPage;
-
+        List<bool> complete;
         //public event PropertyChangedEventHandler PropertyChanged;
 
         private int _currentIndex;
@@ -39,7 +40,7 @@ namespace ProjectCaitlin.ViewModel
             this.mainPage = mainPage;
 
             setUpTime();
-
+            complete = new List<bool>();
             Items = new ObservableCollection<object>();
             AboutMeCommand = new Command(
             async () =>
@@ -59,175 +60,194 @@ namespace ProjectCaitlin.ViewModel
                 Navigate = AboutMeCommand
             });
 
-            if (App.user.routines.Count >= 1)
-
+            if (App.user.routines.Count >= 1) {
+                complete.Add(false);
                 Items.Add(new
-            {
-                Source = App.user.routines[0].photo,
-                Title = App.user.routines[0].title,
-                Ind = _imageCount++,
+                {
+                    Source = App.user.routines[0].photo,
+                    Title = App.user.routines[0].title,
+                    Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
 
                     Length = "Takes me 25 minutes",
-                Text = "Click this card to start!",
-                ButtonText = "Click for More About Me",
-                Navigate = new Command(
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(0,true));
+                         await mainPage.Navigation.PushAsync(new TaskPage(0, true, complete));
                      })
-            });
-
-            if (App.user.routines.Count >= 2)
+                });
+            }
+            if (App.user.routines.Count >= 2) {
+                complete.Add(false);
                 Items.Add(new
-            {
-                Source = App.user.routines[1].photo,
-                Title = App.user.routines[1].title,
-                Ind = _imageCount++,
+                {
+                    Source = App.user.routines[1].photo,
+                    Title = App.user.routines[1].title,
+                    Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                Text = "Click this card to start!",
-                ButtonText = "Click for More About Me",
-                Navigate = new Command(
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(1, true));
+                         await mainPage.Navigation.PushAsync(new TaskPage(1, true, complete));
                      })
-            });
-
+                });
+            }
             if (App.user.routines.Count >= 3)
-                Items.Add(new
             {
-                Source = App.user.routines[2].photo,
-                Title = App.user.routines[2].title,
-                Ind = _imageCount++,
+                complete.Add(false);
+                Items.Add(new
+                {
+                    Source = App.user.routines[2].photo,
+                    Title = App.user.routines[2].title,
+                    Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                Text = "Click this card to start!",
-                ButtonText = "Click for More About Me",
-                Navigate = new Command(
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(2, true));
+                         await mainPage.Navigation.PushAsync(new TaskPage(2, true, complete));
                      })
-            });
-
+                });
+            }
             if (App.user.routines.Count >= 4)
-                Items.Add(new
             {
-                Source = App.user.routines[3].photo,
-                Title = App.user.routines[3].title,
-                Ind = _imageCount++,
+                complete.Add(false);
+                Items.Add(new
+                {
+                    Source = App.user.routines[3].photo,
+                    Title = App.user.routines[3].title,
+                    Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                Text = "Click this card to start!",
-                ButtonText = "Click for More About Me",
-                Navigate = new Command(
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(3, true));
+                         await mainPage.Navigation.PushAsync(new TaskPage(3, true, complete));
                      })
-            });
-
+                });
+            }
             if (App.user.routines.Count >= 5)
-                Items.Add(new
             {
-                Source = App.user.routines[4].photo,
-                Title = App.user.routines[4].title,
-                Ind = _imageCount++,
+                complete.Add(false);
+                Items.Add(new
+                {
+                    Source = App.user.routines[4].photo,
+                    Title = App.user.routines[4].title,
+                    Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                Text = "Click this card to start!",
-                ButtonText = "Click for More About Me",
-                Navigate = new Command(
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(4, true));
+                         await mainPage.Navigation.PushAsync(new TaskPage(4, true, complete));
                      })
-            });
-
+                });
+            }
             if (App.user.routines.Count >= 6)
-                Items.Add(new
             {
-                Source = App.user.routines[5].photo,
-                Title = App.user.routines[5].title,
+                complete.Add(false);
+                Items.Add(new
+                {
+                    Source = App.user.routines[5].photo,
+                    Title = App.user.routines[5].title,
 
-                Ind = _imageCount++,
+                    Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                Text = "Click this card to start!",
-                ButtonText = "Click for More About Me",
-                Navigate = new Command(
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(5, true));
+                         await mainPage.Navigation.PushAsync(new TaskPage(5, true, complete));
                      })
-            });
-
+                });
+            }
             if (App.user.routines.Count >= 7)
-                Items.Add(new
             {
-                Source = App.user.routines[6].photo,
-                Title = App.user.routines[6].title,
+                complete.Add(false);
+                Items.Add(new
+                {
+                    Source = App.user.routines[6].photo,
+                    Title = App.user.routines[6].title,
 
-                Ind = _imageCount++,
+                    Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                Text = "Click this card to start!",
-                ButtonText = "Click for More About Me",
-                Navigate = new Command(
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(6, true));
+                         await mainPage.Navigation.PushAsync(new TaskPage(6, true, complete));
                      })
-            });
-
+                });
+            }
             if (App.user.routines.Count >= 8)
-                Items.Add(new
             {
-                Source = App.user.routines[7].photo,
-                Title = App.user.routines[7].title,
+                complete.Add(false);
+                Items.Add(new
+                {
+                    Source = App.user.routines[7].photo,
+                    Title = App.user.routines[7].title,
 
-                Ind = _imageCount++,
+                    Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                Text = "Click this card to start!",
-                ButtonText = "Click for More About Me",
-                Navigate = new Command(
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(7, true));
+                         await mainPage.Navigation.PushAsync(new TaskPage(7, true, complete));
                      })
-            });
+                }); 
+            }
 
-            if(App.user.routines.Count>=9)
-            Items.Add(new
+            if (App.user.routines.Count >= 9)
             {
-                Source = App.user.routines[8].photo,
-                Title = App.user.routines[8].title,
+                complete.Add(false);
+                Items.Add(new
+                {
+                    Source = App.user.routines[8].photo,
+                    Title = App.user.routines[8].title,
 
-                Ind = _imageCount++,
-                BackgroundColor = Color.Default,
-                TextColor = Color.Black,
-                Length = "Takes me 25 minutes",
-                Text = "Click this card to start!",
-                ButtonText = "Click for More About Me",
-                Navigate = new Command(
+                    Ind = _imageCount++,
+                    BackgroundColor = Color.Default,
+                    TextColor = Color.Black,
+                    Length = "Takes me 25 minutes",
+                    Text = "Click this card to start!",
+                    ButtonText = "Click for More About Me",
+                    Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(8, true));
+                         await mainPage.Navigation.PushAsync(new TaskPage(8, true, complete));
                      })
-            });
+                });
+            }
 
             if (App.user.routines.Count >= 10)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.routines[9].photo,
@@ -242,11 +262,14 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(9, true));
+                             await mainPage.Navigation.PushAsync(new TaskPage(9, true, complete));
                          })
                 });
+            }
 
             if (App.user.routines.Count >= 11)
+            {
+                complete.Add(false);
 
                 Items.Add(new
                 {
@@ -261,11 +284,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(10, true));
+                         await mainPage.Navigation.PushAsync(new TaskPage(10, true, complete));
                      })
                 });
-
+            }
             if (App.user.routines.Count >= 12)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.routines[11].photo,
@@ -279,11 +304,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(11, true));
+                         await mainPage.Navigation.PushAsync(new TaskPage(11, true, complete));
                      })
                 });
-
+            }
             if (App.user.routines.Count >= 13)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.routines[12].photo,
@@ -297,11 +324,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(12, true));
+                         await mainPage.Navigation.PushAsync(new TaskPage(12, true, complete));
                      })
                 });
-
+            }
             if (App.user.routines.Count >= 14)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.routines[13].photo,
@@ -315,11 +344,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(13, true));
+                         await mainPage.Navigation.PushAsync(new TaskPage(13, true, complete));
                      })
                 });
-
+            }
             if (App.user.routines.Count >= 15)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.routines[14].photo,
@@ -333,11 +364,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(14, true));
+                         await mainPage.Navigation.PushAsync(new TaskPage(14, true, complete));
                      })
                 });
-
+            }
             if (App.user.routines.Count >= 16)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.routines[15].photo,
@@ -352,11 +385,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(15, true));
+                         await mainPage.Navigation.PushAsync(new TaskPage(15, true, complete));
                      })
                 });
-
+            }
             if (App.user.routines.Count >= 17)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.routines[16].photo,
@@ -371,11 +406,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(16, true));
+                         await mainPage.Navigation.PushAsync(new TaskPage(16, true, complete));
                      })
                 });
-
+            }
             if (App.user.routines.Count >= 18)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.routines[17].photo,
@@ -390,11 +427,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(17, true));
+                         await mainPage.Navigation.PushAsync(new TaskPage(17, true, complete));
                      })
                 });
-
+            }
             if (App.user.routines.Count >= 19)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.routines[18].photo,
@@ -409,11 +448,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(18, true));
+                             await mainPage.Navigation.PushAsync(new TaskPage(18, true, complete));
                          })
                 });
-
+            }
             if (App.user.routines.Count >= 20)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.routines[19].photo,
@@ -428,11 +469,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(19, true));
+                             await mainPage.Navigation.PushAsync(new TaskPage(19, true, complete));
                          })
                 });
-
+            }
             if (App.user.goals.Count >= 1)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.goals[0].photo,
@@ -447,12 +490,14 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(0,false));
+                             await mainPage.Navigation.PushAsync(new TaskPage(0, false, complete));
                          })
                 });
-
+            }
 
             if (App.user.goals.Count >= 2)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.goals[1].photo,
@@ -468,10 +513,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(1, false));
+                             await mainPage.Navigation.PushAsync(new TaskPage(1, false, complete));
                          })
                 });
+            }
             if (App.user.goals.Count >= 3)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.goals[2].photo,
@@ -487,10 +535,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(2, false));
+                             await mainPage.Navigation.PushAsync(new TaskPage(2, false, complete));
                          })
                 });
+            }
             if (App.user.goals.Count >= 4)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.goals[3].photo,
@@ -506,10 +557,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(3, false));
+                             await mainPage.Navigation.PushAsync(new TaskPage(3, false, complete));
                          })
                 });
+            }
             if (App.user.goals.Count >= 5)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.goals[4].photo,
@@ -525,10 +579,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(4, false));
+                             await mainPage.Navigation.PushAsync(new TaskPage(4, false, complete));
                          })
                 });
+            }
             if (App.user.goals.Count >= 6)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.goals[5].photo,
@@ -544,10 +601,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(5, false));
+                             await mainPage.Navigation.PushAsync(new TaskPage(5, false, complete));
                          })
                 });
+            }
             if (App.user.goals.Count >= 7)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.goals[6].photo,
@@ -563,10 +623,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(6, false));
+                             await mainPage.Navigation.PushAsync(new TaskPage(6, false, complete));
                          })
                 });
+            }
             if (App.user.goals.Count >= 8)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.goals[7].photo,
@@ -582,10 +645,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(7, false));
+                             await mainPage.Navigation.PushAsync(new TaskPage(7, false, complete));
                          })
                 });
+            }
             if (App.user.goals.Count >= 9)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.goals[8].photo,
@@ -601,10 +667,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(8, false));
+                             await mainPage.Navigation.PushAsync(new TaskPage(8, false, complete));
                          })
                 });
+            }
             if (App.user.goals.Count >= 10)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.goals[9].photo,
@@ -620,10 +689,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(9, false));
+                             await mainPage.Navigation.PushAsync(new TaskPage(9, false, complete));
                          })
                 });
+            }
             if (App.user.goals.Count >= 11)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.goals[10].photo,
@@ -639,10 +711,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(10, false));
+                             await mainPage.Navigation.PushAsync(new TaskPage(10, false, complete));
                          })
                 });
+            }
             if (App.user.goals.Count >= 12)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.goals[11].photo,
@@ -658,10 +733,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(11, false));
+                             await mainPage.Navigation.PushAsync(new TaskPage(11, false, complete));
                          })
                 });
+            }
             if (App.user.goals.Count >= 13)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.goals[12].photo,
@@ -677,10 +755,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(12, false));
+                             await mainPage.Navigation.PushAsync(new TaskPage(12, false, complete));
                          })
                 });
+            }
             if (App.user.goals.Count >= 14)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.goals[13].photo,
@@ -696,10 +777,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(13, false));
+                             await mainPage.Navigation.PushAsync(new TaskPage(13, false, complete));
                          })
                 });
+            }
             if (App.user.goals.Count >= 15)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.goals[14].photo,
@@ -715,10 +799,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(14, false));
+                             await mainPage.Navigation.PushAsync(new TaskPage(14, false, complete));
                          })
                 });
+            }
             if (App.user.goals.Count >= 16)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.goals[15].photo,
@@ -734,10 +821,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(15, false));
+                             await mainPage.Navigation.PushAsync(new TaskPage(15, false, complete));
                          })
                 });
+            }
             if (App.user.goals.Count >= 17)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.goals[16].photo,
@@ -753,10 +843,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(16, false));
+                             await mainPage.Navigation.PushAsync(new TaskPage(16, false, complete));
                          })
                 });
+            }
             if (App.user.goals.Count >= 18)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.goals[17].photo,
@@ -772,10 +865,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(17, false));
+                             await mainPage.Navigation.PushAsync(new TaskPage(17, false, complete));
                          })
                 });
+            }
             if (App.user.goals.Count >= 19)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.goals[18].photo,
@@ -791,10 +887,13 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(18, false));
+                             await mainPage.Navigation.PushAsync(new TaskPage(18, false, complete));
                          })
                 });
+            }
             if (App.user.goals.Count >= 20)
+            {
+                complete.Add(false);
                 Items.Add(new
                 {
                     Source = App.user.goals[19].photo,
@@ -810,9 +909,10 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(19, false));
+                             await mainPage.Navigation.PushAsync(new TaskPage(19, false, complete));
                          })
                 });
+            }
 
             /*int routineNum = 0;
             foreach (routine routine in App.user.routines)

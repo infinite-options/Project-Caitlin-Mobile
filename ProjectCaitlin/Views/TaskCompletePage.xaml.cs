@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Collections.Generic;
 
 namespace ProjectCaitlin.Views
 {
@@ -15,11 +16,20 @@ namespace ProjectCaitlin.Views
     public partial class TaskCompletePage : ContentPage
     {
         private int itemcount;
-
+        int a;
+        int b;
+        bool isRoutine;
+        List<bool> complete;
         readonly TaskCompletePageViewModel pageModel;
-        public TaskCompletePage(int a,int b,bool isRoutine)
+        public TaskCompletePage(int a,int b,bool isRoutine, List<bool> complete)
         {
             InitializeComponent();
+            this.complete = complete;
+            
+
+            this.a = a;
+            this.b = b;
+            this.isRoutine = isRoutine;
             pageModel = new TaskCompletePageViewModel(this, a, b,isRoutine);
             BindingContext = pageModel;
             itemcount = pageModel.count;
@@ -28,24 +38,35 @@ namespace ProjectCaitlin.Views
         }
         public async void nextpage(object sender, EventArgs args)
         {
-           
-           if (CarouselTasks.Position + 1 != itemcount)
-            {   
+            if (CarouselTasks.Position == App.user.routines[a].tasks[b].steps.Count - 1)
+            {
+                next.Text = "Done";
+            }
+
+            else if (CarouselTasks.Position + 1 != itemcount)
+            {
                 next.Text = "Next";
-                previous.Text = "Previous";
                 CarouselTasks.Position = CarouselTasks.Position + 1;
             }
-            else
-                next.Text = "Done";
+
+            if (next.Text == "Done")
+            {
+                complete[b] = true;
+                await Navigation.PushAsync(new TaskPage(a, isRoutine, complete));
+            }
 
         }
         public async void prepage(object sender, EventArgs args)
         {
             if (CarouselTasks.Position != 0)
             {
-                previous.Text = "Previous";
                 CarouselTasks.Position = CarouselTasks.Position - 1;
             }
+        }
+        public async void close(object sender, EventArgs args)
+        {
+            await Navigation.PushAsync(new TaskPage(a,isRoutine, complete));
+            //await Navigation.PushAsync(new GoalsRoutinesTemplate());
         }
     }
 }

@@ -12119,6 +12119,12 @@ namespace ProjectCaitlin.Droid
 			// aapt resource value: 0x7F0700A6
 			public const int toothbrushCircle = 2131165350;
 			
+			// aapt resource value: 0x7F0700A7
+			public const int waveformicon = 2131165351;
+			
+			// aapt resource value: 0x7F0700A8
+			public const int waveformiconwhite = 2131165352;
+			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();

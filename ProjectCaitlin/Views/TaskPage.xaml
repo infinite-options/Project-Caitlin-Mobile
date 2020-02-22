@@ -6,50 +6,78 @@
              xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
              xmlns:local="clr-namespace:ProjectCaitlin.Views"
              mc:Ignorable="d"
-             x:Class="ProjectCaitlin.Views.TaskPage">
+             x:Class="ProjectCaitlin.Views.TaskPage"
+             NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <StackLayout >
-            <StackLayout Orientation="Horizontal"
-                                 HeightRequest="60">
-                <Image Source="{Binding TopImage}"
-                               VerticalOptions="Center"
-                               HorizontalOptions="Start"
-                               HeightRequest="50"
-                               WidthRequest="50"/>
-                <Label Text="{Binding TopLabel}" 
-                       VerticalOptions="Center"
-                       FontSize="20"/>
-            </StackLayout>
+        <ScrollView>
 
-            <StackLayout >
-                <flv:FlowListView FlowColumnCount="3"   
+            <StackLayout>
+                <StackLayout HeightRequest="50" >
+                    <Grid>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="0.4*" />
+                            <ColumnDefinition Width="0.6*" />
+                        </Grid.ColumnDefinitions>
+                        <ImageButton Grid.Column="0" Margin="5" Source="moon.png" BackgroundColor="Transparent" HeightRequest="50" WidthRequest="50" HorizontalOptions="Start" VerticalOptions="Center" Clicked="close"/>
+                        <Label Grid.Column="1" Text="My Routine" HorizontalOptions="Start" VerticalOptions="Center"/>
+                    </Grid>
+                </StackLayout>
+                <StackLayout HeightRequest="300">
+                    <Frame  CornerRadius="150" HeightRequest="100" WidthRequest="100" Margin="10" Padding="0" HorizontalOptions="Center" IsClippedToBounds="True">
+                        <Image Source="{Binding TopImage}" Aspect="AspectFill" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" />
+                    </Frame>
+                    <Label Text="{Binding TopLabel}" VerticalOptions="Center" HorizontalOptions="Center" FontSize="40"/>
+                    <Label Text="4 Tasks | Take me 25 mins" VerticalOptions="Center" HorizontalOptions="Center" FontSize="15"/>
+
+                    <StackLayout Margin="20">
+                        <Grid>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="0.5*" />
+                                <ColumnDefinition Width="0.3*" />
+                            </Grid.ColumnDefinitions>
+                            <ImageButton x:Name="previous" Grid.Column="0" Source="waveformicon.png" BackgroundColor="Transparent" HeightRequest="30" HorizontalOptions="Start" VerticalOptions="Center" />
+                            <Frame  Grid.Column="1"  CornerRadius="20" Padding="0" HeightRequest="50"  >
+                                <Button x:Name="next" Text="Start All" BackgroundColor="#42B971"/>
+                            </Frame>
+                        </Grid>
+                    </StackLayout>
+                </StackLayout>
+
+                <StackLayout>
+                    <flv:FlowListView FlowColumnCount="2"   
                 SeparatorVisibility="Default"   
                 HasUnevenRows="False"
-                Margin="3"
-                RowHeight ="250"
+                RowHeight ="260"
                 FlowItemsSource="{Binding Items}">
 
-                    <flv:FlowListView.FlowColumnTemplate>
-                        <DataTemplate>
-                            <Frame 
-                                    Margin="3"
-                                   Padding="1">
-                                <StackLayout>
-                                    <ImageButton Source="{Binding Source}" 
+                        <flv:FlowListView.FlowColumnTemplate>
+                            <DataTemplate>
+                                
+                                    <StackLayout>
+                                    <Frame 
+                                    Margin="10"
+                                   Padding="0"
+                                CornerRadius="25">
+                                        <StackLayout Spacing="-100">
+                                            <ImageButton Source="{Binding Source}" 
                                                  Command="{Binding Navigate}"
                                                CommandParameter="{x:Type local:TaskCompletePage}"
                                             VerticalOptions = "FillAndExpand"
                                             HorizontalOptions = "FillAndExpand"
+                                                     HeightRequest="200"
                                             Aspect = "AspectFill"/>
+                                            <Image x:Name="isComplete" Source="moon.png" IsVisible="{Binding IsComplete}" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                        </StackLayout>
+                                    </Frame>
 
-                                    <Label Text="{Binding Text}" HeightRequest="35" />
-                                </StackLayout>
-                            </Frame>
-                        </DataTemplate>
-                    </flv:FlowListView.FlowColumnTemplate>
-                </flv:FlowListView>
-            </StackLayout>
-
+                                    <Label HorizontalOptions="Center" Text="{Binding Text}" HeightRequest="35" />
+                                    </StackLayout>
+                            </DataTemplate>
+                        </flv:FlowListView.FlowColumnTemplate>
+                    </flv:FlowListView>
+                </StackLayout>
         </StackLayout>
+        </ScrollView>
+
     </ContentPage.Content>
 </ContentPage>
