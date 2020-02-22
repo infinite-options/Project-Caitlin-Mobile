@@ -206,5 +206,26 @@
     <BundleResource Include="Resources\mydayiconselectednotext.png" />
     <BundleResource Include="Resources\myphotosiconnotext.png" />
     <BundleResource Include="Resources\myphotosiconselectednotext.png" />
+    <BundleResource Include="..\ProjectCaitlin\Icons\arrowicon.png">
+      <Link>Resources\arrowicon.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\ProjectCaitlin\Icons\arrowiconwhite.png">
+      <Link>Resources\arrowiconwhite.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\ProjectCaitlin\Icons\exiticon.png">
+      <Link>Resources\exiticon.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\ProjectCaitlin\Icons\exiticonwhite.png">
+      <Link>Resources\exiticonwhite.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\ProjectCaitlin\Icons\graycheckmarkicon.png">
+      <Link>Resources\graycheckmarkicon.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\ProjectCaitlin\Icons\graycircleicon.png">
+      <Link>Resources\graycircleicon.png</Link>
+    </BundleResource>
+    <BundleResource Include="..\ProjectCaitlin\Icons\greencheckmarkicon.png">
+      <Link>Resources\greencheckmarkicon.png</Link>
+    </BundleResource>
   </ItemGroup>
 </Project>

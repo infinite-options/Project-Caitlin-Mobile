@@ -32,5 +32,10 @@ namespace ProjectCaitlin.Views
             BindingContext = pageModel;
             itemcount = pageModel.count;
         }
+
+        public async void close(object sender, EventArgs args)
+        {
+            await Navigation.PopAsync();
+        }
     }
 }
