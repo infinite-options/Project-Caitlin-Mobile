@@ -26,7 +26,8 @@
 
 
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout
+            VerticalOptions="CenterAndExpand">
             <StackLayout>
                 <StackLayout HeightRequest="10" x:Name="TopDivider"></StackLayout>
                 <StackLayout Orientation="Horizontal"
@@ -59,7 +60,8 @@
                                Margin="0, -10, 0, 20"/>
                 </StackLayout>
 
-                <StackLayout>
+                <StackLayout
+                    VerticalOptions="EndAndExpand">
                     <cards:CoverFlowView 
                             PositionShiftValue="50"
                             IsCyclical="false"
@@ -76,9 +78,8 @@
                                 <!-- Card Definition-->
                                 <Frame
                                    Margin="0, 0, 0, 45"
-                                   WidthRequest="305"
-                                   VerticalOptions="FillAndExpand"
-                                   HorizontalOptions="Center"
+                                   HorizontalOptions="CenterAndExpand"
+                                   VerticalOptions="CenterAndExpand"
                                    Padding="0" 
                                    HasShadow="true"
                                    IsClippedToBounds="true"

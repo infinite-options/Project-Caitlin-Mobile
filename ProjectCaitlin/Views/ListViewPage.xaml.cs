@@ -252,7 +252,7 @@ namespace ProjectCaitlin
 
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += async (s, e) => {
-                await Navigation.PushAsync(new TaskPage(routineIdx, true));
+                //await Navigation.PushAsync(new TaskPage(routineIdx, true));
             };
             frame.GestureRecognizers.Add(tapGestureRecognizer);
 
@@ -315,9 +315,9 @@ namespace ProjectCaitlin
                 HeightRequest = 50,
                 HorizontalOptions = LayoutOptions.End,
                 Transformations = new List<ITransformation>()
-                    {
-                        new CircleTransformation(),
-                    },
+                {
+                    new CircleTransformation(),
+                },
             };
 
             stackLayoutInner.Children.Add(EventTimeLabel);
@@ -362,7 +362,7 @@ namespace ProjectCaitlin
 
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += async (s, e) => {
-                await Navigation.PushAsync(new TaskPage(goalIdx, false));
+                //await Navigation.PushAsync(new TaskPage(goalIdx, false));
             };
             goalStackLayout.GestureRecognizers.Add(tapGestureRecognizer);
 
