@@ -85,8 +85,7 @@
                                    <DataTemplate>  
                                        <ViewCell>
                                            <ViewCell.ContextActions>
-                                                <MenuItem Clicked="ChangeIcon"
-                                                          CommandParameter="{Binding ChangeIcon}"
+                                                <MenuItem Command="{Binding ChangeIcon}"
                                                           Text="Complete"
                                                           />
                                              </ViewCell.ContextActions>

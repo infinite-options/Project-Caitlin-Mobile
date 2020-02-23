@@ -127,6 +127,8 @@ namespace ProjectCaitlin.Methods
             }
         }
 
+        public async Task UpdateStep
+
         public async Task LoadTasks(string routineID, int routineIdx, string routineType)
         {
             var request = new HttpRequestMessage();
