@@ -49,10 +49,10 @@
                     </Grid>
                 </StackLayout>
 
-                <Frame CornerRadius="10" 
+                <Frame CornerRadius="10"
                            HeightRequest="290"
                            WidthRequest="355"
-                           Padding="0"                  
+                           Padding="0"
                            HorizontalOptions="Center"
                            IsClippedToBounds="True"
                            HasShadow="True">
@@ -83,11 +83,7 @@
                         <ListView.ItemTemplate>
                             <DataTemplate>
                                 <ViewCell>
-                                    <ViewCell.ContextActions>
-                                        <MenuItem Command="{Binding CompleteStep}"
-                                                          Text="Complete"
-                                                          />
-                                    </ViewCell.ContextActions>
+
 
                                     <Grid>
                                         <Grid.ColumnDefinitions>
@@ -95,19 +91,24 @@
 
                                         </Grid.ColumnDefinitions>
 
-                                        <Label Text="{Binding Text}"
+                                        <Label x:Name = "stepLabel"
+                                               Text="{Binding Text}"
                                             Padding="30, 15, 10, 15"
                                             Grid.Column="0"
                                             VerticalOptions="Center"
                                             HorizontalOptions="Start"
                                             FontSize="15"
                                             FontAttributes="Bold"
-                                            TextColor="#272E32"/>
-                                        <ffimage:CachedImage Source="{Binding CheckmarkIcon}"
+                                            TextColor="#272E32">
+                                        </Label>
+
+                                        <ImageButton Source="{Binding CheckmarkIcon}"
                                                                         Grid.Column="1"
                                                                         WidthRequest="33"
                                                                         HeightRequest="33"
-                                                                        HorizontalOptions="Start"/>
+                                                                        HorizontalOptions="Start"
+                                                     BackgroundColor="Transparent"
+                                                                        Command="{Binding CompleteStep}"/>
                                     </Grid>
                                 </ViewCell>
                             </DataTemplate>

@@ -171,6 +171,7 @@ namespace ProjectCaitlin.Methods
             request.Headers.Add("routineId", routineId);
             request.Headers.Add("taskId", taskId);
             request.Headers.Add("taskIndex", taskIndex);
+
             var client = new HttpClient();
             HttpResponseMessage response = await client.SendAsync(request);
 

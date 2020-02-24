@@ -75,7 +75,7 @@ namespace ProjectCaitlin.ViewModel
 
                 //                 if (okToCheckmark) { App.user.routines[a].tasks[b].steps[indexForCheckmark].isComplete = true; }
                 //                 await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
-                                 
+
                 //             }
                 //           )
                 //        });
@@ -761,5 +761,5 @@ namespace ProjectCaitlin.ViewModel
         }
 
     }
-    
+
 }

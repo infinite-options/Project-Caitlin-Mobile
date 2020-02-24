@@ -32,6 +32,14 @@ namespace ProjectCaitlin.Views
             pageModel = new StepsPageViewModel(this, a, b, isRoutine);
             BindingContext = pageModel;
             itemcount = pageModel.count;
+
+
+
+        }
+
+        private void OnLabelClicked()
+        {
+            throw new NotImplementedException();
         }
 
         public async void close(object sender, EventArgs args)
@@ -68,7 +76,7 @@ namespace ProjectCaitlin.Views
                 await DisplayAlert("Oops!", "Please complete all steps before marking this task as done", "OK");
             }
 
-            
+
         }
     }
 }

@@ -94,7 +94,7 @@ namespace ProjectCaitlin.Services
             {
                 App.user.access_token = jsonParsed["access_token"].ToString();
             }
-            catch(NullReferenceException e)
+            catch (NullReferenceException e)
             {
                 App.user.old_refresh_token = App.user.refresh_token;
                 await Application.Current.MainPage.DisplayAlert("Alert", "Please re-login to continue", "OK");
@@ -110,7 +110,7 @@ namespace ProjectCaitlin.Services
             //var request = new OAuth2Request("POST", new Uri(Constants.AccessTokenUrl), dictionary, e.Account);
             //var response = await request.GetResponseAsync();
             //return response.ToString();
-          
+
         }
 
         public async Task<string> GetCalendars()
@@ -124,7 +124,7 @@ namespace ProjectCaitlin.Services
             //Format Headers of Request with included Token
             string bearerString = string.Format("Bearer {0}", App.user.access_token);
             request.Headers.Add("Authorization", bearerString);
-            request.Headers.Add("Accept" , "application/json");
+            request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
             HttpResponseMessage response = await client.SendAsync(request);
             HttpContent content = response.Content;

@@ -7,6 +7,8 @@ using System.Text;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using System.Collections.Generic;
+using ProjectCaitlin.Methods;
 
 namespace ProjectCaitlin.Views
 {
@@ -23,7 +25,7 @@ namespace ProjectCaitlin.Views
         {
             InitializeComponent();
             this.complete = complete;
-            
+
 
             this.a = a;
             this.b = b;
