@@ -19,7 +19,7 @@ namespace ProjectCaitlin.Views
         bool isRoutine;
         List<bool> complete;
         readonly TaskCompletePageViewModel pageModel;
-        public TaskCompletePage(int a,int b,bool isRoutine, List<bool> complete)
+        public TaskCompletePage(int a,int b,bool isRoutine)
         {
             InitializeComponent();
             this.complete = complete;
@@ -50,7 +50,7 @@ namespace ProjectCaitlin.Views
             if (next.Text == "Done")
             {
                 complete[b] = true;
-                await Navigation.PushAsync(new TaskPage(a, isRoutine, complete));
+                await Navigation.PushAsync(new TaskPage(a, isRoutine));
             }
 
         }
@@ -63,7 +63,7 @@ namespace ProjectCaitlin.Views
         }
         public async void close(object sender, EventArgs args)
         {
-            await Navigation.PushAsync(new TaskPage(a,isRoutine, complete));
+            await Navigation.PushAsync(new TaskPage(a,isRoutine));
             //await Navigation.PushAsync(new GoalsRoutinesTemplate());
         }
     }

@@ -24,7 +24,7 @@ namespace ProjectCaitlin.ViewModel
         List<bool> complete;
 
         private ObservableCollection<object> _items = new ObservableCollection<object>() { };
-        public TaskGridViewModel(TaskPage mainPage, int a, bool isRoutine, List<bool> complete)
+        public TaskGridViewModel(TaskPage mainPage, int a, bool isRoutine)
         {
             this.complete = complete;
             this.mainPage = mainPage;
@@ -47,7 +47,6 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.routines[a].tasks[0].photo,
                         Text = App.user.routines[a].tasks[0].title,
-                        IsComplete = complete[0],
                         Navigate = new Command(
                              async () =>
                              {
@@ -62,7 +61,6 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.routines[a].tasks[1].photo,
                         Text = App.user.routines[a].tasks[1].title,
-                        IsComplete = complete[1],
 
                         Navigate = new Command(
                              async () =>
@@ -75,7 +73,6 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.routines[a].tasks[2].photo,
                         Text = App.user.routines[a].tasks[2].title,
-                        IsComplete = complete[2],
 
                         Navigate = new Command(
                              async () =>
@@ -88,7 +85,6 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.routines[a].tasks[3].photo,
                         Text = App.user.routines[a].tasks[3].title,
-                        IsComplete = complete[3],
 
                         Navigate = new Command(
                              async () =>
@@ -101,7 +97,6 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.routines[a].tasks[4].photo,
                         Text = App.user.routines[a].tasks[4].title,
-                        IsComplete = complete[4],
 
                         Navigate = new Command(
                              async () =>
@@ -114,7 +109,6 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.routines[a].tasks[5].photo,
                         Text = App.user.routines[a].tasks[5].title,
-                        IsComplete = complete[5],
 
                         Navigate = new Command(
                              async () =>
@@ -127,7 +121,6 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.routines[a].tasks[6].photo,
                         Text = App.user.routines[a].tasks[6].title,
-                        IsComplete = complete[6],
 
                         Navigate = new Command(
                              async () =>
@@ -140,7 +133,6 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.routines[a].tasks[7].photo,
                         Text = App.user.routines[a].tasks[7].title,
-                        IsComplete = complete[7],
 
                         Navigate = new Command(
                              async () =>
@@ -153,7 +145,6 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.routines[a].tasks[8].photo,
                         Text = App.user.routines[a].tasks[8].title,
-                        IsComplete = complete[8],
 
                         Navigate = new Command(
                              async () =>
@@ -166,7 +157,6 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.routines[a].tasks[9].photo,
                         Text = App.user.routines[a].tasks[9].title,
-                        IsComplete = complete[9],
 
                         Navigate = new Command(
                              async () =>
@@ -179,7 +169,6 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.routines[a].tasks[10].photo,
                         Text = App.user.routines[a].tasks[10].title,
-                        IsComplete = complete[10],
 
                         Navigate = new Command(
                              async () =>
@@ -192,7 +181,6 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.routines[a].tasks[11].photo,
                         Text = App.user.routines[a].tasks[11].title,
-                        IsComplete = complete[11],
 
                         Navigate = new Command(
                              async () =>
@@ -205,7 +193,6 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.routines[a].tasks[12].photo,
                         Text = App.user.routines[a].tasks[12].title,
-                        IsComplete = complete[12],
 
                         Navigate = new Command(
                              async () =>
@@ -218,7 +205,6 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.routines[a].tasks[13].photo,
                         Text = App.user.routines[a].tasks[13].title,
-                        IsComplete = complete[13],
 
                         Navigate = new Command(
                              async () =>
@@ -231,7 +217,6 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.routines[a].tasks[14].photo,
                         Text = App.user.routines[a].tasks[14].title,
-                        IsComplete = complete[14],
 
                         Navigate = new Command(
                              async () =>
@@ -244,7 +229,6 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.routines[a].tasks[15].photo,
                         Text = App.user.routines[a].tasks[15].title,
-                        IsComplete = complete[15],
 
                         Navigate = new Command(
                              async () =>
@@ -257,7 +241,6 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.routines[a].tasks[16].photo,
                         Text = App.user.routines[a].tasks[16].title,
-                        IsComplete = complete[16],
 
                         Navigate = new Command(
                              async () =>
@@ -270,7 +253,6 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.routines[a].tasks[17].photo,
                         Text = App.user.routines[a].tasks[17].title,
-                        IsComplete = complete[17],
 
                         Navigate = new Command(
                              async () =>
@@ -283,7 +265,6 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.routines[a].tasks[18].photo,
                         Text = App.user.routines[a].tasks[18].title,
-                        IsComplete = complete[18],
 
                         Navigate = new Command(
                              async () =>
@@ -296,7 +277,6 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.routines[a].tasks[19].photo,
                         Text = App.user.routines[a].tasks[19].title,
-                        IsComplete = complete[19],
 
                         Navigate = new Command(
                              async () =>
@@ -311,12 +291,11 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[0].photo,
                         Text = App.user.goals[a].actions[0].title,
-                        IsComplete = complete[0],
 
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 0, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 0, isRoutine));
                              })
                     });
                 if (App.user.goals[a].actions.Count >= 2)
@@ -324,12 +303,11 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[1].photo,
                         Text = App.user.goals[a].actions[1].title,
-                        IsComplete = complete[1],
 
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 1, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 1, isRoutine));
                              })
                     });
                 if (App.user.goals[a].actions.Count >= 3)
@@ -337,12 +315,11 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[2].photo,
                         Text = App.user.goals[a].actions[2].title,
-                        IsComplete = complete[2],
 
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 2, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 2, isRoutine));
                              })
                     });
                 if (App.user.goals[a].actions.Count >= 4)
@@ -350,12 +327,11 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[3].photo,
                         Text = App.user.goals[a].actions[3].title,
-                        IsComplete = complete[3],
 
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 3, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 3, isRoutine));
                              })
                     });
                 if (App.user.goals[a].actions.Count >= 5)
@@ -363,12 +339,11 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[4].photo,
                         Text = App.user.goals[a].actions[4].title,
-                        IsComplete = complete[4],
 
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 4, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 4, isRoutine));
                              })
                     });
                 if (App.user.goals[a].actions.Count >= 6)
@@ -376,12 +351,11 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[5].photo,
                         Text = App.user.goals[a].actions[5].title,
-                        IsComplete = complete[5],
 
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 5, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 5, isRoutine));
                              })
                     });
                 if (App.user.goals[a].actions.Count >= 7)
@@ -389,12 +363,11 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[6].photo,
                         Text = App.user.goals[a].actions[6].title,
-                        IsComplete = complete[6],
 
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 6, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 6, isRoutine));
                              })
                     });
                 if (App.user.goals[a].actions.Count >= 8)
@@ -402,12 +375,11 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[7].photo,
                         Text = App.user.goals[a].actions[7].title,
-                        IsComplete = complete[7],
 
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 7, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 7, isRoutine));
                              })
                     });
                 if (App.user.goals[a].actions.Count >= 9)
@@ -415,12 +387,11 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[8].photo,
                         Text = App.user.goals[a].actions[8].title,
-                        IsComplete = complete[8],
 
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 8, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 8, isRoutine));
                              })
                     });
                 if (App.user.goals[a].actions.Count >= 10)
@@ -428,12 +399,11 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[9].photo,
                         Text = App.user.goals[a].actions[9].title,
-                        IsComplete = complete[9],
 
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 9, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 9, isRoutine));
                              })
                     });
                 if (App.user.goals[a].actions.Count >= 11)
@@ -441,12 +411,11 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[10].photo,
                         Text = App.user.goals[a].actions[10].title,
-                        IsComplete = complete[10],
 
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 10, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 10, isRoutine));
                              })
                     });
                 if (App.user.goals[a].actions.Count >= 12)
@@ -454,12 +423,11 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[11].photo,
                         Text = App.user.goals[a].actions[11].title,
-                        IsComplete = complete[11],
 
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 11, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 11, isRoutine));
                              })
                     });
                 if (App.user.goals[a].actions.Count >= 13)
@@ -467,12 +435,11 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[12].photo,
                         Text = App.user.goals[a].actions[12].title,
-                        IsComplete = complete[12],
 
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 12, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 12, isRoutine));
                              })
                     });
                 if (App.user.goals[a].actions.Count >= 14)
@@ -480,12 +447,11 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[13].photo,
                         Text = App.user.goals[a].actions[13].title,
-                        IsComplete = complete[13],
 
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 13, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 13, isRoutine));
                              })
                     });
                 if (App.user.goals[a].actions.Count >= 15)
@@ -493,12 +459,11 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[14].photo,
                         Text = App.user.goals[a].actions[14].title,
-                        IsComplete = complete[14],
 
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 14, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 14, isRoutine));
                              })
                     });
                 if (App.user.goals[a].actions.Count >= 16)
@@ -506,12 +471,11 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[15].photo,
                         Text = App.user.goals[a].actions[15].title,
-                        IsComplete = complete[15],
 
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 15, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 15, isRoutine));
                              })
                     });
                 if (App.user.goals[a].actions.Count >= 17)
@@ -519,12 +483,11 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[16].photo,
                         Text = App.user.goals[a].actions[16].title,
-                        IsComplete = complete[16],
 
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 16, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 16, isRoutine));
                              })
                     });
                 if (App.user.goals[a].actions.Count >= 18)
@@ -532,12 +495,11 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[17].photo,
                         Text = App.user.goals[a].actions[17].title,
-                        IsComplete = complete[17],
 
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 17, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 17, isRoutine));
                              })
                     });
                 if (App.user.goals[a].actions.Count >= 19)
@@ -545,12 +507,11 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[18].photo,
                         Text = App.user.goals[a].actions[18].title,
-                        IsComplete = complete[18],
 
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 18, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 18, isRoutine));
                              })
                     });
                 if (App.user.goals[a].actions.Count >= 20)
@@ -558,12 +519,11 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[19].photo,
                         Text = App.user.goals[a].actions[19].title,
-                        IsComplete = complete[19],
 
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 19, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 19, isRoutine));
                              })
                     });
 

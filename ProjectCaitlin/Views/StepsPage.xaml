@@ -75,7 +75,7 @@
                            Padding="30, 0, 30, 0"
                            TextColor="#6C7072"/>
 
-                    <StackLayout Padding="0,20,0,0">   
+                    <StackLayout Padding="0,20,0,30">   
                         <ListView x:Name="listView"
                                   HasUnevenRows="true"
                                   ItemsSource="{Binding Items}"
@@ -113,8 +113,17 @@
                                        </ViewCell>  
                                    </DataTemplate>  
                                </ListView.ItemTemplate>  
-                           </ListView>  
-                       </StackLayout>  
+                           </ListView>
+
+                      <Button Text="I Am Done"
+                              Clicked="DoneClicked"
+                              HorizontalOptions="Center"
+                              BackgroundColor="#272E32"
+                              TextColor="White"
+                              WidthRequest="100"
+                              Margin="0, -200, 0, 0"/>
+
+                       </StackLayout>
 
                 </StackLayout>
 
