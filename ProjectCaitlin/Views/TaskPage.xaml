@@ -70,22 +70,22 @@
                 </StackLayout>
 
                 <StackLayout>
-                    <flv:FlowListView FlowColumnCount="2"   
-                SeparatorVisibility="Default"   
+                    <flv:FlowListView FlowColumnCount="2"
+                SeparatorVisibility="Default"
                 HasUnevenRows="False"
                 RowHeight ="260"
                 FlowItemsSource="{Binding Items}">
 
                         <flv:FlowListView.FlowColumnTemplate>
                             <DataTemplate>
-                                
+
                                     <StackLayout>
-                                    <Frame 
+                                    <Frame
                                     Margin="10"
                                    Padding="0"
                                 CornerRadius="25">
                                         <StackLayout Spacing="-100">
-                                            <ImageButton Source="{Binding Source}" 
+                                            <ImageButton Source="{Binding Source}"
                                                  Command="{Binding Navigate}"
                                                CommandParameter="{x:Type local:TaskCompletePage}"
                                             VerticalOptions = "FillAndExpand"
@@ -102,8 +102,9 @@
                         </flv:FlowListView.FlowColumnTemplate>
                     </flv:FlowListView>
                 </StackLayout>
-        </StackLayout>
-        </ScrollView>
+
+            </StackLayout>
+      </ScrollView>
 
     </ContentPage.Content>
 </ContentPage>

@@ -76,7 +76,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(0, true, complete));
+                         await mainPage.Navigation.PushAsync(new TaskPage(0, true));
                      })
                 });
             }
@@ -95,7 +95,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(1, true, complete));
+                         await mainPage.Navigation.PushAsync(new TaskPage(1, true));
                      })
                 });
             }
@@ -115,7 +115,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(2, true, complete));
+                         await mainPage.Navigation.PushAsync(new TaskPage(2, true));
                      })
                 });
             }
@@ -135,7 +135,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(3, true, complete));
+                         await mainPage.Navigation.PushAsync(new TaskPage(3, true));
                      })
                 });
             }
@@ -155,7 +155,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(4, true, complete));
+                         await mainPage.Navigation.PushAsync(new TaskPage(4, true));
                      })
                 });
             }
@@ -176,7 +176,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(5, true, complete));
+                         await mainPage.Navigation.PushAsync(new TaskPage(5, true));
                      })
                 });
             }
@@ -197,7 +197,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(6, true, complete));
+                         await mainPage.Navigation.PushAsync(new TaskPage(6, true));
                      })
                 });
             }
@@ -218,7 +218,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(7, true, complete));
+                         await mainPage.Navigation.PushAsync(new TaskPage(7, true));
                      })
                 }); 
             }
@@ -240,7 +240,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(8, true, complete));
+                         await mainPage.Navigation.PushAsync(new TaskPage(8, true));
                      })
                 });
             }
@@ -262,7 +262,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(9, true, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(9, true));
                          })
                 });
             }
@@ -284,7 +284,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(10, true, complete));
+                         await mainPage.Navigation.PushAsync(new TaskPage(10, true));
                      })
                 });
             }
@@ -304,7 +304,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(11, true, complete));
+                         await mainPage.Navigation.PushAsync(new TaskPage(11, true));
                      })
                 });
             }
@@ -324,7 +324,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(12, true, complete));
+                         await mainPage.Navigation.PushAsync(new TaskPage(12, true));
                      })
                 });
             }
@@ -344,7 +344,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(13, true, complete));
+                         await mainPage.Navigation.PushAsync(new TaskPage(13, true));
                      })
                 });
             }
@@ -364,7 +364,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(14, true, complete));
+                         await mainPage.Navigation.PushAsync(new TaskPage(14, true));
                      })
                 });
             }
@@ -385,7 +385,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(15, true, complete));
+                         await mainPage.Navigation.PushAsync(new TaskPage(15, true));
                      })
                 });
             }
@@ -406,7 +406,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(16, true, complete));
+                         await mainPage.Navigation.PushAsync(new TaskPage(16, true));
                      })
                 });
             }
@@ -427,7 +427,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                      async () =>
                      {
-                         await mainPage.Navigation.PushAsync(new TaskPage(17, true, complete));
+                         await mainPage.Navigation.PushAsync(new TaskPage(17, true));
                      })
                 });
             }
@@ -448,7 +448,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(18, true, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(18, true));
                          })
                 });
             }
@@ -469,7 +469,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(19, true, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(19, true));
                          })
                 });
             }
@@ -490,7 +490,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(0, false, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(0, false));
                          })
                 });
             }
@@ -513,7 +513,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(1, false, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(1, false));
                          })
                 });
             }
@@ -535,7 +535,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(2, false, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(2, false));
                          })
                 });
             }
@@ -557,7 +557,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(3, false, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(3, false));
                          })
                 });
             }
@@ -579,7 +579,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(4, false, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(4, false));
                          })
                 });
             }
@@ -601,7 +601,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(5, false, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(5, false));
                          })
                 });
             }
@@ -623,7 +623,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(6, false, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(6, false));
                          })
                 });
             }
@@ -645,7 +645,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(7, false, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(7, false));
                          })
                 });
             }
@@ -667,7 +667,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(8, false, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(8, false));
                          })
                 });
             }
@@ -689,7 +689,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(9, false, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(9, false));
                          })
                 });
             }
@@ -711,7 +711,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(10, false, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(10, false));
                          })
                 });
             }
@@ -733,7 +733,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(11, false, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(11, false));
                          })
                 });
             }
@@ -755,7 +755,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(12, false, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(12, false));
                          })
                 });
             }
@@ -777,7 +777,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(13, false, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(13, false));
                          })
                 });
             }
@@ -799,7 +799,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(14, false, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(14, false));
                          })
                 });
             }
@@ -821,7 +821,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(15, false, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(15, false));
                          })
                 });
             }
@@ -843,7 +843,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(16, false, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(16, false));
                          })
                 });
             }
@@ -865,7 +865,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(17, false, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(17, false));
                          })
                 });
             }
@@ -887,7 +887,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(18, false, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(18, false));
                          })
                 });
             }
@@ -909,7 +909,7 @@ namespace ProjectCaitlin.ViewModel
                     Navigate = new Command(
                          async () =>
                          {
-                             await mainPage.Navigation.PushAsync(new TaskPage(19, false, complete));
+                             await mainPage.Navigation.PushAsync(new TaskPage(19, false));
                          })
                 });
             }

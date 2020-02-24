@@ -144,8 +144,6 @@ namespace ProjectCaitlin.Methods
             HttpContent content = response.Content;
             var routineResponse = await content.ReadAsStringAsync();
 
-            Console.WriteLine(routineResponse);
-
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 return true;
