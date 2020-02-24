@@ -10,10 +10,49 @@
     <ContentPage.Content>
         <StackLayout BackgroundColor="DarkSlateGray">
 
-            <StackLayout Margin="10">
+            <StackLayout Margin="0, 10, 0, 10">
                 <Grid>
-                    <ImageButton x:Name="previous" Clicked="prepage" Grid.Column ="0" Source="waveformicon.png" BackgroundColor="Transparent" HeightRequest="50" HorizontalOptions="Start" VerticalOptions="Center"/>
-                    <ImageButton Clicked="close" Grid.Column ="1" Source="waveformicon.png" BackgroundColor="Transparent" HeightRequest="50" HorizontalOptions="End" VerticalOptions="Center"/>
+                    <Grid.ColumnDefinitions>
+                        <!--<ColumnDefinition Width="0.4*" />
+                                <ColumnDefinition Width="0.5*" />-->
+                    </Grid.ColumnDefinitions>
+
+                    <!-- BACK ARROW-->
+                    <ImageButton Grid.Column="0"
+                                         Margin="20, 0, 0, 0"
+                                         Source="arrowicon.png"
+                                         BackgroundColor="Transparent"
+                                         HeightRequest="23"
+                                         WidthRequest="23"
+                                         HorizontalOptions="Start"
+                                         VerticalOptions="Center"
+                                         Clicked="prepage"/>
+
+                    <!-- CURRENT ROUTINE-->
+                    <Label Grid.Column="1"
+                                   Text="{Binding TopLabel}"
+                                   FontSize="20"
+                                   TextColor= "White"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+
+                    <Label Grid.Column="1" Grid.Row="1"
+                                   Text="{Binding TopLabel2}"
+                                   FontSize="12"
+                                   TextColor= "White"
+                                   HorizontalOptions="Center"
+                                   VerticalOptions="Center"/>
+
+                    <!-- EXIT BUTTON-->
+                    <ImageButton Grid.Column="2"
+                                         Margin="0, 0, 20, 0"
+                                         Source="exiticon.png"
+                                         BackgroundColor="Transparent"
+                                         HeightRequest="25"
+                                         WidthRequest="25"
+                                         HorizontalOptions="End"
+                                         VerticalOptions="Center"
+                                         Clicked="close"/>
                 </Grid>
             </StackLayout>
             <StackLayout Margin="15">
