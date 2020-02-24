@@ -80,7 +80,8 @@
                                   HasUnevenRows="true"
                                   ItemsSource="{Binding Items}"
                                   SeparatorColor="#6C7072"
-                                  SelectionMode="None">  
+                                  SelectionMode="None">
+                            
                           <ListView.ItemTemplate>  
                                    <DataTemplate>  
                                        <ViewCell>

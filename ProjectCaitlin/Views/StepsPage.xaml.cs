@@ -15,7 +15,7 @@ namespace ProjectCaitlin.Views
     {
         private int itemcount;
         int a;
-        int b;
+        public int b;
         bool isRoutine;
         List<bool> complete;
         readonly StepsPageViewModel pageModel;

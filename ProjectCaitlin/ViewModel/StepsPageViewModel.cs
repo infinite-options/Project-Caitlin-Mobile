@@ -114,7 +114,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "1. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "1. " + App.user.routines[a].tasks[b].steps[0].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
@@ -143,7 +143,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "2. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "2. " + App.user.routines[a].tasks[b].steps[1].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
@@ -172,7 +172,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "3. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "3. " + App.user.routines[a].tasks[b].steps[2].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
@@ -201,7 +201,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "4. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "4. " + App.user.routines[a].tasks[b].steps[3].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
@@ -230,7 +230,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "5. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "5. " + App.user.routines[a].tasks[b].steps[4].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
@@ -259,7 +259,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "6. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "6. " + App.user.routines[a].tasks[b].steps[5].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
@@ -288,7 +288,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "7. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "7. " + App.user.routines[a].tasks[b].steps[6].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
@@ -317,7 +317,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "8. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "8. " + App.user.routines[a].tasks[b].steps[7].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
@@ -346,7 +346,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "9. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "9. " + App.user.routines[a].tasks[b].steps[8].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
@@ -375,7 +375,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "10. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "10. " + App.user.routines[a].tasks[b].steps[9].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
@@ -404,7 +404,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "11. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "11. " + App.user.routines[a].tasks[b].steps[10].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
@@ -433,7 +433,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "12. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "12. " + App.user.routines[a].tasks[b].steps[11].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
@@ -462,7 +462,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "13. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "13. " + App.user.routines[a].tasks[b].steps[12].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
@@ -491,7 +491,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "14. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "14. " + App.user.routines[a].tasks[b].steps[13].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
@@ -520,7 +520,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "15. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "15. " + App.user.routines[a].tasks[b].steps[14].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
@@ -549,7 +549,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "16. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "16. " + App.user.routines[a].tasks[b].steps[15].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
@@ -578,7 +578,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "17. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "17. " + App.user.routines[a].tasks[b].steps[16].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
@@ -607,7 +607,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "18. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "18. " + App.user.routines[a].tasks[b].steps[17].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
@@ -636,7 +636,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "19. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "19. " + App.user.routines[a].tasks[b].steps[18].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
@@ -665,7 +665,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "20. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "20. " + App.user.routines[a].tasks[b].steps[19].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
@@ -694,7 +694,7 @@ namespace ProjectCaitlin.ViewModel
                     }
                     else
                     {
-                        _items.Add(new { Text = "21. " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
+                        _items.Add(new { Text = "21. " + App.user.routines[a].tasks[b].steps[20].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
                 }
 
