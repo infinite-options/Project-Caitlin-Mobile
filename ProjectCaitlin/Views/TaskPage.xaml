@@ -60,7 +60,7 @@
                             <Frame Grid.Column="0" CornerRadius="150" Padding="0" HorizontalOptions="Start" IsClippedToBounds="True">
                                 <Image Source="{Binding TopImage}" Aspect="AspectFill"  />
                             </Frame>
-                            <ImageButton Grid.Column="1" Source="waveformicon.png" BackgroundColor="Transparent" HeightRequest="30" HorizontalOptions="Start" VerticalOptions="Center" />
+                            <ImageButton Grid.Column="1" Source="{Binding SoundButton}" BackgroundColor="Transparent" HeightRequest="30" HorizontalOptions="Start" VerticalOptions="Center" />
                             <ImageButton Grid.Column="2" Source="moon.png" BackgroundColor="Transparent" HeightRequest="30" HorizontalOptions="Start" VerticalOptions="Center" />
                             <Frame  Grid.Column="3"  CornerRadius="20" Padding="0" HeightRequest="30"  >
                                 <Button x:Name="next" Text="Start" BackgroundColor="#42B971"/>
