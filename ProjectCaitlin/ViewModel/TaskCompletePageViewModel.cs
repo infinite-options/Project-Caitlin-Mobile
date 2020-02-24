@@ -15,6 +15,8 @@ namespace ProjectCaitlin.ViewModel
         public string Text { get; set; }
         public Command ItemTappedCommand { get; set; }
         public string photo { get; set; }
+        public string TopLabel { get; set; }
+        public string TopLabel2 { get; set; }
 
 
 
@@ -22,6 +24,17 @@ namespace ProjectCaitlin.ViewModel
         public TaskCompletePageViewModel(TaskCompletePage mainPage,int a, int b, bool isRoutine)
         {
             this.mainPage = mainPage;
+
+            if (isRoutine)
+            {
+                TopLabel = App.user.routines[a].title;
+                TopLabel2 = App.user.routines[a].tasks[b].title;
+            }
+            else
+            {
+                TopLabel = App.user.goals[a].title;
+                TopLabel2 = App.user.goals[a].actions[b].title;
+            }
 
             if (isRoutine)
             {

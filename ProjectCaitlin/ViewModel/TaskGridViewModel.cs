@@ -17,6 +17,7 @@ namespace ProjectCaitlin.ViewModel
         public string photo { get; set; }
         public string TopImage { get; set; }
         public string TopLabel { get; set; }
+        public string SoundButton { get; set; }
 
         public bool IsComplete { get; set; }
         public ICommand NavigateCommand { private set; get; }
@@ -33,6 +34,7 @@ namespace ProjectCaitlin.ViewModel
             {
                 TopImage = App.user.routines[a].photo;
                 TopLabel = App.user.routines[a].title;
+                //if(App.user.routines[a].audio != "") SoundButton = "waveicon.png";
             }
             else {
                 TopImage = App.user.goals[a].photo;
