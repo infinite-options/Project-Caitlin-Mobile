@@ -85,7 +85,7 @@
                                    <DataTemplate>  
                                        <ViewCell>
                                            <ViewCell.ContextActions>
-                                                <MenuItem Command="{Binding ChangeIcon}"
+                                                <MenuItem Command="{Binding CompleteStep}"
                                                           Text="Complete"
                                                           />
                                              </ViewCell.ContextActions>

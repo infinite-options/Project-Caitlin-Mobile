@@ -5,7 +5,7 @@ using Xamarin.Forms;
 using ProjectCaitlin.Models;
 using System;
 using System.ComponentModel;
-
+using ProjectCaitlin.Methods;
 
 namespace ProjectCaitlin.ViewModel
 {
@@ -41,6 +41,7 @@ namespace ProjectCaitlin.ViewModel
         public StepsPageViewModel(StepsPage mainPage, int a, int b, bool isRoutine)
         {
             this.mainPage = mainPage;
+            var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
 
             if (isRoutine)
             {
@@ -52,17 +53,28 @@ namespace ProjectCaitlin.ViewModel
 
                 foreach (step step in App.user.routines[a].tasks[b].steps)
                 {
+                    var routineId = App.user.routines[a].id;
+                    var taskId = App.user.routines[a].tasks[b].id;
 
-                //if (App.user.routines[a].tasks[b].steps.Count >= 1)
-                //{
                     if (App.user.routines[a].tasks[b].steps[stepIdx].isComplete == false)
                     {
-                        _items.Add(new { Text = stepNum + ". " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "graycheckmarkicon.png" });
+                        _items.Add(new
+                        { Text = stepNum + ". " + App.user.routines[a].tasks[b].steps[stepIdx].title,
+                            CheckmarkIcon = "graycheckmarkicon.png",
+                            CompleteStep = new Command(
+                             async () =>
+                             { var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, (stepIdx.ToString()));
+                                 if (okToCheckmark)
+                                 {
+                                     _items[stepIdx] = "greencheckmarkicon.png";
+                                 }
+                        )});
                     }
                     else
                     {
                         _items.Add(new { Text = stepNum + ". " + App.user.routines[a].tasks[b].steps[stepIdx].title, CheckmarkIcon = "greencheckmarkicon.png" });
                     }
+
                     stepIdx++;
                     stepNum++;
                 }
