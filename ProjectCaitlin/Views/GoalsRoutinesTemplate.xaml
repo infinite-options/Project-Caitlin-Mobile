@@ -8,7 +8,7 @@
              xmlns:proc="clr-namespace:PanCardView.Processors;assembly=PanCardView"
              xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="ProjectCaitlin.Views.GoalsRoutinesTemplate"
-             xmlns:local="clr-namespace:ProjectCaitlin.Views"
+             xmlns:local="clr-namespace:ProjectCaitlin.Views" xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              BackgroundColor="#E9E8E8"
              NavigationPage.HasNavigationBar="False">
 
@@ -27,199 +27,195 @@
 
     <ContentPage.Content>
         <StackLayout
-            VerticalOptions="CenterAndExpand">
-            <StackLayout>
-                <StackLayout HeightRequest="10" x:Name="TopDivider"></StackLayout>
-                <StackLayout Orientation="Horizontal"
-                                 HeightRequest="58">
-                    <Image Source= "{Binding DayImage}"
-                               VerticalOptions="Center"
-                               HorizontalOptions="CenterAndExpand"/>
-                </StackLayout>
-                <StackLayout>
-                    <!--><Label Text="Monday&#10;Morning"/><!-->
-                        <Label Text="{Binding DayLabel}"
-                               FontSize="35"
-                               TextColor="#272E32"
-                               HorizontalTextAlignment="Center"
-                               Padding="0, 0, 0, 0"
-                               Margin="0, -10, 0, 20">
-                        
-                        <Label.FontFamily>
-                            <OnPlatform x:TypeArguments="x:String">
-                                <On Platform="iOS" Value="CircularStd-Medium.otf" />
-                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                            </OnPlatform>
-                        </Label.FontFamily>
-                    </Label>
-                    <Label Text="{Binding TimeLabel}"
-                               FontSize="35"
-                               TextColor="#272E32"
-                               HorizontalTextAlignment="Center"
-                               Padding="0, 0, 0, 0"
-                               Margin="0, -10, 0, 20"/>
-                </StackLayout>
+            VerticalOptions="EndAndExpand">
+            <StackLayout
+                VerticalOptions="StartAndExpand">
+                <Image
+                    Source= "{Binding DayImage}"
+                    VerticalOptions="StartAndExpand"
+                    HeightRequest="100"
+                    WidthRequest="150"
+                    HorizontalOptions="CenterAndExpand"/>
 
-                <StackLayout
-                    VerticalOptions="EndAndExpand">
-                    <cards:CoverFlowView 
+                <Label Text="{Binding DayLabel}"
+                            FontSize="35"
+                            TextColor="#272E32"
+                            HorizontalTextAlignment="Center"
+                            Padding="0, 0, 0, 0"
+                            Margin="0, -30, 0, 0">
+
+                    <Label.FontFamily>
+                        <OnPlatform x:TypeArguments="x:String">
+                            <On Platform="iOS" Value="CircularStd-Medium.otf" />
+                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                        </OnPlatform>
+                    </Label.FontFamily>
+                </Label>
+                <Label Text="{Binding TimeLabel}"
+                            FontSize="35"
+                            TextColor="#272E32"
+                            HorizontalTextAlignment="Center"
+                            Padding="0, 0, 0, 0"
+                            Margin="0, 0, 0, 10"/>
+            </StackLayout>
+
+            <cards:CoverFlowView 
                             PositionShiftValue="50"
                             IsCyclical="false"
                             SelectedIndex="{Binding CurrentIndex}"
                             ItemsSource="{Binding Items}">
 
-                        <x:Arguments>
-                            <proc:BaseCoverFlowFrontViewProcessor ScaleFactor="0.75" OpacityFactor=".9" RotationFactor="-0.009" />
-                            <proc:BaseCoverFlowBackViewProcessor  ScaleFactor="0.75" OpacityFactor=".9" RotationFactor="-0.009" />
-                        </x:Arguments>
+                <x:Arguments>
+                    <proc:BaseCoverFlowFrontViewProcessor ScaleFactor="0.75" OpacityFactor=".9" RotationFactor="-0.009" />
+                    <proc:BaseCoverFlowBackViewProcessor  ScaleFactor="0.75" OpacityFactor=".9" RotationFactor="-0.009" />
+                </x:Arguments>
 
-                        <cards:CoverFlowView.ItemTemplate>
-                            <DataTemplate>
-                                <!-- Card Definition-->
-                                <Frame
-                                   Margin="0, 0, 0, 45"
-                                   HorizontalOptions="CenterAndExpand"
-                                   VerticalOptions="CenterAndExpand"
-                                   Padding="0" 
-                                   HasShadow="true"
-                                   IsClippedToBounds="true"
-                                   CornerRadius="10"
-                                   BackgroundColor="{Binding BackgroundColor}">
+                <cards:CoverFlowView.ItemTemplate>
+                    <DataTemplate>
+                        <!-- Card Definition-->
+                        <Frame
+                            Margin="0, 0, 0, 45"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="StartAndExpand"
+                            WidthRequest="300"
+                            Padding="0" 
+                            HasShadow="true"
+                            IsClippedToBounds="true"
+                            CornerRadius="10"
+                            BackgroundColor="{Binding BackgroundColor}">
 
-                                    <StackLayout TranslationY="10">
+                            <StackLayout
+                                Padding="10">
+                                
 
-                                        <Frame CornerRadius="50" 
-                                           HeightRequest="100"
-                                           WidthRequest="100"
-                                           Padding="0"
-                                           
-                                           HorizontalOptions="Center"
-                                           IsClippedToBounds="True"
-                                           >
-                                            <ffimage:CachedImage Source="{Binding Source}"
-                                                             
-                                                             Aspect="AspectFill"
-                                                             HeightRequest="140"
-                                                             WidthRequest="140"
-                                                                 />
-                                        </Frame>
+                                <ffimage:CachedImage
+                                    Source="{Binding Source}"
+                                    HeightRequest="100"
+                                    WidthRequest="100">
+                                    <ffimage:CachedImage.Transformations>
+                                        <fftransformations:CircleTransformation/>
+                                    </ffimage:CachedImage.Transformations>
+                                </ffimage:CachedImage>
 
-                                        <Label Text="{Binding Title}"
-                                               TextColor="{Binding TextColor}"
-                                            FontSize="35"
-                                            HorizontalOptions="Center"
-                                            HorizontalTextAlignment="Center">
+                                <Label
+                                    Text="{Binding Title}"
+                                    TextColor="{Binding TextColor}"
+                                    FontSize="35"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center">
 
-                                            <Label.FontFamily>
-                                                <OnPlatform x:TypeArguments="x:String">
-                                                    <On Platform="iOS" Value="Lobster-Regular" />
-                                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                                </OnPlatform>
-                                            </Label.FontFamily>
-                                        </Label>
+                                    <Label.FontFamily>
+                                        <OnPlatform x:TypeArguments="x:String">
+                                            <On Platform="iOS" Value="Lobster-Regular" />
+                                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                        </OnPlatform>
+                                    </Label.FontFamily>
+                                </Label>
 
 
-                                        <Label Text="{Binding Length}"
-                                            FontSize="15"
-                                            TextColor="#6C7072"
-                                            HorizontalOptions="Center"
-                                            HorizontalTextAlignment="Center">
+                                <Label
+                                    Text="{Binding Length}"
+                                    FontSize="15"
+                                    TextColor="#6C7072"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center">
 
-                                            <Label.FontFamily>
-                                                <OnPlatform x:TypeArguments="x:String">
-                                                    <On Platform="iOS" Value="Lobster-Regular" />
-                                                    <On Platform="Android" Value="CircularStd-Book.otf#Circular Std"/>
-                                                </OnPlatform>
-                                            </Label.FontFamily>
-                                        </Label>
+                                    <Label.FontFamily>
+                                        <OnPlatform x:TypeArguments="x:String">
+                                            <On Platform="iOS" Value="Lobster-Regular" />
+                                            <On Platform="Android" Value="CircularStd-Book.otf#Circular Std"/>
+                                        </OnPlatform>
+                                    </Label.FontFamily>
+                                </Label>
 
-                                        <Button Text="{Binding Text}"
-                                               Command="{Binding Navigate}"
-                                               CornerRadius="10"
-                                                Margin="60"
-                                               TextColor="#272E32"
-                                               BorderWidth="0" />
+                                <Button
+                                    Text="{Binding Text}"
+                                    Command="{Binding Navigate}"
+                                    CornerRadius="20"
+                                    Margin="60"
+                                    BackgroundColor="LightGray"
+                                    Padding="10"
+                                    TextColor="#272E32"
+                                    BorderWidth="0" />
 
-                                    </StackLayout>
+                            </StackLayout>
 
-                                </Frame>
-                            </DataTemplate>
-                        </cards:CoverFlowView.ItemTemplate>
+                        </Frame>
+                    </DataTemplate>
+                </cards:CoverFlowView.ItemTemplate>
 
-                        <controls:IndicatorsControl ToFadeDuration="3000"
-                                                        SelectedIndicatorStyle="{StaticResource ActiveIndicator}"
-                                                        UnselectedIndicatorStyle="{StaticResource InactiveIndicator}"/>
+                <controls:IndicatorsControl 
+                    SelectedIndicatorStyle="{StaticResource ActiveIndicator}"
+                    UnselectedIndicatorStyle="{StaticResource InactiveIndicator}"/>
 
-                    </cards:CoverFlowView>
+            </cards:CoverFlowView>
 
+
+            <Grid
+                Grid.Row="1"
+                Grid.Column="4"
+                HeightRequest="65"
+                VerticalOptions="End">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
+                        Width="0.25*" />
+                    <ColumnDefinition
+                        Width="0.25*" />
+                    <ColumnDefinition
+                        Width="0.25*" />
+                    <ColumnDefinition
+                        Width="0.25*" />
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition
+                        Height="1*" />
+                </Grid.RowDefinitions>
+                <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="0">
+                    <forms:CachedImage DownsampleWidth="35" BackgroundColor="Transparent" Source="mydayiconselectednotext.png" />
+                    <Label Text="My Day" FontSize="12" TextColor="#d6a14b" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Lobster-Regular" />
+                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                </StackLayout>
+                <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="1">
+                    <forms:CachedImage x:Name="ListViewButton" DownsampleWidth="35" BackgroundColor="Transparent" Source="listviewiconnotext.png" />
+                    <Label Text="Today's List" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Lobster-Regular" />
+                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                </StackLayout>
+                <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="2">
+                    <forms:CachedImage DownsampleWidth="35" x:Name="MyPhotosButton" BackgroundColor="Transparent" Source="myphotosiconnotext.png" />
+                    <Label Text="My Photos" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Lobster-Regular" />
+                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
                 </StackLayout>
 
-                <Grid
-                    Grid.Row="1"
-                    Grid.Column="4"
-                    HeightRequest="65"
-                    VerticalOptions="End">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition
-                            Width="0.25*" />
-                        <ColumnDefinition
-                            Width="0.25*" />
-                        <ColumnDefinition
-                            Width="0.25*" />
-                        <ColumnDefinition
-                            Width="0.25*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition
-                            Height="1*" />
-                    </Grid.RowDefinitions>
-                    <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="0">
-                        <forms:CachedImage DownsampleWidth="35" BackgroundColor="Transparent" Source="mydayiconselectednotext.png" />
-                        <Label Text="My Day" FontSize="12" TextColor="#d6a14b" HorizontalOptions="Center" Margin="0, -3, 0, 0">
-                            <Label.FontFamily>
-                                <OnPlatform x:TypeArguments="x:String">
-                                    <On Platform="iOS" Value="Lobster-Regular" />
-                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                </OnPlatform>
-                            </Label.FontFamily>
-                        </Label>
-                     </StackLayout>
-                    <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="1">
-                        <forms:CachedImage x:Name="ListViewButton" DownsampleWidth="35" BackgroundColor="Transparent" Source="listviewiconnotext.png" />
-                        <Label Text="Today's List" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
-                            <Label.FontFamily>
-                                <OnPlatform x:TypeArguments="x:String">
-                                    <On Platform="iOS" Value="Lobster-Regular" />
-                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                </OnPlatform>
-                            </Label.FontFamily>
-                        </Label>
-                     </StackLayout>
-                    <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="2">
-                        <forms:CachedImage DownsampleWidth="35" x:Name="MyPhotosButton" BackgroundColor="Transparent" Source="myphotosiconnotext.png" />
-                        <Label Text="My Photos" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
-                            <Label.FontFamily>
-                                <OnPlatform x:TypeArguments="x:String">
-                                    <On Platform="iOS" Value="Lobster-Regular" />
-                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                </OnPlatform>
-                            </Label.FontFamily>
-                        </Label>
-                    </StackLayout>
-
-                    <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="3">
-                        <forms:CachedImage DownsampleWidth="35" x:Name="AboutMeButton" BackgroundColor="Transparent" Source="aboutmeiconnotext.png" />
-                        <Label Text="About Me" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
-                            <Label.FontFamily>
-                                <OnPlatform x:TypeArguments="x:String">
-                                    <On Platform="iOS" Value="Lobster-Regular" />
-                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                </OnPlatform>
-                            </Label.FontFamily>
-                        </Label>
-                     </StackLayout>
-                </Grid>
-            </StackLayout>
+                <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="3">
+                    <forms:CachedImage DownsampleWidth="35" x:Name="AboutMeButton" BackgroundColor="Transparent" Source="aboutmeiconnotext.png" />
+                    <Label Text="About Me" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Lobster-Regular" />
+                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                </StackLayout>
+            </Grid>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

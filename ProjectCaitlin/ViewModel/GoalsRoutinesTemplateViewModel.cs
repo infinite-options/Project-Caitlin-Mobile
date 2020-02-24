@@ -55,12 +55,12 @@ namespace ProjectCaitlin.ViewModel
                 BackgroundColor = Color.Default,
                 TextColor = Color.Black,
                 Length = "You are a strong, independant person. \n This App helps you take control of your life!",
-                Text = "Click this card to start!",
+                Text = "Tap to start",
                 ButtonText = "Click for More About Me",
                 Navigate = AboutMeCommand
             });
 
-            if (App.user.routines.Count >= 1) {
+            if (App.user.routines.Count >= 1 && isInTimeRange(App.user.routines[0].availableStartTime.TimeOfDay, App.user.routines[0].availableEndTime.TimeOfDay)) {
                 complete.Add(false);
                 Items.Add(new
                 {
@@ -71,7 +71,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.Black,
 
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                      async () =>
@@ -80,7 +80,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 2) {
+            if (App.user.routines.Count >= 2 && isInTimeRange(App.user.routines[1].availableStartTime.TimeOfDay, App.user.routines[1].availableEndTime.TimeOfDay)) {
                 complete.Add(false);
                 Items.Add(new
                 {
@@ -90,7 +90,7 @@ namespace ProjectCaitlin.ViewModel
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                      async () =>
@@ -99,7 +99,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 3)
+            if (App.user.routines.Count >= 3 && isInTimeRange(App.user.routines[2].availableStartTime.TimeOfDay, App.user.routines[2].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -110,7 +110,7 @@ namespace ProjectCaitlin.ViewModel
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                      async () =>
@@ -119,7 +119,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 4)
+            if (App.user.routines.Count >= 4 && isInTimeRange(App.user.routines[3].availableStartTime.TimeOfDay, App.user.routines[3].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -130,7 +130,7 @@ namespace ProjectCaitlin.ViewModel
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                      async () =>
@@ -139,7 +139,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 5)
+            if (App.user.routines.Count >= 5 && isInTimeRange(App.user.routines[4].availableStartTime.TimeOfDay, App.user.routines[4].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -150,7 +150,7 @@ namespace ProjectCaitlin.ViewModel
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                      async () =>
@@ -159,7 +159,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 6)
+            if (App.user.routines.Count >= 6 && isInTimeRange(App.user.routines[5].availableStartTime.TimeOfDay, App.user.routines[5].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -171,7 +171,7 @@ namespace ProjectCaitlin.ViewModel
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                      async () =>
@@ -180,7 +180,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 7)
+            if (App.user.routines.Count >= 7 && isInTimeRange(App.user.routines[6].availableStartTime.TimeOfDay, App.user.routines[6].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -192,7 +192,7 @@ namespace ProjectCaitlin.ViewModel
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                      async () =>
@@ -201,7 +201,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 8)
+            if (App.user.routines.Count >= 8 && isInTimeRange(App.user.routines[7].availableStartTime.TimeOfDay, App.user.routines[7].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -213,7 +213,7 @@ namespace ProjectCaitlin.ViewModel
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                      async () =>
@@ -223,7 +223,7 @@ namespace ProjectCaitlin.ViewModel
                 }); 
             }
 
-            if (App.user.routines.Count >= 9)
+            if (App.user.routines.Count >= 9 && isInTimeRange(App.user.routines[8].availableStartTime.TimeOfDay, App.user.routines[8].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -235,7 +235,7 @@ namespace ProjectCaitlin.ViewModel
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                      async () =>
@@ -245,7 +245,7 @@ namespace ProjectCaitlin.ViewModel
                 });
             }
 
-            if (App.user.routines.Count >= 10)
+            if (App.user.routines.Count >= 10 && isInTimeRange(App.user.routines[9].availableStartTime.TimeOfDay, App.user.routines[9].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -257,7 +257,7 @@ namespace ProjectCaitlin.ViewModel
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -267,7 +267,7 @@ namespace ProjectCaitlin.ViewModel
                 });
             }
 
-            if (App.user.routines.Count >= 11)
+            if (App.user.routines.Count >= 11 && isInTimeRange(App.user.routines[10].availableStartTime.TimeOfDay, App.user.routines[10].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
 
@@ -279,7 +279,7 @@ namespace ProjectCaitlin.ViewModel
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                      async () =>
@@ -288,7 +288,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 12)
+            if (App.user.routines.Count >= 12 && isInTimeRange(App.user.routines[11].availableStartTime.TimeOfDay, App.user.routines[11].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -299,7 +299,7 @@ namespace ProjectCaitlin.ViewModel
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                      async () =>
@@ -308,7 +308,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 13)
+            if (App.user.routines.Count >= 13 && isInTimeRange(App.user.routines[12].availableStartTime.TimeOfDay, App.user.routines[12].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -319,7 +319,7 @@ namespace ProjectCaitlin.ViewModel
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                      async () =>
@@ -328,7 +328,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 14)
+            if (App.user.routines.Count >= 14 && isInTimeRange(App.user.routines[13].availableStartTime.TimeOfDay, App.user.routines[13].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -339,7 +339,7 @@ namespace ProjectCaitlin.ViewModel
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                      async () =>
@@ -348,7 +348,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 15)
+            if (App.user.routines.Count >= 15 && isInTimeRange(App.user.routines[14].availableStartTime.TimeOfDay, App.user.routines[14].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -359,7 +359,7 @@ namespace ProjectCaitlin.ViewModel
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                      async () =>
@@ -368,7 +368,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 16)
+            if (App.user.routines.Count >= 16 && isInTimeRange(App.user.routines[15].availableStartTime.TimeOfDay, App.user.routines[15].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -380,7 +380,7 @@ namespace ProjectCaitlin.ViewModel
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                      async () =>
@@ -389,7 +389,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 17)
+            if (App.user.routines.Count >= 17 && isInTimeRange(App.user.routines[16].availableStartTime.TimeOfDay, App.user.routines[16].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -401,7 +401,7 @@ namespace ProjectCaitlin.ViewModel
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                      async () =>
@@ -410,7 +410,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 18)
+            if (App.user.routines.Count >= 18 && isInTimeRange(App.user.routines[17].availableStartTime.TimeOfDay, App.user.routines[17].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -422,7 +422,7 @@ namespace ProjectCaitlin.ViewModel
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                      async () =>
@@ -431,7 +431,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 19)
+            if (App.user.routines.Count >= 19 && isInTimeRange(App.user.routines[18].availableStartTime.TimeOfDay, App.user.routines[18].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -443,7 +443,7 @@ namespace ProjectCaitlin.ViewModel
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -452,7 +452,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.routines.Count >= 20)
+            if (App.user.routines.Count >= 20 && isInTimeRange(App.user.routines[19].availableStartTime.TimeOfDay, App.user.routines[19].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -464,7 +464,7 @@ namespace ProjectCaitlin.ViewModel
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -473,7 +473,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 1)
+            if (App.user.goals.Count >= 1 && isInTimeRange(App.user.goals[0].availableStartTime.TimeOfDay, App.user.goals[0].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -485,7 +485,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.White,
                     BackgroundColor = "#272E32",
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -495,7 +495,7 @@ namespace ProjectCaitlin.ViewModel
                 });
             }
 
-            if (App.user.goals.Count >= 2)
+            if (App.user.goals.Count >= 2 && isInTimeRange(App.user.goals[1].availableStartTime.TimeOfDay, App.user.goals[1].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -508,7 +508,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.White,
 
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -517,7 +517,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 3)
+            if (App.user.goals.Count >= 3 && isInTimeRange(App.user.goals[2].availableStartTime.TimeOfDay, App.user.goals[2].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -530,7 +530,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.White,
 
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -539,7 +539,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 4)
+            if (App.user.goals.Count >= 4 && isInTimeRange(App.user.goals[3].availableStartTime.TimeOfDay, App.user.goals[3].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -552,7 +552,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.White,
 
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -561,7 +561,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 5)
+            if (App.user.goals.Count >= 5 && isInTimeRange(App.user.goals[4].availableStartTime.TimeOfDay, App.user.goals[4].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -574,7 +574,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.White,
 
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -583,7 +583,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 6)
+            if (App.user.goals.Count >= 6 && isInTimeRange(App.user.goals[5].availableStartTime.TimeOfDay, App.user.goals[5].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -596,7 +596,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.White,
 
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -605,7 +605,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 7)
+            if (App.user.goals.Count >= 7 && isInTimeRange(App.user.goals[6].availableStartTime.TimeOfDay, App.user.goals[6].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -618,7 +618,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.White,
 
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -627,7 +627,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 8)
+            if (App.user.goals.Count >= 8 && isInTimeRange(App.user.goals[7].availableStartTime.TimeOfDay, App.user.goals[7].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -640,7 +640,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.White,
 
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -649,7 +649,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 9)
+            if (App.user.goals.Count >= 9 && isInTimeRange(App.user.goals[8].availableStartTime.TimeOfDay, App.user.goals[8].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -662,7 +662,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.White,
 
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -671,7 +671,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 10)
+            if (App.user.goals.Count >= 10 && isInTimeRange(App.user.goals[9].availableStartTime.TimeOfDay, App.user.goals[9].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -684,7 +684,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.White,
 
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -693,7 +693,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 11)
+            if (App.user.goals.Count >= 11 && isInTimeRange(App.user.goals[10].availableStartTime.TimeOfDay, App.user.goals[10].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -706,7 +706,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.White,
 
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -715,7 +715,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 12)
+            if (App.user.goals.Count >= 12 && isInTimeRange(App.user.goals[11].availableStartTime.TimeOfDay, App.user.goals[11].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -728,7 +728,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.White,
 
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -737,7 +737,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 13)
+            if (App.user.goals.Count >= 13 && isInTimeRange(App.user.goals[12].availableStartTime.TimeOfDay, App.user.goals[12].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -750,7 +750,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.White,
 
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -759,7 +759,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 14)
+            if (App.user.goals.Count >= 14 && isInTimeRange(App.user.goals[13].availableStartTime.TimeOfDay, App.user.goals[13].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -772,7 +772,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.White,
 
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -781,7 +781,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 15)
+            if (App.user.goals.Count >= 15 && isInTimeRange(App.user.goals[14].availableStartTime.TimeOfDay, App.user.goals[14].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -794,7 +794,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.White,
 
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -803,7 +803,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 16)
+            if (App.user.goals.Count >= 16 && isInTimeRange(App.user.goals[15].availableStartTime.TimeOfDay, App.user.goals[15].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -816,7 +816,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.White,
 
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -825,7 +825,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 17)
+            if (App.user.goals.Count >= 17 && isInTimeRange(App.user.goals[16].availableStartTime.TimeOfDay, App.user.goals[16].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -838,7 +838,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.White,
 
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -847,7 +847,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 18)
+            if (App.user.goals.Count >= 18 && isInTimeRange(App.user.goals[17].availableStartTime.TimeOfDay, App.user.goals[17].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -860,7 +860,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.White,
 
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -869,7 +869,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 19)
+            if (App.user.goals.Count >= 19 && isInTimeRange(App.user.goals[18].availableStartTime.TimeOfDay, App.user.goals[18].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -882,7 +882,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.White,
 
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -891,7 +891,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 20)
+            if (App.user.goals.Count >= 20 && isInTimeRange(App.user.goals[19].availableStartTime.TimeOfDay, App.user.goals[19].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -904,7 +904,7 @@ namespace ProjectCaitlin.ViewModel
                     TextColor = Color.White,
 
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                          async () =>
@@ -925,7 +925,7 @@ namespace ProjectCaitlin.ViewModel
                     Ind = _imageCount++,
                     Color = Color.Default,
                     Length = "Takes me 25 minutes",
-                    Text = "Click this card to start!",
+                    Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
                      async () =>
@@ -972,6 +972,13 @@ namespace ProjectCaitlin.ViewModel
 
         public ICommand GoToLastCommand { get; }
 
+
+        private bool isInTimeRange(TimeSpan start, TimeSpan end)
+        {
+            if (start < DateTime.Now.TimeOfDay.Add(TimeSpan.FromHours(4)) && DateTime.Now.TimeOfDay < end)
+                return true;
+            return false;
+        }
 
         public int CurrentIndex
         {

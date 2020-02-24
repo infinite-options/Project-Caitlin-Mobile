@@ -256,7 +256,33 @@ namespace ProjectCaitlin
             };
             frame.GestureRecognizers.Add(tapGestureRecognizer);
 
-            stackLayout.Children.Add(frame);
+            if (routine.isComplete)
+            {
+                StackLayout completeStackLayout = new StackLayout()
+                {
+                    Orientation = StackOrientation.Horizontal
+                };
+
+                CachedImage checkmarkImage = new CachedImage()
+                {
+                    Source = Xamarin.Forms.ImageSource.FromFile("greencheckmarkicon.png"),
+                    WidthRequest = 30,
+                    HeightRequest = 30,
+                    HorizontalOptions = LayoutOptions.Start,
+                    VerticalOptions = LayoutOptions.CenterAndExpand
+                };
+
+                completeStackLayout.Children.Add(checkmarkImage);
+
+                frame.HorizontalOptions = LayoutOptions.FillAndExpand;
+                completeStackLayout.Children.Add(frame);
+
+                stackLayout = GetCompleteTimeOfDay(routine.dateTimeCompleted.TimeOfDay);
+                stackLayout.Children.Add(completeStackLayout);
+
+            }
+            else
+                stackLayout.Children.Add(frame);
         }
 
         private void PopulateEvent(EventsItems event_, StackLayout stackLayout)
@@ -534,6 +560,37 @@ namespace ProjectCaitlin
             }
 
             return result;
+        }
+
+        private StackLayout GetCompleteTimeOfDay(TimeSpan completeTime)
+        {
+            Console.WriteLine("completeTime: " + completeTime.ToString());
+            if (morningStart < completeTime && completeTime < morningEnd)
+            {
+                Console.WriteLine("Morning");
+
+                return MorningREStackLayout;
+            }
+            if (afternoonStart < completeTime && completeTime < afternoonEnd)
+            {
+                Console.WriteLine("Afternoon");
+
+                return AfternoonREStackLayout;
+            }
+            if (eveningStart < completeTime && completeTime < eveningEnd)
+            {
+                Console.WriteLine("Evening");
+
+                return EveningREStackLayout;
+            }
+            if (nightStart < completeTime && completeTime < nightEnd)
+            {
+                Console.WriteLine("Night");
+
+                return NightREStackLayout;
+            }
+
+            return new StackLayout();
         }
 
         internal void StartTimer()

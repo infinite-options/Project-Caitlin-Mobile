@@ -4,7 +4,7 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
-             xmlns:local="clr-namespace:ProjectCaitlin.Views"
+             xmlns:local="clr-namespace:ProjectCaitlin.Views" xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              mc:Ignorable="d"
              x:Class="ProjectCaitlin.Views.TaskPage"
              NavigationPage.HasNavigationBar="False">
@@ -12,16 +12,13 @@
         <ScrollView>
 
             <StackLayout>
-                <StackLayout Margin="0, 10, 0, 10">
-                    <Grid>
-                        <Grid.ColumnDefinitions>
-                            <!--<ColumnDefinition Width="0.4*" />
-                                <ColumnDefinition Width="0.5*" />-->
-                        </Grid.ColumnDefinitions>
+                <StackLayout
+                    Orientation="Horizontal"
+                    HorizontalOptions="FillAndExpand"
+                    Padding="10, 0, 10, 0">
 
                         <!-- BACK ARROW-->
                         <ImageButton Grid.Column="0"
-                                         Margin="20, 0, 0, 0"
                                          Source="arrowicon.png"
                                          BackgroundColor="Transparent"
                                          HeightRequest="23"
@@ -31,41 +28,41 @@
                                          Clicked="close"/>
 
                         <!-- CURRENT ROUTINE-->
-                        <Label Grid.Column="1"
-                                   Text="{Binding TopLabel}"
-                                   FontSize="20"
-                                   TextColor= "Black"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"/>
+                        <Label
+                            Grid.Column="1"
+                            Text="{Binding TopLabel}"
+                            FontSize="30"
+                            FontAttributes="Bold"     
+                            TextColor= "Black"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="Center"/>
 
-                        <ImageButton Grid.Column="2"
-                                         Margin="0, 0, 20, 0"
-                                         Source=""
-                                         BackgroundColor="Transparent"
-                                         HeightRequest="25"
-                                         WidthRequest="25"
-                                         HorizontalOptions="End"
-                                         VerticalOptions="Center"/>
-                    </Grid>
+                    <!-- For Spacing the Label -->
+                    <ImageButton
+                        BackgroundColor="Transparent"
+                        HeightRequest="23"
+                        WidthRequest="23"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center"
+                        />
+
                 </StackLayout>
-                <StackLayout HeightRequest="125">
+                <StackLayout>
                     <StackLayout Margin="20">
-                        <Grid>
-                            <Grid.ColumnDefinitions>
-                                <ColumnDefinition Width="0.4*" />
-                                <ColumnDefinition Width="0.2*" />
-                                <ColumnDefinition Width="0.2*" />
-                                <ColumnDefinition Width="0.2*" />
-                            </Grid.ColumnDefinitions>
-                            <Frame Grid.Column="0" CornerRadius="150" Padding="0" HorizontalOptions="Start" IsClippedToBounds="True">
-                                <Image Source="{Binding TopImage}" Aspect="AspectFill"  />
-                            </Frame>
-                            <ImageButton Grid.Column="1" Source="waveformicon.png" BackgroundColor="Transparent" HeightRequest="30" HorizontalOptions="Start" VerticalOptions="Center" />
-                            <ImageButton Grid.Column="2" Source="moon.png" BackgroundColor="Transparent" HeightRequest="30" HorizontalOptions="Start" VerticalOptions="Center" />
-                            <Frame  Grid.Column="3"  CornerRadius="20" Padding="0" HeightRequest="30"  >
-                                <Button x:Name="next" Text="Start" BackgroundColor="#42B971"/>
-                            </Frame>
-                        </Grid>
+                        <ffimage:CachedImage Source="{Binding TopImage}" WidthRequest="100" HeightRequest="100">
+                            <ffimage:CachedImage.Transformations>
+                                <fftransformations:CircleTransformation/>
+                            </ffimage:CachedImage.Transformations>
+                        </ffimage:CachedImage>
+                    </StackLayout>
+                    <StackLayout
+                        Orientation="Horizontal"
+                        HorizontalOptions="FillAndExpand"
+                        Padding="10, 0, 10, 0"
+                        IsVisible="false">
+                        <ImageButton Source="waveformicon.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="60" HorizontalOptions="StartAndExpand"/>
+                        <ImageButton Source="moon.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="60" HorizontalOptions="CenterAndExpand"/>
+                        <Button x:Name="next" Text="Start" FontAttributes="Bold" TextColor="White" BackgroundColor="#cef7b5" HorizontalOptions="EndAndExpand"/>
                     </StackLayout>
                 </StackLayout>
 
@@ -79,7 +76,7 @@
                         <flv:FlowListView.FlowColumnTemplate>
                             <DataTemplate>
 
-                                    <StackLayout>
+                                <StackLayout>
                                     <Frame
                                     Margin="10"
                                    Padding="0"
@@ -97,14 +94,14 @@
                                     </Frame>
 
                                     <Label HorizontalOptions="Center" Text="{Binding Text}" HeightRequest="35" />
-                                    </StackLayout>
+                                </StackLayout>
                             </DataTemplate>
                         </flv:FlowListView.FlowColumnTemplate>
                     </flv:FlowListView>
                 </StackLayout>
 
             </StackLayout>
-      </ScrollView>
+        </ScrollView>
 
     </ContentPage.Content>
 </ContentPage>

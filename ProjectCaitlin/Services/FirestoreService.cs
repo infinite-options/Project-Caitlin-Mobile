@@ -76,6 +76,7 @@ namespace ProjectCaitlin.Methods
                                 routine.photo = jsonMapGorR["photo"]["stringValue"].ToString();
                                 routine.isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"]
                                     && IsDateToday(jsonMapGorR["datetime_completed"]["stringValue"].ToString());
+                                routine.dateTimeCompleted = DateTime.Parse(jsonMapGorR["datetime_completed"]["stringValue"].ToString());
                                 routine.availableStartTime = DateTime.ParseExact(jsonMapGorR["available_start_time"]["stringValue"].ToString(),
                                     "HH:mm:ss", CultureInfo.InvariantCulture);
                                 routine.availableEndTime = DateTime.ParseExact(jsonMapGorR["available_end_time"]["stringValue"].ToString(),
