@@ -160,6 +160,60 @@ namespace ProjectCaitlin.Methods
             }
         }
 
+        public async Task<bool> UpdateTask(string routineId, string taskId, string taskIndex)
+        {
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/CompleteActionOrTask");
+            request.Method = HttpMethod.Post;
+
+            //Format Headers of Request with included Token
+            request.Headers.Add("userId", "7R6hAVmDrNutRkG3sVRy");
+            request.Headers.Add("routineId", routineId);
+            request.Headers.Add("taskId", taskId);
+            request.Headers.Add("taskIndex", taskIndex);
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+
+            HttpContent content = response.Content;
+            var routineResponse = await content.ReadAsStringAsync();
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+        public async Task<bool> UpdateInstruction(string goalId, string actionId, string instructionNumber)
+        {
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/CompleteInstructionOrStep");
+            request.Method = HttpMethod.Post;
+
+            //Format Headers of Request with included Token
+            request.Headers.Add("userId", "7R6hAVmDrNutRkG3sVRy");
+            request.Headers.Add("routineId", goalId);
+            request.Headers.Add("taskId", actionId);
+            request.Headers.Add("stepNumber", instructionNumber);
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+
+            HttpContent content = response.Content;
+            var routineResponse = await content.ReadAsStringAsync();
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+
         public async Task LoadTasks(string routineID, int routineIdx, string routineType)
         {
             HttpRequestMessage request = new HttpRequestMessage

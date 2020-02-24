@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using ProjectCaitlin.Models;
 using Xamarin.Forms.Xaml;
+using ProjectCaitlin.Methods;
 
 namespace ProjectCaitlin.Views
 {
@@ -52,7 +53,14 @@ namespace ProjectCaitlin.Views
 
             if(completeCounter == App.user.routines[a].tasks[b].steps.Count)
             {
-                App.user.routines[a].tasks[b].isComplete = true;
+                var routineId = App.user.routines[a].id;
+                var taskId = App.user.routines[a].tasks[b].id;
+
+                var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
+
+                var okToCheckmark = await firestoreService.UpdateTask(routineId, taskId, b.ToString());
+                if (okToCheckmark) { App.user.routines[a].tasks[b].isComplete = true; }
+
                 await Navigation.PushAsync(new TaskPage(a, isRoutine));
             }
             else
