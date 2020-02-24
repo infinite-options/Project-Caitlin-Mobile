@@ -6,6 +6,7 @@ using ProjectCaitlin.Models;
 using System;
 using System.ComponentModel;
 using ProjectCaitlin.Methods;
+using System.Windows.Input;
 
 namespace ProjectCaitlin.ViewModel
 {
@@ -63,12 +64,14 @@ namespace ProjectCaitlin.ViewModel
                             CheckmarkIcon = "graycheckmarkicon.png",
                             CompleteStep = new Command(
                              async () =>
-                             { var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, (stepIdx.ToString()));
-                                 if (okToCheckmark)
-                                 {
-                                     _items[stepIdx] = "greencheckmarkicon.png";
-                                 }
-                        )});
+                             {
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, stepIdx.ToString());
+                                 if (okToCheckmark) { App.user.routines[a].tasks[b].steps[stepIdx].isComplete = true; }
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
+                                 
+                             }
+                           )
+                        });
                     }
                     else
                     {

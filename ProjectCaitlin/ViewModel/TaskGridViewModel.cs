@@ -51,7 +51,7 @@ namespace ProjectCaitlin.ViewModel
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 0, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 0, isRoutine));
                              })
                     }); ;
 
@@ -67,7 +67,7 @@ namespace ProjectCaitlin.ViewModel
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 1, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 1, isRoutine));
                              })
                     });
                 if (App.user.routines[a].tasks.Count >= 3)
@@ -80,7 +80,7 @@ namespace ProjectCaitlin.ViewModel
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 2, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 2, isRoutine));
                              })
                     });
                 if (App.user.routines[a].tasks.Count >= 4)
@@ -93,7 +93,7 @@ namespace ProjectCaitlin.ViewModel
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 3, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 3, isRoutine));
                              })
                     });
                 if (App.user.routines[a].tasks.Count >= 5)
@@ -106,7 +106,7 @@ namespace ProjectCaitlin.ViewModel
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 4, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 4, isRoutine));
                              })
                     });
                 if (App.user.routines[a].tasks.Count >= 6)
@@ -119,7 +119,7 @@ namespace ProjectCaitlin.ViewModel
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 5, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 5, isRoutine));
                              })
                     });
                 if (App.user.routines[a].tasks.Count >= 7)
@@ -132,7 +132,7 @@ namespace ProjectCaitlin.ViewModel
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 6, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 6, isRoutine));
                              })
                     });
                 if (App.user.routines[a].tasks.Count >= 8)
@@ -145,7 +145,7 @@ namespace ProjectCaitlin.ViewModel
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 7, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 7, isRoutine));
                              })
                     });
                 if (App.user.routines[a].tasks.Count >= 9)
@@ -158,7 +158,7 @@ namespace ProjectCaitlin.ViewModel
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 8, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 8, isRoutine));
                              })
                     });
                 if (App.user.routines[a].tasks.Count >= 10)
@@ -171,7 +171,7 @@ namespace ProjectCaitlin.ViewModel
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 9, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 9, isRoutine));
                              })
                     });
                 if (App.user.routines[a].tasks.Count >= 11)
@@ -184,7 +184,7 @@ namespace ProjectCaitlin.ViewModel
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 10, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 10, isRoutine));
                              })
                     });
                 if (App.user.routines[a].tasks.Count >= 12)
@@ -197,7 +197,7 @@ namespace ProjectCaitlin.ViewModel
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 11, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 11, isRoutine));
                              })
                     });
                 if (App.user.routines[a].tasks.Count >= 13)
@@ -210,7 +210,7 @@ namespace ProjectCaitlin.ViewModel
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 12, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 12, isRoutine));
                              })
                     });
                 if (App.user.routines[a].tasks.Count >= 14)
@@ -223,7 +223,7 @@ namespace ProjectCaitlin.ViewModel
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 13, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 13, isRoutine));
                              })
                     });
                 if (App.user.routines[a].tasks.Count >= 15)
@@ -236,7 +236,7 @@ namespace ProjectCaitlin.ViewModel
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 14, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 14, isRoutine));
                              })
                     });
                 if (App.user.routines[a].tasks.Count >= 16)
@@ -249,7 +249,7 @@ namespace ProjectCaitlin.ViewModel
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 15, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 15, isRoutine));
                              })
                     });
                 if (App.user.routines[a].tasks.Count >= 17)
@@ -262,7 +262,7 @@ namespace ProjectCaitlin.ViewModel
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 16, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 16, isRoutine));
                              })
                     });
                 if (App.user.routines[a].tasks.Count >= 18)
@@ -275,7 +275,7 @@ namespace ProjectCaitlin.ViewModel
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 17, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 17, isRoutine));
                              })
                     });
                 if (App.user.routines[a].tasks.Count >= 19)
@@ -288,7 +288,7 @@ namespace ProjectCaitlin.ViewModel
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 18, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 18, isRoutine));
                              })
                     });
                 if (App.user.routines[a].tasks.Count >= 20)
@@ -301,7 +301,7 @@ namespace ProjectCaitlin.ViewModel
                         Navigate = new Command(
                              async () =>
                              {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 19, isRoutine, complete));
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 19, isRoutine));
                              })
                     });
             }

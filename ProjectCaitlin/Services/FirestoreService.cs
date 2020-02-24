@@ -130,7 +130,7 @@ namespace ProjectCaitlin.Methods
         public async Task<bool> UpdateStep(string routineId, string taskId, string stepNumber)
         {
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/SetUserGoogleAuthToken");
+            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/CompleteInstructionOrStep");
             request.Method = HttpMethod.Post;
 
             //Format Headers of Request with included Token
@@ -140,6 +140,11 @@ namespace ProjectCaitlin.Methods
             request.Headers.Add("stepNumber", stepNumber);
             var client = new HttpClient();
             HttpResponseMessage response = await client.SendAsync(request);
+
+            HttpContent content = response.Content;
+            var routineResponse = await content.ReadAsStringAsync();
+
+            Console.WriteLine(routineResponse);
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
