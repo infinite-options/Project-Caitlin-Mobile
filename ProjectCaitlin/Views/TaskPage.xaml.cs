@@ -16,6 +16,7 @@ namespace ProjectCaitlin.Views
     public partial class TaskPage : ContentPage
     {
         readonly TaskGridViewModel pageModel;
+
         public TaskPage(int routineNum, bool isRoutine)
         {
             InitializeComponent();
@@ -28,7 +29,6 @@ namespace ProjectCaitlin.Views
             await Navigation.PushAsync(new GoalsRoutinesTemplate());
             //await Navigation.PushAsync(new GoalsRoutinesTemplate());
         }
-
-
     }
+
 }
