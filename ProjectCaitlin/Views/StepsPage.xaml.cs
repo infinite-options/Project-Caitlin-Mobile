@@ -19,10 +19,9 @@ namespace ProjectCaitlin.Views
         List<bool> complete;
         readonly StepsPageViewModel pageModel;
 
-        public StepsPage(int a, int b, bool isRoutine, List<bool> complete)
+        public StepsPage(int a, int b, bool isRoutine)
         {
             InitializeComponent();
-            this.complete = complete;
 
 
             this.a = a;
@@ -33,14 +32,9 @@ namespace ProjectCaitlin.Views
             itemcount = pageModel.count;
         }
 
-        public void ChangeIcon(object sender, EventArgs e)
-        {
-            var mi = ((MenuItem)sender);
-        }
-
         public async void close(object sender, EventArgs args)
         {
-            await Navigation.PopAsync();
+            await Navigation.PushAsync(new TaskPage(a, isRoutine, complete));
         }
     }
 }
