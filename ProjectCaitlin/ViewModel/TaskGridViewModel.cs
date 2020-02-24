@@ -44,248 +44,562 @@ namespace ProjectCaitlin.ViewModel
 
             if (isRoutine)
             {
-                if (App.user.routines[a].tasks.Count >= 1)
-                    _items.Add(new
+                if (App.user.routines[a].tasks.Count > 0)
+
+                    if (App.user.routines[a].tasks[0].isComplete == true)
                     {
-                        Source = App.user.routines[a].tasks[0].photo,
-                        Text = App.user.routines[a].tasks[0].title,
-                        Navigate = new Command(
-                             async () =>
-                             {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 0, isRoutine));
-                             })
-                    }); ;
-
-
-
-                if (App.user.routines[a].tasks.Count >= 2)
-                    _items.Add(new
+                        _items.Add(new
+                        {
+                            Source = App.user.routines[a].tasks[0].photo,
+                            Text = App.user.routines[a].tasks[0].title,
+                            isComplete = true,
+                            Navigate = new Command(
+                                                     async () =>
+                                                     {
+                                                         await mainPage.Navigation.PushAsync(new StepsPage(a, 0, isRoutine));
+                                                     })
+                        });
+                    }
+                    else
                     {
-                        Source = App.user.routines[a].tasks[1].photo,
-                        Text = App.user.routines[a].tasks[1].title,
+                        _items.Add(new
+                        {
+                            Source = App.user.routines[a].tasks[0].photo,
+                            Text = App.user.routines[a].tasks[0].title,
+                            isComplete = false,
+                            Navigate = new Command(
+                                                    async () =>
+                                                    {
+                                                         await mainPage.Navigation.PushAsync(new StepsPage(a, 0, isRoutine));
+                                                    })
+                        });
+                    }
 
-                        Navigate = new Command(
-                             async () =>
-                             {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 1, isRoutine));
-                             })
-                    });
-                if (App.user.routines[a].tasks.Count >= 3)
-                    _items.Add(new
+
+
+                if (App.user.routines[a].tasks.Count > 1)
+
+                    if (App.user.routines[a].tasks[1].isComplete == true)
                     {
-                        Source = App.user.routines[a].tasks[2].photo,
-                        Text = App.user.routines[a].tasks[2].title,
-
-                        Navigate = new Command(
-                             async () =>
-                             {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 2, isRoutine));
-                             })
-                    });
-                if (App.user.routines[a].tasks.Count >= 4)
-                    _items.Add(new
+                        _items.Add(new
+                        {
+                            Source = App.user.routines[a].tasks[1].photo,
+                            Text = App.user.routines[a].tasks[1].title,
+                            isComplete = true,
+                            Navigate = new Command(
+                                                     async () =>
+                                                     {
+                                                         await mainPage.Navigation.PushAsync(new StepsPage(a, 1, isRoutine));
+                                                     })
+                        });
+                    }
+                    else
                     {
-                        Source = App.user.routines[a].tasks[3].photo,
-                        Text = App.user.routines[a].tasks[3].title,
+                        _items.Add(new
+                        {
+                            Source = App.user.routines[a].tasks[1].photo,
+                            Text = App.user.routines[a].tasks[1].title,
+                            isComplete = false,
+                            Navigate = new Command(
+                                                    async () =>
+                                                    {
+                                                        await mainPage.Navigation.PushAsync(new StepsPage(a, 1, isRoutine));
+                                                    })
+                        });
+                    }
 
-                        Navigate = new Command(
-                             async () =>
-                             {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 3, isRoutine));
-                             })
-                    });
-                if (App.user.routines[a].tasks.Count >= 5)
-                    _items.Add(new
+
+
+                if (App.user.routines[a].tasks.Count > 2)
+
+                    if (App.user.routines[a].tasks[2].isComplete == true)
                     {
-                        Source = App.user.routines[a].tasks[4].photo,
-                        Text = App.user.routines[a].tasks[4].title,
-
-                        Navigate = new Command(
-                             async () =>
-                             {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 4, isRoutine));
-                             })
-                    });
-                if (App.user.routines[a].tasks.Count >= 6)
-                    _items.Add(new
+                        _items.Add(new
+                        {
+                            Source = App.user.routines[a].tasks[2].photo,
+                            Text = App.user.routines[a].tasks[2].title,
+                            isComplete = true,
+                            Navigate = new Command(
+                                                     async () =>
+                                                     {
+                                                         await mainPage.Navigation.PushAsync(new StepsPage(a, 2, isRoutine));
+                                                     })
+                        });
+                    }
+                    else
                     {
-                        Source = App.user.routines[a].tasks[5].photo,
-                        Text = App.user.routines[a].tasks[5].title,
+                        _items.Add(new
+                        {
+                            Source = App.user.routines[a].tasks[2].photo,
+                            Text = App.user.routines[a].tasks[2].title,
+                            isComplete = false,
+                            Navigate = new Command(
+                                                    async () =>
+                                                    {
+                                                        await mainPage.Navigation.PushAsync(new StepsPage(a, 2, isRoutine));
+                                                    })
+                        });
+                    }
 
-                        Navigate = new Command(
-                             async () =>
-                             {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 5, isRoutine));
-                             })
-                    });
-                if (App.user.routines[a].tasks.Count >= 7)
-                    _items.Add(new
+
+
+                if (App.user.routines[a].tasks.Count > 3)
+
+                    if (App.user.routines[a].tasks[3].isComplete == true)
                     {
-                        Source = App.user.routines[a].tasks[6].photo,
-                        Text = App.user.routines[a].tasks[6].title,
-
-                        Navigate = new Command(
-                             async () =>
-                             {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 6, isRoutine));
-                             })
-                    });
-                if (App.user.routines[a].tasks.Count >= 8)
-                    _items.Add(new
+                        _items.Add(new
+                        {
+                            Source = App.user.routines[a].tasks[3].photo,
+                            Text = App.user.routines[a].tasks[3].title,
+                            isComplete = true,
+                            Navigate = new Command(
+                                                     async () =>
+                                                     {
+                                                         await mainPage.Navigation.PushAsync(new StepsPage(a, 3, isRoutine));
+                                                     })
+                        });
+                    }
+                    else
                     {
-                        Source = App.user.routines[a].tasks[7].photo,
-                        Text = App.user.routines[a].tasks[7].title,
+                        _items.Add(new
+                        {
+                            Source = App.user.routines[a].tasks[3].photo,
+                            Text = App.user.routines[a].tasks[3].title,
+                            isComplete = false,
+                            Navigate = new Command(
+                                                    async () =>
+                                                    {
+                                                        await mainPage.Navigation.PushAsync(new StepsPage(a, 3, isRoutine));
+                                                    })
+                        });
+                    }
 
-                        Navigate = new Command(
-                             async () =>
-                             {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 7, isRoutine));
-                             })
-                    });
-                if (App.user.routines[a].tasks.Count >= 9)
-                    _items.Add(new
+
+
+                if (App.user.routines[a].tasks.Count > 4)
+
+                    if (App.user.routines[a].tasks[4].isComplete == true)
                     {
-                        Source = App.user.routines[a].tasks[8].photo,
-                        Text = App.user.routines[a].tasks[8].title,
-
-                        Navigate = new Command(
-                             async () =>
-                             {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 8, isRoutine));
-                             })
-                    });
-                if (App.user.routines[a].tasks.Count >= 10)
-                    _items.Add(new
+                        _items.Add(new
+                        {
+                            Source = App.user.routines[a].tasks[4].photo,
+                            Text = App.user.routines[a].tasks[4].title,
+                            isComplete = true,
+                            Navigate = new Command(
+                                                     async () =>
+                                                     {
+                                                         await mainPage.Navigation.PushAsync(new StepsPage(a, 4, isRoutine));
+                                                     })
+                        });
+                    }
+                    else
                     {
-                        Source = App.user.routines[a].tasks[9].photo,
-                        Text = App.user.routines[a].tasks[9].title,
+                        _items.Add(new
+                        {
+                            Source = App.user.routines[a].tasks[4].photo,
+                            Text = App.user.routines[a].tasks[4].title,
+                            isComplete = false,
+                            Navigate = new Command(
+                                                    async () =>
+                                                    {
+                                                        await mainPage.Navigation.PushAsync(new StepsPage(a, 4, isRoutine));
+                                                    })
+                        });
+                    }
 
-                        Navigate = new Command(
-                             async () =>
-                             {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 9, isRoutine));
-                             })
-                    });
-                if (App.user.routines[a].tasks.Count >= 11)
-                    _items.Add(new
+
+
+                if (App.user.routines[a].tasks.Count > 5)
+
+                    if (App.user.routines[a].tasks[5].isComplete == true)
                     {
-                        Source = App.user.routines[a].tasks[10].photo,
-                        Text = App.user.routines[a].tasks[10].title,
-
-                        Navigate = new Command(
-                             async () =>
-                             {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 10, isRoutine));
-                             })
-                    });
-                if (App.user.routines[a].tasks.Count >= 12)
-                    _items.Add(new
+                        _items.Add(new
+                        {
+                            Source = App.user.routines[a].tasks[5].photo,
+                            Text = App.user.routines[a].tasks[5].title,
+                            isComplete = true,
+                            Navigate = new Command(
+                                                     async () =>
+                                                     {
+                                                         await mainPage.Navigation.PushAsync(new StepsPage(a, 5, isRoutine));
+                                                     })
+                        });
+                    }
+                    else
                     {
-                        Source = App.user.routines[a].tasks[11].photo,
-                        Text = App.user.routines[a].tasks[11].title,
+                        _items.Add(new
+                        {
+                            Source = App.user.routines[a].tasks[5].photo,
+                            Text = App.user.routines[a].tasks[5].title,
+                            isComplete = false,
+                            Navigate = new Command(
+                                                    async () =>
+                                                    {
+                                                        await mainPage.Navigation.PushAsync(new StepsPage(a, 5, isRoutine));
+                                                    })
+                        });
+                    }
 
-                        Navigate = new Command(
-                             async () =>
-                             {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 11, isRoutine));
-                             })
-                    });
-                if (App.user.routines[a].tasks.Count >= 13)
-                    _items.Add(new
+
+
+                if (App.user.routines[a].tasks.Count > 6)
+
+                    if (App.user.routines[a].tasks[6].isComplete == true)
                     {
-                        Source = App.user.routines[a].tasks[12].photo,
-                        Text = App.user.routines[a].tasks[12].title,
-
-                        Navigate = new Command(
-                             async () =>
-                             {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 12, isRoutine));
-                             })
-                    });
-                if (App.user.routines[a].tasks.Count >= 14)
-                    _items.Add(new
+                        _items.Add(new
+                        {
+                            Source = App.user.routines[a].tasks[6].photo,
+                            Text = App.user.routines[a].tasks[6].title,
+                            isComplete = true,
+                            Navigate = new Command(
+                                                     async () =>
+                                                     {
+                                                         await mainPage.Navigation.PushAsync(new StepsPage(a, 6, isRoutine));
+                                                     })
+                        });
+                    }
+                    else
                     {
-                        Source = App.user.routines[a].tasks[13].photo,
-                        Text = App.user.routines[a].tasks[13].title,
+                        _items.Add(new
+                        {
+                            Source = App.user.routines[a].tasks[6].photo,
+                            Text = App.user.routines[a].tasks[6].title,
+                            isComplete = false,
+                            Navigate = new Command(
+                                                    async () =>
+                                                    {
+                                                        await mainPage.Navigation.PushAsync(new StepsPage(a, 6, isRoutine));
+                                                    })
+                        });
+                    }
 
-                        Navigate = new Command(
-                             async () =>
-                             {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 13, isRoutine));
-                             })
-                    });
-                if (App.user.routines[a].tasks.Count >= 15)
-                    _items.Add(new
+                if (App.user.routines[a].tasks.Count > 7)
+
+                    if (App.user.routines[a].tasks[7].isComplete == true)
                     {
-                        Source = App.user.routines[a].tasks[14].photo,
-                        Text = App.user.routines[a].tasks[14].title,
-
-                        Navigate = new Command(
-                             async () =>
-                             {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 14, isRoutine));
-                             })
-                    });
-                if (App.user.routines[a].tasks.Count >= 16)
-                    _items.Add(new
+                        _items.Add(new
+                        {
+                            Source = App.user.routines[a].tasks[7].photo,
+                            Text = App.user.routines[a].tasks[7].title,
+                            isComplete = true,
+                            Navigate = new Command(
+                                                     async () =>
+                                                     {
+                                                         await mainPage.Navigation.PushAsync(new StepsPage(a, 7, isRoutine));
+                                                     })
+                        });
+                    }
+                    else
                     {
-                        Source = App.user.routines[a].tasks[15].photo,
-                        Text = App.user.routines[a].tasks[15].title,
+                        _items.Add(new
+                        {
+                            Source = App.user.routines[a].tasks[7].photo,
+                            Text = App.user.routines[a].tasks[7].title,
+                            isComplete = false,
+                            Navigate = new Command(
+                                                    async () =>
+                                                    {
+                                                        await mainPage.Navigation.PushAsync(new StepsPage(a, 7, isRoutine));
+                                                    })
+                        });
+                    }
 
-                        Navigate = new Command(
-                             async () =>
-                             {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 15, isRoutine));
-                             })
-                    });
-                if (App.user.routines[a].tasks.Count >= 17)
-                    _items.Add(new
+
+
+                if (App.user.routines[a].tasks.Count > 8)
+
+                    if (App.user.routines[a].tasks[8].isComplete == true)
                     {
-                        Source = App.user.routines[a].tasks[16].photo,
-                        Text = App.user.routines[a].tasks[16].title,
-
-                        Navigate = new Command(
-                             async () =>
-                             {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 16, isRoutine));
-                             })
-                    });
-                if (App.user.routines[a].tasks.Count >= 18)
-                    _items.Add(new
+                        _items.Add(new
+                        {
+                            Source = App.user.routines[a].tasks[8].photo,
+                            Text = App.user.routines[a].tasks[8].title,
+                            isComplete = true,
+                            Navigate = new Command(
+                                                     async () =>
+                                                     {
+                                                         await mainPage.Navigation.PushAsync(new StepsPage(a, 8, isRoutine));
+                                                     })
+                        });
+                    }
+                    else
                     {
-                        Source = App.user.routines[a].tasks[17].photo,
-                        Text = App.user.routines[a].tasks[17].title,
+                        _items.Add(new
+                        {
+                            Source = App.user.routines[a].tasks[8].photo,
+                            Text = App.user.routines[a].tasks[8].title,
+                            isComplete = false,
+                            Navigate = new Command(
+                                                    async () =>
+                                                    {
+                                                        await mainPage.Navigation.PushAsync(new StepsPage(a, 8, isRoutine));
+                                                    })
+                        });
+                    }
 
-                        Navigate = new Command(
-                             async () =>
-                             {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 17, isRoutine));
-                             })
-                    });
-                if (App.user.routines[a].tasks.Count >= 19)
-                    _items.Add(new
+
+
+                if (App.user.routines[a].tasks.Count > 9)
+
+                    if (App.user.routines[a].tasks[9].isComplete == true)
                     {
-                        Source = App.user.routines[a].tasks[18].photo,
-                        Text = App.user.routines[a].tasks[18].title,
-
-                        Navigate = new Command(
-                             async () =>
-                             {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 18, isRoutine));
-                             })
-                    });
-                if (App.user.routines[a].tasks.Count >= 20)
-                    _items.Add(new
+                        _items.Add(new
+                        {
+                            Source = App.user.routines[a].tasks[9].photo,
+                            Text = App.user.routines[a].tasks[9].title,
+                            isComplete = true,
+                            Navigate = new Command(
+                                                     async () =>
+                                                     {
+                                                         await mainPage.Navigation.PushAsync(new StepsPage(a, 9, isRoutine));
+                                                     })
+                        });
+                    }
+                    else
                     {
-                        Source = App.user.routines[a].tasks[19].photo,
-                        Text = App.user.routines[a].tasks[19].title,
+                        _items.Add(new
+                        {
+                            Source = App.user.routines[a].tasks[9].photo,
+                            Text = App.user.routines[a].tasks[9].title,
+                            isComplete = false,
+                            Navigate = new Command(
+                                                    async () =>
+                                                    {
+                                                        await mainPage.Navigation.PushAsync(new StepsPage(a, 9, isRoutine));
+                                                    })
+                        });
+                    }
 
-                        Navigate = new Command(
-                             async () =>
-                             {
-                                 await mainPage.Navigation.PushAsync(new StepsPage(a, 19, isRoutine));
-                             })
-                    });
+
+
+                //if (App.user.routines[a].tasks.Count >= 2)
+                //    _items.Add(new
+                //    {
+                //        Source = App.user.routines[a].tasks[1].photo,
+                //        Text = App.user.routines[a].tasks[1].title,
+
+                //        Navigate = new Command(
+                //             async () =>
+                //             {
+                //                 await mainPage.Navigation.PushAsync(new StepsPage(a, 1, isRoutine));
+                //             })
+                //    });
+                //if (App.user.routines[a].tasks.Count >= 3)
+                //    _items.Add(new
+                //    {
+                //        Source = App.user.routines[a].tasks[2].photo,
+                //        Text = App.user.routines[a].tasks[2].title,
+
+                //        Navigate = new Command(
+                //             async () =>
+                //             {
+                //                 await mainPage.Navigation.PushAsync(new StepsPage(a, 2, isRoutine));
+                //             })
+                //    });
+                //if (App.user.routines[a].tasks.Count >= 4)
+                //    _items.Add(new
+                //    {
+                //        Source = App.user.routines[a].tasks[3].photo,
+                //        Text = App.user.routines[a].tasks[3].title,
+
+                //        Navigate = new Command(
+                //             async () =>
+                //             {
+                //                 await mainPage.Navigation.PushAsync(new StepsPage(a, 3, isRoutine));
+                //             })
+                //    });
+                //if (App.user.routines[a].tasks.Count >= 5)
+                //    _items.Add(new
+                //    {
+                //        Source = App.user.routines[a].tasks[4].photo,
+                //        Text = App.user.routines[a].tasks[4].title,
+
+                //        Navigate = new Command(
+                //             async () =>
+                //             {
+                //                 await mainPage.Navigation.PushAsync(new StepsPage(a, 4, isRoutine));
+                //             })
+                //    });
+                //if (App.user.routines[a].tasks.Count >= 6)
+                //    _items.Add(new
+                //    {
+                //        Source = App.user.routines[a].tasks[5].photo,
+                //        Text = App.user.routines[a].tasks[5].title,
+
+                //        Navigate = new Command(
+                //             async () =>
+                //             {
+                //                 await mainPage.Navigation.PushAsync(new StepsPage(a, 5, isRoutine));
+                //             })
+                //    });
+                //if (App.user.routines[a].tasks.Count >= 7)
+                //    _items.Add(new
+                //    {
+                //        Source = App.user.routines[a].tasks[6].photo,
+                //        Text = App.user.routines[a].tasks[6].title,
+
+                //        Navigate = new Command(
+                //             async () =>
+                //             {
+                //                 await mainPage.Navigation.PushAsync(new StepsPage(a, 6, isRoutine));
+                //             })
+                //    });
+                //if (App.user.routines[a].tasks.Count >= 8)
+                //    _items.Add(new
+                //    {
+                //        Source = App.user.routines[a].tasks[7].photo,
+                //        Text = App.user.routines[a].tasks[7].title,
+
+                //        Navigate = new Command(
+                //             async () =>
+                //             {
+                //                 await mainPage.Navigation.PushAsync(new StepsPage(a, 7, isRoutine));
+                //             })
+                //    });
+                //if (App.user.routines[a].tasks.Count >= 9)
+                //    _items.Add(new
+                //    {
+                //        Source = App.user.routines[a].tasks[8].photo,
+                //        Text = App.user.routines[a].tasks[8].title,
+
+                //        Navigate = new Command(
+                //             async () =>
+                //             {
+                //                 await mainPage.Navigation.PushAsync(new StepsPage(a, 8, isRoutine));
+                //             })
+                //    });
+                //if (App.user.routines[a].tasks.Count >= 10)
+                //    _items.Add(new
+                //    {
+                //        Source = App.user.routines[a].tasks[9].photo,
+                //        Text = App.user.routines[a].tasks[9].title,
+
+                //        Navigate = new Command(
+                //             async () =>
+                //             {
+                //                 await mainPage.Navigation.PushAsync(new StepsPage(a, 9, isRoutine));
+                //             })
+                //    });
+                //if (App.user.routines[a].tasks.Count >= 11)
+                //    _items.Add(new
+                //    {
+                //        Source = App.user.routines[a].tasks[10].photo,
+                //        Text = App.user.routines[a].tasks[10].title,
+
+                //        Navigate = new Command(
+                //             async () =>
+                //             {
+                //                 await mainPage.Navigation.PushAsync(new StepsPage(a, 10, isRoutine));
+                //             })
+                //    });
+                //if (App.user.routines[a].tasks.Count >= 12)
+                //    _items.Add(new
+                //    {
+                //        Source = App.user.routines[a].tasks[11].photo,
+                //        Text = App.user.routines[a].tasks[11].title,
+
+                //        Navigate = new Command(
+                //             async () =>
+                //             {
+                //                 await mainPage.Navigation.PushAsync(new StepsPage(a, 11, isRoutine));
+                //             })
+                //    });
+                //if (App.user.routines[a].tasks.Count >= 13)
+                //    _items.Add(new
+                //    {
+                //        Source = App.user.routines[a].tasks[12].photo,
+                //        Text = App.user.routines[a].tasks[12].title,
+
+                //        Navigate = new Command(
+                //             async () =>
+                //             {
+                //                 await mainPage.Navigation.PushAsync(new StepsPage(a, 12, isRoutine));
+                //             })
+                //    });
+                //if (App.user.routines[a].tasks.Count >= 14)
+                //    _items.Add(new
+                //    {
+                //        Source = App.user.routines[a].tasks[13].photo,
+                //        Text = App.user.routines[a].tasks[13].title,
+
+                //        Navigate = new Command(
+                //             async () =>
+                //             {
+                //                 await mainPage.Navigation.PushAsync(new StepsPage(a, 13, isRoutine));
+                //             })
+                //    });
+                //if (App.user.routines[a].tasks.Count >= 15)
+                //    _items.Add(new
+                //    {
+                //        Source = App.user.routines[a].tasks[14].photo,
+                //        Text = App.user.routines[a].tasks[14].title,
+
+                //        Navigate = new Command(
+                //             async () =>
+                //             {
+                //                 await mainPage.Navigation.PushAsync(new StepsPage(a, 14, isRoutine));
+                //             })
+                //    });
+                //if (App.user.routines[a].tasks.Count >= 16)
+                //    _items.Add(new
+                //    {
+                //        Source = App.user.routines[a].tasks[15].photo,
+                //        Text = App.user.routines[a].tasks[15].title,
+
+                //        Navigate = new Command(
+                //             async () =>
+                //             {
+                //                 await mainPage.Navigation.PushAsync(new StepsPage(a, 15, isRoutine));
+                //             })
+                //    });
+                //if (App.user.routines[a].tasks.Count >= 17)
+                //    _items.Add(new
+                //    {
+                //        Source = App.user.routines[a].tasks[16].photo,
+                //        Text = App.user.routines[a].tasks[16].title,
+
+                //        Navigate = new Command(
+                //             async () =>
+                //             {
+                //                 await mainPage.Navigation.PushAsync(new StepsPage(a, 16, isRoutine));
+                //             })
+                //    });
+                //if (App.user.routines[a].tasks.Count >= 18)
+                //    _items.Add(new
+                //    {
+                //        Source = App.user.routines[a].tasks[17].photo,
+                //        Text = App.user.routines[a].tasks[17].title,
+
+                //        Navigate = new Command(
+                //             async () =>
+                //             {
+                //                 await mainPage.Navigation.PushAsync(new StepsPage(a, 17, isRoutine));
+                //             })
+                //    });
+                //if (App.user.routines[a].tasks.Count >= 19)
+                //    _items.Add(new
+                //    {
+                //        Source = App.user.routines[a].tasks[18].photo,
+                //        Text = App.user.routines[a].tasks[18].title,
+
+                //        Navigate = new Command(
+                //             async () =>
+                //             {
+                //                 await mainPage.Navigation.PushAsync(new StepsPage(a, 18, isRoutine));
+                //             })
+                //    });
+                //if (App.user.routines[a].tasks.Count >= 20)
+                //    _items.Add(new
+                //    {
+                //        Source = App.user.routines[a].tasks[19].photo,
+                //        Text = App.user.routines[a].tasks[19].title,
+
+                //        Navigate = new Command(
+                //             async () =>
+                //             {
+                //                 await mainPage.Navigation.PushAsync(new StepsPage(a, 19, isRoutine));
+                //             })
+                //    });
             }
             else {
                 if (App.user.goals[a].actions.Count >= 1)

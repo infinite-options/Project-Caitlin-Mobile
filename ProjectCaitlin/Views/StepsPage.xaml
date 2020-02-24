@@ -41,13 +41,11 @@
                         <!-- EXIT BUTTON-->
                         <ImageButton Grid.Column="2"
                                          Margin="0, 0, 20, 0"
-                                         Source="exiticon.png"
                                          BackgroundColor="Transparent"
                                          HeightRequest="25"
                                          WidthRequest="25"
                                          HorizontalOptions="End"
-                                         VerticalOptions="Center"
-                                         Clicked="close"/>
+                                         VerticalOptions="Center"/>
                     </Grid>
                 </StackLayout>
 
