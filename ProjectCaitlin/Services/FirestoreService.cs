@@ -127,7 +127,29 @@ namespace ProjectCaitlin.Methods
             }
         }
 
-        public async Task UpdateStep
+        public async Task<bool> UpdateStep(string routineId, string taskId, string stepNumber)
+        {
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/SetUserGoogleAuthToken");
+            request.Method = HttpMethod.Post;
+
+            //Format Headers of Request with included Token
+            request.Headers.Add("userId", "7R6hAVmDrNutRkG3sVRy");
+            request.Headers.Add("routineId", routineId);
+            request.Headers.Add("taskId", taskId);
+            request.Headers.Add("stepNumber", stepNumber);
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
 
         public async Task LoadTasks(string routineID, int routineIdx, string routineType)
         {
