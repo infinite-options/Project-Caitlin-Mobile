@@ -76,6 +76,7 @@ namespace ProjectCaitlin.Methods
                                 routine.photo = jsonMapGorR["photo"]["stringValue"].ToString();
                                 routine.isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"]
                                     && IsDateToday(jsonMapGorR["datetime_completed"]["stringValue"].ToString());
+                                routine.dateTimeCompleted = DateTime.Parse(jsonMapGorR["datetime_completed"]["stringValue"].ToString());
                                 routine.availableStartTime = DateTime.ParseExact(jsonMapGorR["available_start_time"]["stringValue"].ToString(),
                                     "HH:mm:ss", CultureInfo.InvariantCulture);
                                 routine.availableEndTime = DateTime.ParseExact(jsonMapGorR["available_end_time"]["stringValue"].ToString(),
@@ -124,6 +125,33 @@ namespace ProjectCaitlin.Methods
                     _ = LoadTasks(goal.id, goalIdx, "goal");
                     goalIdx++;
                 }
+            }
+        }
+
+        public async Task<bool> UpdateStep(string routineId, string taskId, string stepNumber)
+        {
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/CompleteInstructionOrStep");
+            request.Method = HttpMethod.Post;
+
+            //Format Headers of Request with included Token
+            request.Headers.Add("userId", "7R6hAVmDrNutRkG3sVRy");
+            request.Headers.Add("routineId", routineId);
+            request.Headers.Add("taskId", taskId);
+            request.Headers.Add("stepNumber", stepNumber);
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+
+            HttpContent content = response.Content;
+            var routineResponse = await content.ReadAsStringAsync();
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
 
@@ -229,6 +257,9 @@ namespace ProjectCaitlin.Methods
                         actionIdx++;
                     }
                 }
+                App.user.routines.Sort((x, y) => TimeSpan.Compare(x.availableStartTime.TimeOfDay, y.availableStartTime.TimeOfDay));
+                App.user.goals.Sort((x, y) => TimeSpan.Compare(x.availableStartTime.TimeOfDay, y.availableStartTime.TimeOfDay));
+
             }
         }
 

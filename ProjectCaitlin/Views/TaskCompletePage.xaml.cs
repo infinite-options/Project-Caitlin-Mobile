@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Collections.Generic;
+using ProjectCaitlin.Methods;
 
 namespace ProjectCaitlin.Views
 {
@@ -52,6 +53,12 @@ namespace ProjectCaitlin.Views
             if (next.Text == "Done")
             {
                 complete[b] = true;
+
+                /* var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
+
+
+                 complete[b] = await firestoreService.UpdateInstruction(a+"", b+"", 0.ToString());*/
+
                 await Navigation.PushAsync(new TaskPage(a, isRoutine, complete));
             }
 
