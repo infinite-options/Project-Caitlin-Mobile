@@ -39,8 +39,10 @@ namespace ProjectCaitlin
         {
             var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
             await firestoreService.LoadUser();
+			PrintFirebaseUser();
 
-            if (App.user.old_refresh_token != App.user.refresh_token)
+
+			if (App.user.old_refresh_token != App.user.refresh_token)
             {
                 if(App.user.access_token != null)
                 {
@@ -52,9 +54,8 @@ namespace ProjectCaitlin
 
         }
 
-        async Task LoadFirebaseUser()
+        void PrintFirebaseUser()
         {
-			await firestoreService.LoadUser();
 			OnPropertyChanged(nameof(App.user));
 			Console.WriteLine("user first name: " + App.user.firstName);
 			Console.WriteLine("user last name: " + App.user.lastName);

@@ -96,6 +96,7 @@ namespace ProjectCaitlin
         {
             await firestoreService.LoadUser();
             await SetupUIAsync();
+            PrintFirebaseUser();
 
         }
 
@@ -252,7 +253,7 @@ namespace ProjectCaitlin
 
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += async (s, e) => {
-                //await Navigation.PushAsync(new TaskPage(routineIdx, true));
+                await Navigation.PushAsync(new TaskPage(routineIdx, true));
             };
             frame.GestureRecognizers.Add(tapGestureRecognizer);
 
@@ -388,7 +389,7 @@ namespace ProjectCaitlin
 
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += async (s, e) => {
-                //await Navigation.PushAsync(new TaskPage(goalIdx, false));
+                await Navigation.PushAsync(new TaskPage(goalIdx, false));
             };
             goalStackLayout.GestureRecognizers.Add(tapGestureRecognizer);
 
@@ -683,6 +684,49 @@ namespace ProjectCaitlin
         public async void btn4(object sender, EventArgs args)
         {
             await Navigation.PushAsync(new GoalsRoutinesTemplate());
+        }
+
+        void PrintFirebaseUser()
+        {
+            OnPropertyChanged(nameof(App.user));
+            Console.WriteLine("user first name: " + App.user.firstName);
+            Console.WriteLine("user last name: " + App.user.lastName);
+
+            foreach (routine routine in App.user.routines)
+            {
+                OnPropertyChanged(nameof(routine));
+                Console.WriteLine("user routine title: " + routine.title);
+                Console.WriteLine("user routine id: " + routine.id);
+                foreach (task task in routine.tasks)
+                {
+                    OnPropertyChanged(nameof(task));
+                    Console.WriteLine("user task title: " + task.title);
+                    Console.WriteLine("user task id: " + task.id);
+                    foreach (step step in task.steps)
+                    {
+                        OnPropertyChanged(nameof(step));
+                        Console.WriteLine("user step title: " + step.title);
+                    }
+                }
+            }
+
+            foreach (goal goal in App.user.goals)
+            {
+                OnPropertyChanged(nameof(goal));
+                Console.WriteLine("user goal title: " + goal.title);
+                Console.WriteLine("user goal id: " + goal.id);
+                foreach (action action in goal.actions)
+                {
+                    OnPropertyChanged(nameof(goal));
+                    Console.WriteLine("user action title: " + action.title);
+                    Console.WriteLine("user action id: " + action.id);
+                    foreach (instruction instruction in action.instructions)
+                    {
+                        OnPropertyChanged(nameof(instruction));
+                        Console.WriteLine("user instruction title: " + instruction.title);
+                    }
+                }
+            }
         }
     }
 }

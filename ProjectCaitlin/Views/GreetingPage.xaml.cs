@@ -23,7 +23,7 @@ namespace ProjectCaitlin.Views
         async void btn1Clicked(object sender, EventArgs e)
         {
 
-            await Navigation.PushAsync(new GreetingPage());
+            await Navigation.PushAsync(new ListViewPage());
 
         }
 

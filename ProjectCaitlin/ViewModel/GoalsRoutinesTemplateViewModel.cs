@@ -55,7 +55,7 @@ namespace ProjectCaitlin.ViewModel
                 BackgroundColor = Color.Default,
                 TextColor = Color.Black,
                 Length = "You are a strong, independant person. \n This App helps you take control of your life!",
-                Text = "Tap to start",
+                Text = "Tap to Learn More",
                 ButtonText = "Click for More About Me",
                 Navigate = AboutMeCommand
             });
@@ -975,7 +975,9 @@ namespace ProjectCaitlin.ViewModel
 
         private bool isInTimeRange(TimeSpan start, TimeSpan end)
         {
-            if (start < DateTime.Now.TimeOfDay.Add(TimeSpan.FromHours(4)) && DateTime.Now.TimeOfDay < end)
+            DateTime dateTimeNow = DateTime.Now;
+            //DateTime dateTimeNow = new DateTime(1999, 12, 1, 23, 59, 59);
+            if (start <= dateTimeNow.TimeOfDay.Add(TimeSpan.FromHours(4)) && dateTimeNow.TimeOfDay <= end)
                 return true;
             return false;
         }
