@@ -36,11 +36,12 @@ namespace ProjectCaitlin.ViewModel
                 TopLabel = App.user.routines[a].title;
                 //if(App.user.routines[a].audio != "") SoundButton = "waveicon.png";
             }
-            else {
+            else
+            {
                 TopImage = App.user.goals[a].photo;
                 TopLabel = App.user.goals[a].title;
             }
-            
+
 
             if (isRoutine)
             {
@@ -54,10 +55,10 @@ namespace ProjectCaitlin.ViewModel
                             Text = App.user.routines[a].tasks[0].title,
                             isComplete = true,
                             Navigate = new Command(
-                                                     async () =>
-                                                     {
-                                                         await mainPage.Navigation.PushAsync(new StepsPage(a, 0, isRoutine));
-                                                     })
+                                async () =>
+                                {
+                                    await mainPage.Navigation.PushAsync(new StepsPage(a, 0, isRoutine));
+                                })
                         });
                     }
                     else
@@ -68,10 +69,10 @@ namespace ProjectCaitlin.ViewModel
                             Text = App.user.routines[a].tasks[0].title,
                             isComplete = false,
                             Navigate = new Command(
-                                                    async () =>
-                                                    {
-                                                         await mainPage.Navigation.PushAsync(new StepsPage(a, 0, isRoutine));
-                                                    })
+                                async () =>
+                                {
+                                    await mainPage.Navigation.PushAsync(new StepsPage(a, 0, isRoutine));
+                                })
                         });
                     }
 
@@ -601,12 +602,14 @@ namespace ProjectCaitlin.ViewModel
                 //             })
                 //    });
             }
-            else {
+            else
+            {
                 if (App.user.goals[a].actions.Count >= 1)
                     _items.Add(new
                     {
                         Source = App.user.goals[a].actions[0].photo,
                         Text = App.user.goals[a].actions[0].title,
+                        isComplete = false,
 
                         Navigate = new Command(
                              async () =>
@@ -619,6 +622,7 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[1].photo,
                         Text = App.user.goals[a].actions[1].title,
+                        isComplete = false,
 
                         Navigate = new Command(
                              async () =>
@@ -631,6 +635,7 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[2].photo,
                         Text = App.user.goals[a].actions[2].title,
+                        isComplete = false,
 
                         Navigate = new Command(
                              async () =>
@@ -643,6 +648,7 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[3].photo,
                         Text = App.user.goals[a].actions[3].title,
+                        isComplete = false,
 
                         Navigate = new Command(
                              async () =>
@@ -655,6 +661,7 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[4].photo,
                         Text = App.user.goals[a].actions[4].title,
+                        isComplete = false,
 
                         Navigate = new Command(
                              async () =>
@@ -667,6 +674,7 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[5].photo,
                         Text = App.user.goals[a].actions[5].title,
+                        isComplete = false,
 
                         Navigate = new Command(
                              async () =>
@@ -679,6 +687,7 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[6].photo,
                         Text = App.user.goals[a].actions[6].title,
+                        isComplete = false,
 
                         Navigate = new Command(
                              async () =>
@@ -691,6 +700,7 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[7].photo,
                         Text = App.user.goals[a].actions[7].title,
+                        isComplete = false,
 
                         Navigate = new Command(
                              async () =>
@@ -703,6 +713,7 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[8].photo,
                         Text = App.user.goals[a].actions[8].title,
+                        isComplete = false,
 
                         Navigate = new Command(
                              async () =>
@@ -715,6 +726,7 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[9].photo,
                         Text = App.user.goals[a].actions[9].title,
+                        isComplete = false,
 
                         Navigate = new Command(
                              async () =>
@@ -727,6 +739,7 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[10].photo,
                         Text = App.user.goals[a].actions[10].title,
+                        isComplete = false,
 
                         Navigate = new Command(
                              async () =>
@@ -739,6 +752,7 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[11].photo,
                         Text = App.user.goals[a].actions[11].title,
+                        isComplete = false,
 
                         Navigate = new Command(
                              async () =>
@@ -751,6 +765,7 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[12].photo,
                         Text = App.user.goals[a].actions[12].title,
+                        isComplete = false,
 
                         Navigate = new Command(
                              async () =>
@@ -763,6 +778,7 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[13].photo,
                         Text = App.user.goals[a].actions[13].title,
+                        isComplete = false,
 
                         Navigate = new Command(
                              async () =>
@@ -775,6 +791,7 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[14].photo,
                         Text = App.user.goals[a].actions[14].title,
+                        isComplete = false,
 
                         Navigate = new Command(
                              async () =>
@@ -787,6 +804,7 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[15].photo,
                         Text = App.user.goals[a].actions[15].title,
+                        isComplete = false,
 
                         Navigate = new Command(
                              async () =>
@@ -799,6 +817,7 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[16].photo,
                         Text = App.user.goals[a].actions[16].title,
+                        isComplete = false,
 
                         Navigate = new Command(
                              async () =>
@@ -811,6 +830,7 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[17].photo,
                         Text = App.user.goals[a].actions[17].title,
+                        isComplete = false,
 
                         Navigate = new Command(
                              async () =>
@@ -823,6 +843,7 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[18].photo,
                         Text = App.user.goals[a].actions[18].title,
+                        isComplete = false,
 
                         Navigate = new Command(
                              async () =>
@@ -835,6 +856,7 @@ namespace ProjectCaitlin.ViewModel
                     {
                         Source = App.user.goals[a].actions[19].photo,
                         Text = App.user.goals[a].actions[19].title,
+                        isComplete = false,
 
                         Navigate = new Command(
                              async () =>

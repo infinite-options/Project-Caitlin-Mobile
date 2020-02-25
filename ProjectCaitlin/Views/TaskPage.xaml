@@ -17,8 +17,8 @@
                     HorizontalOptions="FillAndExpand"
                     Padding="10, 0, 10, 0">
 
-                        <!-- BACK ARROW-->
-                        <ImageButton Grid.Column="0"
+                    <!-- BACK ARROW-->
+                    <ImageButton Grid.Column="0"
                                          Source="arrowicon.png"
                                          BackgroundColor="Transparent"
                                          HeightRequest="23"
@@ -27,8 +27,8 @@
                                          VerticalOptions="Center"
                                          Clicked="close"/>
 
-                        <!-- CURRENT ROUTINE-->
-                        <Label
+                    <!-- CURRENT ROUTINE-->
+                    <Label
                             Grid.Column="1"
                             Text="{Binding TopLabel}"
                             FontSize="30"
@@ -84,12 +84,12 @@
                                         <StackLayout Spacing="-100">
                                             <ImageButton Source="{Binding Source}"
                                                  Command="{Binding Navigate}"
-                                               CommandParameter="{x:Type local:TaskCompletePage}"
-                                            VerticalOptions = "FillAndExpand"
-                                            HorizontalOptions = "FillAndExpand"
-                                                     HeightRequest="200"
-                                            Aspect = "AspectFill"/>
-                                            <Image x:Name="isComplete" IsVisible="{Binding IsComplete}" Source="greencheckmarkicon.png" HeightRequest="100" WidthRequest="100" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
+                                                 CommandParameter="{x:Type local:TaskCompletePage}"
+                                                 VerticalOptions = "FillAndExpand"
+                                                 HorizontalOptions = "FillAndExpand"
+                                                 HeightRequest="200"
+                                                 Aspect = "AspectFill"/>
+                                            <Image x:Name="isComplete" IsVisible="{Binding isComplete}" Source="greencheckmarkicon.png" HeightRequest="100" WidthRequest="100" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
                                         </StackLayout>
                                     </Frame>
 

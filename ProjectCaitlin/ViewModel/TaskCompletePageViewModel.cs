@@ -5,6 +5,7 @@ using Xamarin.Forms;
 using ProjectCaitlin.Models;
 using System;
 using System.ComponentModel;
+using ProjectCaitlin.Methods;
 
 namespace ProjectCaitlin.ViewModel
 {
@@ -18,12 +19,15 @@ namespace ProjectCaitlin.ViewModel
         public string TopLabel { get; set; }
         public string TopLabel2 { get; set; }
 
-
+        FirestoreService firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
 
         private ObservableCollection<object> _items = new ObservableCollection<object>() { };
         public TaskCompletePageViewModel(TaskCompletePage mainPage,int a, int b, bool isRoutine)
         {
             this.mainPage = mainPage;
+
+            var goalId = App.user.routines[a].id;
+            var actionId = App.user.routines[a].tasks[b].id;
 
             if (isRoutine)
             {
@@ -39,7 +43,24 @@ namespace ProjectCaitlin.ViewModel
             if (isRoutine)
             {
                 if (App.user.routines[a].tasks[b].steps.Count >= 1)
-                    _items.Add(new { Source = App.user.routines[a].tasks[b].steps[0].photo, Text = App.user.routines[a].tasks[b].steps[0].title });
+                {
+                    _items.Add(new
+                    {
+                        Source = App.user.goals[a].actions[b].instructions[0].photo,
+                        Text = App.user.goals[a].actions[b].instructions[0].title,
+
+                        CompleteStep = new Command(
+                             async () =>
+                             {
+                                 var okToCheckmark = await firestoreService.UpdateStep(goalId, actionId, App.user.goals[a].actions[b].instructions[0].dbIdx.ToString());
+
+                                 if (okToCheckmark) { App.user.goals[a].actions[b].instructions[0].isComplete = true; }
+                                 await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
+
+                             }
+                        )
+                    });
+                }
 
                 if (App.user.routines[a].tasks[b].steps.Count >= 2)
                     _items.Add(new { Source = App.user.routines[a].tasks[b].steps[1].photo, Text = App.user.routines[a].tasks[b].steps[1].title });

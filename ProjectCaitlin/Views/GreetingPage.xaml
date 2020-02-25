@@ -3,25 +3,25 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              mc:Ignorable="d"
              x:Class="ProjectCaitlin.Views.GreetingPage"
-             NavigationPage.HasNavigationBar="True">
+             NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
         <StackLayout BackgroundColor="#1A1827">
-            <StackLayout>
-                <Frame CornerRadius="100"
-                                           HeightRequest="150"
-                                           WidthRequest="150"
-                                           Padding="0"
-                                           Margin="20"
-                                           HorizontalOptions="Center"
-                                           IsClippedToBounds="True"
-                                           >
+            <StackLayout
+                Margin="0,50,0,0">
 
-                    <Image  Source="caitlinheadshot.jpg" Aspect="AspectFill"
-                                                             HeightRequest="140"
-                                                             WidthRequest="140"/>
-                </Frame>
+
+                <ffimage:CachedImage
+                    Source="caitlinheadshot.jpg"
+                    HeightRequest="140"
+                    WidthRequest="140">
+                    <ffimage:CachedImage.Transformations>
+                        <fftransformations:CircleTransformation/>
+                    </ffimage:CachedImage.Transformations>
+                </ffimage:CachedImage>
             </StackLayout>
             <StackLayout>
                 <Label Text="Good Morning," TextColor="White" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center"/>

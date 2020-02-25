@@ -19,13 +19,10 @@ namespace ProjectCaitlin.Views
         int a;
         int b;
         bool isRoutine;
-        List<bool> complete;
         readonly TaskCompletePageViewModel pageModel;
         public TaskCompletePage(int a,int b,bool isRoutine)
         {
             InitializeComponent();
-            this.complete = complete;
-
 
             this.a = a;
             this.b = b;
@@ -38,7 +35,12 @@ namespace ProjectCaitlin.Views
         }
         public async void nextpage(object sender, EventArgs args)
         {
-            if (CarouselTasks.Position == App.user.routines[a].tasks[b].steps.Count - 1)
+            if (next.Text == "Done")
+            {
+                await Navigation.PushAsync(new TaskPage(a, isRoutine));
+            }
+
+            if (CarouselTasks.Position == App.user.goals[a].actions[b].instructions.Count - 1)
             {
                 next.Text = "Done";
             }
@@ -47,12 +49,6 @@ namespace ProjectCaitlin.Views
             {
                 next.Text = "Next";
                 CarouselTasks.Position = CarouselTasks.Position + 1;
-            }
-
-            if (next.Text == "Done")
-            {
-                complete[b] = true;
-                await Navigation.PushAsync(new TaskPage(a, isRoutine));
             }
 
         }
@@ -65,8 +61,11 @@ namespace ProjectCaitlin.Views
         }
         public async void close(object sender, EventArgs args)
         {
-            await Navigation.PushAsync(new TaskPage(a,isRoutine));
-            //await Navigation.PushAsync(new GoalsRoutinesTemplate());
+            await Navigation.PushAsync(new GoalsRoutinesTemplate());
+        }
+        public async void back(object sender, EventArgs args)
+        {
+            await Navigation.PushAsync(new TaskPage(a, isRoutine));
         }
     }
 }
