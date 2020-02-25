@@ -14,7 +14,7 @@ namespace ProjectCaitlin
     {
         GooglePhotoService GooglePhotoService = new GooglePhotoService();
 
-        string[] photoURIs;
+        List<string> photoURIs = new List<string>();
 
         public PhotoDisplayPage()
         {
@@ -29,13 +29,15 @@ namespace ProjectCaitlin
 
             AddTapGestures();
 
+            Grid controlGrid = new Grid();
+
             int rowLength = 3;
             double gridItemSize = (Application.Current.MainPage.Width / rowLength) - (1.2 * rowLength);
 
             controlGrid.RowDefinitions.Add(new RowDefinition { Height = gridItemSize });
 
-            for (int i = 0; i < rowLength; i ++)
-                controlGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = gridItemSize});
+            for (int i = 0; i < rowLength; i++)
+                controlGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = gridItemSize });
 
             var photoCount = 0;
 
@@ -63,6 +65,8 @@ namespace ProjectCaitlin
 
                     controlGrid.Children.Add(indicator, photoCount % rowLength, photoCount / rowLength);
                     controlGrid.Children.Add(webImage, photoCount % rowLength, photoCount / rowLength);
+                    //controlGrid.Children.Add(indicator, photoCount % rowLength, 0);
+                    //controlGrid.Children.Add(webImage, photoCount % rowLength, 0);
                     photoCount++;
                 }
             }
@@ -73,14 +77,32 @@ namespace ProjectCaitlin
                 SetupUI();
             }
 
-            photoScrollView.Content = controlGrid;
+            photoScrollView.HeightRequest = Application.Current.MainPage.Height - NavBar.Height;
 
+            if (photoURIs.Count != 0)
+            {
+                photoScrollView.Content = controlGrid;
+            }
+            else
+            {
+                Label noPhotosLabel = new Label()
+                {
+                    Text = "No photos to Show",
+                    VerticalOptions = LayoutOptions.CenterAndExpand,
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    TextColor = Color.DimGray
+
+                };
+
+                photoScrollView.Content = noPhotosLabel;
+            }
         }
 
         private void AddTapGestures()
         {
 
-
+            // for nav bar
+            // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             var tapGestureRecognizer1 = new TapGestureRecognizer();
             tapGestureRecognizer1.Tapped += async (s, e) => {
                 await Navigation.PushAsync(new GreetingPage());
@@ -98,6 +120,7 @@ namespace ProjectCaitlin
                 await Navigation.PushAsync(new GoalsRoutinesTemplate());
             };
             MyDayButton.GestureRecognizers.Add(tapGestureRecognizer3);
+            // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         }
     }
 }

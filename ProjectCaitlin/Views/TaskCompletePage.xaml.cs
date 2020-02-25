@@ -39,14 +39,13 @@ namespace ProjectCaitlin.Views
         }
         public async void nextpage(object sender, EventArgs args)
         {
-            if (CarouselTasks.Position == App.user.routines[a].tasks[b].steps.Count - 1)
+            if (CarouselTasks.Position == App.user.goals[a].actions[b].instructions.Count - 1)
             {
                 next.Text = "Done";
             }
 
             else if (CarouselTasks.Position + 1 != itemcount)
             {
-                next.Text = "Next";
                 CarouselTasks.Position = CarouselTasks.Position + 1;
             }
 

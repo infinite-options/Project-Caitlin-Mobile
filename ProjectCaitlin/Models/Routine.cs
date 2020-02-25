@@ -16,6 +16,8 @@ namespace ProjectCaitlin.Models
 
 		public bool isComplete { get; set; }
 
+		public int dbIdx { get; set; }
+
 		public DateTime dateTimeCompleted { get; set; }
 
 		public DateTime availableStartTime { get; set; }
@@ -24,6 +26,6 @@ namespace ProjectCaitlin.Models
 
 		public List<task> tasks { get; set; } = new List<task>();
 
-        public event PropertyChangedEventHandler PropertyChanged;
-    }
+		public event PropertyChangedEventHandler PropertyChanged;
+	}
 }

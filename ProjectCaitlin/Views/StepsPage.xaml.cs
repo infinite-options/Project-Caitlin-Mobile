@@ -43,7 +43,7 @@ namespace ProjectCaitlin.Views
 
         public async void close(object sender, EventArgs args)
         {
-            await Navigation.PushAsync(new TaskPage(a, isRoutine));
+            await Navigation.PushAsync(new TaskPage(a, isRoutine,complete));
         }
 
         public async void DoneClicked(object sender, EventArgs args)
@@ -61,7 +61,7 @@ namespace ProjectCaitlin.Views
             if(completeCounter == App.user.routines[a].tasks[b].steps.Count)
             {
                 App.user.routines[a].tasks[b].isComplete = true;
-                await Navigation.PushAsync(new TaskPage(a, isRoutine));
+                await Navigation.PushAsync(new TaskPage(a, isRoutine, complete));
             }
             else
             {

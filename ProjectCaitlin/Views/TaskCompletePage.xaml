@@ -87,9 +87,10 @@
                             <ColumnDefinition Width="0.5*" />
                             <ColumnDefinition Width="0.2*" />
                         </Grid.ColumnDefinitions>
-                        <ImageButton Grid.Column="0" Source="waveformiconwhite.png" BackgroundColor="Transparent" HeightRequest="50" HorizontalOptions="Start" VerticalOptions="Center" />
-                        <Frame  Grid.Column="1"  CornerRadius="20" Padding="0" HeightRequest="40" HorizontalOptions="Center" >
-                            <Button x:Name="next" Grid.Column="1" Text="Start"  BackgroundColor="#42B971" Clicked="nextpage"/>
+                        <!--> <ImageButton Grid.Column="0" Source="waveformiconwhite.png" BackgroundColor="Transparent" HeightRequest="50" HorizontalOptions="Start" VerticalOptions="Center" />  <-->
+
+                            <Frame  Grid.Column="1"  CornerRadius="20" Padding="0" HeightRequest="40" HorizontalOptions="Center" >
+                            <Button x:Name="next" Grid.Column="1" Text="Next"  BackgroundColor="#42B971" Clicked="nextpage"/>
                         </Frame>
                     </Grid>
                 </StackLayout>
