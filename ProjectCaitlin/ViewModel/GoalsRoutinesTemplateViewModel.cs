@@ -159,7 +159,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 6 && isInTimeRange(App.user.routines[5].availableStartTime.TimeOfDay, App.user.routines[5].availableEndTime.TimeOfDay))
+            if (App.user.routines.Count >= 6 && !App.user.routines[5].isComplete && isInTimeRange(App.user.routines[5].availableStartTime.TimeOfDay, App.user.routines[5].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -180,7 +180,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 7 && isInTimeRange(App.user.routines[6].availableStartTime.TimeOfDay, App.user.routines[6].availableEndTime.TimeOfDay))
+            if (App.user.routines.Count >= 7 && !App.user.routines[6].isComplete && isInTimeRange(App.user.routines[6].availableStartTime.TimeOfDay, App.user.routines[6].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -201,7 +201,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 8 && isInTimeRange(App.user.routines[7].availableStartTime.TimeOfDay, App.user.routines[7].availableEndTime.TimeOfDay))
+            if (App.user.routines.Count >= 8 && !App.user.routines[7].isComplete && isInTimeRange(App.user.routines[7].availableStartTime.TimeOfDay, App.user.routines[7].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -223,7 +223,7 @@ namespace ProjectCaitlin.ViewModel
                 }); 
             }
 
-            if (App.user.routines.Count >= 9 && isInTimeRange(App.user.routines[8].availableStartTime.TimeOfDay, App.user.routines[8].availableEndTime.TimeOfDay))
+            if (App.user.routines.Count >= 9 && !App.user.routines[8].isComplete && isInTimeRange(App.user.routines[8].availableStartTime.TimeOfDay, App.user.routines[8].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -245,7 +245,7 @@ namespace ProjectCaitlin.ViewModel
                 });
             }
 
-            if (App.user.routines.Count >= 10 && isInTimeRange(App.user.routines[9].availableStartTime.TimeOfDay, App.user.routines[9].availableEndTime.TimeOfDay))
+            if (App.user.routines.Count >= 10 && !App.user.routines[9].isComplete && isInTimeRange(App.user.routines[9].availableStartTime.TimeOfDay, App.user.routines[9].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -267,7 +267,7 @@ namespace ProjectCaitlin.ViewModel
                 });
             }
 
-            if (App.user.routines.Count >= 11 && isInTimeRange(App.user.routines[10].availableStartTime.TimeOfDay, App.user.routines[10].availableEndTime.TimeOfDay))
+            if (App.user.routines.Count >= 11 && !App.user.routines[10].isComplete && isInTimeRange(App.user.routines[10].availableStartTime.TimeOfDay, App.user.routines[10].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
 
@@ -288,7 +288,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 12 && isInTimeRange(App.user.routines[11].availableStartTime.TimeOfDay, App.user.routines[11].availableEndTime.TimeOfDay))
+            if (App.user.routines.Count >= 12 && !App.user.routines[11].isComplete && isInTimeRange(App.user.routines[11].availableStartTime.TimeOfDay, App.user.routines[11].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -308,7 +308,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 13 && isInTimeRange(App.user.routines[12].availableStartTime.TimeOfDay, App.user.routines[12].availableEndTime.TimeOfDay))
+            if (App.user.routines.Count >= 13 && !App.user.routines[12].isComplete && isInTimeRange(App.user.routines[12].availableStartTime.TimeOfDay, App.user.routines[12].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -328,7 +328,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 14 && isInTimeRange(App.user.routines[13].availableStartTime.TimeOfDay, App.user.routines[13].availableEndTime.TimeOfDay))
+            if (App.user.routines.Count >= 14 && !App.user.routines[13].isComplete && isInTimeRange(App.user.routines[13].availableStartTime.TimeOfDay, App.user.routines[13].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -348,7 +348,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 15 && isInTimeRange(App.user.routines[14].availableStartTime.TimeOfDay, App.user.routines[14].availableEndTime.TimeOfDay))
+            if (App.user.routines.Count >= 15 && !App.user.routines[14].isComplete && isInTimeRange(App.user.routines[14].availableStartTime.TimeOfDay, App.user.routines[14].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -368,7 +368,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 16 && isInTimeRange(App.user.routines[15].availableStartTime.TimeOfDay, App.user.routines[15].availableEndTime.TimeOfDay))
+            if (App.user.routines.Count >= 16 && !App.user.routines[15].isComplete && isInTimeRange(App.user.routines[15].availableStartTime.TimeOfDay, App.user.routines[15].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -389,7 +389,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 17 && isInTimeRange(App.user.routines[16].availableStartTime.TimeOfDay, App.user.routines[16].availableEndTime.TimeOfDay))
+            if (App.user.routines.Count >= 17 && !App.user.routines[16].isComplete && isInTimeRange(App.user.routines[16].availableStartTime.TimeOfDay, App.user.routines[16].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -410,7 +410,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 18 && isInTimeRange(App.user.routines[17].availableStartTime.TimeOfDay, App.user.routines[17].availableEndTime.TimeOfDay))
+            if (App.user.routines.Count >= 18 && !App.user.routines[17].isComplete && isInTimeRange(App.user.routines[17].availableStartTime.TimeOfDay, App.user.routines[17].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -431,7 +431,7 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 19 && isInTimeRange(App.user.routines[18].availableStartTime.TimeOfDay, App.user.routines[18].availableEndTime.TimeOfDay))
+            if (App.user.routines.Count >= 19 && !App.user.routines[18].isComplete && isInTimeRange(App.user.routines[18].availableStartTime.TimeOfDay, App.user.routines[18].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -452,7 +452,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.routines.Count >= 20 && isInTimeRange(App.user.routines[19].availableStartTime.TimeOfDay, App.user.routines[19].availableEndTime.TimeOfDay))
+            if (App.user.routines.Count >= 20 && !App.user.routines[19].isComplete && isInTimeRange(App.user.routines[19].availableStartTime.TimeOfDay, App.user.routines[19].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -473,7 +473,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 1 && isInTimeRange(App.user.goals[0].availableStartTime.TimeOfDay, App.user.goals[0].availableEndTime.TimeOfDay))
+            if (App.user.goals.Count >= 1 && !App.user.goals[0].isComplete && isInTimeRange(App.user.goals[0].availableStartTime.TimeOfDay, App.user.goals[0].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -495,7 +495,7 @@ namespace ProjectCaitlin.ViewModel
                 });
             }
 
-            if (App.user.goals.Count >= 2 && isInTimeRange(App.user.goals[1].availableStartTime.TimeOfDay, App.user.goals[1].availableEndTime.TimeOfDay))
+            if (App.user.goals.Count >= 2 && !App.user.goals[1].isComplete && isInTimeRange(App.user.goals[1].availableStartTime.TimeOfDay, App.user.goals[1].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -517,7 +517,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 3 && isInTimeRange(App.user.goals[2].availableStartTime.TimeOfDay, App.user.goals[2].availableEndTime.TimeOfDay))
+            if (App.user.goals.Count >= 3 && !App.user.goals[2].isComplete && isInTimeRange(App.user.goals[2].availableStartTime.TimeOfDay, App.user.goals[2].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -539,7 +539,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 4 && isInTimeRange(App.user.goals[3].availableStartTime.TimeOfDay, App.user.goals[3].availableEndTime.TimeOfDay))
+            if (App.user.goals.Count >= 4 && !App.user.goals[3].isComplete && isInTimeRange(App.user.goals[3].availableStartTime.TimeOfDay, App.user.goals[3].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -561,7 +561,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 5 && isInTimeRange(App.user.goals[4].availableStartTime.TimeOfDay, App.user.goals[4].availableEndTime.TimeOfDay))
+            if (App.user.goals.Count >= 5 && !App.user.goals[4].isComplete && isInTimeRange(App.user.goals[4].availableStartTime.TimeOfDay, App.user.goals[4].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -583,7 +583,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 6 && isInTimeRange(App.user.goals[5].availableStartTime.TimeOfDay, App.user.goals[5].availableEndTime.TimeOfDay))
+            if (App.user.goals.Count >= 6 && !App.user.goals[5].isComplete && isInTimeRange(App.user.goals[5].availableStartTime.TimeOfDay, App.user.goals[5].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -605,7 +605,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 7 && isInTimeRange(App.user.goals[6].availableStartTime.TimeOfDay, App.user.goals[6].availableEndTime.TimeOfDay))
+            if (App.user.goals.Count >= 7 && !App.user.goals[6].isComplete && isInTimeRange(App.user.goals[6].availableStartTime.TimeOfDay, App.user.goals[6].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -627,7 +627,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 8 && isInTimeRange(App.user.goals[7].availableStartTime.TimeOfDay, App.user.goals[7].availableEndTime.TimeOfDay))
+            if (App.user.goals.Count >= 8 && !App.user.goals[7].isComplete && isInTimeRange(App.user.goals[7].availableStartTime.TimeOfDay, App.user.goals[7].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -649,7 +649,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 9 && isInTimeRange(App.user.goals[8].availableStartTime.TimeOfDay, App.user.goals[8].availableEndTime.TimeOfDay))
+            if (App.user.goals.Count >= 9 && !App.user.goals[8].isComplete && isInTimeRange(App.user.goals[8].availableStartTime.TimeOfDay, App.user.goals[8].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -671,7 +671,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 10 && isInTimeRange(App.user.goals[9].availableStartTime.TimeOfDay, App.user.goals[9].availableEndTime.TimeOfDay))
+            if (App.user.goals.Count >= 10 && !App.user.goals[9].isComplete && isInTimeRange(App.user.goals[9].availableStartTime.TimeOfDay, App.user.goals[9].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -693,7 +693,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 11 && isInTimeRange(App.user.goals[10].availableStartTime.TimeOfDay, App.user.goals[10].availableEndTime.TimeOfDay))
+            if (App.user.goals.Count >= 11 && !App.user.goals[10].isComplete && isInTimeRange(App.user.goals[10].availableStartTime.TimeOfDay, App.user.goals[10].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -715,7 +715,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 12 && isInTimeRange(App.user.goals[11].availableStartTime.TimeOfDay, App.user.goals[11].availableEndTime.TimeOfDay))
+            if (App.user.goals.Count >= 12 && !App.user.goals[11].isComplete && isInTimeRange(App.user.goals[11].availableStartTime.TimeOfDay, App.user.goals[11].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -737,7 +737,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 13 && isInTimeRange(App.user.goals[12].availableStartTime.TimeOfDay, App.user.goals[12].availableEndTime.TimeOfDay))
+            if (App.user.goals.Count >= 13 && !App.user.goals[12].isComplete && isInTimeRange(App.user.goals[12].availableStartTime.TimeOfDay, App.user.goals[12].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -759,7 +759,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 14 && isInTimeRange(App.user.goals[13].availableStartTime.TimeOfDay, App.user.goals[13].availableEndTime.TimeOfDay))
+            if (App.user.goals.Count >= 14 && !App.user.goals[13].isComplete && isInTimeRange(App.user.goals[13].availableStartTime.TimeOfDay, App.user.goals[13].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -781,7 +781,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 15 && isInTimeRange(App.user.goals[14].availableStartTime.TimeOfDay, App.user.goals[14].availableEndTime.TimeOfDay))
+            if (App.user.goals.Count >= 15 && !App.user.goals[14].isComplete && isInTimeRange(App.user.goals[14].availableStartTime.TimeOfDay, App.user.goals[14].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -803,7 +803,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 16 && isInTimeRange(App.user.goals[15].availableStartTime.TimeOfDay, App.user.goals[15].availableEndTime.TimeOfDay))
+            if (App.user.goals.Count >= 16 && !App.user.goals[15].isComplete && isInTimeRange(App.user.goals[15].availableStartTime.TimeOfDay, App.user.goals[15].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -825,7 +825,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 17 && isInTimeRange(App.user.goals[16].availableStartTime.TimeOfDay, App.user.goals[16].availableEndTime.TimeOfDay))
+            if (App.user.goals.Count >= 17 && !App.user.goals[16].isComplete && isInTimeRange(App.user.goals[16].availableStartTime.TimeOfDay, App.user.goals[16].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -847,7 +847,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 18 && isInTimeRange(App.user.goals[17].availableStartTime.TimeOfDay, App.user.goals[17].availableEndTime.TimeOfDay))
+            if (App.user.goals.Count >= 18 && !App.user.goals[17].isComplete && isInTimeRange(App.user.goals[17].availableStartTime.TimeOfDay, App.user.goals[17].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -869,7 +869,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 19 && isInTimeRange(App.user.goals[18].availableStartTime.TimeOfDay, App.user.goals[18].availableEndTime.TimeOfDay))
+            if (App.user.goals.Count >= 19 && !App.user.goals[18].isComplete && isInTimeRange(App.user.goals[18].availableStartTime.TimeOfDay, App.user.goals[18].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
@@ -891,7 +891,7 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 20 && isInTimeRange(App.user.goals[19].availableStartTime.TimeOfDay, App.user.goals[19].availableEndTime.TimeOfDay))
+            if (App.user.goals.Count >= 20 && !App.user.goals[19].isComplete && isInTimeRange(App.user.goals[19].availableStartTime.TimeOfDay, App.user.goals[19].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new

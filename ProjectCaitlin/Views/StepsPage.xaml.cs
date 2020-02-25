@@ -37,6 +37,11 @@ namespace ProjectCaitlin.Views
 
         }
 
+        void SetStepTapGestures()
+        {
+            
+        }
+
         private void OnLabelClicked()
         {
             throw new NotImplementedException();
@@ -61,28 +66,6 @@ namespace ProjectCaitlin.Views
                 }
             }
 
-            foreach (task task in App.user.routines[a].tasks)
-            {
-                if (task.isComplete)
-                {
-                    completeTasksCounter++;
-                }
-            }
-
-            if (completeCounter == App.user.routines[a].tasks[b].steps.Count)
-            {
-                var routineId = App.user.routines[a].id;
-
-                var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
-
-                var okToCheckmark = await firestoreService.CompleteRoutine(routineId, App.user.routines[a].dbIdx.ToString());
-                if (okToCheckmark)
-                {
-                    App.user.routines[a].isComplete = true;
-                    App.user.routines[a].dateTimeCompleted = DateTime.Now;
-                }
-            }
-
             if (completeCounter == App.user.routines[a].tasks[b].steps.Count)
             {
                 var routineId = App.user.routines[a].id;
@@ -104,7 +87,27 @@ namespace ProjectCaitlin.Views
                 await DisplayAlert("Oops!", "Please complete all steps before marking this task as done", "OK");
             }
 
+            foreach (task task in App.user.routines[a].tasks)
+            {
+                if (task.isComplete)
+                {
+                    completeTasksCounter++;
+                }
+            }
 
+            if (completeTasksCounter == App.user.routines[a].tasks.Count)
+            {
+                var routineId = App.user.routines[a].id;
+
+                var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
+
+                var okToCheckmark = await firestoreService.CompleteRoutine(routineId, App.user.routines[a].dbIdx.ToString());
+                if (okToCheckmark)
+                {
+                    App.user.routines[a].isComplete = true;
+                    App.user.routines[a].dateTimeCompleted = DateTime.Now;
+                }
+            }
         }
     }
 }

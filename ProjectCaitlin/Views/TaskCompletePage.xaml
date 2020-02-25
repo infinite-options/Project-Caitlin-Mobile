@@ -11,58 +11,61 @@
         <StackLayout BackgroundColor="DarkSlateGray">
 
             <StackLayout Margin="0, 20, 0, 10">
-                <Grid>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.2*" />
-                        <ColumnDefinition Width="0.6*" />
-                        <ColumnDefinition Width="0.2*" />
-                    </Grid.ColumnDefinitions>
+
+                <StackLayout
+                    Orientation="Horizontal"
+                    HorizontalOptions="FillAndExpand"
+                    Padding="10, 0, 10, 0">
 
                     <!-- BACK ARROW-->
-                    <ImageButton Grid.Column="0"
-                                         Margin="20, 0, 0, 0"
-                                         Source="arrowicon.png"
-                                         BackgroundColor="Transparent"
-                                         HeightRequest="23"
-                                         WidthRequest="23"
-                                         HorizontalOptions="Start"
-                                         VerticalOptions="Center"
-                                         Clicked="back"/>
+           
+                    <ImageButton 
+                        Source="arrowicon.png"
+                        BackgroundColor="Transparent"
+                        HeightRequest="23"
+                        WidthRequest="23"
+                        HorizontalOptions="Start"
+                        VerticalOptions="Center"
+                        Clicked="back"/>
 
                     <!-- CURRENT ROUTINE-->
-                    <Label Grid.Column="1"
-                                   Text="{Binding TopLabel}"
-                                   FontSize="20"
-                                   TextColor= "White"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"/>
-
-                    <Label Grid.Column="1" Grid.Row="1"
-                                   Text="{Binding TopLabel2}"
-                                   FontSize="12"
-                                   TextColor= "White"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"/>
+                    <Label
+                            Grid.Column="1"
+                            Text="{Binding TopLabel}"
+                            FontSize="30"
+                            FontAttributes="Bold"     
+                            TextColor= "White"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="Center"/>
 
                     <!-- EXIT BUTTON-->
-                    <ImageButton Grid.Column="2"
-                                         Margin="0, 0, 20, 0"
-                                         Source="exiticon.png"
-                                         BackgroundColor="Transparent"
-                                         HeightRequest="25"
-                                         WidthRequest="25"
-                                         HorizontalOptions="End"
-                                         VerticalOptions="Center"
-                                         Clicked="close"/>
-                </Grid>
+                    <ImageButton
+                        Source="exiticon.png"
+                        BackgroundColor="Transparent"
+                        HeightRequest="25"
+                        WidthRequest="25"
+                        HorizontalOptions="End"
+                        VerticalOptions="Center"
+                        Clicked="close"/>
+
+                </StackLayout>
+                <Label 
+                Text="{Binding TopLabel2}"
+                FontSize="18"
+                TextColor= "White"
+                HorizontalOptions="Center"
+                VerticalOptions="StartAndExpand"/>
+
+               
             </StackLayout>
             <StackLayout Margin="15">
                 <CarouselView x:Name="CarouselTasks" HeightRequest="400" ItemsSource="{Binding Items}">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout>
+                            <StackLayout
+                                Padding="10, 0, 10, 0">
 
-                                <Frame  CornerRadius="30" HeightRequest="300" WidthRequest="300" Margin="10" Padding="0" HorizontalOptions="Center" IsClippedToBounds="True">
+                                <Frame  CornerRadius="30" HeightRequest="300" WidthRequest="300" HorizontalOptions="Center" IsClippedToBounds="True">
                                     <Image Source="{Binding Source}"
                                Aspect="AspectFill"
                                HeightRequest="300"

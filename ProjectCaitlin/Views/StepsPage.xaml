@@ -91,8 +91,9 @@
 
                                         </Grid.ColumnDefinitions>
 
-                                        <Label x:Name = "stepLabel"
-                                               Text="{Binding Text}"
+                                        <Label
+                                            x:Name="{Binding StepLabelName}"
+                                            Text="{Binding Text}"
                                             Padding="30, 15, 10, 15"
                                             Grid.Column="0"
                                             VerticalOptions="Center"
@@ -103,6 +104,7 @@
                                         </Label>
 
                                         <ImageButton
+                                            x:Name = "{Binding CheckmarkImageName}"
                                             Source="{Binding CheckmarkIcon}"
                                             Grid.Column="1"
                                             WidthRequest="33"
@@ -110,7 +112,8 @@
                                             HorizontalOptions="Center"
                                             VerticalOptions="Center"
                                             BackgroundColor="Transparent"
-                                            Command="{Binding CompleteStep}"/>
+                                            Command="{Binding CompleteStep}"
+                                            CommandParameter="{Binding indexForCheckmark}"/>
                                     </Grid>
                                 </ViewCell>
                             </DataTemplate>

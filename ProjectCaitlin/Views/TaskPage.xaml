@@ -19,13 +19,13 @@
 
                     <!-- BACK ARROW-->
                     <ImageButton Grid.Column="0"
-                                         Source="arrowicon.png"
-                                         BackgroundColor="Transparent"
-                                         HeightRequest="23"
-                                         WidthRequest="23"
-                                         HorizontalOptions="Start"
-                                         VerticalOptions="Center"
-                                         Clicked="close"/>
+                                Source="arrowicon.png"
+                                BackgroundColor="Transparent"
+                                HeightRequest="23"
+                                WidthRequest="23"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Center"
+                                Clicked="close"/>
 
                     <!-- CURRENT ROUTINE-->
                     <Label

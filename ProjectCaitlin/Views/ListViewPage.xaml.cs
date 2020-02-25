@@ -219,7 +219,7 @@ namespace ProjectCaitlin
 
             Label expectedTimeLabel = new Label
             {
-                Text = "Takes me " + 5.ToString() + " minutes",
+                Text = "Takes me " + "x".ToString() + " minutes",
                 FontSize = 10,
                 TextColor = Color.DimGray,
                 VerticalOptions = LayoutOptions.EndAndExpand,
@@ -366,6 +366,11 @@ namespace ProjectCaitlin
                 Margin = new Thickness(0, 0, 10, 0)
             };
 
+            Grid grid = new Grid()
+            {
+
+            };
+
             CachedImage image = new CachedImage()
             {
                 Source = goal.photo,
@@ -376,6 +381,20 @@ namespace ProjectCaitlin
                 {
                     new RoundedTransformation(30, 120, 90),
                 },
+            };
+            if (goal.isComplete)
+            {
+                image.Opacity = .6;
+            }
+
+            CachedImage checkmarkImage = new CachedImage()
+            {
+                Source = Xamarin.Forms.ImageSource.FromFile("greencheckmarkicon.png"),
+                WidthRequest = 70,
+                HeightRequest = 70,
+                IsVisible = goal.isComplete,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
             Label goalLabel = new Label
@@ -397,7 +416,10 @@ namespace ProjectCaitlin
             indicator.SetBinding(ActivityIndicator.IsRunningProperty, "IsLoading");
             indicator.BindingContext = image;
 
-            goalStackLayout.Children.Add(image);
+            grid.Children.Add(image, 0, 0);
+            grid.Children.Add(checkmarkImage, 0, 0);
+
+            goalStackLayout.Children.Add(grid);
             goalStackLayout.Children.Add(goalLabel);
 
             stackLayout.Children.Add(goalStackLayout);

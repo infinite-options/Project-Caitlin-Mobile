@@ -11,6 +11,8 @@ namespace ProjectCaitlin
     {
         public static user user { get; set; } = new user();
 
+        public static string parentPage { get; set; } = "";
+
         public App()
         {
             InitializeComponent();
