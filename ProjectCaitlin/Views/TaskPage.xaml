@@ -32,7 +32,7 @@
                             Grid.Column="1"
                             Text="{Binding TopLabel}"
                             FontSize="30"
-                            FontAttributes="Bold"
+                            FontAttributes="Bold"     
                             TextColor= "Black"
                             HorizontalOptions="CenterAndExpand"
                             VerticalOptions="Center"/>
@@ -60,7 +60,7 @@
                         HorizontalOptions="FillAndExpand"
                         Padding="10, 0, 10, 0"
                         IsVisible="false">
-                        <ImageButton Source="{Binding SoundButton}" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="60" HorizontalOptions="StartAndExpand"/>
+                        <ImageButton Source="waveformicon.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="60" HorizontalOptions="StartAndExpand"/>
                         <ImageButton Source="moon.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="60" HorizontalOptions="CenterAndExpand"/>
                         <Button x:Name="next" Text="Start" FontAttributes="Bold" TextColor="White" BackgroundColor="#cef7b5" HorizontalOptions="EndAndExpand"/>
                     </StackLayout>
@@ -89,7 +89,7 @@
                                             HorizontalOptions = "FillAndExpand"
                                                      HeightRequest="200"
                                             Aspect = "AspectFill"/>
-                                            <Image x:Name="isComplete" Source="greencheckmarkicon.png" IsVisible="{Binding isComplete}" HeightRequest="100" WidthRequest="100" HorizontalOptions="Center" VerticalOptions="Center"/>
+                                            <Image x:Name="isComplete" IsVisible="{Binding IsComplete}" Source="greencheckmarkicon.png" HeightRequest="100" WidthRequest="100" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
                                         </StackLayout>
                                     </Frame>
 

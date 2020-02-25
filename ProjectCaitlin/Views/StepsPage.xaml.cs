@@ -51,7 +51,9 @@ namespace ProjectCaitlin.Views
         {
             var completeCounter = 0;
 
-            foreach(step step in App.user.routines[a].tasks[b].steps)
+            var completeTasksCounter = 0;
+
+            foreach (step step in App.user.routines[a].tasks[b].steps)
             {
                 if (step.isComplete)
                 {
@@ -59,15 +61,41 @@ namespace ProjectCaitlin.Views
                 }
             }
 
-            if(completeCounter == App.user.routines[a].tasks[b].steps.Count)
+            foreach (task task in App.user.routines[a].tasks)
+            {
+                if (task.isComplete)
+                {
+                    completeTasksCounter++;
+                }
+            }
+
+            if (completeCounter == App.user.routines[a].tasks[b].steps.Count)
+            {
+                var routineId = App.user.routines[a].id;
+
+                var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
+
+                var okToCheckmark = await firestoreService.CompleteRoutine(routineId, App.user.routines[a].dbIdx.ToString());
+                if (okToCheckmark)
+                {
+                    App.user.routines[a].isComplete = true;
+                    App.user.routines[a].dateTimeCompleted = DateTime.Now;
+                }
+            }
+
+            if (completeCounter == App.user.routines[a].tasks[b].steps.Count)
             {
                 var routineId = App.user.routines[a].id;
                 var taskId = App.user.routines[a].tasks[b].id;
 
                 var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
 
-                var okToCheckmark = await firestoreService.UpdateTask(routineId, taskId, b.ToString());
-                if (okToCheckmark) { App.user.routines[a].tasks[b].isComplete = true; }
+                var okToCheckmark = await firestoreService.UpdateTask(routineId, taskId, App.user.routines[a].tasks[b].dbIdx.ToString());
+                if (okToCheckmark)
+                {
+                    App.user.routines[a].tasks[b].isComplete = true;
+                    App.user.routines[a].tasks[b].dateTimeCompleted = DateTime.Now;
+                }
 
                 await Navigation.PushAsync(new TaskPage(a, isRoutine));
             }

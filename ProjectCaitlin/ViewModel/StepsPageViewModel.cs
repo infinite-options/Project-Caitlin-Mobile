@@ -103,7 +103,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 1.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[0].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[0].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
@@ -132,7 +132,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 2.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[1].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[1].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
@@ -161,7 +161,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 3.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[2].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[2].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
@@ -190,7 +190,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 4.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[3].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[3].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
@@ -219,7 +219,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 5.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[4].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[4].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
@@ -248,7 +248,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 6.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[5].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[5].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
@@ -277,7 +277,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 7.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[6].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[6].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
@@ -306,7 +306,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 8.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[7].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[7].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
@@ -335,7 +335,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 9.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[8].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[8].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
@@ -364,7 +364,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 10.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[9].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[9].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
@@ -393,7 +393,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 11.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[10].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[10].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
@@ -422,7 +422,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 12.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[11].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[11].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
@@ -451,7 +451,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 13.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[12].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[12].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
@@ -480,7 +480,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 14.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[13].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[13].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
@@ -509,7 +509,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 15.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[14].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[14].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
@@ -538,7 +538,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 16.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[15].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[15].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
@@ -567,7 +567,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 17.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[16].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[16].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
@@ -596,7 +596,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 18.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[17].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[17].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
@@ -625,7 +625,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 19.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[18].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[18].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
@@ -654,7 +654,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 20.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[19].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[19].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
@@ -683,7 +683,7 @@ namespace ProjectCaitlin.ViewModel
                             CompleteStep = new Command(
                              async () =>
                              {
-                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, 21.ToString());
+                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, App.user.routines[a].tasks[b].steps[20].dbIdx.ToString());
 
                                  if (okToCheckmark) { App.user.routines[a].tasks[b].steps[20].isComplete = true; }
                                  await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));

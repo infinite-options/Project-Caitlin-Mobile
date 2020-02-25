@@ -16,7 +16,9 @@ namespace ProjectCaitlin.Models
 
 		public bool isComplete { get; set; }
 
-        public DateTime dateTimeCompleted { get; set; }
+		public int dbIdx { get; set; }
+
+		public DateTime dateTimeCompleted { get; set; }
 
 		public DateTime availableStartTime { get; set; }
 

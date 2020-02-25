@@ -102,13 +102,15 @@
                                             TextColor="#272E32">
                                         </Label>
 
-                                        <ImageButton Source="{Binding CheckmarkIcon}"
-                                                                        Grid.Column="1"
-                                                                        WidthRequest="33"
-                                                                        HeightRequest="33"
-                                                                        HorizontalOptions="Start"
-                                                     BackgroundColor="Transparent"
-                                                                        Command="{Binding CompleteStep}"/>
+                                        <ImageButton
+                                            Source="{Binding CheckmarkIcon}"
+                                            Grid.Column="1"
+                                            WidthRequest="33"
+                                            HeightRequest="33"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center"
+                                            BackgroundColor="Transparent"
+                                            Command="{Binding CompleteStep}"/>
                                     </Grid>
                                 </ViewCell>
                             </DataTemplate>
