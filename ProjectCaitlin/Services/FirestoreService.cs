@@ -170,7 +170,7 @@ namespace ProjectCaitlin.Methods
             request.Headers.Add("userId", "7R6hAVmDrNutRkG3sVRy");
             request.Headers.Add("routineId", routineId);
             request.Headers.Add("taskId", taskId);
-            request.Headers.Add("taskIndex", taskIndex);
+            request.Headers.Add("taskNumber", taskIndex);
 
             var client = new HttpClient();
             HttpResponseMessage response = await client.SendAsync(request);
@@ -348,6 +348,8 @@ namespace ProjectCaitlin.Methods
                 try
                 {
                     jsonInstructionsAndSteps = stepJson["fields"]["instructions&steps"]["arrayValue"]["values"];
+                    if (jsonInstructionsAndSteps == null)
+                        return;
                 }
                 catch
                 {
