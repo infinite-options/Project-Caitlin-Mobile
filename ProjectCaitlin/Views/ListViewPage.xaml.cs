@@ -12,6 +12,7 @@ using FFImageLoading.Work;
 using ProjectCaitlin.Views;
 using ProjectCaitlin.Methods;
 using System.Threading;
+using ProjectCaitlin.Helpers;
 
 namespace ProjectCaitlin
 {
@@ -143,14 +144,13 @@ namespace ProjectCaitlin
 
             int goalIdx = 0;
             foreach (goal goal in user.goals)
-                PopulateGoal(goal, goalIdx++, GetFirstInTimeOfDay("goal", dateTimeNow.TimeOfDay, goal.availableStartTime.TimeOfDay, goal.availableEndTime.TimeOfDay));
+                PopulateGoal(goal, goalIdx++, GetFirstInTimeOfDay("goal", goal.availableStartTime.TimeOfDay));
 
             PopulateEventsAndRoutines(0, 0);
         }
 
         private void PopulateEventsAndRoutines(int eventIdx, int routineIdx)
         {
-
             Console.WriteLine("eventIdx: " + eventIdx);
             Console.WriteLine("routineIdx: " + routineIdx);
 
@@ -163,26 +163,26 @@ namespace ProjectCaitlin
 
             if (eventsList.Count == eventIdx)
             {
-                PopulateRoutine(user.routines[routineIdx], routineIdx, GetFirstInTimeOfDay("routine", currentTime, user.routines[routineIdx].availableStartTime.TimeOfDay, user.routines[routineIdx].availableEndTime.TimeOfDay));
+                PopulateRoutine(user.routines[routineIdx], routineIdx, GetFirstInTimeOfDay("routine",user.routines[routineIdx].availableStartTime.TimeOfDay));
                 PopulateEventsAndRoutines(eventIdx, ++routineIdx);
                 return;
             }
             if (user.routines.Count == routineIdx)
             {
-                PopulateEvent(eventsList[eventIdx], GetFirstInTimeOfDay("routine", currentTime, eventsList[eventIdx].Start.DateTime.DateTime.TimeOfDay, eventsList[eventIdx].End.DateTime.DateTime.TimeOfDay));
+                PopulateEvent(eventsList[eventIdx], GetFirstInTimeOfDay("routine", eventsList[eventIdx].Start.DateTime.DateTime.TimeOfDay));
                 PopulateEventsAndRoutines(++eventIdx, routineIdx);
                 return;
             }
 
             if (user.routines[routineIdx].availableStartTime.TimeOfDay <= eventsList[eventIdx].Start.DateTime.TimeOfDay)
             {
-                PopulateEvent(eventsList[eventIdx], GetFirstInTimeOfDay("routine", currentTime, eventsList[eventIdx].Start.DateTime.DateTime.TimeOfDay, eventsList[eventIdx].End.DateTime.DateTime.TimeOfDay));
+                PopulateEvent(eventsList[eventIdx], GetFirstInTimeOfDay("routine", eventsList[eventIdx].Start.DateTime.DateTime.TimeOfDay));
                 PopulateEventsAndRoutines(++eventIdx, routineIdx);
                 return;
             }
             else
             {
-                PopulateRoutine(user.routines[routineIdx], routineIdx, GetFirstInTimeOfDay("routine", currentTime, user.routines[routineIdx].availableStartTime.TimeOfDay, user.routines[routineIdx].availableEndTime.TimeOfDay));
+                PopulateRoutine(user.routines[routineIdx], routineIdx, GetFirstInTimeOfDay("routine", user.routines[routineIdx].availableStartTime.TimeOfDay));
                 PopulateEventsAndRoutines(eventIdx, ++routineIdx);
                 return;
             }
@@ -492,17 +492,13 @@ namespace ProjectCaitlin
             }
         }
 
-        private StackLayout GetFirstInTimeOfDay(string GorR,TimeSpan currentTime, TimeSpan startTime, TimeSpan endTime)
+        private StackLayout GetFirstInTimeOfDay(string GorR, TimeSpan startTime)
         {
             Console.WriteLine("startTime: " + startTime.ToString());
-            Console.WriteLine("endTime: " + endTime.ToString());
 
             //currentTime = testTime;
 
-            if (currentTime < morningEnd
-                && ((startTime < morningEnd && morningStart < endTime)
-                || startTime == morningStart || morningEnd == endTime))
-
+            if (startTime == new TimeSpan(0, 0, 0))
             {
                 Console.WriteLine("Morning");
 
@@ -511,9 +507,17 @@ namespace ProjectCaitlin
                 else
                     return MorningGoalsStackLayout;
             }
-            if (currentTime < afternoonEnd
-                && ((startTime < afternoonEnd && afternoonStart < endTime)
-                || startTime == afternoonStart || afternoonEnd == endTime))
+
+            if (morningStart <= startTime && startTime < morningEnd)
+            {
+                Console.WriteLine("Morning");
+
+                if (GorR == "routine")
+                    return MorningREStackLayout;
+                else
+                    return MorningGoalsStackLayout;
+            }
+            if (afternoonStart <= startTime && startTime < afternoonEnd)
             {
                 Console.WriteLine("Afternoon");
 
@@ -522,9 +526,7 @@ namespace ProjectCaitlin
                 else
                     return AfternoonGoalsStackLayout;
             }
-            if (currentTime < eveningEnd
-                && ((startTime < eveningEnd && eveningStart < endTime)
-                || startTime == eveningStart || eveningEnd == endTime))
+            if (eveningStart <= startTime && startTime < eveningEnd)
             {
                 Console.WriteLine("Evening");
 
@@ -533,8 +535,7 @@ namespace ProjectCaitlin
                 else
                     return EveningGoalsStackLayout;
             }
-            if ((startTime < nightEnd && nightStart < endTime)
-                || startTime == nightStart || nightEnd == endTime)
+            if (nightStart <= startTime && startTime < nightEnd)
             {
                 Console.WriteLine("Night");
 
@@ -668,44 +669,6 @@ namespace ProjectCaitlin
                 await Navigation.PushAsync(new GoalsRoutinesTemplate());
             };
             MyDayButton.GestureRecognizers.Add(tapGestureRecognizer4);
-        }
-
-        private void HidePreviousTimeOfDayElements(TimeSpan currentTime)
-        {
-            if (currentTime > morningEnd)
-            {
-                MorningREStackLayout.IsVisible = false;
-                MorningGoalsSection.IsVisible = false;
-            }
-            if (currentTime > afternoonEnd)
-            {
-                AfternoonREStackLayout.IsVisible = false;
-                AfternoonGoalsSection.IsVisible = false;
-            }
-            if (currentTime < nightEnd)
-            {
-                MorningREStackLayout.IsVisible = false;
-                MorningGoalsSection.IsVisible = false;
-                EveningREStackLayout.IsVisible = false;
-                EveningGoalsSection.IsVisible = false;
-                AfternoonREStackLayout.IsVisible = false;
-                AfternoonGoalsSection.IsVisible = false;
-            }
-        }
-
-        public async void btn1(object sender, EventArgs args)
-        {
-            await Navigation.PushAsync(new GreetingPage());
-        }
-
-        public async void btn3(object sender, EventArgs args)
-        {
-            await Navigation.PushAsync(new PhotoDisplayPage());
-        }
-
-        public async void btn4(object sender, EventArgs args)
-        {
-            await Navigation.PushAsync(new GoalsRoutinesTemplate());
         }
 
         void PrintFirebaseUser()

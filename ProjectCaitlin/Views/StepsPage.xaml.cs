@@ -32,19 +32,7 @@ namespace ProjectCaitlin.Views
             pageModel = new StepsPageViewModel(this, a, b, isRoutine);
             BindingContext = pageModel;
             itemcount = pageModel.count;
-
-
-
-        }
-
-        void SetStepTapGestures()
-        {
-            
-        }
-
-        private void OnLabelClicked()
-        {
-            throw new NotImplementedException();
+            StepListView.HeightRequest = 50 * App.user.routines[a].tasks[b].steps.Count;
         }
 
         public async void close(object sender, EventArgs args)

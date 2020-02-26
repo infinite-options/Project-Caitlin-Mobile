@@ -13,6 +13,7 @@ namespace ProjectCaitlin
 
         public static string parentPage { get; set; } = "";
 
+        [assembly:XamlCompilation(XamlCompilationsOptions.Compile)]
         public App()
         {
             InitializeComponent();

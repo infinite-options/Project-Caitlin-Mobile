@@ -2,12 +2,11 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:viewmodels="clr-namespace:ProjectCaitlin.ViewModel"
+             xmlns:models="clr-namespace:ProjectCaitlin.ViewModel"
+             x:DataType="viewmodels:StepsPageViewModel"
              x:Class="ProjectCaitlin.Views.StepsPage"
              NavigationPage.HasNavigationBar="False">
-
-    <ContentPage.Content>
-    </ContentPage.Content>
-
     <Grid>
         <ScrollView>
             <StackLayout Orientation="Vertical">
@@ -21,22 +20,22 @@
 
                         <!-- BACK ARROW-->
                         <ImageButton Grid.Column="0"
-                                         Margin="20, 0, 0, 0"
-                                         Source="arrowicon.png"
-                                         BackgroundColor="Transparent"
-                                         HeightRequest="23"
-                                         WidthRequest="23"
-                                         HorizontalOptions="Start"
-                                         VerticalOptions="Center"
-                                         Clicked="close"/>
+                                    Margin="20, 0, 0, 0"
+                                    Source="arrowicon.png"
+                                    BackgroundColor="Transparent"
+                                    HeightRequest="23"
+                                    WidthRequest="23"
+                                    HorizontalOptions="Start"
+                                    VerticalOptions="Center"
+                                    Clicked="close"/>
 
                         <!-- CURRENT ROUTINE-->
                         <Label Grid.Column="1"
-                                   Text="{Binding TaskName}"
-                                   FontSize="20"
-                                   TextColor="#272E32"
-                                   HorizontalOptions="Center"
-                                   VerticalOptions="Center"/>
+                                Text="{Binding TaskName}"
+                                FontSize="20"
+                                TextColor="#272E32"
+                                HorizontalOptions="Center"
+                                VerticalOptions="Center"/>
 
                         <!-- EXIT BUTTON-->
                         <ImageButton Grid.Column="2"
@@ -73,18 +72,22 @@
                            Padding="30, 0, 30, 0"
                            TextColor="#6C7072"/>
 
-                <StackLayout Padding="0,20,0,30">
-                    <ListView x:Name="listView"
-                                  HasUnevenRows="true"
-                                  ItemsSource="{Binding Items}"
-                                  SeparatorColor="#6C7072"
-                                  SelectionMode="None">
+                <StackLayout
+                    x:Name="ListStackLayout"
+                    Padding="0,20,0,30"
+                    VerticalOptions="Fill">
+                    <ContentView>
+                    <ListView
+                        x:Name="StepListView"
+                        HasUnevenRows="true"
+                        ItemsSource="{Binding Items}"
+                        SeparatorColor="#6C7072"
+                        SelectionMode="None"
+                        VerticalOptions="Fill">
 
                         <ListView.ItemTemplate>
-                            <DataTemplate>
+                            <DataTemplate x:DataType="viewmodels:ListViewItemModel">
                                 <ViewCell>
-
-
                                     <Grid>
                                         <Grid.ColumnDefinitions>
                                             <ColumnDefinition Width="5*" />
@@ -113,20 +116,20 @@
                                             VerticalOptions="Center"
                                             BackgroundColor="Transparent"
                                             Command="{Binding CompleteStep}"
-                                            CommandParameter="{Binding indexForCheckmark}"/>
+                                            CommandParameter="{Binding CompleteIdx}"/>
                                     </Grid>
                                 </ViewCell>
                             </DataTemplate>
                         </ListView.ItemTemplate>
                     </ListView>
+                    </ContentView>
 
                     <Button Text="I Am Done"
                               Clicked="DoneClicked"
                               HorizontalOptions="Center"
                               BackgroundColor="#272E32"
                               TextColor="White"
-                              WidthRequest="100"
-                              Margin="0, -200, 0, 0"/>
+                              WidthRequest="100"/>
 
                 </StackLayout>
 

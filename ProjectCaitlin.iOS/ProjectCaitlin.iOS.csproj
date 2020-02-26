@@ -235,5 +235,6 @@
     </BundleResource>
     <BundleResource Include="Resources\waveformicon.png" />
     <BundleResource Include="Resources\waveformiconwhite.png" />
+    <BundleResource Include="Resources\redoGray.png" />
   </ItemGroup>
 </Project>
