@@ -12,7 +12,6 @@ using FFImageLoading.Work;
 using ProjectCaitlin.Views;
 using ProjectCaitlin.Methods;
 using System.Threading;
-using ProjectCaitlin.Helpers;
 
 namespace ProjectCaitlin
 {

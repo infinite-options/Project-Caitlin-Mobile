@@ -73,16 +73,22 @@ namespace ProjectCaitlin.Views
                 await Navigation.PushAsync(new TaskPage(a, isRoutine));
             }
 
-            if (CarouselTasks.Position == App.user.goals[a].actions[b].instructions.Count - 1)
+            else if (next.Text == "Start")
+            {
+                CarouselTasks.Position = 0;
+                next.Text = "Next";
+            }
+            else if (CarouselTasks.Position != App.user.goals[a].actions[b].instructions.Count - 1)
+            {
+                CarouselTasks.Position = CarouselTasks.Position + 1;
+                Console.WriteLine("You are in page " + CarouselTasks.Position);
+
+            }
+            else if (CarouselTasks.Position == App.user.goals[a].actions[b].instructions.Count - 1)
             {
                 next.Text = "Done";
             }
-
-            else if (CarouselTasks.Position + 1 != itemcount)
-            {
-                next.Text = "Next";
-                CarouselTasks.Position = CarouselTasks.Position + 1;
-            }
+           
 
         }
         public async void prepage(object sender, EventArgs args)
