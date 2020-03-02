@@ -32,7 +32,31 @@ namespace ProjectCaitlin.ViewModel
             TopLabel = App.user.goals[a].title;
             TopLabel2 = App.user.goals[a].actions[b].title;
 
-            if (App.user.goals[a].actions[b].instructions.Count >= 1)
+            int i = 0;
+            foreach (instruction instruction in App.user.goals[a].actions[b].instructions)
+            {
+                Command completeStep;
+                completeStep = new Command(
+                         async () =>
+                         {
+                             var okToCheckmark = await firestoreService.UpdateStep(goalId, actionId, App.user.goals[a].actions[b].instructions[i].dbIdx.ToString());
+
+                             if (okToCheckmark) { App.user.goals[a].actions[b].instructions[0].isComplete = true; }
+                             await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
+
+                         }
+                    );
+
+                _items.Add(new
+                {
+                    Source = instruction.photo,
+                    Text = instruction.title,
+                    CompleteStep = completeStep
+                });
+                i++;
+            }
+
+            /*if (App.user.goals[a].actions[b].instructions.Count >= 1)
             {
                 _items.Add(new
                 {
@@ -411,10 +435,8 @@ namespace ProjectCaitlin.ViewModel
                          }
                     )
                 });
-            }            /*foreach (step step in App.user.routines[routineNum].tasks[taskNum].steps)
-            {
-                _items.Add(new { Source = step.photo, Text = step.title });
             }*/
+
 
 
         }
