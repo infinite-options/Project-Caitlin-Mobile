@@ -23,75 +23,78 @@
 
         </ScrollView>
 
-        <Frame
+        <RelativeLayout>
+            <Frame
+            x:Name="NavBar"
             HasShadow="True"
             CornerRadius="0"
-            Padding="0,-5,0,5">
-            <Grid
-            x:Name="NavBar"
-            Grid.Row="1"
-            Grid.Column="4"
+            Padding="0,-5,0,10"
             HeightRequest="65"
-            VerticalOptions="End">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition
+            VerticalOptions="End"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}">
+                <Grid
+            Grid.Row="1"
+            Grid.Column="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition
                     Width="0.25*" />
-                    <ColumnDefinition
+                        <ColumnDefinition
                     Width="0.25*" />
-                    <ColumnDefinition
+                        <ColumnDefinition
                     Width="0.25*" />
-                    <ColumnDefinition
+                        <ColumnDefinition
                     Width="0.25*" />
-                </Grid.ColumnDefinitions>
-                <Grid.RowDefinitions>
-                    <RowDefinition
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition
                     Height="1*" />
-                </Grid.RowDefinitions>
-                <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="0">
-                    <forms:CachedImage x:Name="MyDayButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="mydayiconnotext.png" />
-                    <Label Text="My Day" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 3">
-                        <Label.FontFamily>
-                            <OnPlatform x:TypeArguments="x:String">
-                                <On Platform="iOS" Value="Lobster-Regular" />
-                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                            </OnPlatform>
-                        </Label.FontFamily>
-                    </Label>
-                </StackLayout>
-                <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="1">
-                    <forms:CachedImage x:Name="ListViewButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="listviewiconnotext.png" />
-                    <Label Text="Today's List" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 3">
-                        <Label.FontFamily>
-                            <OnPlatform x:TypeArguments="x:String">
-                                <On Platform="iOS" Value="Lobster-Regular" />
-                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                            </OnPlatform>
-                        </Label.FontFamily>
-                    </Label>
-                </StackLayout>
-                <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="2">
-                    <forms:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="myphotosiconselectednotext.png" />
-                    <Label Text="My Photos" FontSize="12" TextColor="#d6a14b" HorizontalOptions="Center" Margin="0, -3, 0, 3">
-                        <Label.FontFamily>
-                            <OnPlatform x:TypeArguments="x:String">
-                                <On Platform="iOS" Value="Lobster-Regular" />
-                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                            </OnPlatform>
-                        </Label.FontFamily>
-                    </Label>
-                </StackLayout>
-                <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="3">
-                    <forms:CachedImage x:Name="AboutMeButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="aboutmeiconnotext.png" />
-                    <Label Text="About Me" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 3">
-                        <Label.FontFamily>
-                            <OnPlatform x:TypeArguments="x:String">
-                                <On Platform="iOS" Value="Lobster-Regular" />
-                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                            </OnPlatform>
-                        </Label.FontFamily>
-                    </Label>
-                </StackLayout>
-            </Grid>
-        </Frame>
+                    </Grid.RowDefinitions>
+                    <StackLayout VerticalOptions="End" Grid.Column="0">
+                        <forms:CachedImage x:Name="MyDayButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="mydayiconnotext.png" />
+                        <Label Text="My Day" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                            <Label.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                </OnPlatform>
+                            </Label.FontFamily>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout VerticalOptions="End" Grid.Column="1">
+                        <forms:CachedImage x:Name="ListViewButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="listviewiconnotext.png" />
+                        <Label Text="Today's List" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                            <Label.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                </OnPlatform>
+                            </Label.FontFamily>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout VerticalOptions="End" Grid.Column="2">
+                        <forms:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="myphotosiconselectednotext.png" />
+                        <Label Text="My Photos" FontSize="12" TextColor="#d6a14b" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                            <Label.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                </OnPlatform>
+                            </Label.FontFamily>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout VerticalOptions="End" Grid.Column="3">
+                        <forms:CachedImage x:Name="AboutMeButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="aboutmeiconnotext.png" />
+                        <Label Text="About Me" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                            <Label.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                </OnPlatform>
+                            </Label.FontFamily>
+                        </Label>
+                    </StackLayout>
+                </Grid>
+            </Frame>
+        </RelativeLayout>
     </StackLayout>
 </ContentPage>

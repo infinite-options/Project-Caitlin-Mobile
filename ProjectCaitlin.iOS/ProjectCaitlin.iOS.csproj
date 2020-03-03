@@ -74,6 +74,9 @@
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ButtonTextWrap.cs" />
+    <Compile Include="AnimationNavigationRenderer.cs" />
+    <Compile Include="AnimationNavigationControllerDelegate.cs" />
+    <Compile Include="TransitionAnimator.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />

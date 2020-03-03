@@ -327,19 +327,19 @@
                 </StackLayout>
 
             </StackLayout>
-
         </ScrollView>
+        <RelativeLayout>
         <Frame
+            x:Name="NavBar"
             HasShadow="True"
             CornerRadius="0"
             Padding="0,-5,0,10"
             HeightRequest="65"
-            VerticalOptions="End">
+            VerticalOptions="End"
+            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}">
             <Grid
-            x:Name="NavBar"
             Grid.Row="1"
-            Grid.Column="4"
-            VerticalOptions="FillAndExpand">
+            Grid.Column="4">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition
                     Width="0.25*" />
@@ -400,6 +400,7 @@
                 </StackLayout>
             </Grid>
         </Frame>
+        </RelativeLayout>
     </StackLayout>
 
 </ContentPage>
