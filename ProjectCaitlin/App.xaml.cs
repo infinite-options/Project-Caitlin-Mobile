@@ -4,16 +4,17 @@ using ProjectCaitlin.Methods;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Threading.Tasks;
+using ProjectCaitlin.Views;
 
 namespace ProjectCaitlin
 {
     public partial class App : Application
     {
-        public static user user { get; set; } = new user();
+        public static user User { get; set; } = new user();
 
-        public static string parentPage { get; set; } = "";
+        public static string ParentPage { get; set; } = "";
 
-        [assembly:XamlCompilation(XamlCompilationsOptions.Compile)]
+        [assembly: XamlCompilation(XamlCompilationsOptions.Compile)]
         public App()
         {
             InitializeComponent();

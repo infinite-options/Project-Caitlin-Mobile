@@ -32,27 +32,27 @@ namespace ProjectCaitlin.ViewModel
 
             if (isRoutine)
             {
-                TopImage = App.user.routines[a].photo;
-                TopLabel = App.user.routines[a].title;
+                TopImage = App.User.routines[a].photo;
+                TopLabel = App.User.routines[a].title;
                 //if(App.user.routines[a].audio != "") SoundButton = "waveicon.png";
             }
             else
             {
-                TopImage = App.user.goals[a].photo;
-                TopLabel = App.user.goals[a].title;
+                TopImage = App.User.goals[a].photo;
+                TopLabel = App.User.goals[a].title;
             }
 
 
             if (isRoutine)
             {
-                if (App.user.routines[a].tasks.Count > 0)
+                if (App.User.routines[a].tasks.Count > 0)
 
-                    if (App.user.routines[a].tasks[0].isComplete == true)
+                    if (App.User.routines[a].tasks[0].isComplete == true)
                     {
                         _items.Add(new
                         {
-                            Source = App.user.routines[a].tasks[0].photo,
-                            Text = App.user.routines[a].tasks[0].title,
+                            Source = App.User.routines[a].tasks[0].photo,
+                            Text = App.User.routines[a].tasks[0].title,
                             isComplete = true,
                             Navigate = new Command(
                                 async () =>
@@ -65,8 +65,8 @@ namespace ProjectCaitlin.ViewModel
                     {
                         _items.Add(new
                         {
-                            Source = App.user.routines[a].tasks[0].photo,
-                            Text = App.user.routines[a].tasks[0].title,
+                            Source = App.User.routines[a].tasks[0].photo,
+                            Text = App.User.routines[a].tasks[0].title,
                             isComplete = false,
                             Navigate = new Command(
                                 async () =>
@@ -78,14 +78,14 @@ namespace ProjectCaitlin.ViewModel
 
 
 
-                if (App.user.routines[a].tasks.Count > 1)
+                if (App.User.routines[a].tasks.Count > 1)
 
-                    if (App.user.routines[a].tasks[1].isComplete == true)
+                    if (App.User.routines[a].tasks[1].isComplete == true)
                     {
                         _items.Add(new
                         {
-                            Source = App.user.routines[a].tasks[1].photo,
-                            Text = App.user.routines[a].tasks[1].title,
+                            Source = App.User.routines[a].tasks[1].photo,
+                            Text = App.User.routines[a].tasks[1].title,
                             isComplete = true,
                             Navigate = new Command(
                                                      async () =>
@@ -98,8 +98,8 @@ namespace ProjectCaitlin.ViewModel
                     {
                         _items.Add(new
                         {
-                            Source = App.user.routines[a].tasks[1].photo,
-                            Text = App.user.routines[a].tasks[1].title,
+                            Source = App.User.routines[a].tasks[1].photo,
+                            Text = App.User.routines[a].tasks[1].title,
                             isComplete = false,
                             Navigate = new Command(
                                                     async () =>
@@ -111,14 +111,14 @@ namespace ProjectCaitlin.ViewModel
 
 
 
-                if (App.user.routines[a].tasks.Count > 2)
+                if (App.User.routines[a].tasks.Count > 2)
 
-                    if (App.user.routines[a].tasks[2].isComplete == true)
+                    if (App.User.routines[a].tasks[2].isComplete == true)
                     {
                         _items.Add(new
                         {
-                            Source = App.user.routines[a].tasks[2].photo,
-                            Text = App.user.routines[a].tasks[2].title,
+                            Source = App.User.routines[a].tasks[2].photo,
+                            Text = App.User.routines[a].tasks[2].title,
                             isComplete = true,
                             Navigate = new Command(
                                                      async () =>
@@ -131,8 +131,8 @@ namespace ProjectCaitlin.ViewModel
                     {
                         _items.Add(new
                         {
-                            Source = App.user.routines[a].tasks[2].photo,
-                            Text = App.user.routines[a].tasks[2].title,
+                            Source = App.User.routines[a].tasks[2].photo,
+                            Text = App.User.routines[a].tasks[2].title,
                             isComplete = false,
                             Navigate = new Command(
                                                     async () =>
@@ -144,14 +144,14 @@ namespace ProjectCaitlin.ViewModel
 
 
 
-                if (App.user.routines[a].tasks.Count > 3)
+                if (App.User.routines[a].tasks.Count > 3)
 
-                    if (App.user.routines[a].tasks[3].isComplete == true)
+                    if (App.User.routines[a].tasks[3].isComplete == true)
                     {
                         _items.Add(new
                         {
-                            Source = App.user.routines[a].tasks[3].photo,
-                            Text = App.user.routines[a].tasks[3].title,
+                            Source = App.User.routines[a].tasks[3].photo,
+                            Text = App.User.routines[a].tasks[3].title,
                             isComplete = true,
                             Navigate = new Command(
                                                      async () =>
@@ -164,8 +164,8 @@ namespace ProjectCaitlin.ViewModel
                     {
                         _items.Add(new
                         {
-                            Source = App.user.routines[a].tasks[3].photo,
-                            Text = App.user.routines[a].tasks[3].title,
+                            Source = App.User.routines[a].tasks[3].photo,
+                            Text = App.User.routines[a].tasks[3].title,
                             isComplete = false,
                             Navigate = new Command(
                                                     async () =>
@@ -177,14 +177,14 @@ namespace ProjectCaitlin.ViewModel
 
 
 
-                if (App.user.routines[a].tasks.Count > 4)
+                if (App.User.routines[a].tasks.Count > 4)
 
-                    if (App.user.routines[a].tasks[4].isComplete == true)
+                    if (App.User.routines[a].tasks[4].isComplete == true)
                     {
                         _items.Add(new
                         {
-                            Source = App.user.routines[a].tasks[4].photo,
-                            Text = App.user.routines[a].tasks[4].title,
+                            Source = App.User.routines[a].tasks[4].photo,
+                            Text = App.User.routines[a].tasks[4].title,
                             isComplete = true,
                             Navigate = new Command(
                                                      async () =>
@@ -197,8 +197,8 @@ namespace ProjectCaitlin.ViewModel
                     {
                         _items.Add(new
                         {
-                            Source = App.user.routines[a].tasks[4].photo,
-                            Text = App.user.routines[a].tasks[4].title,
+                            Source = App.User.routines[a].tasks[4].photo,
+                            Text = App.User.routines[a].tasks[4].title,
                             isComplete = false,
                             Navigate = new Command(
                                                     async () =>
@@ -210,14 +210,14 @@ namespace ProjectCaitlin.ViewModel
 
 
 
-                if (App.user.routines[a].tasks.Count > 5)
+                if (App.User.routines[a].tasks.Count > 5)
 
-                    if (App.user.routines[a].tasks[5].isComplete == true)
+                    if (App.User.routines[a].tasks[5].isComplete == true)
                     {
                         _items.Add(new
                         {
-                            Source = App.user.routines[a].tasks[5].photo,
-                            Text = App.user.routines[a].tasks[5].title,
+                            Source = App.User.routines[a].tasks[5].photo,
+                            Text = App.User.routines[a].tasks[5].title,
                             isComplete = true,
                             Navigate = new Command(
                                                      async () =>
@@ -230,8 +230,8 @@ namespace ProjectCaitlin.ViewModel
                     {
                         _items.Add(new
                         {
-                            Source = App.user.routines[a].tasks[5].photo,
-                            Text = App.user.routines[a].tasks[5].title,
+                            Source = App.User.routines[a].tasks[5].photo,
+                            Text = App.User.routines[a].tasks[5].title,
                             isComplete = false,
                             Navigate = new Command(
                                                     async () =>
@@ -243,14 +243,14 @@ namespace ProjectCaitlin.ViewModel
 
 
 
-                if (App.user.routines[a].tasks.Count > 6)
+                if (App.User.routines[a].tasks.Count > 6)
 
-                    if (App.user.routines[a].tasks[6].isComplete == true)
+                    if (App.User.routines[a].tasks[6].isComplete == true)
                     {
                         _items.Add(new
                         {
-                            Source = App.user.routines[a].tasks[6].photo,
-                            Text = App.user.routines[a].tasks[6].title,
+                            Source = App.User.routines[a].tasks[6].photo,
+                            Text = App.User.routines[a].tasks[6].title,
                             isComplete = true,
                             Navigate = new Command(
                                                      async () =>
@@ -263,8 +263,8 @@ namespace ProjectCaitlin.ViewModel
                     {
                         _items.Add(new
                         {
-                            Source = App.user.routines[a].tasks[6].photo,
-                            Text = App.user.routines[a].tasks[6].title,
+                            Source = App.User.routines[a].tasks[6].photo,
+                            Text = App.User.routines[a].tasks[6].title,
                             isComplete = false,
                             Navigate = new Command(
                                                     async () =>
@@ -274,14 +274,14 @@ namespace ProjectCaitlin.ViewModel
                         });
                     }
 
-                if (App.user.routines[a].tasks.Count > 7)
+                if (App.User.routines[a].tasks.Count > 7)
 
-                    if (App.user.routines[a].tasks[7].isComplete == true)
+                    if (App.User.routines[a].tasks[7].isComplete == true)
                     {
                         _items.Add(new
                         {
-                            Source = App.user.routines[a].tasks[7].photo,
-                            Text = App.user.routines[a].tasks[7].title,
+                            Source = App.User.routines[a].tasks[7].photo,
+                            Text = App.User.routines[a].tasks[7].title,
                             isComplete = true,
                             Navigate = new Command(
                                                      async () =>
@@ -294,8 +294,8 @@ namespace ProjectCaitlin.ViewModel
                     {
                         _items.Add(new
                         {
-                            Source = App.user.routines[a].tasks[7].photo,
-                            Text = App.user.routines[a].tasks[7].title,
+                            Source = App.User.routines[a].tasks[7].photo,
+                            Text = App.User.routines[a].tasks[7].title,
                             isComplete = false,
                             Navigate = new Command(
                                                     async () =>
@@ -307,14 +307,14 @@ namespace ProjectCaitlin.ViewModel
 
 
 
-                if (App.user.routines[a].tasks.Count > 8)
+                if (App.User.routines[a].tasks.Count > 8)
 
-                    if (App.user.routines[a].tasks[8].isComplete == true)
+                    if (App.User.routines[a].tasks[8].isComplete == true)
                     {
                         _items.Add(new
                         {
-                            Source = App.user.routines[a].tasks[8].photo,
-                            Text = App.user.routines[a].tasks[8].title,
+                            Source = App.User.routines[a].tasks[8].photo,
+                            Text = App.User.routines[a].tasks[8].title,
                             isComplete = true,
                             Navigate = new Command(
                                                      async () =>
@@ -327,8 +327,8 @@ namespace ProjectCaitlin.ViewModel
                     {
                         _items.Add(new
                         {
-                            Source = App.user.routines[a].tasks[8].photo,
-                            Text = App.user.routines[a].tasks[8].title,
+                            Source = App.User.routines[a].tasks[8].photo,
+                            Text = App.User.routines[a].tasks[8].title,
                             isComplete = false,
                             Navigate = new Command(
                                                     async () =>
@@ -340,14 +340,14 @@ namespace ProjectCaitlin.ViewModel
 
 
 
-                if (App.user.routines[a].tasks.Count > 9)
+                if (App.User.routines[a].tasks.Count > 9)
 
-                    if (App.user.routines[a].tasks[9].isComplete == true)
+                    if (App.User.routines[a].tasks[9].isComplete == true)
                     {
                         _items.Add(new
                         {
-                            Source = App.user.routines[a].tasks[9].photo,
-                            Text = App.user.routines[a].tasks[9].title,
+                            Source = App.User.routines[a].tasks[9].photo,
+                            Text = App.User.routines[a].tasks[9].title,
                             isComplete = true,
                             Navigate = new Command(
                                                      async () =>
@@ -360,8 +360,8 @@ namespace ProjectCaitlin.ViewModel
                     {
                         _items.Add(new
                         {
-                            Source = App.user.routines[a].tasks[9].photo,
-                            Text = App.user.routines[a].tasks[9].title,
+                            Source = App.User.routines[a].tasks[9].photo,
+                            Text = App.User.routines[a].tasks[9].title,
                             isComplete = false,
                             Navigate = new Command(
                                                     async () =>
@@ -604,12 +604,12 @@ namespace ProjectCaitlin.ViewModel
             }
             else
             {
-                if (App.user.goals[a].actions.Count >= 1)
+                if (App.User.goals[a].actions.Count >= 1)
                     _items.Add(new
                     {
-                        Source = App.user.goals[a].actions[0].photo,
-                        Text = App.user.goals[a].actions[0].title,
-                        App.user.goals[a].actions[0].isComplete,
+                        Source = App.User.goals[a].actions[0].photo,
+                        Text = App.User.goals[a].actions[0].title,
+                        App.User.goals[a].actions[0].isComplete,
 
                         Navigate = new Command(
                              async () =>
@@ -617,12 +617,12 @@ namespace ProjectCaitlin.ViewModel
                                  await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 0, isRoutine));
                              })
                     });
-                if (App.user.goals[a].actions.Count >= 2)
+                if (App.User.goals[a].actions.Count >= 2)
                     _items.Add(new
                     {
-                        Source = App.user.goals[a].actions[1].photo,
-                        Text = App.user.goals[a].actions[1].title,
-                        App.user.goals[a].actions[1].isComplete,
+                        Source = App.User.goals[a].actions[1].photo,
+                        Text = App.User.goals[a].actions[1].title,
+                        App.User.goals[a].actions[1].isComplete,
 
                         Navigate = new Command(
                              async () =>
@@ -630,12 +630,12 @@ namespace ProjectCaitlin.ViewModel
                                  await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 1, isRoutine));
                              })
                     });
-                if (App.user.goals[a].actions.Count >= 3)
+                if (App.User.goals[a].actions.Count >= 3)
                     _items.Add(new
                     {
-                        Source = App.user.goals[a].actions[2].photo,
-                        Text = App.user.goals[a].actions[2].title,
-                        App.user.goals[a].actions[2].isComplete,
+                        Source = App.User.goals[a].actions[2].photo,
+                        Text = App.User.goals[a].actions[2].title,
+                        App.User.goals[a].actions[2].isComplete,
 
                         Navigate = new Command(
                              async () =>
@@ -643,12 +643,12 @@ namespace ProjectCaitlin.ViewModel
                                  await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 2, isRoutine));
                              })
                     });
-                if (App.user.goals[a].actions.Count >= 4)
+                if (App.User.goals[a].actions.Count >= 4)
                     _items.Add(new
                     {
-                        Source = App.user.goals[a].actions[3].photo,
-                        Text = App.user.goals[a].actions[3].title,
-                        App.user.goals[a].actions[3].isComplete,
+                        Source = App.User.goals[a].actions[3].photo,
+                        Text = App.User.goals[a].actions[3].title,
+                        App.User.goals[a].actions[3].isComplete,
 
                         Navigate = new Command(
                              async () =>
@@ -656,12 +656,12 @@ namespace ProjectCaitlin.ViewModel
                                  await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 3, isRoutine));
                              })
                     });
-                if (App.user.goals[a].actions.Count >= 5)
+                if (App.User.goals[a].actions.Count >= 5)
                     _items.Add(new
                     {
-                        Source = App.user.goals[a].actions[4].photo,
-                        Text = App.user.goals[a].actions[4].title,
-                        App.user.goals[a].actions[4].isComplete,
+                        Source = App.User.goals[a].actions[4].photo,
+                        Text = App.User.goals[a].actions[4].title,
+                        App.User.goals[a].actions[4].isComplete,
 
                         Navigate = new Command(
                              async () =>
@@ -669,12 +669,12 @@ namespace ProjectCaitlin.ViewModel
                                  await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 4, isRoutine));
                              })
                     });
-                if (App.user.goals[a].actions.Count >= 6)
+                if (App.User.goals[a].actions.Count >= 6)
                     _items.Add(new
                     {
-                        Source = App.user.goals[a].actions[5].photo,
-                        Text = App.user.goals[a].actions[5].title,
-                        App.user.goals[a].actions[5].isComplete,
+                        Source = App.User.goals[a].actions[5].photo,
+                        Text = App.User.goals[a].actions[5].title,
+                        App.User.goals[a].actions[5].isComplete,
 
                         Navigate = new Command(
                              async () =>
@@ -682,12 +682,12 @@ namespace ProjectCaitlin.ViewModel
                                  await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 5, isRoutine));
                              })
                     });
-                if (App.user.goals[a].actions.Count >= 7)
+                if (App.User.goals[a].actions.Count >= 7)
                     _items.Add(new
                     {
-                        Source = App.user.goals[a].actions[6].photo,
-                        Text = App.user.goals[a].actions[6].title,
-                        App.user.goals[a].actions[6].isComplete,
+                        Source = App.User.goals[a].actions[6].photo,
+                        Text = App.User.goals[a].actions[6].title,
+                        App.User.goals[a].actions[6].isComplete,
 
                         Navigate = new Command(
                              async () =>
@@ -695,12 +695,12 @@ namespace ProjectCaitlin.ViewModel
                                  await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 6, isRoutine));
                              })
                     });
-                if (App.user.goals[a].actions.Count >= 8)
+                if (App.User.goals[a].actions.Count >= 8)
                     _items.Add(new
                     {
-                        Source = App.user.goals[a].actions[7].photo,
-                        Text = App.user.goals[a].actions[7].title,
-                        App.user.goals[a].actions[7].isComplete,
+                        Source = App.User.goals[a].actions[7].photo,
+                        Text = App.User.goals[a].actions[7].title,
+                        App.User.goals[a].actions[7].isComplete,
 
                         Navigate = new Command(
                              async () =>
@@ -708,12 +708,12 @@ namespace ProjectCaitlin.ViewModel
                                  await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 7, isRoutine));
                              })
                     });
-                if (App.user.goals[a].actions.Count >= 9)
+                if (App.User.goals[a].actions.Count >= 9)
                     _items.Add(new
                     {
-                        Source = App.user.goals[a].actions[8].photo,
-                        Text = App.user.goals[a].actions[8].title,
-                        App.user.goals[a].actions[8].isComplete,
+                        Source = App.User.goals[a].actions[8].photo,
+                        Text = App.User.goals[a].actions[8].title,
+                        App.User.goals[a].actions[8].isComplete,
 
                         Navigate = new Command(
                              async () =>
@@ -721,12 +721,12 @@ namespace ProjectCaitlin.ViewModel
                                  await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 8, isRoutine));
                              })
                     });
-                if (App.user.goals[a].actions.Count >= 10)
+                if (App.User.goals[a].actions.Count >= 10)
                     _items.Add(new
                     {
-                        Source = App.user.goals[a].actions[9].photo,
-                        Text = App.user.goals[a].actions[9].title,
-                        App.user.goals[a].actions[9].isComplete,
+                        Source = App.User.goals[a].actions[9].photo,
+                        Text = App.User.goals[a].actions[9].title,
+                        App.User.goals[a].actions[9].isComplete,
 
                         Navigate = new Command(
                              async () =>
@@ -734,12 +734,12 @@ namespace ProjectCaitlin.ViewModel
                                  await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 9, isRoutine));
                              })
                     });
-                if (App.user.goals[a].actions.Count >= 11)
+                if (App.User.goals[a].actions.Count >= 11)
                     _items.Add(new
                     {
-                        Source = App.user.goals[a].actions[10].photo,
-                        Text = App.user.goals[a].actions[10].title,
-                        App.user.goals[a].actions[10].isComplete,
+                        Source = App.User.goals[a].actions[10].photo,
+                        Text = App.User.goals[a].actions[10].title,
+                        App.User.goals[a].actions[10].isComplete,
 
                         Navigate = new Command(
                              async () =>
@@ -747,12 +747,12 @@ namespace ProjectCaitlin.ViewModel
                                  await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 10, isRoutine));
                              })
                     });
-                if (App.user.goals[a].actions.Count >= 12)
+                if (App.User.goals[a].actions.Count >= 12)
                     _items.Add(new
                     {
-                        Source = App.user.goals[a].actions[11].photo,
-                        Text = App.user.goals[a].actions[11].title,
-                        App.user.goals[a].actions[11].isComplete,
+                        Source = App.User.goals[a].actions[11].photo,
+                        Text = App.User.goals[a].actions[11].title,
+                        App.User.goals[a].actions[11].isComplete,
 
                         Navigate = new Command(
                              async () =>
@@ -760,12 +760,12 @@ namespace ProjectCaitlin.ViewModel
                                  await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 11, isRoutine));
                              })
                     });
-                if (App.user.goals[a].actions.Count >= 13)
+                if (App.User.goals[a].actions.Count >= 13)
                     _items.Add(new
                     {
-                        Source = App.user.goals[a].actions[12].photo,
-                        Text = App.user.goals[a].actions[12].title,
-                        App.user.goals[a].actions[12].isComplete,
+                        Source = App.User.goals[a].actions[12].photo,
+                        Text = App.User.goals[a].actions[12].title,
+                        App.User.goals[a].actions[12].isComplete,
 
                         Navigate = new Command(
                              async () =>
@@ -773,12 +773,12 @@ namespace ProjectCaitlin.ViewModel
                                  await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 12, isRoutine));
                              })
                     });
-                if (App.user.goals[a].actions.Count >= 14)
+                if (App.User.goals[a].actions.Count >= 14)
                     _items.Add(new
                     {
-                        Source = App.user.goals[a].actions[13].photo,
-                        Text = App.user.goals[a].actions[13].title,
-                        App.user.goals[a].actions[13].isComplete,
+                        Source = App.User.goals[a].actions[13].photo,
+                        Text = App.User.goals[a].actions[13].title,
+                        App.User.goals[a].actions[13].isComplete,
 
                         Navigate = new Command(
                              async () =>
@@ -786,12 +786,12 @@ namespace ProjectCaitlin.ViewModel
                                  await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 13, isRoutine));
                              })
                     });
-                if (App.user.goals[a].actions.Count >= 15)
+                if (App.User.goals[a].actions.Count >= 15)
                     _items.Add(new
                     {
-                        Source = App.user.goals[a].actions[14].photo,
-                        Text = App.user.goals[a].actions[14].title,
-                        App.user.goals[a].actions[14].isComplete,
+                        Source = App.User.goals[a].actions[14].photo,
+                        Text = App.User.goals[a].actions[14].title,
+                        App.User.goals[a].actions[14].isComplete,
 
                         Navigate = new Command(
                              async () =>
@@ -799,12 +799,12 @@ namespace ProjectCaitlin.ViewModel
                                  await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 14, isRoutine));
                              })
                     });
-                if (App.user.goals[a].actions.Count >= 16)
+                if (App.User.goals[a].actions.Count >= 16)
                     _items.Add(new
                     {
-                        Source = App.user.goals[a].actions[15].photo,
-                        Text = App.user.goals[a].actions[15].title,
-                        App.user.goals[a].actions[15].isComplete,
+                        Source = App.User.goals[a].actions[15].photo,
+                        Text = App.User.goals[a].actions[15].title,
+                        App.User.goals[a].actions[15].isComplete,
 
                         Navigate = new Command(
                              async () =>
@@ -812,12 +812,12 @@ namespace ProjectCaitlin.ViewModel
                                  await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 15, isRoutine));
                              })
                     });
-                if (App.user.goals[a].actions.Count >= 17)
+                if (App.User.goals[a].actions.Count >= 17)
                     _items.Add(new
                     {
-                        Source = App.user.goals[a].actions[16].photo,
-                        Text = App.user.goals[a].actions[16].title,
-                        App.user.goals[a].actions[16].isComplete,
+                        Source = App.User.goals[a].actions[16].photo,
+                        Text = App.User.goals[a].actions[16].title,
+                        App.User.goals[a].actions[16].isComplete,
 
                         Navigate = new Command(
                              async () =>
@@ -825,12 +825,12 @@ namespace ProjectCaitlin.ViewModel
                                  await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 16, isRoutine));
                              })
                     });
-                if (App.user.goals[a].actions.Count >= 18)
+                if (App.User.goals[a].actions.Count >= 18)
                     _items.Add(new
                     {
-                        Source = App.user.goals[a].actions[17].photo,
-                        Text = App.user.goals[a].actions[17].title,
-                        App.user.goals[a].actions[17].isComplete,
+                        Source = App.User.goals[a].actions[17].photo,
+                        Text = App.User.goals[a].actions[17].title,
+                        App.User.goals[a].actions[17].isComplete,
 
                         Navigate = new Command(
                              async () =>
@@ -838,12 +838,12 @@ namespace ProjectCaitlin.ViewModel
                                  await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 17, isRoutine));
                              })
                     });
-                if (App.user.goals[a].actions.Count >= 19)
+                if (App.User.goals[a].actions.Count >= 19)
                     _items.Add(new
                     {
-                        Source = App.user.goals[a].actions[18].photo,
-                        Text = App.user.goals[a].actions[18].title,
-                        App.user.goals[a].actions[18].isComplete,
+                        Source = App.User.goals[a].actions[18].photo,
+                        Text = App.User.goals[a].actions[18].title,
+                        App.User.goals[a].actions[18].isComplete,
 
                         Navigate = new Command(
                              async () =>
@@ -851,12 +851,12 @@ namespace ProjectCaitlin.ViewModel
                                  await mainPage.Navigation.PushAsync(new TaskCompletePage(a, 18, isRoutine));
                              })
                     });
-                if (App.user.goals[a].actions.Count >= 20)
+                if (App.User.goals[a].actions.Count >= 20)
                     _items.Add(new
                     {
-                        Source = App.user.goals[a].actions[19].photo,
-                        Text = App.user.goals[a].actions[19].title,
-                        App.user.goals[a].actions[19].isComplete,
+                        Source = App.User.goals[a].actions[19].photo,
+                        Text = App.User.goals[a].actions[19].title,
+                        App.User.goals[a].actions[19].isComplete,
 
                         Navigate = new Command(
                              async () =>

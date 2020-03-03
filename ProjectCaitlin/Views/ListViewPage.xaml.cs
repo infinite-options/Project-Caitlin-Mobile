@@ -52,10 +52,11 @@ namespace ProjectCaitlin
         public ListViewPage()
         {
             InitializeComponent();
+            App.ParentPage = "ListView";
 
             AddTapGestures();
 
-            user = App.user;
+            user = App.User;
 
             putLayoutsIntoLists();
 
@@ -68,7 +69,11 @@ namespace ProjectCaitlin
             firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
 
             StartTimer();
-            SetupUIAsync();
+        }
+
+        protected override async void OnAppearing()
+        {
+            await SetupUIAsync();
         }
 
         async Task SetupUIAsync()
@@ -156,13 +161,12 @@ namespace ProjectCaitlin
             Console.WriteLine("eventcount: " + eventsList.Count);
             Console.WriteLine("routinecount: " + user.routines.Count);
 
-            TimeSpan currentTime = dateTimeNow.TimeOfDay;
             if (eventsList.Count == eventIdx && user.routines.Count == routineIdx)
                 return;
 
             if (eventsList.Count == eventIdx)
             {
-                PopulateRoutine(user.routines[routineIdx], routineIdx, GetFirstInTimeOfDay("routine",user.routines[routineIdx].availableStartTime.TimeOfDay));
+                PopulateRoutine(user.routines[routineIdx], routineIdx, GetFirstInTimeOfDay("routine", user.routines[routineIdx].availableStartTime.TimeOfDay));
                 PopulateEventsAndRoutines(eventIdx, ++routineIdx);
                 return;
             }
@@ -173,16 +177,16 @@ namespace ProjectCaitlin
                 return;
             }
 
-            if (user.routines[routineIdx].availableStartTime.TimeOfDay <= eventsList[eventIdx].Start.DateTime.TimeOfDay)
+            if (user.routines[routineIdx].availableStartTime.TimeOfDay < eventsList[eventIdx].Start.DateTime.TimeOfDay)
             {
-                PopulateEvent(eventsList[eventIdx], GetFirstInTimeOfDay("routine", eventsList[eventIdx].Start.DateTime.DateTime.TimeOfDay));
-                PopulateEventsAndRoutines(++eventIdx, routineIdx);
+                PopulateRoutine(user.routines[routineIdx], routineIdx, GetFirstInTimeOfDay("routine", user.routines[routineIdx].availableStartTime.TimeOfDay));
+                PopulateEventsAndRoutines(eventIdx, ++routineIdx);
                 return;
             }
             else
             {
-                PopulateRoutine(user.routines[routineIdx], routineIdx, GetFirstInTimeOfDay("routine", user.routines[routineIdx].availableStartTime.TimeOfDay));
-                PopulateEventsAndRoutines(eventIdx, ++routineIdx);
+                PopulateEvent(eventsList[eventIdx], GetFirstInTimeOfDay("routine", eventsList[eventIdx].Start.DateTime.DateTime.TimeOfDay));
+                PopulateEventsAndRoutines(++eventIdx, routineIdx);
                 return;
             }
         }
@@ -672,11 +676,11 @@ namespace ProjectCaitlin
 
         void PrintFirebaseUser()
         {
-            OnPropertyChanged(nameof(App.user));
-            Console.WriteLine("user first name: " + App.user.firstName);
-            Console.WriteLine("user last name: " + App.user.lastName);
+            OnPropertyChanged(nameof(App.User));
+            Console.WriteLine("user first name: " + App.User.firstName);
+            Console.WriteLine("user last name: " + App.User.lastName);
 
-            foreach (routine routine in App.user.routines)
+            foreach (routine routine in App.User.routines)
             {
                 OnPropertyChanged(nameof(routine));
                 Console.WriteLine("user routine title: " + routine.title);
@@ -694,7 +698,7 @@ namespace ProjectCaitlin
                 }
             }
 
-            foreach (goal goal in App.user.goals)
+            foreach (goal goal in App.User.goals)
             {
                 OnPropertyChanged(nameof(goal));
                 Console.WriteLine("user goal title: " + goal.title);

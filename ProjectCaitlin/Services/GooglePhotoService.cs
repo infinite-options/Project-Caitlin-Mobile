@@ -19,7 +19,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", App.user.access_token);
+            string bearerString = string.Format("Bearer {0}", App.User.access_token);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();

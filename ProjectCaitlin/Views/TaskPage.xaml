@@ -32,6 +32,7 @@
                             Grid.Column="1"
                             Text="{Binding TopLabel}"
                             FontSize="30"
+                            HorizontalTextAlignment="Center"
                             FontAttributes="Bold"     
                             TextColor= "Black"
                             HorizontalOptions="CenterAndExpand"

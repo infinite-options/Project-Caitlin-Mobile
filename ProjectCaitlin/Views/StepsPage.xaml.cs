@@ -32,12 +32,20 @@ namespace ProjectCaitlin.Views
             pageModel = new StepsPageViewModel(this, a, b, isRoutine);
             BindingContext = pageModel;
             itemcount = pageModel.count;
-            StepListView.HeightRequest = 50 * App.user.routines[a].tasks[b].steps.Count;
+            StepListView.HeightRequest = 50 * App.User.routines[a].tasks[b].steps.Count;
         }
 
         public async void close(object sender, EventArgs args)
         {
-            await Navigation.PushAsync(new TaskPage(a, isRoutine));
+            switch (App.ParentPage)
+            {
+                case "ListView":
+                    await Navigation.PushAsync(new ListViewPage());
+                    break;
+                default:
+                    await Navigation.PushAsync(new GoalsRoutinesTemplate());
+                    break;
+            }
         }
 
         public async void DoneClicked(object sender, EventArgs args)
@@ -46,7 +54,7 @@ namespace ProjectCaitlin.Views
 
             var completeTasksCounter = 0;
 
-            foreach (step step in App.user.routines[a].tasks[b].steps)
+            foreach (step step in App.User.routines[a].tasks[b].steps)
             {
                 if (step.isComplete)
                 {
@@ -54,18 +62,18 @@ namespace ProjectCaitlin.Views
                 }
             }
 
-            if (completeCounter == App.user.routines[a].tasks[b].steps.Count)
+            if (completeCounter == App.User.routines[a].tasks[b].steps.Count)
             {
-                var routineId = App.user.routines[a].id;
-                var taskId = App.user.routines[a].tasks[b].id;
+                var routineId = App.User.routines[a].id;
+                var taskId = App.User.routines[a].tasks[b].id;
 
                 var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
 
-                var okToCheckmark = await firestoreService.UpdateTask(routineId, taskId, App.user.routines[a].tasks[b].dbIdx.ToString());
+                var okToCheckmark = await firestoreService.UpdateTask(routineId, taskId, App.User.routines[a].tasks[b].dbIdx.ToString());
                 if (okToCheckmark)
                 {
-                    App.user.routines[a].tasks[b].isComplete = true;
-                    App.user.routines[a].tasks[b].dateTimeCompleted = DateTime.Now;
+                    App.User.routines[a].tasks[b].isComplete = true;
+                    App.User.routines[a].tasks[b].dateTimeCompleted = DateTime.Now;
                 }
 
                 await Navigation.PushAsync(new TaskPage(a, isRoutine));
@@ -75,7 +83,7 @@ namespace ProjectCaitlin.Views
                 await DisplayAlert("Oops!", "Please complete all steps before marking this task as done", "OK");
             }
 
-            foreach (task task in App.user.routines[a].tasks)
+            foreach (task task in App.User.routines[a].tasks)
             {
                 if (task.isComplete)
                 {
@@ -83,17 +91,17 @@ namespace ProjectCaitlin.Views
                 }
             }
 
-            if (completeTasksCounter == App.user.routines[a].tasks.Count)
+            if (completeTasksCounter == App.User.routines[a].tasks.Count)
             {
-                var routineId = App.user.routines[a].id;
+                var routineId = App.User.routines[a].id;
 
                 var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
 
-                var okToCheckmark = await firestoreService.CompleteRoutine(routineId, App.user.routines[a].dbIdx.ToString());
+                var okToCheckmark = await firestoreService.CompleteRoutine(routineId, App.User.routines[a].dbIdx.ToString());
                 if (okToCheckmark)
                 {
-                    App.user.routines[a].isComplete = true;
-                    App.user.routines[a].dateTimeCompleted = DateTime.Now;
+                    App.User.routines[a].isComplete = true;
+                    App.User.routines[a].dateTimeCompleted = DateTime.Now;
                 }
             }
         }

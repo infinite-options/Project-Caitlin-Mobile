@@ -31,7 +31,7 @@ namespace ProjectCaitlin
         {
             InitializeComponent();
             BindingContext = this;
-            user = App.user;
+            user = App.User;
             SetupUI();
             StartTimer();
             PrepSetUpcomingEvents();
@@ -307,7 +307,7 @@ namespace ProjectCaitlin
         {
             RefreshDatabaseButton.IsEnabled = false;
             await firestoreService.LoadUser();
-            user = App.user;
+            user = App.User;
             SetupUI();
             RefreshDatabaseButton.IsEnabled = true;
         }

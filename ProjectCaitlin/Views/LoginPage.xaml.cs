@@ -42,9 +42,9 @@ namespace ProjectCaitlin
 			PrintFirebaseUser();
 
 
-			if (App.user.old_refresh_token != App.user.refresh_token)
+			if (App.User.old_refresh_token != App.User.refresh_token)
             {
-                if(App.user.access_token != null)
+                if(App.User.access_token != null)
                 {
                     await Navigation.PushAsync(new GoalsRoutinesTemplate());
                 }
@@ -56,11 +56,11 @@ namespace ProjectCaitlin
 
         void PrintFirebaseUser()
         {
-			OnPropertyChanged(nameof(App.user));
-			Console.WriteLine("user first name: " + App.user.firstName);
-			Console.WriteLine("user last name: " + App.user.lastName);
+			OnPropertyChanged(nameof(App.User));
+			Console.WriteLine("user first name: " + App.User.firstName);
+			Console.WriteLine("user last name: " + App.User.lastName);
 
-            foreach (routine routine in App.user.routines)
+            foreach (routine routine in App.User.routines)
             {
 				OnPropertyChanged(nameof(routine));
 				Console.WriteLine("user routine title: " + routine.title);
@@ -78,7 +78,7 @@ namespace ProjectCaitlin
 				}
 			}
 
-			foreach (goal goal in App.user.goals)
+			foreach (goal goal in App.User.goals)
 			{
 				OnPropertyChanged(nameof(goal));
 				Console.WriteLine("user goal title: " + goal.title);

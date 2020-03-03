@@ -40,20 +40,20 @@ namespace ProjectCaitlin.ViewModel
 
             if (isRoutine)
             {
-                TopImage = App.user.routines[a].tasks[b].photo;
-                TopLabel = App.user.routines[a].tasks[b].title;
-                TaskName = App.user.routines[a].title;
+                TopImage = App.User.routines[a].tasks[b].photo;
+                TopLabel = App.User.routines[a].tasks[b].title;
+                TaskName = App.User.routines[a].title;
                 int stepIdx = 0;
                 int stepNum = 1;
 
-                Console.WriteLine("step count: " + App.user.routines[a].tasks[b].steps.Count);
+                Console.WriteLine("step count: " + App.User.routines[a].tasks[b].steps.Count);
 
-                foreach (step step in App.user.routines[a].tasks[b].steps)
+                foreach (step step in App.User.routines[a].tasks[b].steps)
                 {
                     string _checkmarkIcon;
                     Command<int> _completeStep;
 
-                    if (App.user.routines[a].tasks[b].steps[stepIdx].isComplete)
+                    if (App.User.routines[a].tasks[b].steps[stepIdx].isComplete)
                     {
                         _checkmarkIcon = "greencheckmarkicon.png";
                         _completeStep = new Command<int>((int _stepIdx) => { });
@@ -64,8 +64,8 @@ namespace ProjectCaitlin.ViewModel
                         _completeStep = new Command<int>(
                             async (int _stepIdx) =>
                             {
-                                var routineId = App.user.routines[a].id;
-                                var taskId = App.user.routines[a].tasks[b].id;
+                                var routineId = App.User.routines[a].id;
+                                var taskId = App.User.routines[a].tasks[b].id;
                                 var indexForCheckmark = _stepIdx;
                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, indexForCheckmark.ToString());
 
@@ -75,7 +75,7 @@ namespace ProjectCaitlin.ViewModel
 
                                 if (okToCheckmark)
                                 {
-                                    App.user.routines[a].tasks[b].steps[indexForCheckmark].isComplete = true;
+                                    App.User.routines[a].tasks[b].steps[indexForCheckmark].isComplete = true;
                                     Items[_stepIdx].CheckmarkIcon = "greencheckmarkicon.png";
                                 }
 
@@ -85,12 +85,12 @@ namespace ProjectCaitlin.ViewModel
 
                     Items.Add(new ListViewItemModel
                     (
-                        stepNum + ". " + App.user.routines[a].tasks[b].steps[stepIdx].title,
+                        stepNum + ". " + App.User.routines[a].tasks[b].steps[stepIdx].title,
                         _checkmarkIcon,
                         stepIdx,
                         _completeStep
                     ));
-                    
+
                     stepIdx++;
                     stepNum++;
                 }

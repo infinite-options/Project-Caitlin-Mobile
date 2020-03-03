@@ -75,7 +75,7 @@ namespace ProjectCaitlin.Services
             }
 
             var values = new Dictionary<string, string> {
-            { "refresh_token", App.user.refresh_token },
+            { "refresh_token", App.User.refresh_token },
             { "client_id", clientId },
             { "grant_type", "refresh_token"}
             };
@@ -92,16 +92,16 @@ namespace ProjectCaitlin.Services
 
             try
             {
-                App.user.access_token = jsonParsed["access_token"].ToString();
+                App.User.access_token = jsonParsed["access_token"].ToString();
             }
             catch (NullReferenceException e)
             {
-                App.user.old_refresh_token = App.user.refresh_token;
+                App.User.old_refresh_token = App.User.refresh_token;
                 await Application.Current.MainPage.DisplayAlert("Alert", "Please re-login to continue", "OK");
                 await Application.Current.MainPage.Navigation.PopToRootAsync();
             }
 
-            await SaveAccessTokenToFireBase(App.user.access_token);
+            await SaveAccessTokenToFireBase(App.User.access_token);
 
             Console.WriteLine(json);
 
@@ -122,7 +122,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", App.user.access_token);
+            string bearerString = string.Format("Bearer {0}", App.User.access_token);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
@@ -141,7 +141,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", App.user.access_token);
+            string bearerString = string.Format("Bearer {0}", App.User.access_token);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
@@ -231,7 +231,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", App.user.access_token);
+            string bearerString = string.Format("Bearer {0}", App.User.access_token);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
@@ -296,7 +296,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", App.user.access_token);
+            string bearerString = string.Format("Bearer {0}", App.User.access_token);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
@@ -397,7 +397,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", App.user.access_token);
+            string bearerString = string.Format("Bearer {0}", App.User.access_token);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();

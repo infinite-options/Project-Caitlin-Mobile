@@ -14,6 +14,7 @@ namespace ProjectCaitlin.Views
         {
             InitializeComponent();
             AddTapGestures();
+            App.ParentPage = "MyDay";
             pageModel = new GoalsRoutinesTemplateViewModel(this);
             BindingContext = pageModel;
         }

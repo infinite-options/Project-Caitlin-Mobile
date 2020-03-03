@@ -26,22 +26,22 @@ namespace ProjectCaitlin.ViewModel
         {
             this.mainPage = mainPage;
 
-            var goalId = App.user.goals[a].id;
-            var actionId = App.user.goals[a].actions[b].id;
+            var goalId = App.User.goals[a].id;
+            var actionId = App.User.goals[a].actions[b].id;
 
-            TopLabel = App.user.goals[a].title;
-            TopLabel2 = App.user.goals[a].actions[b].title;
+            TopLabel = App.User.goals[a].title;
+            TopLabel2 = App.User.goals[a].actions[b].title;
 
             int i = 0;
-            foreach (instruction instruction in App.user.goals[a].actions[b].instructions)
+            foreach (instruction instruction in App.User.goals[a].actions[b].instructions)
             {
                 Command completeStep;
                 completeStep = new Command(
                          async () =>
                          {
-                             var okToCheckmark = await firestoreService.UpdateStep(goalId, actionId, App.user.goals[a].actions[b].instructions[i].dbIdx.ToString());
+                             var okToCheckmark = await firestoreService.UpdateStep(goalId, actionId, App.User.goals[a].actions[b].instructions[i].dbIdx.ToString());
 
-                             if (okToCheckmark) { App.user.goals[a].actions[b].instructions[0].isComplete = true; }
+                             if (okToCheckmark) { App.User.goals[a].actions[b].instructions[0].isComplete = true; }
                              await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));
 
                          }
