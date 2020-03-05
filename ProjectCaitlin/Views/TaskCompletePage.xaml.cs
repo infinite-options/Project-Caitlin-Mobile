@@ -37,8 +37,9 @@ namespace ProjectCaitlin.Views
         }
         public async void nextpage(object sender, EventArgs args)
         {
-            if (next.Text == "Done")
+            if (NextButton.Text == "Done")
             {
+                NextButton.IsEnabled = false;
                 var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
 
                 var completeActionCounter = 0;
@@ -74,31 +75,24 @@ namespace ProjectCaitlin.Views
                 await Navigation.PopAsync();
             }
 
-            else if (next.Text == "Start")
+            else if (NextButton.Text == "Start")
             {
-                CarouselTasks.Position = 1;
-                next.Text = "Next";
+                CarouselTasks.Position = 0;
+                NextButton.Text = "Next";
             }
             else if (CarouselTasks.Position != App.User.goals[a].actions[b].instructions.Count - 1)
             {
-                CarouselTasks.Position = CarouselTasks.Position + 1;
+
+                CarouselTasks.Position += 1;
                 Console.WriteLine("You are in page " + CarouselTasks.Position);
 
             }
             else if (CarouselTasks.Position == App.User.goals[a].actions[b].instructions.Count - 1)
             {
-                next.Text = "Done";
+                NextButton.Text = "Done";
             }
-           
+        }
 
-        }
-        public async void prepage(object sender, EventArgs args)
-        {
-            if (CarouselTasks.Position != 0)
-            {
-                CarouselTasks.Position = CarouselTasks.Position - 1;
-            }
-        }
         public async void close(object sender, EventArgs args)
         {
             Navigation.PopAsync();

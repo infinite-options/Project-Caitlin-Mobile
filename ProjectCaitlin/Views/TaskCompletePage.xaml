@@ -90,7 +90,7 @@
                         </Grid.ColumnDefinitions>
                         <!--<ImageButton Grid.Column="0" Source="waveformiconwhite.png" BackgroundColor="Transparent" HeightRequest="50" HorizontalOptions="Start" VerticalOptions="Center" />-->
                         <Frame  Grid.Column="1" HasShadow="False" CornerRadius="20" Padding="0" HeightRequest="40" HorizontalOptions="Center" >
-                            <Button x:Name="next" CornerRadius="20" Grid.Column="1" Text="Start" FontSize="16" WidthRequest="90" BackgroundColor="LightGray" TextColor="Black" Clicked="nextpage"/>
+                            <Button x:Name="NextButton" CornerRadius="20" Grid.Column="1" Text="Start" FontSize="16" WidthRequest="90" BackgroundColor="LightGray" TextColor="Black" Clicked="nextpage"/>
                         </Frame>
                     </Grid>
                 </StackLayout>

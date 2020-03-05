@@ -60,6 +60,8 @@ namespace ProjectCaitlin.Views
 
         public async void DoneClicked(object sender, EventArgs args)
         {
+            DoneButton.IsEnabled = false;
+
             var completeCounter = 0;
 
             var completeTasksCounter = 0;
@@ -74,6 +76,7 @@ namespace ProjectCaitlin.Views
 
             if (completeCounter == App.User.routines[a].tasks[b].steps.Count)
             {
+                DoneButton.IsEnabled = false;
                 var routineId = App.User.routines[a].id;
                 var taskId = App.User.routines[a].tasks[b].id;
 
@@ -91,6 +94,7 @@ namespace ProjectCaitlin.Views
             }
             else
             {
+                DoneButton.IsEnabled = true;
                 await DisplayAlert("Oops!", "Please complete all steps before marking this task as done", "OK");
             }
 

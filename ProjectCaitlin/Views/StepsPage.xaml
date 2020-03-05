@@ -121,7 +121,9 @@
                     </ListView>
                     </ContentView>
 
-                    <Button Text="I Am Done"
+                    <Button
+                        x:Name="DoneButton"
+                        Text="I Am Done"
                               Clicked="DoneClicked"
                               HorizontalOptions="Center"
                               BackgroundColor="#272E32"
