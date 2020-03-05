@@ -20,7 +20,7 @@
                     <!-- BACK ARROW-->
            
                     <ImageButton 
-                        Source="arrowicon.png"
+                        Source="arrowiconwhite.png"
                         BackgroundColor="Transparent"
                         HeightRequest="25"
                         WidthRequest="25"
@@ -39,7 +39,7 @@
 
                     <!-- EXIT BUTTON-->
                     <ImageButton
-                        Source="exiticon.png"
+                        Source="exiticonwhite.png"
                         BackgroundColor="Transparent"
                         HeightRequest="25"
                         WidthRequest="25"

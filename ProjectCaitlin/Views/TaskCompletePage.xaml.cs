@@ -50,6 +50,7 @@ namespace ProjectCaitlin.Views
                 {
                     App.User.goals[a].actions[b].isComplete = true;
                     App.User.goals[a].actions[b].dateTimeCompleted = DateTime.Now;
+                    TaskPage.pageModel.Items[b].IsComplete = true;
                 }
 
                 foreach (action action in App.User.goals[a].actions)
@@ -70,12 +71,12 @@ namespace ProjectCaitlin.Views
                     }
                 }
 
-                await Navigation.PushAsync(new TaskPage(a, isRoutine));
+                await Navigation.PopAsync();
             }
 
             else if (next.Text == "Start")
             {
-                CarouselTasks.Position = 0;
+                CarouselTasks.Position = 1;
                 next.Text = "Next";
             }
             else if (CarouselTasks.Position != App.User.goals[a].actions[b].instructions.Count - 1)

@@ -7,6 +7,8 @@ using System;
 using System.ComponentModel;
 using System.Windows.Input;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+
 namespace ProjectCaitlin.ViewModel
 {
     public class TaskGridViewModel : BindableObject
@@ -19,18 +21,19 @@ namespace ProjectCaitlin.ViewModel
         public string TopLabel { get; set; }
         public Color BackgroundColor { get; set; }
         public Color TitleTextColor { get; set; }
+        public string BackImage { get; set; }
         public Color SoundButton { get; set; }
 
         public ICommand NavigateCommand { private set; get; }
 
         List<bool> complete;
 
-        private ObservableCollection<object> _items;
+        public ObservableCollection<TaskItemModel> Items { get; set; }
 
         public TaskGridViewModel(TaskPage mainPage, int a, bool isRoutine)
         {
             this.mainPage = mainPage;
-            _items = new ObservableCollection<object>();
+            Items = new ObservableCollection<TaskItemModel>();
 
             if (isRoutine)
             {
@@ -38,26 +41,27 @@ namespace ProjectCaitlin.ViewModel
                 TopLabel = App.User.routines[a].title;
                 BackgroundColor = Color.WhiteSmoke;
                 TitleTextColor = Color.FromHex("#272E32");
+                BackImage = "arrowicon.png";
 
                 //if(App.user.routines[a].audio != "") SoundButton = "waveicon.png";
 
                 int taskIdx = 0;
                 foreach (task task in App.User.routines[a].tasks)
                 {
-                    _items.Add(new
-                    {
-                        Source = App.User.routines[a].tasks[taskIdx].photo,
-                        Text = App.User.routines[a].tasks[taskIdx].title,
-                        TextColor = Color.FromHex("#272E32"),
+                    Items.Add( new TaskItemModel(
+                    
+                        App.User.routines[a].tasks[taskIdx].photo,
+                        App.User.routines[a].tasks[taskIdx].title,
+                        Color.FromHex("#272E32"),
 
-                        isComplete = App.User.routines[a].tasks[taskIdx].isComplete,
-                        Navigate = new Command<int>(
+                        App.User.routines[a].tasks[taskIdx].isComplete,
+                        new Command<int>(
                             async (int _taskIdx) =>
                             {
                                 await mainPage.Navigation.PushAsync(new StepsPage(a, _taskIdx, isRoutine));
                             }),
-                        NavigateIdx = taskIdx,
-                    }) ;
+                        taskIdx
+                    ));
                     taskIdx++;
                 }
             }
@@ -67,44 +71,109 @@ namespace ProjectCaitlin.ViewModel
                 TopLabel = App.User.goals[a].title;
                 BackgroundColor = Color.FromHex("#272E32");
                 TitleTextColor = Color.WhiteSmoke;
+                BackImage = "arrowiconwhite.png";
 
                 int taskIdx = 0;
                 foreach (action action in App.User.goals[a].actions)
                 {
-                    _items.Add(new
-                    {
-                        Source = App.User.goals[a].actions[taskIdx].photo,
-                        Text = App.User.goals[a].actions[taskIdx].title,
-                        TextColor = Color.WhiteSmoke,
+                    Items.Add(new TaskItemModel(
 
-                        isComplete = App.User.goals[a].actions[taskIdx].isComplete,
-                        Navigate = new Command<int>(
+                        App.User.goals[a].actions[taskIdx].photo,
+                        App.User.goals[a].actions[taskIdx].title,
+                        Color.WhiteSmoke,
+
+                        App.User.goals[a].actions[taskIdx].isComplete,
+                        new Command<int>(
                             async (int _taskIdx) =>
                             {
                                 await mainPage.Navigation.PushAsync(new TaskCompletePage(a, _taskIdx, isRoutine));
                             }),
-                        NavigateIdx = taskIdx,
-                    });
+                       taskIdx
+                    ));
                     taskIdx++;
                 }
             }
         }
+    }
 
+    public class TaskItemModel : INotifyPropertyChanged
+    {
 
-        public ObservableCollection<object> Items
+        private string source;
+        public string Source
         {
-            get
-            {
-                return _items;
-            }
+            get => source;
+        }
+
+        private string text;
+        public string Text
+        {
+            get => text;
+        }
+
+        private Color textColor;
+        public Color TextColor
+        {
+            get => textColor;
+        }
+
+        private bool isComplete;
+        public bool IsComplete
+        {
+            get => isComplete;
             set
             {
-                if (_items != value)
+                if (isComplete != value)
                 {
-                    _items = value;
-                    OnPropertyChanged(nameof(Items));
+                    isComplete = value;
+                    OnPropertyChanged(nameof(IsComplete));
                 }
             }
+        }
+
+        private Command<int> navigate;
+        public Command<int> Navigate
+        {
+            get => navigate;
+            set
+            {
+                if (navigate != value)
+                {
+                    navigate = value;
+                    OnPropertyChanged(nameof(Navigate));
+                }
+            }
+        }
+
+        private int navigateIdx;
+        public int NavigateIdx
+        {
+            get => navigateIdx;
+            set
+            {
+                if (navigateIdx != value)
+                {
+                    navigateIdx = value;
+                    OnPropertyChanged(nameof(NavigateIdx));
+                }
+            }
+        }
+
+        public TaskItemModel(string _source, string _text, Color _textColor, bool _isComplete, Command<int> _navigate, int _navigateIdx)
+        {
+            source = _source;
+            text = _text;
+            textColor = _textColor;
+            isComplete = _isComplete;
+            navigate = _navigate;
+            navigateIdx = _navigateIdx;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
     }
 }

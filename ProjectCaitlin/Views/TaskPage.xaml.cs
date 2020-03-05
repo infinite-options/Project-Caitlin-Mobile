@@ -15,7 +15,7 @@ namespace ProjectCaitlin.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TaskPage : ContentPage
     {
-        readonly TaskGridViewModel pageModel;
+        public static TaskGridViewModel pageModel;
 
         public TaskPage(int routineNum, bool isRoutine)
         {
@@ -26,7 +26,10 @@ namespace ProjectCaitlin.Views
         }
         public async void close(object sender, EventArgs args)
         {
-            await Navigation.PopAsync();
+            if (App.ParentPage == "ListView")
+                await Navigation.PushAsync(new ListViewPage());
+            else
+                await Navigation.PopAsync();
         }
     }
 

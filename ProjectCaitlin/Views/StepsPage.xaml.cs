@@ -32,7 +32,19 @@ namespace ProjectCaitlin.Views
             pageModel = new StepsPageViewModel(this, a, b, isRoutine);
             BindingContext = pageModel;
             itemcount = pageModel.count;
-            StepListView.HeightRequest = 50 * App.User.routines[a].tasks[b].steps.Count;
+            StepListView.HeightRequest = GetListViewHeight();
+        }
+
+        private double GetListViewHeight()
+        {
+            double result = 0;
+            foreach (step step in App.User.routines[a].tasks[b].steps)
+            {
+                result += 50 + (10 * step.title.Length / 40);
+
+            }
+
+            return result;
         }
 
         public async void close(object sender, EventArgs args)
@@ -72,9 +84,10 @@ namespace ProjectCaitlin.Views
                 {
                     App.User.routines[a].tasks[b].isComplete = true;
                     App.User.routines[a].tasks[b].dateTimeCompleted = DateTime.Now;
+                    TaskPage.pageModel.Items[b].IsComplete = true;
                 }
 
-                await Navigation.PushAsync(new TaskPage(a, isRoutine));
+                await Navigation.PopAsync();
             }
             else
             {

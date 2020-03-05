@@ -12,13 +12,12 @@ using FFImageLoading.Work;
 using ProjectCaitlin.Views;
 using ProjectCaitlin.Methods;
 using System.Threading;
+using System.ComponentModel;
 
 namespace ProjectCaitlin
 {
     public partial class ListViewPage : ContentPage
     {
-        private static List<string> eventNameList;
-
         List<StackLayout> EventAndRoutineStackLayouts = new List<StackLayout>();
         List<StackLayout> GoalsStackLayouts = new List<StackLayout>();
         
@@ -60,6 +59,12 @@ namespace ProjectCaitlin
             firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
 
             StartTimer();
+        }
+
+        protected override void OnAppearing()
+        {
+            base.OnAppearing();
+            mainScrollView.ScrollToAsync(0, App.ListPageScrollPosY, true);
         }
 
         void SetupUI()
@@ -241,6 +246,7 @@ namespace ProjectCaitlin
 
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += async (s, e) => {
+                App.ListPageScrollPosY = mainScrollView.ScrollY;
                 await Navigation.PushAsync(new TaskPage(routineIdx, true));
             };
             frame.GestureRecognizers.Add(tapGestureRecognizer);
@@ -396,6 +402,7 @@ namespace ProjectCaitlin
 
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += async (s, e) => {
+                App.ListPageScrollPosY = mainScrollView.ScrollY;
                 await Navigation.PushAsync(new TaskPage(goalIdx, false));
             };
             goalStackLayout.GestureRecognizers.Add(tapGestureRecognizer);

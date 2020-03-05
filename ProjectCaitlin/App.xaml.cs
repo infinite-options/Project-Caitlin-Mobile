@@ -14,6 +14,8 @@ namespace ProjectCaitlin
 
         public static string ParentPage { get; set; } = "";
 
+        public static double ListPageScrollPosY { get; set; } = -20;
+
         [assembly: XamlCompilation(XamlCompilationsOptions.Compile)]
         public App()
         {
