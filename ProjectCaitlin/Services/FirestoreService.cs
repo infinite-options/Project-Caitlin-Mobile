@@ -100,8 +100,7 @@ namespace ProjectCaitlin.Methods
                                     title = jsonMapGorR["title"]["stringValue"].ToString(),
                                     id = jsonMapGorR["id"]["stringValue"].ToString(),
                                     photo = jsonMapGorR["photo"]["stringValue"].ToString(),
-                                    isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"]
-                                        && IsDateToday(jsonMapGorR["datetime_completed"]["stringValue"].ToString()),
+                                    isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"],
                                     dbIdx = dbIdx_,
                                     dateTimeCompleted = DateTime.Parse(jsonMapGorR["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
                                     availableStartTime = DateTime.ParseExact(jsonMapGorR["available_start_time"]["stringValue"].ToString(),

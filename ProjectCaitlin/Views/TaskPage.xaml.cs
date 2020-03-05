@@ -26,16 +26,7 @@ namespace ProjectCaitlin.Views
         }
         public async void close(object sender, EventArgs args)
         {
-            switch (App.ParentPage)
-            {
-                case "ListView":
-                    await Navigation.PushAsync(new ListViewPage());
-                    break;
-                default:
-                    await Navigation.PushAsync(new GoalsRoutinesTemplate());
-                    break;
-
-            }
+            await Navigation.PopAsync();
         }
     }
 

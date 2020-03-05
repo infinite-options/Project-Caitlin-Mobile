@@ -21,14 +21,7 @@ namespace ProjectCaitlin
 
         List<StackLayout> EventAndRoutineStackLayouts = new List<StackLayout>();
         List<StackLayout> GoalsStackLayouts = new List<StackLayout>();
-        public int oldDate;
-
-        public int publicYear;
-        public int publicMonth;
-        public int publicDay;
-        public int uTCHour;
-        public int currentLocalUTCMinute;
-
+        
         TimeSpan morningStart = new TimeSpan(6, 0, 0);
         TimeSpan morningEnd = new TimeSpan(11, 0, 0);
         TimeSpan afternoonStart = new TimeSpan(11, 0, 0);
@@ -37,8 +30,6 @@ namespace ProjectCaitlin
         TimeSpan eveningEnd = new TimeSpan(23, 59, 59);
         TimeSpan nightStart = new TimeSpan(0, 0, 0);
         TimeSpan nightEnd = new TimeSpan(6, 0, 0);
-
-        List<EventsItems> eventsList = new List<EventsItems>();
 
         DateTime dateTimeNow;
 
@@ -53,12 +44,12 @@ namespace ProjectCaitlin
         {
             InitializeComponent();
             App.ParentPage = "ListView";
+            putLayoutsIntoLists();
+            user = App.User;
+            SetupUI();
 
             AddTapGestures();
 
-            user = App.User;
-
-            putLayoutsIntoLists();
 
             dateTimeNow = DateTime.Now;
             //dateTimeNow = new DateTime(2020, 2, 19, 10, 0, 0);
@@ -71,19 +62,12 @@ namespace ProjectCaitlin
             StartTimer();
         }
 
-        protected override async void OnAppearing()
-        {
-            await SetupUIAsync();
-        }
-
-        async Task SetupUIAsync()
+        void SetupUI()
         {
             DayOfWeekLabel.Text = dateTimeNow.DayOfWeek.ToString();
 
             //dateTimeNow = DateTime.Now;
             //HidePreviousTimeOfDayElements(dateTimeNow.TimeOfDay);
-
-            await EventsLoad();
 
             try
             {
@@ -100,7 +84,8 @@ namespace ProjectCaitlin
         public async Task RefreshPage()
         {
             await firestoreService.LoadUser();
-            await SetupUIAsync();
+            await LoginPage.EventsLoad();
+            SetupUI();
             PrintFirebaseUser();
 
         }
@@ -158,13 +143,13 @@ namespace ProjectCaitlin
             Console.WriteLine("eventIdx: " + eventIdx);
             Console.WriteLine("routineIdx: " + routineIdx);
 
-            Console.WriteLine("eventcount: " + eventsList.Count);
+            Console.WriteLine("eventcount: " + user.CalendarEvents.Count);
             Console.WriteLine("routinecount: " + user.routines.Count);
 
-            if (eventsList.Count == eventIdx && user.routines.Count == routineIdx)
+            if (user.CalendarEvents.Count == eventIdx && user.routines.Count == routineIdx)
                 return;
 
-            if (eventsList.Count == eventIdx)
+            if (user.CalendarEvents.Count == eventIdx)
             {
                 PopulateRoutine(user.routines[routineIdx], routineIdx, GetFirstInTimeOfDay("routine", user.routines[routineIdx].availableStartTime.TimeOfDay));
                 PopulateEventsAndRoutines(eventIdx, ++routineIdx);
@@ -172,12 +157,12 @@ namespace ProjectCaitlin
             }
             if (user.routines.Count == routineIdx)
             {
-                PopulateEvent(eventsList[eventIdx], GetFirstInTimeOfDay("routine", eventsList[eventIdx].Start.DateTime.DateTime.TimeOfDay));
+                PopulateEvent(user.CalendarEvents[eventIdx], GetFirstInTimeOfDay("routine", user.CalendarEvents[eventIdx].Start.DateTime.DateTime.TimeOfDay));
                 PopulateEventsAndRoutines(++eventIdx, routineIdx);
                 return;
             }
 
-            if (user.routines[routineIdx].availableStartTime.TimeOfDay < eventsList[eventIdx].Start.DateTime.TimeOfDay)
+            if (user.routines[routineIdx].availableStartTime.TimeOfDay < user.CalendarEvents[eventIdx].Start.DateTime.TimeOfDay)
             {
                 PopulateRoutine(user.routines[routineIdx], routineIdx, GetFirstInTimeOfDay("routine", user.routines[routineIdx].availableStartTime.TimeOfDay));
                 PopulateEventsAndRoutines(eventIdx, ++routineIdx);
@@ -185,7 +170,7 @@ namespace ProjectCaitlin
             }
             else
             {
-                PopulateEvent(eventsList[eventIdx], GetFirstInTimeOfDay("routine", eventsList[eventIdx].Start.DateTime.DateTime.TimeOfDay));
+                PopulateEvent(user.CalendarEvents[eventIdx], GetFirstInTimeOfDay("routine", user.CalendarEvents[eventIdx].Start.DateTime.DateTime.TimeOfDay));
                 PopulateEventsAndRoutines(++eventIdx, routineIdx);
                 return;
             }
@@ -439,60 +424,6 @@ namespace ProjectCaitlin
             GoalsStackLayouts.Add(AfternoonGoalsStackLayout);
             GoalsStackLayouts.Add(EveningGoalsStackLayout);
             GoalsStackLayouts.Add(NightGoalsStackLayout);
-        }
-
-        public async Task EventsLoad()
-        {
-            // empty current events
-            eventsList = new List<EventsItems>();
-
-            //Call Google API
-            var googleService = new GoogleService();
-
-            publicYear = dateTimeNow.Year;
-            publicMonth = dateTimeNow.Month;
-            publicDay = dateTimeNow.Day;
-
-            string timeZoneOffset = DateTimeOffset.Now.ToString();
-            string[] timeZoneOffsetParsed = timeZoneOffset.Split('-');
-            int timeZoneNum = Int32.Parse(timeZoneOffsetParsed[1].Substring(0, 2));
-
-            DateTime currentTimeinUTC = DateTime.Now.ToUniversalTime();
-            uTCHour = (currentTimeinUTC.Hour - timeZoneNum);
-            currentLocalUTCMinute = currentTimeinUTC.Minute;
-
-
-            var jsonResult = await googleService.GetAllTodaysEventsList(publicYear, publicMonth, publicDay, timeZoneNum);
-            //var jsonResult = await googleService.GetEventsList();
-
-            Console.WriteLine("jsonResult event: " + jsonResult);
-
-            //Return error if result is empty
-            if (jsonResult == null)
-            {
-                await DisplayAlert("Oops!", "There was an error listing your events", "OK");
-            }
-
-            //Parse the json using EventsList Method
-
-            try
-            {
-
-                var parsedResult = JsonConvert.DeserializeObject<Methods.GetEventsListMethod>(jsonResult);
-
-                //Separate out just the EventName
-                foreach (var events in parsedResult.Items)
-                {
-                    eventsList.Add(events);
-                    Console.WriteLine(events.EventName.ToString());
-                }
-            }
-            catch (ArgumentNullException e)
-            {
-                //LoginPage.accessToken = LoginPage.refreshToken;
-                //await Navigation.PopAsync();
-                //Console.WriteLine(LoginPage.accessToken);
-            }
         }
 
         private StackLayout GetFirstInTimeOfDay(string GorR, TimeSpan startTime)

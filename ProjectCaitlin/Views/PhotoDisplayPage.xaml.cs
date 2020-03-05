@@ -79,7 +79,7 @@ namespace ProjectCaitlin
 
             photoScrollView.HeightRequest = Application.Current.MainPage.Height - NavBar.Height;
    
-            if (photoURIs.Count != 0)
+            if (photoURIs != null && photoURIs.Count != 0)
             {
                 photoScrollView.Content = controlGrid;
             }
