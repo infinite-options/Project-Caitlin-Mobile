@@ -41,6 +41,7 @@ namespace ProjectCaitlin
             await firestoreService.LoadUser();
 			PrintFirebaseUser();
 
+            await Task.Delay(3000);
 
 			if (App.user.old_refresh_token != App.user.refresh_token)
             {
