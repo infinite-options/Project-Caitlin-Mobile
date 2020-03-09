@@ -45,16 +45,16 @@ namespace ProjectCaitlin
             App.ParentPage = "ListView";
             putLayoutsIntoLists();
             user = App.User;
-            SetupUI();
-
-            AddTapGestures();
-
 
             dateTimeNow = DateTime.Now;
             //dateTimeNow = new DateTime(2020, 2, 19, 10, 0, 0);
 
             labelFont = Device.RuntimePlatform == Device.iOS ? "Lobster-Regular" :
                 Device.RuntimePlatform == Device.Android ? "Lobster-Regular.ttf#Lobster-Regular" : "Assets/Fonts/Lobster-Regular.ttf#Lobster";
+
+            SetupUI();
+
+            AddTapGestures();
 
             firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
 
