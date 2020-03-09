@@ -96,8 +96,7 @@ namespace ProjectCaitlin.Services
             }
             catch (NullReferenceException e)
             {
-                App.User.old_refresh_token = App.User.refresh_token;
-                await Application.Current.MainPage.DisplayAlert("Alert", "Please re-login to continue", "OK");
+                App.user.old_refresh_token = App.user.refresh_token;
                 await Application.Current.MainPage.Navigation.PopToRootAsync();
             }
 

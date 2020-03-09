@@ -42,17 +42,18 @@ namespace ProjectCaitlin
 			await EventsLoad();
 			PrintFirebaseUser();
 
-
-			if (App.User.old_refresh_token != App.User.refresh_token)
+			if (App.user.old_refresh_token != App.user.refresh_token)
             {
                 if(App.User.access_token != null)
                 {
                     await Navigation.PushAsync(new GoalsRoutinesTemplate());
                 }
             }
-
-            loginButton.IsVisible = true;
-
+            else
+            {
+                await Application.Current.MainPage.DisplayAlert("Alert", "Please re-login to continue", "OK");
+                loginButton.IsVisible = true;
+            }
         }
 
         void PrintFirebaseUser()
@@ -180,10 +181,6 @@ namespace ProjectCaitlin
                 //Display Successful Login Alert
 				//await DisplayAlert("Login Successful", "", "OK");
 
-                //Reset accessToken
-                accessToken = e.Account.Properties["access_token"];
-                refreshToken = e.Account.Properties["refresh_token"];
-
                 //Write the Toekn to console, in case it changes
                 Console.WriteLine("HERE is the TOKEN------------------------------------------------");
                 Console.WriteLine(e.Account.Properties["access_token"]);
@@ -191,13 +188,17 @@ namespace ProjectCaitlin
                 Console.WriteLine(e.Account.Properties["refresh_token"]);
                 Console.WriteLine("----------------------------------------------------------------");
 
+                //Reset accessToken
+                accessToken = e.Account.Properties["access_token"];
+                refreshToken = e.Account.Properties["refresh_token"];
+
                 //Save to App.User AND Update Firebase with pertitnent info
                 var googleService = new GoogleService();
                 await googleService.SaveAccessTokenToFireBase(accessToken);
                 await googleService.SaveRefreshTokenToFireBase(refreshToken);
 
                 //Navigate to the Daily Page after Login
-                await Navigation.PushAsync(new ListViewPage());
+                await Navigation.PushAsync(new GoalsRoutinesTemplate());
 			}
 		}
 
