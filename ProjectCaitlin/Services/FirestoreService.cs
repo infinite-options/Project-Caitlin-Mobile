@@ -55,8 +55,17 @@ namespace ProjectCaitlin.Methods
                 App.User.firstName = userJson["fields"]["first_name"]["stringValue"].ToString();
                 App.User.lastName = userJson["fields"]["last_name"]["stringValue"].ToString();
 
-                App.User.access_token = userJson["fields"]["google_auth_token"]["stringValue"].ToString();
-                App.User.refresh_token = userJson["fields"]["google_refresh_token"]["stringValue"].ToString();
+                try
+                {
+                    App.User.access_token = userJson["fields"]["google_auth_token"]["stringValue"].ToString();
+                    App.User.refresh_token = userJson["fields"]["google_refresh_token"]["stringValue"].ToString();
+                }
+                catch
+                {
+                    Console.WriteLine("Error with access and refresh tokens:");
+                    Console.WriteLine(userJson);
+                    return;
+                }
 
                 int dbIdx_ = 0;
                 foreach (JToken jsonGorR in userJsonGoalsAndRoutines)
