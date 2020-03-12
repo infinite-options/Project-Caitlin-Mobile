@@ -1001,7 +1001,8 @@ namespace ProjectCaitlin.ViewModel
 
             if (time >= 6 && time < 12) { TimeLabel = "Good Morning"; DayImage = "sunrisemid.png"; }
             else if (time >= 12 && time < 18) { TimeLabel = "Good Afternoon"; DayImage = "fullsun.png"; }
-            else { TimeLabel = "Good Evening"; DayImage = "moon.png"; }
+            else if (time >= 18 && time <= 23) { TimeLabel = "Good Evening"; DayImage = "sunriselow.png"; }
+            else { TimeLabel = "Good Night"; DayImage = "moon.png"; }
         }
         public bool IsAutoAnimationRunning { get; set; }
 
