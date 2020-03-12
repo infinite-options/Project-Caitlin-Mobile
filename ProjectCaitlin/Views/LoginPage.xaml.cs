@@ -51,7 +51,7 @@ namespace ProjectCaitlin
             }
             else
             {
-                await Application.Current.MainPage.DisplayAlert("Alert", "Please re-login to continue", "OK");
+                // await Application.Current.MainPage.DisplayAlert("Alert", "Please re-login to continue", "OK");
                 loginButton.IsVisible = true;
             }
         }
@@ -198,7 +198,7 @@ namespace ProjectCaitlin
                 await googleService.SaveRefreshTokenToFireBase(refreshToken);
 
                 //Navigate to the Daily Page after Login
-                await Navigation.PushAsync(new GoalsRoutinesTemplate());
+                await Navigation.PushAsync(new LoginPage());
 			}
 		}
 
