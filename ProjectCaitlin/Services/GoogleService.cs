@@ -96,7 +96,7 @@ namespace ProjectCaitlin.Services
             }
             catch (NullReferenceException e)
             {
-                App.user.old_refresh_token = App.user.refresh_token;
+                App.User.old_refresh_token = App.User.refresh_token;
                 await Application.Current.MainPage.Navigation.PopToRootAsync();
             }
 
@@ -405,6 +405,59 @@ namespace ProjectCaitlin.Services
             var json = await content.ReadAsStringAsync();
             return (json);
 
+        }
+
+        public static async Task LoadTodaysEvents()
+        {
+            App.User.CalendarEvents.Clear();
+
+            //Call Google API
+            var googleService = new GoogleService();
+
+            int publicYear = DateTime.Now.Year;
+            int publicMonth = DateTime.Now.Month;
+            int publicDay = DateTime.Now.Day;
+
+            string timeZoneOffset = DateTimeOffset.Now.ToString();
+            string[] timeZoneOffsetParsed = timeZoneOffset.Split('-');
+            int timeZoneNum = Int32.Parse(timeZoneOffsetParsed[1].Substring(0, 2));
+
+            DateTime currentTimeinUTC = DateTime.Now.ToUniversalTime();
+            int uTCHour = (currentTimeinUTC.Hour - timeZoneNum);
+            int currentLocalUTCMinute = currentTimeinUTC.Minute;
+
+
+            var jsonResult = await googleService.GetAllTodaysEventsList(publicYear, publicMonth, publicDay, timeZoneNum);
+            //var jsonResult = await googleService.GetEventsList();
+
+            Console.WriteLine("jsonResult event: " + jsonResult);
+
+            //Return error if result is empty
+            if (jsonResult == null)
+            {
+                return;
+            }
+
+            //Parse the json using EventsList Method
+
+            try
+            {
+
+                var parsedResult = JsonConvert.DeserializeObject<Methods.GetEventsListMethod>(jsonResult);
+
+                //Separate out just the EventName
+                foreach (EventsItems events in parsedResult.Items)
+                {
+                    App.User.CalendarEvents.Add(events);
+                    Console.WriteLine(events.EventName.ToString());
+                }
+            }
+            catch (ArgumentNullException e)
+            {
+                //LoginPage.accessToken = LoginPage.refreshToken;
+                //await Navigation.PopAsync();
+                //Console.WriteLine(LoginPage.accessToken);
+            }
         }
     }
 }

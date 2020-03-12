@@ -89,7 +89,7 @@ namespace ProjectCaitlin
         public async Task RefreshPage()
         {
             await firestoreService.LoadUser();
-            await LoginPage.EventsLoad();
+            await GoogleService.LoadTodaysEvents();
             SetupUI();
             PrintFirebaseUser();
 
