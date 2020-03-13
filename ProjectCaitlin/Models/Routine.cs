@@ -26,6 +26,6 @@ namespace ProjectCaitlin.Models
 
 		public List<task> tasks { get; set; } = new List<task>();
 
-		public event PropertyChangedEventHandler PropertyChanged;
-	}
+        public event PropertyChangedEventHandler PropertyChanged;
+    }
 }

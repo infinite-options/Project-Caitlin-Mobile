@@ -8,10 +8,11 @@
              NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#E9E8E8">
-    <StackLayout>
+    <StackLayout
+        VerticalOptions="EndAndExpand">
 
         <ScrollView
-            VerticalOptions="Start">
+            x:Name="mainScrollView">
 
             <StackLayout
                 x:Name="MainStackLayout"
@@ -19,7 +20,7 @@
 
                 <StackLayout
                 Orientation="Horizontal">
-             
+
                     <Label
                         x:Name="DayOfWeekLabel"
                         Text=""
@@ -46,7 +47,7 @@
                     x:Name="MorningREStackLayout"
                     Padding="0,30,0,0">
 
-                     <!--Morning Label--> 
+                    <!--Morning Label-->
                     <StackLayout
                         Orientation="Horizontal">
 
@@ -70,7 +71,7 @@
 
                     </StackLayout>
 
-                     <!-- Start Goals/Routines/Events -->
+                    <!-- Start Goals/Routines/Events -->
 
                 </StackLayout>
 
@@ -104,7 +105,7 @@
                             Orientation="Horizontal">
 
                             <!--Start Morning Goals-->
-                
+
                         </StackLayout>
 
                     </ScrollView>
@@ -115,7 +116,7 @@
                     x:Name="AfternoonREStackLayout"
                     Padding="0,30,0,0">
 
-                <!-- Afternoon Label -->
+                    <!-- Afternoon Label -->
                     <StackLayout
                         Orientation="Horizontal">
 
@@ -163,12 +164,12 @@
                             HorizontalOptions="Start"
                             Padding="0,15,0,0">
 
-                            <StackLayout
+                        <StackLayout
                                 x:Name="AfternoonGoalsStackLayout"
                                 Orientation="Horizontal">
 
-                                <!-- Start Afternoon Goals -->
-                            </StackLayout>
+                            <!-- Start Afternoon Goals -->
+                        </StackLayout>
                     </ScrollView>
 
                 </StackLayout>
@@ -177,7 +178,7 @@
                     x:Name="EveningREStackLayout"
                     Padding="0,30,0,0">
 
-                <!-- Afternoon Label -->
+                    <!-- Afternoon Label -->
                     <StackLayout
                         Orientation="Horizontal">
 
@@ -227,12 +228,12 @@
                             HorizontalOptions="Start"
                             Padding="0,15,0,0">
 
-                            <StackLayout
+                        <StackLayout
                                 x:Name="EveningGoalsStackLayout"
                                 Orientation="Horizontal">
 
-                                <!-- Start Evening Goals -->
-                            </StackLayout>
+                            <!-- Start Evening Goals -->
+                        </StackLayout>
                     </ScrollView>
 
                 </StackLayout>
@@ -241,7 +242,7 @@
                     x:Name="NightREStackLayout"
                     Padding="0,30,0,0">
 
-                 <!--Afternoon Label--> 
+                    <!--Afternoon Label-->
                     <StackLayout
                         Orientation="Horizontal">
 
@@ -291,12 +292,12 @@
                             HorizontalOptions="Start"
                             Padding="0,15,0,0">
 
-                            <StackLayout
+                        <StackLayout
                                 x:Name="NightGoalsStackLayout"
                                 Orientation="Horizontal">
 
-                                <!-- Start Night Goals -->
-                            </StackLayout>
+                            <!-- Start Night Goals -->
+                        </StackLayout>
                     </ScrollView>
 
                 </StackLayout>
@@ -320,7 +321,6 @@
                         x:Name="HWYDButtons"
                         Padding="0,30,0,0"
                         Orientation="Horizontal">
-                
 
                     </StackLayout>
 
@@ -329,71 +329,77 @@
             </StackLayout>
 
         </ScrollView>
-        <Grid
+        <Frame
+            HasShadow="True"
+            CornerRadius="0"
+            Padding="0,-5,0,10"
+            HeightRequest="65"
+            VerticalOptions="End">
+            <Grid
+            x:Name="NavBar"
             Grid.Row="1"
             Grid.Column="4"
-            HeightRequest="150"
-            HorizontalOptions="FillAndExpand"
-            VerticalOptions="End">
-            <Grid.ColumnDefinitions>
-                <ColumnDefinition
+            VerticalOptions="FillAndExpand">
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition
                     Width="0.25*" />
-                <ColumnDefinition
+                    <ColumnDefinition
                     Width="0.25*" />
-                <ColumnDefinition
+                    <ColumnDefinition
                     Width="0.25*" />
-                <ColumnDefinition
+                    <ColumnDefinition
                     Width="0.25*" />
-            </Grid.ColumnDefinitions>
-            <Grid.RowDefinitions>
-                <RowDefinition
+                </Grid.ColumnDefinitions>
+                <Grid.RowDefinitions>
+                    <RowDefinition
                     Height="1*" />
-            </Grid.RowDefinitions>
-            <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="0">
-                <forms:CachedImage DownsampleWidth="35" x:Name="MyDayButton" BackgroundColor="Transparent" Source="mydayiconnotext.png" />
-                <Label Text="My Day" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
-                    <Label.FontFamily>
-                        <OnPlatform x:TypeArguments="x:String">
-                            <On Platform="iOS" Value="Lobster-Regular" />
-                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                        </OnPlatform>
-                    </Label.FontFamily>
-                </Label>
-             </StackLayout>
-            <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="1">
-                <forms:CachedImage DownsampleWidth="35" BackgroundColor="Transparent" Source="listviewiconselectednotext.png" />
-                <Label Text="Today's List" FontSize="12" TextColor="#d6a14b" HorizontalOptions="Center" Margin="0, -3, 0, 0">
-                    <Label.FontFamily>
-                        <OnPlatform x:TypeArguments="x:String">
-                            <On Platform="iOS" Value="Lobster-Regular" />
-                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                        </OnPlatform>
-                    </Label.FontFamily>
-                </Label>
-             </StackLayout>
-            <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="2">
-                <forms:CachedImage DownsampleWidth="35" x:Name="MyPhotosButton" BackgroundColor="Transparent" Source="myphotosiconnotext.png" />
-                <Label Text="My Photos" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
-                    <Label.FontFamily>
-                        <OnPlatform x:TypeArguments="x:String">
-                            <On Platform="iOS" Value="Lobster-Regular" />
-                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                        </OnPlatform>
-                    </Label.FontFamily>
-                </Label>
-            </StackLayout>
-            <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="3">
-                <forms:CachedImage DownsampleWidth="35" x:Name="AboutMeButton" BackgroundColor="Transparent" Source="aboutmeiconnotext.png" />
-                <Label Text="About Me" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
-                    <Label.FontFamily>
-                        <OnPlatform x:TypeArguments="x:String">
-                            <On Platform="iOS" Value="Lobster-Regular" />
-                            <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                        </OnPlatform>
-                    </Label.FontFamily>
-                </Label>
-             </StackLayout>
-        </Grid>
+                </Grid.RowDefinitions>
+                <StackLayout VerticalOptions="End" Grid.Column="0">
+                    <forms:CachedImage DownsampleWidth="25" x:Name="MyDayButton" BackgroundColor="Transparent" Source="mydayiconnotext.png" />
+                    <Label Text="My Day" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Lobster-Regular" />
+                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                </StackLayout>
+                <StackLayout VerticalOptions="End" Grid.Column="1">
+                    <forms:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="listviewiconselectednotext.png" />
+                    <Label Text="Today's List" FontSize="12" TextColor="#d6a14b" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Lobster-Regular" />
+                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                </StackLayout>
+                <StackLayout VerticalOptions="End" Grid.Column="2">
+                    <forms:CachedImage DownsampleWidth="25" x:Name="MyPhotosButton" BackgroundColor="Transparent" Source="myphotosiconnotext.png" />
+                    <Label Text="My Photos" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Lobster-Regular" />
+                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                </StackLayout>
+                <StackLayout VerticalOptions="End" Grid.Column="3">
+                    <forms:CachedImage DownsampleWidth="25" x:Name="AboutMeButton" BackgroundColor="Transparent" Source="aboutmeiconnotext.png" />
+                    <Label Text="About Me" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Lobster-Regular" />
+                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
+                </StackLayout>
+            </Grid>
+        </Frame>
     </StackLayout>
 
 </ContentPage>

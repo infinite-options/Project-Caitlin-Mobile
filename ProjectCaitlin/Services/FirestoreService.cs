@@ -169,6 +169,8 @@ namespace ProjectCaitlin.Methods
             }
         }
 
+       
+
         public async Task<bool> CompleteRoutine(string routineId, string routineIdx)
         {
             var request = new HttpRequestMessage();
@@ -225,20 +227,19 @@ namespace ProjectCaitlin.Methods
 
         public async Task<bool> UpdateInstruction(string goalId, string actionId, string instructionNumber)
         {
-            var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/CompleteInstructionOrStep");
-            request.Method = HttpMethod.Post;
+            HttpRequestMessage request = new HttpRequestMessage
+            {
+                RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/CompleteInstructionOrStep"),
+                Method = HttpMethod.Post
+            };
 
             //Format Headers of Request with included Token
             request.Headers.Add("userId", "7R6hAVmDrNutRkG3sVRy");
-            request.Headers.Add("routineId", goalId);
-            request.Headers.Add("taskId", actionId);
-            request.Headers.Add("stepNumber", instructionNumber);
+            request.Headers.Add("goalId", goalId);
+            request.Headers.Add("actionId", actionId);
+            request.Headers.Add("instructionNumber", instructionNumber);
             var client = new HttpClient();
             HttpResponseMessage response = await client.SendAsync(request);
-
-            HttpContent content = response.Content;
-            var routineResponse = await content.ReadAsStringAsync();
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {

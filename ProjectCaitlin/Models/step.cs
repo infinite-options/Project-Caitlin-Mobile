@@ -13,7 +13,7 @@ namespace ProjectCaitlin.Models
 
 		public bool isComplete { get; set; }
 
-		public int dbIdx { get; set; }
+        public int dbIdx { get; set; }
 
 		public DateTime dateTimeCompleted { get; set; }
 
@@ -22,5 +22,5 @@ namespace ProjectCaitlin.Models
 		public DateTime availableEndTime { get; set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
-	}
+    }
 }

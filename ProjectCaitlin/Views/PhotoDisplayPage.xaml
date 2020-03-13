@@ -18,6 +18,7 @@
                 VerticalOptions="CenterAndExpand"
                 HorizontalOptions="CenterAndExpand"
                 TextColor="#262c32">
+
             </Label>-->
 
         </ScrollView>

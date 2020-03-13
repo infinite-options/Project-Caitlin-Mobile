@@ -36,8 +36,8 @@ namespace ProjectCaitlin
 
             controlGrid.RowDefinitions.Add(new RowDefinition { Height = gridItemSize });
 
-            for (int i = 0; i < rowLength; i++)
-                controlGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = gridItemSize });
+            for (int i = 0; i < rowLength; i ++)
+                controlGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = gridItemSize});
 
             var photoCount = 0;
 
@@ -78,7 +78,7 @@ namespace ProjectCaitlin
             }
 
             photoScrollView.HeightRequest = Application.Current.MainPage.Height - NavBar.Height;
-
+   
             if (photoURIs.Count != 0)
             {
                 photoScrollView.Content = controlGrid;

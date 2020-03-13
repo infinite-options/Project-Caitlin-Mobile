@@ -27,5 +27,5 @@ namespace ProjectCaitlin.Models
 		public List<step> steps { get; set; } = new List<step>();
 
 		public event PropertyChangedEventHandler PropertyChanged;
-	}
+    }
 }

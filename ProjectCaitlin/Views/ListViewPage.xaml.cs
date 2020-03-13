@@ -71,78 +71,37 @@ namespace ProjectCaitlin
             SetupUIAsync();
         }
 
-        
-
         async Task SetupUIAsync()
         {
-            await LoadDataAsync();
             DayOfWeekLabel.Text = dateTimeNow.DayOfWeek.ToString();
 
             //dateTimeNow = DateTime.Now;
-            HidePreviousTimeOfDayElements(dateTimeNow.TimeOfDay);
+            //HidePreviousTimeOfDayElements(dateTimeNow.TimeOfDay);
+
+            await EventsLoad();
 
             try
             {
+                DeletePageElements();
                 PopulatePage();
             }
             catch (Exception e)
             {
                 Console.WriteLine(e);
             }
-
-            Console.WriteLine("get here?");
-        }
-
-        private void HidePreviousTimeOfDayElements(TimeSpan currentTime)
-        {
-            if (currentTime > morningEnd)
-            {
-                MorningREStackLayout.IsVisible = false;
-                MorningGoalsSection.IsVisible = false;
-            }
-            if (currentTime > afternoonEnd)
-            {
-                AfternoonREStackLayout.IsVisible = false;
-                AfternoonGoalsSection.IsVisible = false;
-            }
-            if (currentTime < nightEnd)
-            {
-                MorningREStackLayout.IsVisible = false;
-                MorningGoalsSection.IsVisible = false;
-                EveningREStackLayout.IsVisible = false;
-                EveningGoalsSection.IsVisible = false;
-                AfternoonREStackLayout.IsVisible = false;
-                AfternoonGoalsSection.IsVisible = false;
-            }
-        }
-
-        private async Task LoadDataAsync()
-        {
-            await EventsLoad();
-            sortData();
-        }
-
-        private void sortData()
-        {
-            user.routines.Sort((x, y) => TimeSpan.Compare(x.availableStartTime.TimeOfDay, y.availableStartTime.TimeOfDay));
-
-            for (int i = 0; i < user.routines.Count; i++)
-                Console.WriteLine("routine " + (i + 1) + ": " + user.routines[i].title);
-            //eventsList.Sort((x, y) => TimeSpan.Compare(x.Start.DateTime.DateTime.TimeOfDay, y.Start.DateTime.DateTime.TimeOfDay));
+            mainScrollView.HeightRequest = Application.Current.MainPage.Height - NavBar.Height;
         }
 
         public async Task RefreshPage()
         {
-            DeletePageElements();
             await firestoreService.LoadUser();
             await SetupUIAsync();
+            PrintFirebaseUser();
 
         }
 
         void DeletePageElements()
         {
-            // Empty events
-            eventsList = new List<EventsItems>();
             List<List<View>> ElementsRandE = new List<List<View>>();
             List<List<View>> ElementsGoals = new List<List<View>>();
 
@@ -182,15 +141,15 @@ namespace ProjectCaitlin
             //    foreach (StackLayout stackLayout in GetInTimeOfDayList(goal.availableStartTime.TimeOfDay, goal.availableEndTime.TimeOfDay))
             //        PopulateGoal(goal, stackLayout);
 
+            int goalIdx = 0;
             foreach (goal goal in user.goals)
-                PopulateGoal(goal, GetFirstInTimeOfDay("goal", dateTimeNow.TimeOfDay, goal.availableStartTime.TimeOfDay, goal.availableEndTime.TimeOfDay));
+                PopulateGoal(goal, goalIdx++, GetFirstInTimeOfDay("goal", goal.availableStartTime.TimeOfDay));
 
             PopulateEventsAndRoutines(0, 0);
         }
 
         private void PopulateEventsAndRoutines(int eventIdx, int routineIdx)
         {
-
             Console.WriteLine("eventIdx: " + eventIdx);
             Console.WriteLine("routineIdx: " + routineIdx);
 
@@ -203,32 +162,32 @@ namespace ProjectCaitlin
 
             if (eventsList.Count == eventIdx)
             {
-                PopulateRoutine(user.routines[routineIdx], GetFirstInTimeOfDay("routine", currentTime, user.routines[routineIdx].availableStartTime.TimeOfDay, user.routines[routineIdx].availableEndTime.TimeOfDay));
+                PopulateRoutine(user.routines[routineIdx], routineIdx, GetFirstInTimeOfDay("routine",user.routines[routineIdx].availableStartTime.TimeOfDay));
                 PopulateEventsAndRoutines(eventIdx, ++routineIdx);
                 return;
             }
             if (user.routines.Count == routineIdx)
             {
-                PopulateEvent(eventsList[eventIdx], GetFirstInTimeOfDay("routine", currentTime, eventsList[eventIdx].Start.DateTime.DateTime.TimeOfDay, eventsList[eventIdx].End.DateTime.DateTime.TimeOfDay));
+                PopulateEvent(eventsList[eventIdx], GetFirstInTimeOfDay("routine", eventsList[eventIdx].Start.DateTime.DateTime.TimeOfDay));
                 PopulateEventsAndRoutines(++eventIdx, routineIdx);
                 return;
             }
 
             if (user.routines[routineIdx].availableStartTime.TimeOfDay <= eventsList[eventIdx].Start.DateTime.TimeOfDay)
             {
-                PopulateEvent(eventsList[eventIdx], GetFirstInTimeOfDay("routine", currentTime, eventsList[eventIdx].Start.DateTime.DateTime.TimeOfDay, eventsList[eventIdx].End.DateTime.DateTime.TimeOfDay));
+                PopulateEvent(eventsList[eventIdx], GetFirstInTimeOfDay("routine", eventsList[eventIdx].Start.DateTime.DateTime.TimeOfDay));
                 PopulateEventsAndRoutines(++eventIdx, routineIdx);
                 return;
             }
             else
             {
-                PopulateRoutine(user.routines[routineIdx], GetFirstInTimeOfDay("routine", currentTime, user.routines[routineIdx].availableStartTime.TimeOfDay, user.routines[routineIdx].availableEndTime.TimeOfDay));
+                PopulateRoutine(user.routines[routineIdx], routineIdx, GetFirstInTimeOfDay("routine", user.routines[routineIdx].availableStartTime.TimeOfDay));
                 PopulateEventsAndRoutines(eventIdx, ++routineIdx);
                 return;
             }
         }
 
-        private void PopulateRoutine(routine routine, StackLayout stackLayout)
+        private void PopulateRoutine(routine routine, int routineIdx, StackLayout stackLayout)
         {
             Frame frame = new Frame
             {
@@ -259,7 +218,7 @@ namespace ProjectCaitlin
 
             Label expectedTimeLabel = new Label
             {
-                Text = "Takes me " + 5.ToString() + " minutes",
+                Text = "Takes me " + "x".ToString() + " minutes",
                 FontSize = 10,
                 TextColor = Color.DimGray,
                 VerticalOptions = LayoutOptions.EndAndExpand,
@@ -279,6 +238,10 @@ namespace ProjectCaitlin
                 },
             };
 
+            var indicator = new ActivityIndicator { Color = Color.Gray, };
+            indicator.SetBinding(ActivityIndicator.IsRunningProperty, "IsLoading");
+            indicator.BindingContext = image;
+
             stackLayoutInner.Children.Add(routineTitleLabel);
             stackLayoutInner.Children.Add(expectedTimeLabel);
 
@@ -287,7 +250,39 @@ namespace ProjectCaitlin
 
             frame.Content = stackLayoutOuter;
 
-            stackLayout.Children.Add(frame);
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Tapped += async (s, e) => {
+                await Navigation.PushAsync(new TaskPage(routineIdx, true));
+            };
+            frame.GestureRecognizers.Add(tapGestureRecognizer);
+
+            if (routine.isComplete)
+            {
+                StackLayout completeStackLayout = new StackLayout()
+                {
+                    Orientation = StackOrientation.Horizontal
+                };
+
+                CachedImage checkmarkImage = new CachedImage()
+                {
+                    Source = Xamarin.Forms.ImageSource.FromFile("greencheckmarkicon.png"),
+                    WidthRequest = 30,
+                    HeightRequest = 30,
+                    HorizontalOptions = LayoutOptions.Start,
+                    VerticalOptions = LayoutOptions.CenterAndExpand
+                };
+
+                completeStackLayout.Children.Add(checkmarkImage);
+
+                frame.HorizontalOptions = LayoutOptions.FillAndExpand;
+                completeStackLayout.Children.Add(frame);
+
+                stackLayout = GetCompleteTimeOfDay(routine.dateTimeCompleted.TimeOfDay);
+                stackLayout.Children.Add(completeStackLayout);
+
+            }
+            else
+                stackLayout.Children.Add(frame);
         }
 
         private void PopulateEvent(EventsItems event_, StackLayout stackLayout)
@@ -346,9 +341,9 @@ namespace ProjectCaitlin
                 HeightRequest = 50,
                 HorizontalOptions = LayoutOptions.End,
                 Transformations = new List<ITransformation>()
-                    {
-                        new CircleTransformation(),
-                    },
+                {
+                    new CircleTransformation(),
+                },
             };
 
             stackLayoutInner.Children.Add(EventTimeLabel);
@@ -363,11 +358,16 @@ namespace ProjectCaitlin
             stackLayout.Children.Add(frame);
         }
 
-        private void PopulateGoal(goal goal, StackLayout stackLayout)
+        private void PopulateGoal(goal goal, int goalIdx, StackLayout stackLayout)
         {
             StackLayout goalStackLayout = new StackLayout()
             {
                 Margin = new Thickness(0, 0, 10, 0)
+            };
+
+            Grid grid = new Grid()
+            {
+
             };
 
             CachedImage image = new CachedImage()
@@ -381,6 +381,20 @@ namespace ProjectCaitlin
                     new RoundedTransformation(30, 120, 90),
                 },
             };
+            if (goal.isComplete)
+            {
+                image.Opacity = .6;
+            }
+
+            CachedImage checkmarkImage = new CachedImage()
+            {
+                Source = Xamarin.Forms.ImageSource.FromFile("greencheckmarkicon.png"),
+                WidthRequest = 70,
+                HeightRequest = 70,
+                IsVisible = goal.isComplete,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand
+            };
 
             Label goalLabel = new Label
             {
@@ -391,7 +405,20 @@ namespace ProjectCaitlin
 
             };
 
-            goalStackLayout.Children.Add(image);
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Tapped += async (s, e) => {
+                await Navigation.PushAsync(new TaskPage(goalIdx, false));
+            };
+            goalStackLayout.GestureRecognizers.Add(tapGestureRecognizer);
+
+            var indicator = new ActivityIndicator { Color = Color.Gray, };
+            indicator.SetBinding(ActivityIndicator.IsRunningProperty, "IsLoading");
+            indicator.BindingContext = image;
+
+            grid.Children.Add(image, 0, 0);
+            grid.Children.Add(checkmarkImage, 0, 0);
+
+            goalStackLayout.Children.Add(grid);
             goalStackLayout.Children.Add(goalLabel);
 
             stackLayout.Children.Add(goalStackLayout);
@@ -412,6 +439,9 @@ namespace ProjectCaitlin
 
         public async Task EventsLoad()
         {
+            // empty current events
+            eventsList = new List<EventsItems>();
+
             //Call Google API
             var googleService = new GoogleService();
 
@@ -461,17 +491,13 @@ namespace ProjectCaitlin
             }
         }
 
-        private StackLayout GetFirstInTimeOfDay(string GorR,TimeSpan currentTime, TimeSpan startTime, TimeSpan endTime)
+        private StackLayout GetFirstInTimeOfDay(string GorR, TimeSpan startTime)
         {
             Console.WriteLine("startTime: " + startTime.ToString());
-            Console.WriteLine("endTime: " + endTime.ToString());
 
             //currentTime = testTime;
 
-            if (currentTime < morningEnd
-                && ((startTime < morningEnd && morningStart < endTime)
-                || startTime == morningStart || morningEnd == endTime))
-
+            if (startTime == new TimeSpan(0, 0, 0))
             {
                 Console.WriteLine("Morning");
 
@@ -480,9 +506,17 @@ namespace ProjectCaitlin
                 else
                     return MorningGoalsStackLayout;
             }
-            if (currentTime < afternoonEnd
-                && ((startTime < afternoonEnd && afternoonStart < endTime)
-                || startTime == afternoonStart || afternoonEnd == endTime))
+
+            if (morningStart <= startTime && startTime < morningEnd)
+            {
+                Console.WriteLine("Morning");
+
+                if (GorR == "routine")
+                    return MorningREStackLayout;
+                else
+                    return MorningGoalsStackLayout;
+            }
+            if (afternoonStart <= startTime && startTime < afternoonEnd)
             {
                 Console.WriteLine("Afternoon");
 
@@ -491,9 +525,7 @@ namespace ProjectCaitlin
                 else
                     return AfternoonGoalsStackLayout;
             }
-            if (currentTime < eveningEnd
-                && ((startTime < eveningEnd && eveningStart < endTime)
-                || startTime == eveningStart || eveningEnd == endTime))
+            if (eveningStart <= startTime && startTime < eveningEnd)
             {
                 Console.WriteLine("Evening");
 
@@ -502,8 +534,7 @@ namespace ProjectCaitlin
                 else
                     return EveningGoalsStackLayout;
             }
-            if ((startTime < nightEnd && nightStart < endTime)
-                || startTime == nightStart || nightEnd == endTime)
+            if (nightStart <= startTime && startTime < nightEnd)
             {
                 Console.WriteLine("Night");
 
@@ -552,6 +583,37 @@ namespace ProjectCaitlin
             }
 
             return result;
+        }
+
+        private StackLayout GetCompleteTimeOfDay(TimeSpan completeTime)
+        {
+            Console.WriteLine("completeTime: " + completeTime.ToString());
+            if (morningStart < completeTime && completeTime < morningEnd)
+            {
+                Console.WriteLine("Morning");
+
+                return MorningREStackLayout;
+            }
+            if (afternoonStart < completeTime && completeTime < afternoonEnd)
+            {
+                Console.WriteLine("Afternoon");
+
+                return AfternoonREStackLayout;
+            }
+            if (eveningStart < completeTime && completeTime < eveningEnd)
+            {
+                Console.WriteLine("Evening");
+
+                return EveningREStackLayout;
+            }
+            if (nightStart < completeTime && completeTime < nightEnd)
+            {
+                Console.WriteLine("Night");
+
+                return NightREStackLayout;
+            }
+
+            return new StackLayout();
         }
 
         internal void StartTimer()
@@ -608,19 +670,47 @@ namespace ProjectCaitlin
             MyDayButton.GestureRecognizers.Add(tapGestureRecognizer4);
         }
 
-        public async void btn1(object sender, EventArgs args)
+        void PrintFirebaseUser()
         {
-            await Navigation.PushAsync(new GreetingPage());
-        }
+            OnPropertyChanged(nameof(App.user));
+            Console.WriteLine("user first name: " + App.user.firstName);
+            Console.WriteLine("user last name: " + App.user.lastName);
 
-        public async void btn3(object sender, EventArgs args)
-        {
-            await Navigation.PushAsync(new PhotoDisplayPage());
-        }
+            foreach (routine routine in App.user.routines)
+            {
+                OnPropertyChanged(nameof(routine));
+                Console.WriteLine("user routine title: " + routine.title);
+                Console.WriteLine("user routine id: " + routine.id);
+                foreach (task task in routine.tasks)
+                {
+                    OnPropertyChanged(nameof(task));
+                    Console.WriteLine("user task title: " + task.title);
+                    Console.WriteLine("user task id: " + task.id);
+                    foreach (step step in task.steps)
+                    {
+                        OnPropertyChanged(nameof(step));
+                        Console.WriteLine("user step title: " + step.title);
+                    }
+                }
+            }
 
-        public async void btn4(object sender, EventArgs args)
-        {
-            await Navigation.PushAsync(new GoalsRoutinesTemplate());
+            foreach (goal goal in App.user.goals)
+            {
+                OnPropertyChanged(nameof(goal));
+                Console.WriteLine("user goal title: " + goal.title);
+                Console.WriteLine("user goal id: " + goal.id);
+                foreach (action action in goal.actions)
+                {
+                    OnPropertyChanged(nameof(goal));
+                    Console.WriteLine("user action title: " + action.title);
+                    Console.WriteLine("user action id: " + action.id);
+                    foreach (instruction instruction in action.instructions)
+                    {
+                        OnPropertyChanged(nameof(instruction));
+                        Console.WriteLine("user instruction title: " + instruction.title);
+                    }
+                }
+            }
         }
     }
 }
