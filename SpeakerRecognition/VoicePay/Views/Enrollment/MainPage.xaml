@@ -1,0 +1,57 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="VoicePay.Views.Enrollment.MainPage">
+    <ContentPage.Content>
+        <StackLayout BackgroundColor= "White">
+        <!-- Place new controls here -->
+        <Label Text="Good Morning Caitlin" FontSize="50" HorizontalTextAlignment="Center" TextColor="Black" Margin="0, 30, 0, 0"/>
+
+        <Label Text="Wear your Watch" FontSize="40" HorizontalOptions="Center" TextColor="Blue" Margin="0, 0, 0, 0"/>
+
+        <Button x:Name="who" Text = "Who you are" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" BorderRadius="100" HeightRequest="60" WidthRequest="350" HorizontalOptions="Center" Margin="0, 0, 0, 5" BorderWidth="1"/>
+        <Button x:Name="where" Text = "Where you are" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" BorderRadius="100" HeightRequest ="60" WidthRequest="350" HorizontalOptions="Center" Margin="0, 0, 0, 5" BorderWidth="1"/>
+        <Button x:Name="info" Text = "Get more information" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" BorderRadius="100" HeightRequest="60" WidthRequest="350" HorizontalOptions="Center" BorderWidth="1"/>
+
+        <Label Text="Call" FontSize="30" HorizontalOptions="Center" TextColor="Black"/>
+
+       <!--<AbsoluteLayout HorizontalOptions="Center">
+            <Button x:Name="mom" ImageSource="mom.png" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" CornerRadius="80" WidthRequest="100" HorizontalOptions="Center" Margin="30, 0, 0, 0" BorderWidth="1"/>
+            <Button x:Name="dad" ImageSource="dad.png" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" CornerRadius="80" WidthRequest="100" HorizontalOptions="Center" Margin="130, 0, 0, 0" BorderWidth="1"/>
+            <Button x:Name="momTwo" ImageSource="mom.png" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" CornerRadius="80" WidthRequest="100" HorizontalOptions="Center" Margin="230, 0, 0, 0" BorderWidth="1"/>
+        </AbsoluteLayout> -->
+
+        <AbsoluteLayout HorizontalOptions="Center">
+            <Button x:Name="mom" BackgroundColor="White" FontAttributes="Bold" WidthRequest="100" HorizontalOptions="Center" Margin="10, 0, 0, 0" BorderWidth="1">
+                <Button.Image>
+                    <OnPlatform x:TypeArguments="FileImageSource"
+                                Android="mom.png" />
+                </Button.Image>
+            </Button>
+            <Button x:Name="dad" BackgroundColor="White" FontAttributes="Bold" WidthRequest="100" HorizontalOptions="Center" Margin="110, 0, 0, 0" BorderWidth="1">
+                <Button.Image>
+                    <OnPlatform x:TypeArguments="FileImageSource"
+                                Android="mom.png" />
+                </Button.Image>
+            </Button>
+            <Button x:Name="brother" BackgroundColor="White" FontAttributes="Bold" WidthRequest="100" HorizontalOptions="Center" Margin="210, 0, 0, 0" BorderWidth="1">
+                <Button.Image>
+                    <OnPlatform x:TypeArguments="FileImageSource"
+                                Android="mom.png" />
+                </Button.Image>
+            </Button>
+
+        </AbsoluteLayout>
+
+        <AbsoluteLayout HorizontalOptions="Center">
+            <Button x:Name="activity" Text = "Activities" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" BorderRadius="200" HorizontalOptions="Center" Margin="0, 0, 0, 10" Clicked="Goals" BorderWidth="1"/>
+            <Button x:Name="home" Text = "Home" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" BorderRadius="200" HorizontalOptions="Center" Margin="100, 0, 0, 10" BorderWidth="1"/>
+            <Button x:Name="history" Text = "History" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" BorderRadius="200" HorizontalOptions="Center" Margin="200, 0, 0, 10" BorderWidth="1"/>
+            <Button x:Name="speaker" Text = "Speaker" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" BorderRadius="200" HorizontalOptions="Center" Margin="50, 50, 0, 10" Clicked="Speaker" BorderWidth="1"/>
+            <!--<Button Text="Identify" Grid.Row="1" Command="{Binding CheckAndGoVerifyCommand}" BackgroundColor="Red" HorizontalOptions="Center" WidthRequest="130" TextColor="{StaticResource Primary}" Margin="50, 50, 0, 10"/>-->
+            <Button x:Name="register" Text = "Register" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" BorderRadius="200" HorizontalOptions="Center" Margin="140, 50, 0, 10" Clicked="Register" BorderWidth="1"/>
+        </AbsoluteLayout>
+    </StackLayout>
+
+
+
+    </ContentPage.Content>
+</ContentPage>

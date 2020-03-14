@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+        x:Class="VoicePay.Views.Authentication.LoginPage"
+        NavigationPage.HasNavigationBar="False">
+	<ContentPage.Content>
+        <StackLayout VerticalOptions="CenterAndExpand" Padding="16">
+            <Label Text="Welcome back." FontSize="34" Margin="0,0,0,8"/>
+            <Entry Placeholder="Email" Keyboard="Email" />
+            <Entry Placeholder="Password" IsPassword="true" />
+            <Button Text="Log In" Style="{StaticResource PrimaryBtn}" Clicked="Handle_Clicked"/>
+        </StackLayout>
+	</ContentPage.Content>
+</ContentPage>

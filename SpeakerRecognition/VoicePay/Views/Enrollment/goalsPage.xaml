@@ -1,0 +1,63 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="VoicePay.Views.Enrollment.goalsPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <Label Text="Goals" FontSize="50" HorizontalTextAlignment="Center" TextColor="Black" Margin="0, 30, 0, 0"/>
+            <Label Text="0:00:000" x:Name="timer" FontSize="30" HorizontalTextAlignment="Center"/>
+            <Label Text="Short Term Goals" FontSize="30" HorizontalTextAlignment="Center" TextColor="Black" Margin="0, 5, 0, 0"/>
+
+            <!--<AbsoluteLayout HorizontalOptions="Center">
+                <Button x:Name="activity1" Text="Brush Teeth" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" CornerRadius="10" BorderWidth="1" WidthRequest="70" HeightRequest="70" HorizontalOptions="Start" Margin="10, 10, 0, 0"/>
+                <Button x:Name="Done" Text ="DONE" FontSize="15" Padding="0,0,0,0" BackgroundColor="White" FontAttributes="Bold" BorderColor="Black" BorderWidth="1" WidthRequest="70" HeightRequest="30" HorizontalOptions="Start" Margin="10, 80, 0, 0"/>
+                <Button x:Name="activity2" Text="Wash Dishes" FontSize="12" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" CornerRadius="10" BorderWidth="1" WidthRequest="70" HeightRequest="70" HorizontalOptions="Start" Margin="100, 10, 0, 0"/>
+                <Button x:Name="Done2" Text ="DONE" FontSize="15" Padding="0,0,0,0" BackgroundColor="White" FontAttributes="Bold" BorderColor="Black" BorderWidth="1" WidthRequest="70" HeightRequest="30" HorizontalOptions="Start" Margin="100, 80, 0, 0"/>
+            </AbsoluteLayout>-->
+
+            <AbsoluteLayout HorizontalOptions="Center">
+                <Button x:Name="activity1" Text="Brush Teeth" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" BorderWidth="1" WidthRequest="70" HeightRequest="70" HorizontalOptions="Start" Margin="10, 10, 0, 0"/>
+                <Button x:Name="Done" Text ="DONE" FontSize="15" BackgroundColor="White" FontAttributes="Bold" BorderColor="Black" BorderWidth="1" WidthRequest="70" HeightRequest="30" HorizontalOptions="Start" Margin="10, 80, 0, 0"/>
+                <Button x:Name="activity2" Text="Wash Dishes" FontSize="12" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" BorderWidth="1" WidthRequest="70" HeightRequest="70" HorizontalOptions="Start" Margin="100, 10, 0, 0"/>
+                <Button x:Name="Done2" Text ="DONE" FontSize="15" BackgroundColor="White" FontAttributes="Bold" BorderColor="Black" BorderWidth="1" WidthRequest="70" HeightRequest="30" HorizontalOptions="Start" Margin="100, 80, 0, 0"/>
+            </AbsoluteLayout>
+            
+
+
+            <!---<Label Text="Long Term Goals" FontSize="30" HorizontalTextAlignment="Center" TextColor="Black" Margin="0, 40, 0, 0"/>
+            <AbsoluteLayout HorizontalOptions="Center">
+                <Button x:Name="activity3" Text="Plant Garden" FontSize="12" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" CornerRadius="10" BorderWidth="1" WidthRequest="70" HeightRequest="70" HorizontalOptions="Start" Margin="10, 10, 0, 0"/>
+                <Button x:Name="Done3" Text ="DONE" FontSize="15" Padding="0,0,0,0" BackgroundColor="White" FontAttributes="Bold" BorderColor="Black" BorderWidth="1" WidthRequest="70" HeightRequest="30" HorizontalOptions="Start" Margin="10, 80, 0, 0"/>
+                <Button x:Name="activity4" Text="Finish Book" FontSize="12" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" CornerRadius="10" BorderWidth="1" WidthRequest="70" HeightRequest="70" HorizontalOptions="Start" Margin="90, 10, 0, 0"/>
+                <Button x:Name="Done4" Text ="DONE" FontSize="15" Padding="0,0,0,0" BackgroundColor="White" FontAttributes="Bold" BorderColor="Black" BorderWidth="1" WidthRequest="70" HeightRequest="30" HorizontalOptions="Start" Margin="90, 80, 0, 0"/>
+            </AbsoluteLayout>
+
+            <AbsoluteLayout HorizontalOptions="Center">
+                <Button x:Name="activity" Text = "Tasks" BackgroundColor="Orange" BorderColor="Black" FontAttributes="Bold" CornerRadius="200" HorizontalOptions="Center" Margin="0, 48, 0, 10" BorderWidth="1" />
+                <Button x:Name="home" Text = "Home" BackgroundColor="Blue" BorderColor="Black" FontAttributes="Bold" CornerRadius="200" HorizontalOptions="Center" Margin="100, 48, 0, 10" BorderWidth="1"/>
+                <Button x:Name="history" Text = "History" BackgroundColor="Green" BorderColor="Black" FontAttributes="Bold" CornerRadius="200" HorizontalOptions="Center" Margin="200, 48, 0, 10" BorderWidth="1"/>
+                <Button x:Name="question" Text = "?" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" CornerRadius="200" HorizontalOptions="Center" Margin="300, 48, 0, 10" BorderWidth="1"/>
+            </AbsoluteLayout>-->
+
+
+            <Label Text="Long Term Goals" FontSize="30" HorizontalTextAlignment="Center" TextColor="Black" Margin="0, 40, 0, 0"/>
+            <AbsoluteLayout HorizontalOptions="Center">
+                <Button x:Name="activity3" Text="Plant Garden" FontSize="12" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" BorderWidth="1" WidthRequest="70" HeightRequest="70" HorizontalOptions="Start" Margin="10, 10, 0, 0"/>
+                <Button x:Name="Done3" Text ="DONE" FontSize="15" BackgroundColor="White" FontAttributes="Bold" BorderColor="Black" BorderWidth="1" WidthRequest="70" HeightRequest="30" HorizontalOptions="Start" Margin="10, 80, 0, 0"/>
+                <Button x:Name="activity4" Text="Finish Book" FontSize="12" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" BorderWidth="1" WidthRequest="70" HeightRequest="70" HorizontalOptions="Start" Margin="90, 10, 0, 0"/>
+                <Button x:Name="Done4" Text ="DONE" FontSize="15" BackgroundColor="White" FontAttributes="Bold" BorderColor="Black" BorderWidth="1" WidthRequest="70" HeightRequest="30" HorizontalOptions="Start" Margin="90, 80, 0, 0"/>
+            </AbsoluteLayout>
+
+            <AbsoluteLayout HorizontalOptions="Center">
+                <Button x:Name="activity" Text = "Tasks" BackgroundColor="Orange" BorderColor="Black" FontAttributes="Bold" HorizontalOptions="Center" Margin="0, 48, 0, 10" BorderWidth="1" />
+                <Button x:Name="home" Text = "Home" BackgroundColor="Blue" BorderColor="Black" FontAttributes="Bold" HorizontalOptions="Center" Margin="100, 48, 0, 10" BorderWidth="1"/>
+                <Button x:Name="history" Text = "History" BackgroundColor="Green" BorderColor="Black" FontAttributes="Bold" HorizontalOptions="Center" Margin="200, 48, 0, 10" BorderWidth="1"/>
+                <Button x:Name="question" Text = "?" BackgroundColor="White" BorderColor="Black" FontAttributes="Bold" HorizontalOptions="Center" Margin="300, 48, 0, 10" BorderWidth="1"/>
+            </AbsoluteLayout>
+
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

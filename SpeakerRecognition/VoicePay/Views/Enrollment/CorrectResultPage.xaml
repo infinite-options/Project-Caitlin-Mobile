@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+        xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+        x:Class="VoicePay.Views.Enrollment.CorrectResultPage">
+	<ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            
+            <StackLayout VerticalOptions="End">
+                 <Label Text="Someone is &#10; Speaking"
+                   x:Name="NameLabel"
+                   HorizontalOptions="Center"
+                   VerticalOptions="CenterAndExpand"
+                   FontSize = "40"
+                   />
+
+                <Image
+                    x:Name="ProfileImage"
+                    Source="facePic.png"
+                    HeightRequest="200"
+                    WidthRequest="200"
+                    Margin="0,0,0,250"
+                ></Image>
+
+                <Label
+                    Text="John Baer"
+                    HorizontalOptions="Center"
+                    TextColor="#000000"
+                    FontSize = "30"
+                    Margin="0,-250,0,0"
+                ></Label>
+
+                <Label
+                    Text="Chemistry Class"
+                    TextColor="#000000"
+                    HorizontalOptions="Center"
+                    FontSize = "23"
+                    Margin="0,0,0,10"
+                ></Label>
+
+                <Label
+                    Text="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+                    TextColor="#838383"
+                    FontSize = "20"
+                    Margin="0,0,0,40"
+                ></Label>
+                <Button Text="Next" Clicked="Handle_Clicked" BackgroundColor="{StaticResource PrimaryDark}" TextColor="White" />
+            </StackLayout>
+        </Grid>
+	</ContentPage.Content>
+</ContentPage>

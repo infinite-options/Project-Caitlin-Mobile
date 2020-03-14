@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+        xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
+        Title="Our products"
+        x:Class="VoicePay.Views.Store.CategoriesPage">
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Cart" Priority="0" Order="Primary" Command="{Binding GoToCartReviewCommand}" />
+    </ContentPage.ToolbarItems>
+	<ContentPage.Content>
+        <flv:FlowListView FlowItemsSource="{Binding Categories}"
+            FlowItemTappedCommand="{Binding CategoryTappedCommand}"
+            FlowColumnCount="2"
+            FlowColumnExpand="First"
+            SeparatorVisibility="None"
+            VerticalOptions="FillAndExpand"
+            HorizontalOptions="FillAndExpand"
+            HasUnevenRows="true"
+            Margin="4,4,4,0">
+            <flv:FlowListView.FlowColumnTemplate>
+                <DataTemplate>
+                    <Frame HeightRequest="180" HasShadow="true" Margin="4">
+                        <Grid>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*" />
+                                <RowDefinition Height="30" />
+                            </Grid.RowDefinitions>
+                            
+                            <Image Source="{Binding ImageUri}" VerticalOptions="Center" HorizontalOptions="Center" />
+                            <Label Grid.Row="1" Text="{Binding Description}" HorizontalTextAlignment="Center" /> 
+                        </Grid>
+                    </Frame>
+                </DataTemplate>
+            </flv:FlowListView.FlowColumnTemplate>
+        </flv:FlowListView>
+	</ContentPage.Content>
+</ContentPage>

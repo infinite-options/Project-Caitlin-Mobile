@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" x:Class="VoicePay.Views.Enrollment.MainCaitlinPage">
+    <StackLayout BackgroundColor="#FFF4CA">
+        <!-- Place new controls here -->
+        <Label Text="Good Morning Caitlin" FontSize="50" HorizontalTextAlignment="Center" TextColor="Black" Margin="0, 30, 0, 0"/>
+
+        <Label Text="Wear your Watch" FontSize="30" HorizontalOptions="Center" TextColor="Blue" Margin="0, 0, 0, 10"/>
+
+        <Button x:Name="who" Text = "Who you are" BackgroundColor="White" BorderColor="Chocolate" FontAttributes="Bold" HeightRequest="60" WidthRequest="350" HorizontalOptions="Center" Margin="0, 0, 0, 10"/>
+        <Button x:Name="where" Text = "Where you are" BackgroundColor="White" BorderColor="Chocolate" FontAttributes="Bold" HeightRequest ="60" WidthRequest="350" HorizontalOptions="Center" Margin="0, 0, 0, 10"/>
+        <Button x:Name="info" Text = "Get more information" BackgroundColor="White" BorderColor="Chocolate" FontAttributes="Bold" HeightRequest="60" WidthRequest="350" HorizontalOptions="Center"/>
+
+        <Label Text="Call" FontSize="30" HorizontalOptions="Center" TextColor="Black"/>
+
+        <AbsoluteLayout HorizontalOptions="Center">
+            <Button x:Name="mom" Image="mom.png" BackgroundColor="White" BorderColor="Chocolate" FontAttributes="Bold" WidthRequest="100" HorizontalOptions="Center" Margin="30, 0, 0, 0"/>
+            <Button x:Name="dad" Image="dad.png" BackgroundColor="White" BorderColor="Chocolate" FontAttributes="Bold" WidthRequest="100" HorizontalOptions="Center" Margin="130, 0, 0, 0"/>
+            <Button x:Name="momTwo" Image="mom.png" BackgroundColor="White" BorderColor="Chocolate" FontAttributes="Bold" WidthRequest="100" HorizontalOptions="Center" Margin="230, 0, 0, 0"/>
+        </AbsoluteLayout>
+
+        <AbsoluteLayout HorizontalOptions="Center">
+            <Button x:Name="activity" Text = "Activities" BackgroundColor="White" BorderColor="Chocolate" FontAttributes="Bold" HorizontalOptions="Center" Margin="0, 0, 0, 10"/>
+            <Button x:Name="home" Text = "Home" BackgroundColor="White" BorderColor="Chocolate" FontAttributes="Bold" HorizontalOptions="Center" Margin="100, 0, 0, 10"/>
+            <Button x:Name="history" Text = "History" BackgroundColor="White" BorderColor="Chocolate" FontAttributes="Bold" HorizontalOptions="Center" Margin="200, 0, 0, 10"/>
+            <Button x:Name="question" Text = "?" BackgroundColor="White" BorderColor="Chocolate" FontAttributes="Bold" HorizontalOptions="Center" Margin="300, 0, 0, 10"/>
+        </AbsoluteLayout>
+    </StackLayout>
+</ContentPage>

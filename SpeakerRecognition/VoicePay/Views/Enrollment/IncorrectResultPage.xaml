@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+        xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+        x:Class="VoicePay.Views.Enrollment.IncorrectResultPage">
+	<ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+            </Grid.RowDefinitions>
+            <StackLayout VerticalOptions="End">
+                <Label Text="Unknown &#10; Speaker"
+                       HorizontalOptions="Center"
+                       VerticalOptions="CenterAndExpand"
+                       FontSize = "40"
+                       />
+
+                <Image
+                    Source="blankProfile.png"
+                    HeightRequest="200"
+                    WidthRequest="200"
+                    Margin="0,0,0,300"
+
+                ></Image>
+
+                <Entry
+                    WidthRequest="500"
+                    Placeholder="Enter name"
+                    Margin="0,-250,0,0"
+                    TextColor="#000000"
+                    FontSize = "30"
+                    HorizontalOptions="Center"
+                    />
+
+                <Entry
+                    WidthRequest="500"
+                    Placeholder="Enter relation"
+                    FontSize = "23"
+                    Margin="0,0,0,10"
+                    TextColor="#000000"
+                    HorizontalOptions="Center"
+                    />
+
+                <Entry
+                    WidthRequest="500"
+                    Placeholder="Lorem ipsum dolor sit amet."
+                    FontSize = "20"
+                    Margin="0,0,0,40"
+                    TextColor="#838383"
+                    HorizontalOptions="Center"
+                    />
+                <Button Text="Register" Clicked="Handle_Clicked" BackgroundColor="{StaticResource Accent2}" TextColor="White" />
+            </StackLayout>
+        </Grid>
+	</ContentPage.Content>
+</ContentPage>

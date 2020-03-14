@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+        x:Class="VoicePay.Views.Payment.PaymentReviewPage"
+        Title="Your payment information"
+        Padding="12">
+	<ContentPage.Content>
+        <StackLayout>
+            <Label Text="This is your billing info" FontSize="24" />
+            <Label Text="Please, check this out." Margin="0,0,0,8"/>
+            <Entry IsEnabled="false" Text="Javier Escobar" />
+            <Entry IsEnabled="false" Text="VISA" />
+            <Entry IsEnabled="false" Text="Peru" />
+            <Entry IsEnabled="false" Text="Av. America Sur 1234" />
+            <Entry IsEnabled="false" Text="XXXX-XXXX-XXXX-9876" />
+            <Label Text="When clicking 'Process payment', you will be required to verify your identity with your voiceprint. Please, be prepared."
+                    Margin="0,8,0,0"/>
+            <Button Text="Process payment" Style="{StaticResource PrimaryBtn}" BackgroundColor="{StaticResource PrimaryDark}" Clicked="Handle_Clicked"/>
+        </StackLayout>
+	</ContentPage.Content>
+</ContentPage>

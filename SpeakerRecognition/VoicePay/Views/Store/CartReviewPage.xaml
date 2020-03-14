@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+        xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+        xmlns:vm="clr-namespace:VoicePay.ViewModels.Store"
+        x:Class="VoicePay.Views.Store.CartReviewPage"
+        Title="Your shopping cart">
+    <ContentPage.BindingContext>
+        <vm:CartReviewViewModel />
+    </ContentPage.BindingContext>
+	<ContentPage.Content>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition Height="*" />
+                <RowDefinition Height="Auto" />
+            </Grid.RowDefinitions>
+            <ListView
+                ItemsSource="{Binding Products}"
+                HasUnevenRows="true">
+                <ListView.Header>
+                    <Label Text="Your order is ready!" Style="{DynamicResource TitleStyle}" Margin="12"/>
+                </ListView.Header>
+                <ListView.ItemTemplate>
+                    <DataTemplate>
+                        <ViewCell>
+                            <Grid Padding="12,0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="80" />
+                                    <ColumnDefinition Width="*" />
+                                    <ColumnDefinition Width="Auto" />
+                                </Grid.ColumnDefinitions>
+
+                                <Image Source="{Binding ImageUri}" Aspect="AspectFit"/>
+                                
+                                <StackLayout Grid.Column="1" Spacing="0" Padding="8" VerticalOptions="Center">
+                                    <Label Text="{Binding Name}" Style="{DynamicResource ListItemTextStyle}" LineBreakMode="MiddleTruncation"/>
+                                    <Label Text="{Binding Price, StringFormat='Unit price: {0:c}'}" TextColor="Gray" />
+                                    <Label Text="{Binding Quantity, StringFormat='Quantity: {0}'}" TextColor="Gray" Margin="0,8,0,0"/>
+                                </StackLayout>
+
+                                <Label Grid.Column="2" Text="{Binding Total, StringFormat='{}{0:c}'}" Style="{DynamicResource SubtitleStyle}" VerticalOptions="Center"/>
+                            </Grid>
+                        </ViewCell>
+                    </DataTemplate>
+                </ListView.ItemTemplate>
+                <ListView.Footer>
+                    <Grid Margin="12,20,12,8">
+                        <Label Text="Total: " Style="{DynamicResource SubtitleStyle}"/>
+                        <Label Text="{Binding Total, StringFormat='{}{0:c}'}" HorizontalTextAlignment="End" Style="{DynamicResource SubtitleStyle}"/>
+                    </Grid>
+                </ListView.Footer>
+            </ListView>
+            <Button Grid.Row="1" Text="Pay now" Style="{StaticResource PrimaryBtn}" Command="{Binding GoAndPayCommand}"/>
+        </Grid>
+	</ContentPage.Content>
+</ContentPage>

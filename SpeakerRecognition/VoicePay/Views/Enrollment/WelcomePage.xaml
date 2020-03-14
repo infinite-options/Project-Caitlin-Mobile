@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms" 
+    xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml" 
+    xmlns:vm="clr-namespace:VoicePay.ViewModels.Enrollment;assembly=VoicePay"
+    xmlns:forms="clr-namespace:Lottie.Forms;assembly=Lottie.Forms"
+    x:Class="VoicePay.Views.Enrollment.WelcomePage"
+    Title="Voice Training">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Clear" Priority="0" Order="Primary" Command="{Binding ClearCommand}" />
+    </ContentPage.ToolbarItems>
+    
+    <ContentPage.BindingContext>
+        <vm:WelcomeViewModel />
+    </ContentPage.BindingContext>
+
+    <ContentPage.Content>
+        <ScrollView>
+            <Grid ColumnSpacing="80">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*" />
+                    <RowDefinition Height="54" />
+                </Grid.RowDefinitions>
+                
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*" />
+                    <ColumnDefinition Width="*" />
+                </Grid.ColumnDefinitions>
+                
+                <StackLayout Grid.ColumnSpan="2" VerticalOptions="StartAndExpand" Margin="24,40,24,0">
+                    <Image Source="microphone_black.png" WidthRequest="80" HeightRequest="80" />
+                    <Label Text="Hi there! Teach our assistant to recognize your voice" FontSize="26" Margin="0,0,0,10" HorizontalTextAlignment="Center" />
+                    <Label Text="Press 'Train' when you are ready to go" FontSize="16" Margin="0,0,0,10" HorizontalTextAlignment="Center" />
+                    <Label Text="After that, we will be able to identify your voice." FontSize="16" HorizontalTextAlignment="Center" />
+                </StackLayout>
+                <Button Text="Identify" Grid.Row="1" Command="{Binding CheckAndGoVerifyCommand}" BackgroundColor="Transparent" HorizontalOptions="Start" WidthRequest="130" TextColor="{StaticResource Primary}" Margin="8"/>
+                <Button Text="Train" Grid.Row="1" Grid.Column="1" Command="{Binding CheckAndGoTrainCommand}"  Style="{StaticResource PrimaryBtn}" WidthRequest="130" HorizontalOptions="EndAndExpand" Margin="8" />
+            </Grid>
+        </ScrollView>
+    </ContentPage.Content>
+    
+</ContentPage>
