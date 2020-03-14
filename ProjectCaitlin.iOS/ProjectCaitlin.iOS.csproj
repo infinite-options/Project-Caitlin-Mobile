@@ -77,6 +77,8 @@
     <Compile Include="AnimationNavigationRenderer.cs" />
     <Compile Include="AnimationNavigationControllerDelegate.cs" />
     <Compile Include="TransitionAnimator.cs" />
+    <Compile Include="iOSNotificationManager.cs" />
+    <Compile Include="iOSNotificationReceiver.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
