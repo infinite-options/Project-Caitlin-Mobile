@@ -27,6 +27,12 @@ namespace ProjectCaitlin.Services
             HttpContent content = response.Content;
             var json = await content.ReadAsStringAsync();
 
+            Console.WriteLine("Here: " + json.ToString());
+           /* if () {
+                var googleService = new GoogleService();
+                await googleService.RefreshToken();
+            }*/
+
             //return json;
             //Deserialize JSON Result
             var result = JsonConvert.DeserializeObject<ProjectCaitlin.Methods.GetPhotoAlbumMethod>(json);

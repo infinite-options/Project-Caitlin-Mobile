@@ -2,28 +2,34 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProjectCaitlin;
+using ProjectCaitlin.Services;
 using ProjectCaitlin.Views;
 using Xamarin.Forms;
+using FFImageLoading.Forms;
+using FFImageLoading.Transformations;
+using FFImageLoading.Work;
 
 namespace ProjectCaitlin
 {
+
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
     public partial class MonthlyViewPage : ContentPage
     {
+
+        GooglePhotoService GooglePhotoService = new GooglePhotoService();
+
+        List<string> photoURIs = new List<string>();
         public int Year { get; set; } = 0;
         public int Month { get; set; } = 1;
         Label[] labels = new Label[42];
-        Image[] images = new Image[42];
+        //Image[] images = new Image[42];
 
         public MonthlyViewPage()
         {
             InitializeComponent();
+            
 
             int row = 1;
             int col = 0;
@@ -43,13 +49,12 @@ namespace ProjectCaitlin
                 if (col == 7)
                 {
                     row++;
-                    row++;
                     col = 0;
                 }
 
                 StackLayoutMap.Children.Add(labels[i]);
             }
-
+/*
             int row2 = 2;
             for (int i = 0; i < 42; i++)
             {
@@ -70,7 +75,7 @@ namespace ProjectCaitlin
                 }
 
                 StackLayoutMap.Children.Add(images[i]);
-            }
+            }*/
 
 
             var button1 = this.FindByName<Button>("month2");
@@ -91,7 +96,88 @@ namespace ProjectCaitlin
             yearLabel.Text = Year + "";
             setMonthLabel(Month);
             SetCalendar(currentYear, currentMonth);
+
+            SetupUI();
+            AddTapGestures();
+
         }
+
+        private async void SetupUI()
+        {
+            photoURIs = await GooglePhotoService.GetPhotos();
+
+            //AddTapGestures();
+
+            Grid controlGrid = new Grid();
+
+            int rowLength = 3;
+            double gridItemSize = (Application.Current.MainPage.Width / rowLength) - (1.2 * rowLength);
+
+            controlGrid.RowDefinitions.Add(new RowDefinition { Height = gridItemSize });
+
+            for (int i = 0; i < rowLength; i++)
+                controlGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = gridItemSize });
+
+            var photoCount = 0;
+
+            try
+            {
+                foreach (string photoURI in photoURIs)
+                {
+                    if (photoCount % rowLength == 0)
+                    {
+                        controlGrid.RowDefinitions.Add(new RowDefinition { Height = gridItemSize });
+
+                    }
+                    CachedImage webImage = new CachedImage
+                    {
+                        Source = Xamarin.Forms.ImageSource.FromUri(new Uri(photoURI)),
+                        Transformations = new List<ITransformation>() {
+                        new CropTransformation(),
+                    },
+
+                    };
+
+                    var indicator = new ActivityIndicator { Color = Color.Gray, };
+                    indicator.SetBinding(ActivityIndicator.IsRunningProperty, "IsLoading");
+                    indicator.BindingContext = webImage;
+
+                    controlGrid.Children.Add(indicator, photoCount % rowLength, photoCount / rowLength);
+                    controlGrid.Children.Add(webImage, photoCount % rowLength, photoCount / rowLength);
+                    //controlGrid.Children.Add(indicator, photoCount % rowLength, 0);
+                    //controlGrid.Children.Add(webImage, photoCount % rowLength, 0);
+                    photoCount++;
+                }
+            }
+            catch (NullReferenceException e)
+            {
+                var googleService = new GoogleService();
+                await googleService.RefreshToken();
+                
+
+            }
+
+            photoScrollView.HeightRequest = Application.Current.MainPage.Height - CalendarContent.Height - NavBar.Height;
+
+            if (photoURIs.Count != 0)
+            {
+                photoScrollView.Content = controlGrid;
+            }
+            else
+            {
+                Label noPhotosLabel = new Label()
+                {
+                    Text = "No photos to Show",
+                    VerticalOptions = LayoutOptions.CenterAndExpand,
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    TextColor = Color.DimGray
+
+                };
+
+                photoScrollView.Content = noPhotosLabel;
+            }
+        }
+
         void setMonthLabel(int month)
         {
             if (month == 1)
@@ -258,16 +344,37 @@ namespace ProjectCaitlin
             }
         }
 
-        public async void DailyBtnClicked(object sender, EventArgs e)
+        private void AddTapGestures()
         {
-            await Navigation.PushAsync(new DailyViewPage());
+            var tapGestureRecognizer1 = new TapGestureRecognizer();
+            tapGestureRecognizer1.Tapped += async (s, e) => {
+                await Navigation.PushAsync(new GreetingPage());
+            };
+            AboutMeButton.GestureRecognizers.Add(tapGestureRecognizer1);
+
+            var tapGestureRecognizer2 = new TapGestureRecognizer();
+            tapGestureRecognizer2.Tapped += async (s, e) => {
+                await Navigation.PushAsync(new ListViewPage());
+            };
+            ListViewButton.GestureRecognizers.Add(tapGestureRecognizer2);
+
+            var tapGestureRecognizer3 = new TapGestureRecognizer();
+            tapGestureRecognizer3.Tapped += async (s, e) => {
+                await Navigation.PushAsync(new PhotoDisplayPage());
+            };
+            MyPhotosButton.GestureRecognizers.Add(tapGestureRecognizer3);
         }
 
-        public async void ListBtnClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new ListViewPage());
-        }
+        /*  public async void DailyBtnClicked(object sender, EventArgs e)
+          {
+              await Navigation.PushAsync(new DailyViewPage());
+          }
 
+          public async void ListBtnClicked(object sender, EventArgs e)
+          {
+              await Navigation.PushAsync(new ListViewPage());
+          }
+  */
 
         public async void btn1(object sender, EventArgs args)
         {

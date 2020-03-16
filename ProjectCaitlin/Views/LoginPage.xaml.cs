@@ -46,7 +46,10 @@ namespace ProjectCaitlin
             {
                 if(App.user.access_token != null)
                 {
-                    await Navigation.PushAsync(new GoalsRoutinesTemplate());
+					
+					await Navigation.PushAsync(new MonthlyViewPage());
+
+					//await Navigation.PushAsync(new GoalsRoutinesTemplate());
                 }
             }
 
@@ -139,7 +142,7 @@ namespace ProjectCaitlin
 
 		async void CardViewPageClicked(object sender, EventArgs e)
 		{
-
+			await Navigation.PushAsync(new MonthlyViewPage());
 			await Navigation.PushAsync(new GoalsRoutinesTemplate());
 
 		}

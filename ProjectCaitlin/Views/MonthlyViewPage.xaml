@@ -3,88 +3,159 @@
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="ProjectCaitlin.MonthlyViewPage"
              NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="true">
 
 
-    <ContentPage.ToolbarItems>
-    <ToolbarItem Text="Daily View                                                                       "
-                 x:Name="dailyBtn"
-                 Clicked="DailyBtnClicked"/>
-    <ToolbarItem Text="List View"
-                 x:Name="listBtn"
-                 Clicked="ListBtnClicked"/>
-
-
-    </ContentPage.ToolbarItems>
     <StackLayout>
-        <ScrollView>
-            <StackLayout>
-                <StackLayout Grid.Row="1" Orientation="Horizontal" HorizontalOptions="Center" Spacing="3">
-                    <Button x:Name= "month1" Text="Previous Month" />
-                    <Label x:Name ="yearLabel" Text=" " FontSize="20"/>
-                    <Label x:Name = "monthLabel" Text=" " FontSize="20"/>
-                    <Button x:Name ="month2" Text="Next Month" />
-                </StackLayout>
-                <Grid x:Name="StackLayoutMap" Grid.Column="7" Grid.Row="13">
+        <StackLayout x:Name="CalendarContent">
+            <StackLayout Orientation="Horizontal" HorizontalOptions="Center" >
+                <Grid Grid.Column="4" Grid.Row="1">
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.14285714285*" />
-                        <ColumnDefinition Width="0.14285714285*" />
-                        <ColumnDefinition Width="0.14285714285*" />
-                        <ColumnDefinition Width="0.14285714285*" />
-                        <ColumnDefinition Width="0.14285714285*" />
-                        <ColumnDefinition Width="0.14285714285*" />
-                        <ColumnDefinition Width="0.14285714285*" />
+                        <ColumnDefinition Width="0.25*" />
+                        <ColumnDefinition Width="0.2*" />
+                        <ColumnDefinition Width="0.4*" />
+                        <ColumnDefinition Width="0.2*" />
                     </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="0.07692307692*" />
-                        <RowDefinition Height="0.03*" />
-                        <RowDefinition Height="0.07692307692*" />
-                        <RowDefinition Height="0.03*" />
-                        <RowDefinition Height="0.07692307692*" />
-                        <RowDefinition Height="0.03*" />
-                        <RowDefinition Height="0.07692307692*" />
-                        <RowDefinition Height="0.03*" />
-                        <RowDefinition Height="0.07692307692*" />
-                        <RowDefinition Height="0.03*" />
-                        <RowDefinition Height="0.07692307692*" />
-                        <RowDefinition Height="0.03*" />
-                        <RowDefinition Height="0.07692307692*" />
-
-                    </Grid.RowDefinitions>
-                    <Label Text="Sun" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="0" FontSize="20"/>
-                    <Label Text="Mon" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" FontSize="20"/>
-                    <Label Text="Tue" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="2" FontSize="20" />
-                    <Label Text="Wed" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="3" FontSize="20"/>
-                    <Label Text="Thu" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="4" FontSize="20"/>
-                    <Label Text="Fri" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="5" FontSize="20"/>
-                    <Label Text="Sat" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="6" FontSize="20"/>
+                    <Button Grid.Column="0" x:Name= "month1" Text="Previous" />
+                    <Label Grid.Column="1" x:Name ="yearLabel" Text=" " FontSize="20"/>
+                    <Label Grid.Column="2" x:Name = "monthLabel" Text=" " FontSize="20"/>
+                    <Button Grid.Column="3" x:Name ="month2" Text="Next" />
                 </Grid>
-
-                <StackLayout HeightRequest="100" WidthRequest="100">
-                    <Label Text=""/>
-                </StackLayout>
-
             </StackLayout>
-        </ScrollView>
-
-        <StackLayout HeightRequest="80" WidthRequest="80">
-            <Grid Grid.Row="1" Grid.Column="4" Padding="10" HeightRequest="60" WidthRequest="60">
+            <Grid x:Name="StackLayoutMap" Grid.Column="7" Grid.Row="6">
                 <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="0.25*" />
-                    <ColumnDefinition Width="0.25*" />
-                    <ColumnDefinition Width="0.25*" />
-                    <ColumnDefinition Width="0.25*" />
+                    <ColumnDefinition Width="0.14285714285*" />
+                    <ColumnDefinition Width="0.14285714285*" />
+                    <ColumnDefinition Width="0.14285714285*" />
+                    <ColumnDefinition Width="0.14285714285*" />
+                    <ColumnDefinition Width="0.14285714285*" />
+                    <ColumnDefinition Width="0.14285714285*" />
+                    <ColumnDefinition Width="0.14285714285*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
-                    <RowDefinition Height="1*" />
+                    <RowDefinition Height="0.16666666666*" />
+                    <RowDefinition Height="0.16666666666*" />
+                    <RowDefinition Height="0.16666666666*" />
+                    <RowDefinition Height="0.16666666666*" />
+                    <RowDefinition Height="0.16666666666*" />
+                    <RowDefinition Height="0.16666666666*" />
+                    <RowDefinition Height="0.16666666666*" />
+
                 </Grid.RowDefinitions>
-                <ImageButton BackgroundColor="Transparent" Source="aboutmeicon.png" Grid.Column="0" Clicked="btn1" />
-                <ImageButton BackgroundColor="Transparent" Source="listviewicon.png" Grid.Column="1" Clicked="btn2" />
-                <ImageButton BackgroundColor="Transparent" Source="myphotosiconselected.png" Grid.Column="2" Clicked="btn3" />
-                <ImageButton BackgroundColor="Transparent" Source="mydayicon.png" Grid.Column="3" Clicked="btn4" />
+                <Label Text="Sun" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="0" FontSize="20"/>
+                <Label Text="Mon" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="1" FontSize="20"/>
+                <Label Text="Tue" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="2" FontSize="20" />
+                <Label Text="Wed" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="3" FontSize="20"/>
+                <Label Text="Thu" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="4" FontSize="20"/>
+                <Label Text="Fri" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="5" FontSize="20"/>
+                <Label Text="Sat" VerticalOptions ="Center" HorizontalOptions="Center" Grid.Row="0" Grid.Column="6" FontSize="20"/>
             </Grid>
+        </StackLayout>
+
+        <StackLayout>
+            <ScrollView x:Name="photoScrollView">
+            </ScrollView>
+
+            <Frame
+                HasShadow="True"
+                CornerRadius="0"
+                x:Name="NavBar"
+                Padding="0,-5,0,10">
+                <Grid
+                    Grid.Row="1"
+                    Grid.Column="4"
+                    HeightRequest="65"
+                    VerticalOptions="End">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition
+                        Width="0.25*" />
+                        <ColumnDefinition
+                        Width="0.25*" />
+                        <ColumnDefinition
+                        Width="0.25*" />
+                        <ColumnDefinition
+                        Width="0.25*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition
+                        Height="1*" />
+                    </Grid.RowDefinitions>
+
+                    <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="0">
+                        <forms:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="mydayiconnotext.png" >
+                            <forms:CachedImage.HeightRequest>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <On Platform="Android">20</On>
+                                </OnPlatform>
+                            </forms:CachedImage.HeightRequest>
+                        </forms:CachedImage>
+                        <Label Text="My Day" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                            <Label.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                </OnPlatform>
+                            </Label.FontFamily>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="1">
+                        <forms:CachedImage x:Name="ListViewButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="listviewiconnotext.png" >
+                            <forms:CachedImage.HeightRequest>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <On Platform="Android">20</On>
+                                </OnPlatform>
+                            </forms:CachedImage.HeightRequest>
+                        </forms:CachedImage>
+                        <Label Text="Today's List" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                            <Label.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                </OnPlatform>
+                            </Label.FontFamily>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="2">
+                        <forms:CachedImage x:Name="MyPhotosButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="myphotosiconselectednotext.png" >
+                            <forms:CachedImage.HeightRequest>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <On Platform="Android">20</On>
+                                </OnPlatform>
+                            </forms:CachedImage.HeightRequest>
+                        </forms:CachedImage>
+                        <Label Text="My Photos" FontSize="12" TextColor="#d6a14b" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                            <Label.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                </OnPlatform>
+                            </Label.FontFamily>
+                        </Label>
+                    </StackLayout>
+
+                    <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="3">
+                        <forms:CachedImage DownsampleWidth="25" x:Name="AboutMeButton" BackgroundColor="Transparent" Source="aboutmeiconnotext.png" >
+                            <forms:CachedImage.HeightRequest>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <On Platform="Android">20</On>
+                                </OnPlatform>
+                            </forms:CachedImage.HeightRequest>
+                        </forms:CachedImage>
+                        <Label Text="About Me" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                            <Label.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                </OnPlatform>
+                            </Label.FontFamily>
+                        </Label>
+                    </StackLayout>
+                </Grid>
+            </Frame>
+
         </StackLayout>
     </StackLayout>
 
