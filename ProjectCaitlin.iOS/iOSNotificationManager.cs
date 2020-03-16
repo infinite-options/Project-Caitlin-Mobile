@@ -30,13 +30,17 @@ namespace ProjectCaitlin.iOS
 
         public void PrintPendingNotifications()
         {
-            Console.WriteLine("GetPendingNotifications: ");
+            Console.WriteLine("");
+            Console.WriteLine("=============GetPendingNotifications============= ");
             foreach (var notification in pendingNotificationRequests)
             {
                 Console.WriteLine("Title: " + notification.Content.Title);
                 Console.WriteLine("Duration: " + notification.Content.Body);
                 Console.WriteLine("badge: " + notification.Content.Badge);
             }
+            Console.WriteLine("=============GetPendingNotifications=============");
+            Console.WriteLine("");
+
         }
 
         public void ReceiveNotification(string title, string message)

@@ -71,13 +71,13 @@ namespace ProjectCaitlin.Methods
                     return;
                 }
 
+                notificationManager.PrintPendingNotifications();
+
                 int dbIdx_ = 0;
                 foreach (JToken jsonGorR in userJsonGoalsAndRoutines)
                 {
                     try
                     {
-                        notificationManager.PrintPendingNotifications();
-
                         JToken jsonMapGorR = jsonGorR["mapValue"]["fields"];
 
                         var isDeleted = false;
@@ -119,7 +119,8 @@ namespace ProjectCaitlin.Methods
                                     if (GRUserNotificationSetToTrue(routine.id, routine.dbIdx.ToString()).Result)
                                     {
                                         string title = "You have missed your " + jsonMapGorR["title"]["stringValue"].ToString() + " Routine!";
-                                        double duration = (routine.availableEndTime.TimeOfDay - DateTime.Now.TimeOfDay).TotalSeconds;
+                                        //double duration = (routine.availableEndTime.TimeOfDay - DateTime.Now.TimeOfDay).TotalSeconds;
+                                        double duration = 10;
                                         string message = "Open the app to review your tasks.";
                                         Console.WriteLine("duration: " + duration);
                                         if (duration > 0)
