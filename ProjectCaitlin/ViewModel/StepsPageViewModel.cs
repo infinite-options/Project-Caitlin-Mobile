@@ -67,16 +67,12 @@ namespace ProjectCaitlin.ViewModel
                                 var routineId = App.User.routines[a].id;
                                 var taskId = App.User.routines[a].tasks[b].id;
                                 var indexForCheckmark = _stepIdx;
+                                Items[_stepIdx].CheckmarkIcon = "greencheckmarkicon.png";
                                 var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, indexForCheckmark.ToString());
-
-                                Console.WriteLine("-----------------------------");
-                                Console.WriteLine("indexForCheckmark: " + indexForCheckmark);
-                                Console.WriteLine("-----------------------------");
 
                                 if (okToCheckmark)
                                 {
                                     App.User.routines[a].tasks[b].steps[indexForCheckmark].isComplete = true;
-                                    Items[_stepIdx].CheckmarkIcon = "greencheckmarkicon.png";
                                 }
 
                             }

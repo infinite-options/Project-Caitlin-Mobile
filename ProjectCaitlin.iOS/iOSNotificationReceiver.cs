@@ -2,7 +2,7 @@
 using UserNotifications;
 using Xamarin.Forms;
 
-namespace LocalNotifications.iOS
+namespace ProjectCaitlin.iOS
 {
     public class iOSNotificationReceiver : UNUserNotificationCenterDelegate
     {

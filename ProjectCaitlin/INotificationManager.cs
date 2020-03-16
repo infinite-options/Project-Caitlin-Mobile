@@ -1,10 +1,15 @@
 ﻿using System;
+
 namespace ProjectCaitlin
 {
-    public class INotificationManager
+    public interface INotificationManager
     {
-        public INotificationManager()
-        {
-        }
+        event EventHandler NotificationReceived;
+
+        void Initialize();
+
+        void ReceiveNotification(string title, string message);
+        int ScheduleNotification(string title, string message, double duration);
+        void PrintPendingNotifications();
     }
 }

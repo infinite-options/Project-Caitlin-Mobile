@@ -2,14 +2,16 @@
 using UserNotifications;
 using Xamarin.Forms;
 
-[assembly: Dependency(typeof(LocalNotifications.iOS.iOSNotificationManager))]
-namespace LocalNotifications.iOS
+[assembly: Dependency(typeof(ProjectCaitlin.iOS.IOSNotificationManager))]
+namespace ProjectCaitlin.iOS
 {
-    public class iOSNotificationManager : INotificationManager
+    public class IOSNotificationManager : INotificationManager
     {
         int messageId = -1;
 
         bool hasNotificationsPermission;
+
+        UNNotificationRequest[] pendingNotificationRequests;
 
         public event EventHandler NotificationReceived;
 
@@ -20,12 +22,37 @@ namespace LocalNotifications.iOS
             {
                 hasNotificationsPermission = approved;
             });
+
+            UNUserNotificationCenter.Current.GetPendingNotificationRequests(completionHandler: (obj) => {
+                pendingNotificationRequests = obj;
+            });
         }
 
-        public int ScheduleNotification(string title, string message)
+        public void PrintPendingNotifications()
+        {
+            Console.WriteLine("GetPendingNotifications: ");
+            foreach (var notification in pendingNotificationRequests)
+            {
+                Console.WriteLine("Title: " + notification.Content.Title);
+                Console.WriteLine("Duration: " + notification.Content.Body);
+                Console.WriteLine("badge: " + notification.Content.Badge);
+            }
+        }
+
+        public void ReceiveNotification(string title, string message)
+        {
+            var args = new NotificationEventArgs()
+            {
+                Title = title,
+                Message = message
+            };
+            NotificationReceived?.Invoke(null, args);
+        }
+
+        public int ScheduleNotification(string title, string message, double duration)
         {
             // EARLY OUT: app doesn't have permissions
-            if(!hasNotificationsPermission)
+            if (!hasNotificationsPermission)
             {
                 return -1;
             }
@@ -40,30 +67,26 @@ namespace LocalNotifications.iOS
                 Badge = 1
             };
 
+            Console.WriteLine("here");
+
             // Local notifications can be time or location based
             // Create a time-based trigger, interval is in seconds and must be greater than 0
-            var trigger = UNTimeIntervalNotificationTrigger.CreateTrigger(0.25, false);
+            UNTimeIntervalNotificationTrigger trigger = UNTimeIntervalNotificationTrigger.CreateTrigger(duration, false);
 
-            var request = UNNotificationRequest.FromIdentifier(messageId.ToString(), content, trigger);
+            UNNotificationRequest request = UNNotificationRequest.FromIdentifier(messageId.ToString(), content, trigger);
             UNUserNotificationCenter.Current.AddNotificationRequest(request, (err) =>
             {
                 if (err != null)
                 {
                     throw new Exception($"Failed to schedule notification: {err}");
                 }
+                else
+                {
+                    Console.WriteLine("notification: " + request.ToString() + " made to notify in " + duration.ToString() + " seconds.");
+                }
             });
 
             return messageId;
-        }
-
-        public void ReceiveNotification(string title, string message)
-        {
-            var args = new NotificationEventArgs()
-            {
-                Title = title,
-                Message = message
-            };
-            NotificationReceived?.Invoke(null, args);
         }
     }
 }

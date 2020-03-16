@@ -6,5 +6,12 @@
 	<array>
 		<string>$(AppIdentifierPrefix)com.infiniteoptions.Project-Caitlin</string>
 	</array>
+	<key>com.apple.developer.user-fonts</key>
+	<array>
+		<string>system-installation</string>
+		<string>app-usage</string>
+	</array>
+	<key>aps-environment</key>
+	<string>development</string>
 </dict>
 </plist>
