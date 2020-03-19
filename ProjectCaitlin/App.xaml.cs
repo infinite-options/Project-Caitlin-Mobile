@@ -4,13 +4,19 @@ using ProjectCaitlin.Methods;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Threading.Tasks;
+using ProjectCaitlin.Views;
 
 namespace ProjectCaitlin
 {
     public partial class App : Application
     {
-        public static user user { get; set; } = new user();
+        public static user User { get; set; } = new user();
 
+        public static string ParentPage { get; set; } = "";
+
+        public static double ListPageScrollPosY { get; set; } = -20;
+
+        [assembly: XamlCompilation(XamlCompilationsOptions.Compile)]
         public App()
         {
             InitializeComponent();

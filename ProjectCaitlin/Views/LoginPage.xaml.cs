@@ -38,32 +38,30 @@ namespace ProjectCaitlin
         protected override async void OnAppearing()
         {
             var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
-            await firestoreService.LoadUser();
-			PrintFirebaseUser();
+			await firestoreService.LoadUser();
 
-
-			if (App.user.old_refresh_token != App.user.refresh_token)
+			if (App.User.old_refresh_token != App.User.refresh_token)
             {
-                if(App.user.access_token != null)
+                if(App.User.access_token != null)
                 {
-					
-					await Navigation.PushAsync(new MonthlyViewPage());
-
-					//await Navigation.PushAsync(new GoalsRoutinesTemplate());
+					await GoogleService.LoadTodaysEvents();
+					await Navigation.PushAsync(new GoalsRoutinesTemplate());
                 }
             }
-
-            loginButton.IsVisible = true;
-
+            else
+            {
+                // await Application.Current.MainPage.DisplayAlert("Alert", "Please re-login to continue", "OK");
+                loginButton.IsVisible = true;
+            }
         }
 
         void PrintFirebaseUser()
         {
-			OnPropertyChanged(nameof(App.user));
-			Console.WriteLine("user first name: " + App.user.firstName);
-			Console.WriteLine("user last name: " + App.user.lastName);
+			OnPropertyChanged(nameof(App.User));
+			Console.WriteLine("user first name: " + App.User.firstName);
+			Console.WriteLine("user last name: " + App.User.lastName);
 
-            foreach (routine routine in App.user.routines)
+            foreach (routine routine in App.User.routines)
             {
 				OnPropertyChanged(nameof(routine));
 				Console.WriteLine("user routine title: " + routine.title);
@@ -81,7 +79,7 @@ namespace ProjectCaitlin
 				}
 			}
 
-			foreach (goal goal in App.user.goals)
+			foreach (goal goal in App.User.goals)
 			{
 				OnPropertyChanged(nameof(goal));
 				Console.WriteLine("user goal title: " + goal.title);
@@ -142,7 +140,7 @@ namespace ProjectCaitlin
 
 		async void CardViewPageClicked(object sender, EventArgs e)
 		{
-			await Navigation.PushAsync(new MonthlyViewPage());
+
 			await Navigation.PushAsync(new GoalsRoutinesTemplate());
 
 		}
@@ -182,10 +180,6 @@ namespace ProjectCaitlin
                 //Display Successful Login Alert
 				//await DisplayAlert("Login Successful", "", "OK");
 
-                //Reset accessToken
-                accessToken = e.Account.Properties["access_token"];
-                refreshToken = e.Account.Properties["refresh_token"];
-
                 //Write the Toekn to console, in case it changes
                 Console.WriteLine("HERE is the TOKEN------------------------------------------------");
                 Console.WriteLine(e.Account.Properties["access_token"]);
@@ -193,13 +187,17 @@ namespace ProjectCaitlin
                 Console.WriteLine(e.Account.Properties["refresh_token"]);
                 Console.WriteLine("----------------------------------------------------------------");
 
+                //Reset accessToken
+                accessToken = e.Account.Properties["access_token"];
+                refreshToken = e.Account.Properties["refresh_token"];
+
                 //Save to App.User AND Update Firebase with pertitnent info
                 var googleService = new GoogleService();
                 await googleService.SaveAccessTokenToFireBase(accessToken);
                 await googleService.SaveRefreshTokenToFireBase(refreshToken);
 
                 //Navigate to the Daily Page after Login
-                await Navigation.PushAsync(new ListViewPage());
+                await Navigation.PushAsync(new LoginPage());
 			}
 		}
 

@@ -20,7 +20,7 @@ namespace ProjectCaitlin
 
         GooglePhotoService GooglePhotoService = new GooglePhotoService();
 
-        List<string> photoURIs = new List<string>();
+        Dictionary<string,string> photoURIs = new Dictionary<string,string>();
         public int Year { get; set; } = 0;
         public int Month { get; set; } = 1;
         Label[] labels = new Label[42];
@@ -54,29 +54,6 @@ namespace ProjectCaitlin
 
                 StackLayoutMap.Children.Add(labels[i]);
             }
-/*
-            int row2 = 2;
-            for (int i = 0; i < 42; i++)
-            {
-                images[i] = new Image();
-                images[i].Source = "bear.jpg";
-                images[i].HeightRequest = 20;
-                images[i].WidthRequest = 20;
-
-                Grid.SetRow(images[i], row2);
-                Grid.SetColumn(images[i], col);
-
-                col++;
-                if (col == 7)
-                {
-                    row2++;
-                    row2++;
-                    col = 0;
-                }
-
-                StackLayoutMap.Children.Add(images[i]);
-            }*/
-
 
             var button1 = this.FindByName<Button>("month2");
             button1.Clicked += ButtonOne;
@@ -106,8 +83,6 @@ namespace ProjectCaitlin
         {
             photoURIs = await GooglePhotoService.GetPhotos();
 
-            //AddTapGestures();
-
             Grid controlGrid = new Grid();
 
             int rowLength = 3;
@@ -122,8 +97,11 @@ namespace ProjectCaitlin
 
             try
             {
-                foreach (string photoURI in photoURIs)
+                foreach (var pair in photoURIs)
                 {
+                    string photoURI = pair.Key;
+                    string date = pair.Value;
+
                     if (photoCount % rowLength == 0)
                     {
                         controlGrid.RowDefinitions.Add(new RowDefinition { Height = gridItemSize });
@@ -137,6 +115,13 @@ namespace ProjectCaitlin
                     },
 
                     };
+
+                    var tapGestureRecognizer = new TapGestureRecognizer();
+                    tapGestureRecognizer.Tapped += async (s, e) => {
+                        await Navigation.PushAsync(new PhotoDisplayPage(webImage,date));
+                    };
+                    webImage.GestureRecognizers.Add(tapGestureRecognizer);
+
 
                     var indicator = new ActivityIndicator { Color = Color.Gray, };
                     indicator.SetBinding(ActivityIndicator.IsRunningProperty, "IsLoading");
@@ -360,38 +345,12 @@ namespace ProjectCaitlin
 
             var tapGestureRecognizer3 = new TapGestureRecognizer();
             tapGestureRecognizer3.Tapped += async (s, e) => {
-                await Navigation.PushAsync(new PhotoDisplayPage());
+                await Navigation.PushAsync(new GoalsRoutinesTemplate());
             };
-            MyPhotosButton.GestureRecognizers.Add(tapGestureRecognizer3);
+            MyDayButton.GestureRecognizers.Add(tapGestureRecognizer3);
+
         }
 
-        /*  public async void DailyBtnClicked(object sender, EventArgs e)
-          {
-              await Navigation.PushAsync(new DailyViewPage());
-          }
-
-          public async void ListBtnClicked(object sender, EventArgs e)
-          {
-              await Navigation.PushAsync(new ListViewPage());
-          }
-  */
-
-        public async void btn1(object sender, EventArgs args)
-        {
-            await Navigation.PushAsync(new GreetingPage());
-        }
-        public async void btn2(object sender, EventArgs args)
-        {
-            await Navigation.PushAsync(new ListViewPage());
-        }
-        public async void btn3(object sender, EventArgs args)
-        {
-            await Navigation.PushAsync(new MonthlyViewPage());
-        }
-        public async void btn4(object sender, EventArgs args)
-        {
-            await Navigation.PushAsync(new GoalsRoutinesTemplate());
-        }
 
     }
 }

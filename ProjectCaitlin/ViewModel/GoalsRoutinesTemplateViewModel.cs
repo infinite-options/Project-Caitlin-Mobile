@@ -60,12 +60,12 @@ namespace ProjectCaitlin.ViewModel
                 Navigate = AboutMeCommand
             });
 
-            if (App.user.routines.Count >= 1 && !App.user.routines[0].isComplete && isInTimeRange(App.user.routines[0].availableStartTime.TimeOfDay, App.user.routines[0].availableEndTime.TimeOfDay)) {
+            if (App.User.routines.Count >= 1 && !App.User.routines[0].isComplete && isInTimeRange(App.User.routines[0].availableStartTime.TimeOfDay, App.User.routines[0].availableEndTime.TimeOfDay)) {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.routines[0].photo,
-                    Title = App.user.routines[0].title,
+                    Source = App.User.routines[0].photo,
+                    Title = App.User.routines[0].title,
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
@@ -80,12 +80,12 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 2 && !App.user.routines[1].isComplete && isInTimeRange(App.user.routines[1].availableStartTime.TimeOfDay, App.user.routines[1].availableEndTime.TimeOfDay)) {
+            if (App.User.routines.Count >= 2 && !App.User.routines[1].isComplete && isInTimeRange(App.User.routines[1].availableStartTime.TimeOfDay, App.User.routines[1].availableEndTime.TimeOfDay)) {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.routines[1].photo,
-                    Title = App.user.routines[1].title,
+                    Source = App.User.routines[1].photo,
+                    Title = App.User.routines[1].title,
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
@@ -99,13 +99,13 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 3 && !App.user.routines[2].isComplete && isInTimeRange(App.user.routines[2].availableStartTime.TimeOfDay, App.user.routines[2].availableEndTime.TimeOfDay))
+            if (App.User.routines.Count >= 3 && !App.User.routines[2].isComplete && isInTimeRange(App.User.routines[2].availableStartTime.TimeOfDay, App.User.routines[2].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.routines[2].photo,
-                    Title = App.user.routines[2].title,
+                    Source = App.User.routines[2].photo,
+                    Title = App.User.routines[2].title,
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
@@ -119,13 +119,13 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 4 && !App.user.routines[3].isComplete && isInTimeRange(App.user.routines[3].availableStartTime.TimeOfDay, App.user.routines[3].availableEndTime.TimeOfDay))
+            if (App.User.routines.Count >= 4 && !App.User.routines[3].isComplete && isInTimeRange(App.User.routines[3].availableStartTime.TimeOfDay, App.User.routines[3].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.routines[3].photo,
-                    Title = App.user.routines[3].title,
+                    Source = App.User.routines[3].photo,
+                    Title = App.User.routines[3].title,
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
@@ -139,13 +139,13 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 5 && !App.user.routines[4].isComplete && isInTimeRange(App.user.routines[4].availableStartTime.TimeOfDay, App.user.routines[4].availableEndTime.TimeOfDay))
+            if (App.User.routines.Count >= 5 && !App.User.routines[4].isComplete && isInTimeRange(App.User.routines[4].availableStartTime.TimeOfDay, App.User.routines[4].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.routines[4].photo,
-                    Title = App.user.routines[4].title,
+                    Source = App.User.routines[4].photo,
+                    Title = App.User.routines[4].title,
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
@@ -159,13 +159,13 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 6 && !App.user.routines[5].isComplete && isInTimeRange(App.user.routines[5].availableStartTime.TimeOfDay, App.user.routines[5].availableEndTime.TimeOfDay))
+            if (App.User.routines.Count >= 6 && !App.User.routines[5].isComplete && isInTimeRange(App.User.routines[5].availableStartTime.TimeOfDay, App.User.routines[5].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.routines[5].photo,
-                    Title = App.user.routines[5].title,
+                    Source = App.User.routines[5].photo,
+                    Title = App.User.routines[5].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
@@ -180,13 +180,13 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 7 && !App.user.routines[6].isComplete && isInTimeRange(App.user.routines[6].availableStartTime.TimeOfDay, App.user.routines[6].availableEndTime.TimeOfDay))
+            if (App.User.routines.Count >= 7 && !App.User.routines[6].isComplete && isInTimeRange(App.User.routines[6].availableStartTime.TimeOfDay, App.User.routines[6].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.routines[6].photo,
-                    Title = App.user.routines[6].title,
+                    Source = App.User.routines[6].photo,
+                    Title = App.User.routines[6].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
@@ -201,13 +201,13 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 8 && !App.user.routines[7].isComplete && isInTimeRange(App.user.routines[7].availableStartTime.TimeOfDay, App.user.routines[7].availableEndTime.TimeOfDay))
+            if (App.User.routines.Count >= 8 && !App.User.routines[7].isComplete && isInTimeRange(App.User.routines[7].availableStartTime.TimeOfDay, App.User.routines[7].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.routines[7].photo,
-                    Title = App.user.routines[7].title,
+                    Source = App.User.routines[7].photo,
+                    Title = App.User.routines[7].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
@@ -223,13 +223,13 @@ namespace ProjectCaitlin.ViewModel
                 }); 
             }
 
-            if (App.user.routines.Count >= 9 && !App.user.routines[8].isComplete && isInTimeRange(App.user.routines[8].availableStartTime.TimeOfDay, App.user.routines[8].availableEndTime.TimeOfDay))
+            if (App.User.routines.Count >= 9 && !App.User.routines[8].isComplete && isInTimeRange(App.User.routines[8].availableStartTime.TimeOfDay, App.User.routines[8].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.routines[8].photo,
-                    Title = App.user.routines[8].title,
+                    Source = App.User.routines[8].photo,
+                    Title = App.User.routines[8].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
@@ -245,13 +245,13 @@ namespace ProjectCaitlin.ViewModel
                 });
             }
 
-            if (App.user.routines.Count >= 10 && !App.user.routines[9].isComplete && isInTimeRange(App.user.routines[9].availableStartTime.TimeOfDay, App.user.routines[9].availableEndTime.TimeOfDay))
+            if (App.User.routines.Count >= 10 && !App.User.routines[9].isComplete && isInTimeRange(App.User.routines[9].availableStartTime.TimeOfDay, App.User.routines[9].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.routines[9].photo,
-                    Title = App.user.routines[9].title,
+                    Source = App.User.routines[9].photo,
+                    Title = App.User.routines[9].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
@@ -267,14 +267,14 @@ namespace ProjectCaitlin.ViewModel
                 });
             }
 
-            if (App.user.routines.Count >= 11 && !App.user.routines[10].isComplete && isInTimeRange(App.user.routines[10].availableStartTime.TimeOfDay, App.user.routines[10].availableEndTime.TimeOfDay))
+            if (App.User.routines.Count >= 11 && !App.User.routines[10].isComplete && isInTimeRange(App.User.routines[10].availableStartTime.TimeOfDay, App.User.routines[10].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
 
                 Items.Add(new
                 {
-                    Source = App.user.routines[10].photo,
-                    Title = App.user.routines[10].title,
+                    Source = App.User.routines[10].photo,
+                    Title = App.User.routines[10].title,
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
@@ -288,13 +288,13 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 12 && !App.user.routines[11].isComplete && isInTimeRange(App.user.routines[11].availableStartTime.TimeOfDay, App.user.routines[11].availableEndTime.TimeOfDay))
+            if (App.User.routines.Count >= 12 && !App.User.routines[11].isComplete && isInTimeRange(App.User.routines[11].availableStartTime.TimeOfDay, App.User.routines[11].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.routines[11].photo,
-                    Title = App.user.routines[11].title,
+                    Source = App.User.routines[11].photo,
+                    Title = App.User.routines[11].title,
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
@@ -308,13 +308,13 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 13 && !App.user.routines[12].isComplete && isInTimeRange(App.user.routines[12].availableStartTime.TimeOfDay, App.user.routines[12].availableEndTime.TimeOfDay))
+            if (App.User.routines.Count >= 13 && !App.User.routines[12].isComplete && isInTimeRange(App.User.routines[12].availableStartTime.TimeOfDay, App.User.routines[12].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.routines[12].photo,
-                    Title = App.user.routines[12].title,
+                    Source = App.User.routines[12].photo,
+                    Title = App.User.routines[12].title,
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
@@ -328,13 +328,13 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 14 && !App.user.routines[13].isComplete && isInTimeRange(App.user.routines[13].availableStartTime.TimeOfDay, App.user.routines[13].availableEndTime.TimeOfDay))
+            if (App.User.routines.Count >= 14 && !App.User.routines[13].isComplete && isInTimeRange(App.User.routines[13].availableStartTime.TimeOfDay, App.User.routines[13].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.routines[13].photo,
-                    Title = App.user.routines[13].title,
+                    Source = App.User.routines[13].photo,
+                    Title = App.User.routines[13].title,
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
@@ -348,13 +348,13 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 15 && !App.user.routines[14].isComplete && isInTimeRange(App.user.routines[14].availableStartTime.TimeOfDay, App.user.routines[14].availableEndTime.TimeOfDay))
+            if (App.User.routines.Count >= 15 && !App.User.routines[14].isComplete && isInTimeRange(App.User.routines[14].availableStartTime.TimeOfDay, App.User.routines[14].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.routines[14].photo,
-                    Title = App.user.routines[14].title,
+                    Source = App.User.routines[14].photo,
+                    Title = App.User.routines[14].title,
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
@@ -368,13 +368,13 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 16 && !App.user.routines[15].isComplete && isInTimeRange(App.user.routines[15].availableStartTime.TimeOfDay, App.user.routines[15].availableEndTime.TimeOfDay))
+            if (App.User.routines.Count >= 16 && !App.User.routines[15].isComplete && isInTimeRange(App.User.routines[15].availableStartTime.TimeOfDay, App.User.routines[15].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.routines[15].photo,
-                    Title = App.user.routines[15].title,
+                    Source = App.User.routines[15].photo,
+                    Title = App.User.routines[15].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
@@ -389,13 +389,13 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 17 && !App.user.routines[16].isComplete && isInTimeRange(App.user.routines[16].availableStartTime.TimeOfDay, App.user.routines[16].availableEndTime.TimeOfDay))
+            if (App.User.routines.Count >= 17 && !App.User.routines[16].isComplete && isInTimeRange(App.User.routines[16].availableStartTime.TimeOfDay, App.User.routines[16].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.routines[16].photo,
-                    Title = App.user.routines[16].title,
+                    Source = App.User.routines[16].photo,
+                    Title = App.User.routines[16].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
@@ -410,13 +410,13 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 18 && !App.user.routines[17].isComplete && isInTimeRange(App.user.routines[17].availableStartTime.TimeOfDay, App.user.routines[17].availableEndTime.TimeOfDay))
+            if (App.User.routines.Count >= 18 && !App.User.routines[17].isComplete && isInTimeRange(App.User.routines[17].availableStartTime.TimeOfDay, App.User.routines[17].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.routines[17].photo,
-                    Title = App.user.routines[17].title,
+                    Source = App.User.routines[17].photo,
+                    Title = App.User.routines[17].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
@@ -431,13 +431,13 @@ namespace ProjectCaitlin.ViewModel
                      })
                 });
             }
-            if (App.user.routines.Count >= 19 && !App.user.routines[18].isComplete && isInTimeRange(App.user.routines[18].availableStartTime.TimeOfDay, App.user.routines[18].availableEndTime.TimeOfDay))
+            if (App.User.routines.Count >= 19 && !App.User.routines[18].isComplete && isInTimeRange(App.User.routines[18].availableStartTime.TimeOfDay, App.User.routines[18].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.routines[18].photo,
-                    Title = App.user.routines[18].title,
+                    Source = App.User.routines[18].photo,
+                    Title = App.User.routines[18].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
@@ -452,13 +452,13 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.routines.Count >= 20 && !App.user.routines[19].isComplete && isInTimeRange(App.user.routines[19].availableStartTime.TimeOfDay, App.user.routines[19].availableEndTime.TimeOfDay))
+            if (App.User.routines.Count >= 20 && !App.User.routines[19].isComplete && isInTimeRange(App.User.routines[19].availableStartTime.TimeOfDay, App.User.routines[19].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.routines[19].photo,
-                    Title = App.user.routines[19].title,
+                    Source = App.User.routines[19].photo,
+                    Title = App.User.routines[19].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
@@ -473,13 +473,13 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 1 && !App.user.goals[0].isComplete && isInTimeRange(App.user.goals[0].availableStartTime.TimeOfDay, App.user.goals[0].availableEndTime.TimeOfDay))
+            if (App.User.goals.Count >= 1 && !App.User.goals[0].isComplete && isInTimeRange(App.User.goals[0].availableStartTime.TimeOfDay, App.User.goals[0].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.goals[0].photo,
-                    Title = App.user.goals[0].title,
+                    Source = App.User.goals[0].photo,
+                    Title = App.User.goals[0].title,
 
                     Ind = _imageCount++,
                     TextColor = Color.White,
@@ -495,13 +495,13 @@ namespace ProjectCaitlin.ViewModel
                 });
             }
 
-            if (App.user.goals.Count >= 2 && !App.user.goals[1].isComplete && isInTimeRange(App.user.goals[1].availableStartTime.TimeOfDay, App.user.goals[1].availableEndTime.TimeOfDay))
+            if (App.User.goals.Count >= 2 && !App.User.goals[1].isComplete && isInTimeRange(App.User.goals[1].availableStartTime.TimeOfDay, App.User.goals[1].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.goals[1].photo,
-                    Title = App.user.goals[1].title,
+                    Source = App.User.goals[1].photo,
+                    Title = App.User.goals[1].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = "#272E32",
@@ -517,13 +517,13 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 3 && !App.user.goals[2].isComplete && isInTimeRange(App.user.goals[2].availableStartTime.TimeOfDay, App.user.goals[2].availableEndTime.TimeOfDay))
+            if (App.User.goals.Count >= 3 && !App.User.goals[2].isComplete && isInTimeRange(App.User.goals[2].availableStartTime.TimeOfDay, App.User.goals[2].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.goals[2].photo,
-                    Title = App.user.goals[2].title,
+                    Source = App.User.goals[2].photo,
+                    Title = App.User.goals[2].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = "#272E32",
@@ -539,13 +539,13 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 4 && !App.user.goals[3].isComplete && isInTimeRange(App.user.goals[3].availableStartTime.TimeOfDay, App.user.goals[3].availableEndTime.TimeOfDay))
+            if (App.User.goals.Count >= 4 && !App.User.goals[3].isComplete && isInTimeRange(App.User.goals[3].availableStartTime.TimeOfDay, App.User.goals[3].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.goals[3].photo,
-                    Title = App.user.goals[3].title,
+                    Source = App.User.goals[3].photo,
+                    Title = App.User.goals[3].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = "#272E32",
@@ -561,13 +561,13 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 5 && !App.user.goals[4].isComplete && isInTimeRange(App.user.goals[4].availableStartTime.TimeOfDay, App.user.goals[4].availableEndTime.TimeOfDay))
+            if (App.User.goals.Count >= 5 && !App.User.goals[4].isComplete && isInTimeRange(App.User.goals[4].availableStartTime.TimeOfDay, App.User.goals[4].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.goals[4].photo,
-                    Title = App.user.goals[4].title,
+                    Source = App.User.goals[4].photo,
+                    Title = App.User.goals[4].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = "#272E32",
@@ -583,13 +583,13 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 6 && !App.user.goals[5].isComplete && isInTimeRange(App.user.goals[5].availableStartTime.TimeOfDay, App.user.goals[5].availableEndTime.TimeOfDay))
+            if (App.User.goals.Count >= 6 && !App.User.goals[5].isComplete && isInTimeRange(App.User.goals[5].availableStartTime.TimeOfDay, App.User.goals[5].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.goals[5].photo,
-                    Title = App.user.goals[5].title,
+                    Source = App.User.goals[5].photo,
+                    Title = App.User.goals[5].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = "#272E32",
@@ -605,13 +605,13 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 7 && !App.user.goals[6].isComplete && isInTimeRange(App.user.goals[6].availableStartTime.TimeOfDay, App.user.goals[6].availableEndTime.TimeOfDay))
+            if (App.User.goals.Count >= 7 && !App.User.goals[6].isComplete && isInTimeRange(App.User.goals[6].availableStartTime.TimeOfDay, App.User.goals[6].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.goals[6].photo,
-                    Title = App.user.goals[6].title,
+                    Source = App.User.goals[6].photo,
+                    Title = App.User.goals[6].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = "#272E32",
@@ -627,13 +627,13 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 8 && !App.user.goals[7].isComplete && isInTimeRange(App.user.goals[7].availableStartTime.TimeOfDay, App.user.goals[7].availableEndTime.TimeOfDay))
+            if (App.User.goals.Count >= 8 && !App.User.goals[7].isComplete && isInTimeRange(App.User.goals[7].availableStartTime.TimeOfDay, App.User.goals[7].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.goals[7].photo,
-                    Title = App.user.goals[7].title,
+                    Source = App.User.goals[7].photo,
+                    Title = App.User.goals[7].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = "#272E32",
@@ -649,13 +649,13 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 9 && !App.user.goals[8].isComplete && isInTimeRange(App.user.goals[8].availableStartTime.TimeOfDay, App.user.goals[8].availableEndTime.TimeOfDay))
+            if (App.User.goals.Count >= 9 && !App.User.goals[8].isComplete && isInTimeRange(App.User.goals[8].availableStartTime.TimeOfDay, App.User.goals[8].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.goals[8].photo,
-                    Title = App.user.goals[8].title,
+                    Source = App.User.goals[8].photo,
+                    Title = App.User.goals[8].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = "#272E32",
@@ -671,13 +671,13 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 10 && !App.user.goals[9].isComplete && isInTimeRange(App.user.goals[9].availableStartTime.TimeOfDay, App.user.goals[9].availableEndTime.TimeOfDay))
+            if (App.User.goals.Count >= 10 && !App.User.goals[9].isComplete && isInTimeRange(App.User.goals[9].availableStartTime.TimeOfDay, App.User.goals[9].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.goals[9].photo,
-                    Title = App.user.goals[9].title,
+                    Source = App.User.goals[9].photo,
+                    Title = App.User.goals[9].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = "#272E32",
@@ -693,13 +693,13 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 11 && !App.user.goals[10].isComplete && isInTimeRange(App.user.goals[10].availableStartTime.TimeOfDay, App.user.goals[10].availableEndTime.TimeOfDay))
+            if (App.User.goals.Count >= 11 && !App.User.goals[10].isComplete && isInTimeRange(App.User.goals[10].availableStartTime.TimeOfDay, App.User.goals[10].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.goals[10].photo,
-                    Title = App.user.goals[10].title,
+                    Source = App.User.goals[10].photo,
+                    Title = App.User.goals[10].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = "#272E32",
@@ -715,13 +715,13 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 12 && !App.user.goals[11].isComplete && isInTimeRange(App.user.goals[11].availableStartTime.TimeOfDay, App.user.goals[11].availableEndTime.TimeOfDay))
+            if (App.User.goals.Count >= 12 && !App.User.goals[11].isComplete && isInTimeRange(App.User.goals[11].availableStartTime.TimeOfDay, App.User.goals[11].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.goals[11].photo,
-                    Title = App.user.goals[11].title,
+                    Source = App.User.goals[11].photo,
+                    Title = App.User.goals[11].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = "#272E32",
@@ -737,13 +737,13 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 13 && !App.user.goals[12].isComplete && isInTimeRange(App.user.goals[12].availableStartTime.TimeOfDay, App.user.goals[12].availableEndTime.TimeOfDay))
+            if (App.User.goals.Count >= 13 && !App.User.goals[12].isComplete && isInTimeRange(App.User.goals[12].availableStartTime.TimeOfDay, App.User.goals[12].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.goals[12].photo,
-                    Title = App.user.goals[12].title,
+                    Source = App.User.goals[12].photo,
+                    Title = App.User.goals[12].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = "#272E32",
@@ -759,13 +759,13 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 14 && !App.user.goals[13].isComplete && isInTimeRange(App.user.goals[13].availableStartTime.TimeOfDay, App.user.goals[13].availableEndTime.TimeOfDay))
+            if (App.User.goals.Count >= 14 && !App.User.goals[13].isComplete && isInTimeRange(App.User.goals[13].availableStartTime.TimeOfDay, App.User.goals[13].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.goals[13].photo,
-                    Title = App.user.goals[13].title,
+                    Source = App.User.goals[13].photo,
+                    Title = App.User.goals[13].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = "#272E32",
@@ -781,13 +781,13 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 15 && !App.user.goals[14].isComplete && isInTimeRange(App.user.goals[14].availableStartTime.TimeOfDay, App.user.goals[14].availableEndTime.TimeOfDay))
+            if (App.User.goals.Count >= 15 && !App.User.goals[14].isComplete && isInTimeRange(App.User.goals[14].availableStartTime.TimeOfDay, App.User.goals[14].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.goals[14].photo,
-                    Title = App.user.goals[14].title,
+                    Source = App.User.goals[14].photo,
+                    Title = App.User.goals[14].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = "#272E32",
@@ -803,13 +803,13 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 16 && !App.user.goals[15].isComplete && isInTimeRange(App.user.goals[15].availableStartTime.TimeOfDay, App.user.goals[15].availableEndTime.TimeOfDay))
+            if (App.User.goals.Count >= 16 && !App.User.goals[15].isComplete && isInTimeRange(App.User.goals[15].availableStartTime.TimeOfDay, App.User.goals[15].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.goals[15].photo,
-                    Title = App.user.goals[15].title,
+                    Source = App.User.goals[15].photo,
+                    Title = App.User.goals[15].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = "#272E32",
@@ -825,13 +825,13 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 17 && !App.user.goals[16].isComplete && isInTimeRange(App.user.goals[16].availableStartTime.TimeOfDay, App.user.goals[16].availableEndTime.TimeOfDay))
+            if (App.User.goals.Count >= 17 && !App.User.goals[16].isComplete && isInTimeRange(App.User.goals[16].availableStartTime.TimeOfDay, App.User.goals[16].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.goals[16].photo,
-                    Title = App.user.goals[16].title,
+                    Source = App.User.goals[16].photo,
+                    Title = App.User.goals[16].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = "#272E32",
@@ -847,13 +847,13 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 18 && !App.user.goals[17].isComplete && isInTimeRange(App.user.goals[17].availableStartTime.TimeOfDay, App.user.goals[17].availableEndTime.TimeOfDay))
+            if (App.User.goals.Count >= 18 && !App.User.goals[17].isComplete && isInTimeRange(App.User.goals[17].availableStartTime.TimeOfDay, App.User.goals[17].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.goals[17].photo,
-                    Title = App.user.goals[17].title,
+                    Source = App.User.goals[17].photo,
+                    Title = App.User.goals[17].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = "#272E32",
@@ -869,13 +869,13 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 19 && !App.user.goals[18].isComplete && isInTimeRange(App.user.goals[18].availableStartTime.TimeOfDay, App.user.goals[18].availableEndTime.TimeOfDay))
+            if (App.User.goals.Count >= 19 && !App.User.goals[18].isComplete && isInTimeRange(App.User.goals[18].availableStartTime.TimeOfDay, App.User.goals[18].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.goals[18].photo,
-                    Title = App.user.goals[18].title,
+                    Source = App.User.goals[18].photo,
+                    Title = App.User.goals[18].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = "#272E32",
@@ -891,13 +891,13 @@ namespace ProjectCaitlin.ViewModel
                          })
                 });
             }
-            if (App.user.goals.Count >= 20 && !App.user.goals[19].isComplete && isInTimeRange(App.user.goals[19].availableStartTime.TimeOfDay, App.user.goals[19].availableEndTime.TimeOfDay))
+            if (App.User.goals.Count >= 20 && !App.User.goals[19].isComplete && isInTimeRange(App.User.goals[19].availableStartTime.TimeOfDay, App.User.goals[19].availableEndTime.TimeOfDay))
             {
                 complete.Add(false);
                 Items.Add(new
                 {
-                    Source = App.user.goals[19].photo,
-                    Title = App.user.goals[19].title,
+                    Source = App.User.goals[19].photo,
+                    Title = App.User.goals[19].title,
 
                     Ind = _imageCount++,
                     BackgroundColor = "#272E32",
@@ -1001,7 +1001,8 @@ namespace ProjectCaitlin.ViewModel
 
             if (time >= 6 && time < 12) { TimeLabel = "Good Morning"; DayImage = "sunrisemid.png"; }
             else if (time >= 12 && time < 18) { TimeLabel = "Good Afternoon"; DayImage = "fullsun.png"; }
-            else { TimeLabel = "Good Evening"; DayImage = "moon.png"; }
+            else if (time >= 18 && time <= 23) { TimeLabel = "Good Evening"; DayImage = "sunriselow.png"; }
+            else { TimeLabel = "Good Night"; DayImage = "moon.png"; }
         }
         public bool IsAutoAnimationRunning { get; set; }
 

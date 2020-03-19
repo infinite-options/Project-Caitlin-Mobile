@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using Newtonsoft.Json;
+using ProjectCaitlin.Methods;
 
 namespace ProjectCaitlin.Models
 {
@@ -25,6 +26,9 @@ namespace ProjectCaitlin.Models
 
 		public List<goal> goals { get; set; } = new List<goal>();
 
-        public event PropertyChangedEventHandler PropertyChanged;
+        public List<EventsItems> CalendarEvents { get; set; } = new List<EventsItems>();
+
+
+		public event PropertyChangedEventHandler PropertyChanged;
     }
 }

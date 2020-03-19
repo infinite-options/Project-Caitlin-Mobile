@@ -330,32 +330,37 @@
 
         </ScrollView>
         <Frame
-            HasShadow="True"
-            CornerRadius="0"
-            Padding="0,-5,0,10"
-            HeightRequest="65"
-            VerticalOptions="End">
-            <Grid
-            x:Name="NavBar"
-            Grid.Row="1"
-            Grid.Column="4"
-            VerticalOptions="FillAndExpand">
+                HasShadow="True"
+                CornerRadius="0"
+                Padding="0,-5,0,10">
+            <Grid x:Name="NavBar"
+                    Grid.Row="1"
+                    Grid.Column="4"
+                    HeightRequest="65"
+                    VerticalOptions="End">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition
-                    Width="0.25*" />
+                        Width="0.25*" />
                     <ColumnDefinition
-                    Width="0.25*" />
+                        Width="0.25*" />
                     <ColumnDefinition
-                    Width="0.25*" />
+                        Width="0.25*" />
                     <ColumnDefinition
-                    Width="0.25*" />
+                        Width="0.25*" />
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition
-                    Height="1*" />
+                        Height="1*" />
                 </Grid.RowDefinitions>
-                <StackLayout VerticalOptions="End" Grid.Column="0">
-                    <forms:CachedImage DownsampleWidth="25" x:Name="MyDayButton" BackgroundColor="Transparent" Source="mydayiconnotext.png" />
+
+                <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="0">
+                    <forms:CachedImage x:Name="MyDayButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="mydayiconnotext.png" >
+                        <forms:CachedImage.HeightRequest>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <On Platform="Android">20</On>
+                            </OnPlatform>
+                        </forms:CachedImage.HeightRequest>
+                    </forms:CachedImage>
                     <Label Text="My Day" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
                         <Label.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
@@ -365,8 +370,14 @@
                         </Label.FontFamily>
                     </Label>
                 </StackLayout>
-                <StackLayout VerticalOptions="End" Grid.Column="1">
-                    <forms:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="listviewiconselectednotext.png" />
+                <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="1">
+                    <forms:CachedImage x:Name="ListViewButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="listviewiconselectednotext.png" >
+                        <forms:CachedImage.HeightRequest>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <On Platform="Android">20</On>
+                            </OnPlatform>
+                        </forms:CachedImage.HeightRequest>
+                    </forms:CachedImage>
                     <Label Text="Today's List" FontSize="12" TextColor="#d6a14b" HorizontalOptions="Center" Margin="0, -3, 0, 0">
                         <Label.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
@@ -376,8 +387,14 @@
                         </Label.FontFamily>
                     </Label>
                 </StackLayout>
-                <StackLayout VerticalOptions="End" Grid.Column="2">
-                    <forms:CachedImage DownsampleWidth="25" x:Name="MyPhotosButton" BackgroundColor="Transparent" Source="myphotosiconnotext.png" />
+                <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="2">
+                    <forms:CachedImage x:Name="MyPhotosButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="myphotosiconnotext.png" >
+                        <forms:CachedImage.HeightRequest>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <On Platform="Android">20</On>
+                            </OnPlatform>
+                        </forms:CachedImage.HeightRequest>
+                    </forms:CachedImage>
                     <Label Text="My Photos" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
                         <Label.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
@@ -387,8 +404,15 @@
                         </Label.FontFamily>
                     </Label>
                 </StackLayout>
-                <StackLayout VerticalOptions="End" Grid.Column="3">
-                    <forms:CachedImage DownsampleWidth="25" x:Name="AboutMeButton" BackgroundColor="Transparent" Source="aboutmeiconnotext.png" />
+
+                <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="3">
+                    <forms:CachedImage DownsampleWidth="25" x:Name="AboutMeButton" BackgroundColor="Transparent" Source="aboutmeiconnotext.png" >
+                        <forms:CachedImage.HeightRequest>
+                            <OnPlatform x:TypeArguments="x:Double">
+                                <On Platform="Android">20</On>
+                            </OnPlatform>
+                        </forms:CachedImage.HeightRequest>
+                    </forms:CachedImage>
                     <Label Text="About Me" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
                         <Label.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">

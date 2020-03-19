@@ -21,8 +21,8 @@ namespace ProjectCaitlin.Methods
         public async Task LoadUser()
         {
             // reset current user and goals values (in case of reload)
-            App.user.routines = new List<routine>();
-            App.user.goals = new List<goal>();
+            App.User.routines = new List<routine>();
+            App.User.goals = new List<goal>();
 
             var request = new HttpRequestMessage
             {
@@ -52,11 +52,20 @@ namespace ProjectCaitlin.Methods
                 }
 
 
-                App.user.firstName = userJson["fields"]["first_name"]["stringValue"].ToString();
-                App.user.lastName = userJson["fields"]["last_name"]["stringValue"].ToString();
+                App.User.firstName = userJson["fields"]["first_name"]["stringValue"].ToString();
+                App.User.lastName = userJson["fields"]["last_name"]["stringValue"].ToString();
 
-                App.user.access_token = userJson["fields"]["google_auth_token"]["stringValue"].ToString();
-                App.user.refresh_token = userJson["fields"]["google_refresh_token"]["stringValue"].ToString();
+                try
+                {
+                    App.User.access_token = userJson["fields"]["google_auth_token"]["stringValue"].ToString();
+                    App.User.refresh_token = userJson["fields"]["google_refresh_token"]["stringValue"].ToString();
+                }
+                catch
+                {
+                    Console.WriteLine("Error with access and refresh tokens:");
+                    Console.WriteLine(userJson);
+                    return;
+                }
 
                 int dbIdx_ = 0;
                 foreach (JToken jsonGorR in userJsonGoalsAndRoutines)
@@ -89,7 +98,7 @@ namespace ProjectCaitlin.Methods
                                         "HH:mm:ss", CultureInfo.InvariantCulture)
                                 };
 
-                                App.user.routines.Add(routine);
+                                App.User.routines.Add(routine);
 
                                 //Console.WriteLine("on Routine: " + routine.id);
                             }
@@ -100,8 +109,7 @@ namespace ProjectCaitlin.Methods
                                     title = jsonMapGorR["title"]["stringValue"].ToString(),
                                     id = jsonMapGorR["id"]["stringValue"].ToString(),
                                     photo = jsonMapGorR["photo"]["stringValue"].ToString(),
-                                    isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"]
-                                        && IsDateToday(jsonMapGorR["datetime_completed"]["stringValue"].ToString()),
+                                    isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"],
                                     dbIdx = dbIdx_,
                                     dateTimeCompleted = DateTime.Parse(jsonMapGorR["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
                                     availableStartTime = DateTime.ParseExact(jsonMapGorR["available_start_time"]["stringValue"].ToString(),
@@ -110,7 +118,7 @@ namespace ProjectCaitlin.Methods
                                         "HH:mm:ss", CultureInfo.InvariantCulture)
                                 };
 
-                                App.user.goals.Add(goal);
+                                App.User.goals.Add(goal);
 
                                 //Console.WriteLine("on Goal: " + goal.id);
                             }
@@ -124,18 +132,18 @@ namespace ProjectCaitlin.Methods
                     dbIdx_++;
                 }
 
-                App.user.routines.Sort((x, y) => TimeSpan.Compare(x.availableStartTime.TimeOfDay, y.availableStartTime.TimeOfDay));
-                App.user.goals.Sort((x, y) => TimeSpan.Compare(x.availableStartTime.TimeOfDay, y.availableStartTime.TimeOfDay));
+                App.User.routines.Sort((x, y) => TimeSpan.Compare(x.availableStartTime.TimeOfDay, y.availableStartTime.TimeOfDay));
+                App.User.goals.Sort((x, y) => TimeSpan.Compare(x.availableStartTime.TimeOfDay, y.availableStartTime.TimeOfDay));
 
                 int routineIdx = 0;
-                foreach (routine routine in App.user.routines)
+                foreach (routine routine in App.User.routines)
                 {
                     _ = LoadTasks(routine.id, routineIdx, "routine");
                     routineIdx++;
                 }
 
                 int goalIdx = 0;
-                foreach (goal goal in App.user.goals)
+                foreach (goal goal in App.User.goals)
                 {
                     _ = LoadTasks(goal.id, goalIdx, "goal");
                     goalIdx++;
@@ -168,8 +176,6 @@ namespace ProjectCaitlin.Methods
                 return false;
             }
         }
-
-       
 
         public async Task<bool> CompleteRoutine(string routineId, string routineIdx)
         {
@@ -227,19 +233,20 @@ namespace ProjectCaitlin.Methods
 
         public async Task<bool> UpdateInstruction(string goalId, string actionId, string instructionNumber)
         {
-            HttpRequestMessage request = new HttpRequestMessage
-            {
-                RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/CompleteInstructionOrStep"),
-                Method = HttpMethod.Post
-            };
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/CompleteInstructionOrStep");
+            request.Method = HttpMethod.Post;
 
             //Format Headers of Request with included Token
             request.Headers.Add("userId", "7R6hAVmDrNutRkG3sVRy");
-            request.Headers.Add("goalId", goalId);
-            request.Headers.Add("actionId", actionId);
-            request.Headers.Add("instructionNumber", instructionNumber);
+            request.Headers.Add("routineId", goalId);
+            request.Headers.Add("taskId", actionId);
+            request.Headers.Add("stepNumber", instructionNumber);
             var client = new HttpClient();
             HttpResponseMessage response = await client.SendAsync(request);
+
+            HttpContent content = response.Content;
+            var routineResponse = await content.ReadAsStringAsync();
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
@@ -311,7 +318,7 @@ namespace ProjectCaitlin.Methods
                                         "HH:mm:ss", CultureInfo.InvariantCulture)
                                 };
 
-                                App.user.routines[routineIdx].tasks.Add(task);
+                                App.User.routines[routineIdx].tasks.Add(task);
 
                                 Console.WriteLine("on Task: " + task.id);
 
@@ -333,7 +340,7 @@ namespace ProjectCaitlin.Methods
                                         "HH:mm:ss", CultureInfo.InvariantCulture)
                                 };
 
-                                App.user.goals[routineIdx].actions.Add(action);
+                                App.User.goals[routineIdx].actions.Add(action);
 
                                 Console.WriteLine("on Action: " + action.id);
                             }
@@ -350,7 +357,7 @@ namespace ProjectCaitlin.Methods
                 if (routineType == "routine")
                 {
                     int taskIdx = 0;
-                    foreach (task task in App.user.routines[routineIdx].tasks)
+                    foreach (task task in App.User.routines[routineIdx].tasks)
                     {
                         //Console.WriteLine("on Task step load: " + task.id);
                         _ = LoadSteps(routineID, task.id, routineIdx, taskIdx, routineType);
@@ -360,7 +367,7 @@ namespace ProjectCaitlin.Methods
                 else
                 {
                     int actionIdx = 0;
-                    foreach (action action in App.user.goals[routineIdx].actions)
+                    foreach (action action in App.User.goals[routineIdx].actions)
                     {
                         //Console.WriteLine("on action step load: " + action.id);
                         _ = LoadSteps(routineID, action.id, routineIdx, actionIdx, routineType);
@@ -432,7 +439,7 @@ namespace ProjectCaitlin.Methods
 
                                 //Console.WriteLine("on Step: " + step.isComplete);
 
-                                App.user.routines[routineIdx].tasks[taskIdx].steps.Add(step);
+                                App.User.routines[routineIdx].tasks[taskIdx].steps.Add(step);
                             }
                             else if (routineType == "goal")
                             {
@@ -452,7 +459,7 @@ namespace ProjectCaitlin.Methods
 
 
 
-                                App.user.goals[routineIdx].actions[taskIdx].instructions.Add(instruction);
+                                App.User.goals[routineIdx].actions[taskIdx].instructions.Add(instruction);
 
                                 //Console.WriteLine("on Instruction: " + instruction.isComplete);
                             }

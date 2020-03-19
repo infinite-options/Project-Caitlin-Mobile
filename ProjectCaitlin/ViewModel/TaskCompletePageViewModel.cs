@@ -21,8 +21,8 @@ namespace ProjectCaitlin.ViewModel
         public string TopLabel { get; set; }
         public string TopLabel2 { get; set; }
 
-        
-        
+
+
 
 
         FirestoreService firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
@@ -30,18 +30,18 @@ namespace ProjectCaitlin.ViewModel
         public ObservableCollection<InstructionModel> Items { get; set; }
         public TaskCompletePageViewModel(TaskCompletePage mainPage, int a, int b, bool isRoutine)
         {
-        Items = new ObservableCollection<InstructionModel>();
-        this.mainPage = mainPage;
+            Items = new ObservableCollection<InstructionModel>();
+            this.mainPage = mainPage;
 
 
-            var goalId = App.user.goals[a].id;
-            var actionId = App.user.goals[a].actions[b].id;
+            var goalId = App.User.goals[a].id;
+            var actionId = App.User.goals[a].actions[b].id;
 
-            TopLabel = App.user.goals[a].title;
-            TopLabel2 = App.user.goals[a].actions[b].title;
+            TopLabel = App.User.goals[a].title;
+            TopLabel2 = App.User.goals[a].actions[b].title;
 
             int i = 0;
-            foreach (instruction instruction in App.user.goals[a].actions[b].instructions)
+            foreach (instruction instruction in App.User.goals[a].actions[b].instructions)
             {
                 /*Command completeInstuction; 
                 if (App.user.routines[a].tasks[b].steps[i].isComplete)
@@ -54,7 +54,6 @@ namespace ProjectCaitlin.ViewModel
                             async () =>
                             {
                                 var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
-
                                 var goalId = App.user.goals[a].id;
                                 var actionId = App.user.goals[a].actions[b].id;
                                 var isInstructionComplete = await firestoreService.UpdateInstruction(goalId, actionId, App.user.goals[a].actions[b].instructions[i].dbIdx.ToString());
@@ -63,7 +62,6 @@ namespace ProjectCaitlin.ViewModel
                                     App.user.goals[a].actions[b].instructions[i].isComplete = true;
                                     App.user.goals[a].actions[b].instructions[i].dateTimeCompleted = DateTime.Now;
                                 }
-
                             }
                         );
                 }*/
@@ -78,10 +76,10 @@ namespace ProjectCaitlin.ViewModel
                     _okToCheckmark = false;
                 }
 
-                    Items.Add(new InstructionModel
-                    (
-                        instruction.photo, instruction.title, _okToCheckmark
-                      ));
+                Items.Add(new InstructionModel
+                (
+                    instruction.photo, instruction.title, _okToCheckmark
+                  ));
                 Console.WriteLine("instruction " + i + " isComplete : " + instruction.isComplete);
                 i++;
             }
@@ -91,7 +89,7 @@ namespace ProjectCaitlin.ViewModel
         {
 
             public string Text { get; set; }
-            public string Source{ get; set; }
+            public string Source { get; set; }
 
             private bool okToCheckmark;
 
@@ -109,7 +107,7 @@ namespace ProjectCaitlin.ViewModel
             }
 
 
-            public Command CompleteInstuction{ get; set;}
+            public Command CompleteInstuction { get; set; }
 
             public InstructionModel(string source, string text, bool _okToCheckmark)
             {

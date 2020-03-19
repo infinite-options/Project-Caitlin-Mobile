@@ -85,7 +85,7 @@
                     </Grid.RowDefinitions>
 
                     <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="0">
-                        <forms:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="mydayiconnotext.png" >
+                        <forms:CachedImage x:Name="MyDayButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="mydayiconnotext.png" >
                             <forms:CachedImage.HeightRequest>
                                 <OnPlatform x:TypeArguments="x:Double">
                                     <On Platform="Android">20</On>
@@ -119,7 +119,7 @@
                         </Label>
                     </StackLayout>
                     <StackLayout VerticalOptions="End" Margin="0, 0, 0, 3" Grid.Column="2">
-                        <forms:CachedImage x:Name="MyPhotosButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="myphotosiconselectednotext.png" >
+                        <forms:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="myphotosiconselectednotext.png" >
                             <forms:CachedImage.HeightRequest>
                                 <OnPlatform x:TypeArguments="x:Double">
                                     <On Platform="Android">20</On>

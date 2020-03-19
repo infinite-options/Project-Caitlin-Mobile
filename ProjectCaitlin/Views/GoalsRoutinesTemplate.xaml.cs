@@ -18,19 +18,6 @@ namespace ProjectCaitlin.Views
             BindingContext = pageModel;
         }
 
-        public async void btn1(object sender, EventArgs args)
-        {
-            await Navigation.PushAsync(new GreetingPage());
-        }
-        public async void btn2(object sender, EventArgs args)
-        {
-            await Navigation.PushAsync(new ListViewPage());
-        }
-        public async void btn3(object sender, EventArgs args)
-        {
-            await Navigation.PushAsync(new PhotoDisplayPage());
-        }
-
         private void AddTapGestures()
         {
             var tapGestureRecognizer1 = new TapGestureRecognizer();
@@ -47,7 +34,7 @@ namespace ProjectCaitlin.Views
 
             var tapGestureRecognizer3 = new TapGestureRecognizer();
             tapGestureRecognizer3.Tapped += async (s, e) => {
-                await Navigation.PushAsync(new PhotoDisplayPage());
+                await Navigation.PushAsync(new MonthlyViewPage());
             };
             MyPhotosButton.GestureRecognizers.Add(tapGestureRecognizer3);
         }

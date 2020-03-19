@@ -10,7 +10,7 @@ namespace ProjectCaitlin.Services
     public class GooglePhotoService
     {
 
-        public async Task<List<string>> GetPhotos()
+        public async Task<Dictionary<string,string>> GetPhotos()
         {
 
             //Make HTTP Request
@@ -19,7 +19,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", App.user.access_token);
+            string bearerString = string.Format("Bearer {0}", App.User.access_token);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
@@ -27,18 +27,15 @@ namespace ProjectCaitlin.Services
             HttpContent content = response.Content;
             var json = await content.ReadAsStringAsync();
 
-            Console.WriteLine("Here: " + json.ToString());
-           /* if () {
-                var googleService = new GoogleService();
-                await googleService.RefreshToken();
-            }*/
-
             //return json;
             //Deserialize JSON Result
             var result = JsonConvert.DeserializeObject<ProjectCaitlin.Methods.GetPhotoAlbumMethod>(json);
 
             //Create itemList
-            var itemList = new List<string>();
+            //var itemList = new List<string>();
+            var itemMap = new Dictionary<string, string>();
+
+
             String creationTime = "";
             String storePicUri = "";
             String date = "";
@@ -55,7 +52,8 @@ namespace ProjectCaitlin.Services
                     string datePicker = "5/26/2016";
                     //if (date == datePicker)
                     //{
-                    itemList.Add(product.BaseUrl.ToString());
+                    //itemList.Add(product.BaseUrl.ToString());
+                    itemMap.Add(product.BaseUrl.ToString(),date);
                     storePicUri = product.BaseUrl.ToString();
                     //System.Diagnostics.Debug.WriteLine(storePicUri);
                     //System.Diagnostics.Debug.WriteLine(date);
@@ -68,10 +66,10 @@ namespace ProjectCaitlin.Services
                 return null;
             }
 
-            if (itemList.Count == 0)
-                return new List<string>();
+            if (itemMap.Count == 0)
+                return new Dictionary<string,string>();
             else
-                return itemList;
+                return itemMap;
         }
     }
 }

@@ -10,11 +10,11 @@
     <StackLayout
         VerticalOptions="Center"
         Margin="20">
-
+        
         <Label
             Text="Project Caitlin"
             HorizontalOptions="Center"
-            TextColor="#4682B4"
+            TextColor="DimGray"
             FontSize="35"
             Margin="0, 23"
             />

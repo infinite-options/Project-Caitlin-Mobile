@@ -32,21 +32,41 @@ namespace ProjectCaitlin.Views
             pageModel = new StepsPageViewModel(this, a, b, isRoutine);
             BindingContext = pageModel;
             itemcount = pageModel.count;
-            StepListView.HeightRequest = 50 * App.user.routines[a].tasks[b].steps.Count;
+            StepListView.HeightRequest = GetListViewHeight();
+        }
+
+        private double GetListViewHeight()
+        {
+            double result = 0;
+            foreach (step step in App.User.routines[a].tasks[b].steps)
+            {
+                result += 50 + (10 * step.title.Length / 40);
+
+            }
+
+            return result;
         }
 
         public async void close(object sender, EventArgs args)
         {
-            await Navigation.PushAsync(new TaskPage(a, isRoutine));
+            Navigation.PopAsync();
+            Navigation.PopAsync();
+        }
+
+        public async void back(object sender, EventArgs args)
+        {
+            await Navigation.PopAsync();
         }
 
         public async void DoneClicked(object sender, EventArgs args)
         {
+            DoneButton.IsEnabled = false;
+
             var completeCounter = 0;
 
             var completeTasksCounter = 0;
 
-            foreach (step step in App.user.routines[a].tasks[b].steps)
+            foreach (step step in App.User.routines[a].tasks[b].steps)
             {
                 if (step.isComplete)
                 {
@@ -54,28 +74,31 @@ namespace ProjectCaitlin.Views
                 }
             }
 
-            if (completeCounter == App.user.routines[a].tasks[b].steps.Count)
+            if (completeCounter == App.User.routines[a].tasks[b].steps.Count)
             {
-                var routineId = App.user.routines[a].id;
-                var taskId = App.user.routines[a].tasks[b].id;
+                DoneButton.IsEnabled = false;
+                var routineId = App.User.routines[a].id;
+                var taskId = App.User.routines[a].tasks[b].id;
 
                 var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
 
-                var okToCheckmark = await firestoreService.UpdateTask(routineId, taskId, App.user.routines[a].tasks[b].dbIdx.ToString());
+                var okToCheckmark = await firestoreService.UpdateTask(routineId, taskId, App.User.routines[a].tasks[b].dbIdx.ToString());
                 if (okToCheckmark)
                 {
-                    App.user.routines[a].tasks[b].isComplete = true;
-                    App.user.routines[a].tasks[b].dateTimeCompleted = DateTime.Now;
+                    App.User.routines[a].tasks[b].isComplete = true;
+                    App.User.routines[a].tasks[b].dateTimeCompleted = DateTime.Now;
+                    //TaskPage.pageModel.Items[b].IsComplete = true;
                 }
 
-                await Navigation.PushAsync(new TaskPage(a, isRoutine));
+                await Navigation.PopAsync();
             }
             else
             {
+                DoneButton.IsEnabled = true;
                 await DisplayAlert("Oops!", "Please complete all steps before marking this task as done", "OK");
             }
 
-            foreach (task task in App.user.routines[a].tasks)
+            foreach (task task in App.User.routines[a].tasks)
             {
                 if (task.isComplete)
                 {
@@ -83,17 +106,17 @@ namespace ProjectCaitlin.Views
                 }
             }
 
-            if (completeTasksCounter == App.user.routines[a].tasks.Count)
+            if (completeTasksCounter == App.User.routines[a].tasks.Count)
             {
-                var routineId = App.user.routines[a].id;
+                var routineId = App.User.routines[a].id;
 
                 var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
 
-                var okToCheckmark = await firestoreService.CompleteRoutine(routineId, App.user.routines[a].dbIdx.ToString());
+                var okToCheckmark = await firestoreService.CompleteRoutine(routineId, App.User.routines[a].dbIdx.ToString());
                 if (okToCheckmark)
                 {
-                    App.user.routines[a].isComplete = true;
-                    App.user.routines[a].dateTimeCompleted = DateTime.Now;
+                    App.User.routines[a].isComplete = true;
+                    App.User.routines[a].dateTimeCompleted = DateTime.Now;
                 }
             }
         }

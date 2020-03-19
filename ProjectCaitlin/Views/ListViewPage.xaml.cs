@@ -55,7 +55,7 @@ namespace ProjectCaitlin
 
             AddTapGestures();
 
-            user = App.user;
+            user = App.User;
 
             putLayoutsIntoLists();
 
@@ -162,7 +162,7 @@ namespace ProjectCaitlin
 
             if (eventsList.Count == eventIdx)
             {
-                PopulateRoutine(user.routines[routineIdx], routineIdx, GetFirstInTimeOfDay("routine",user.routines[routineIdx].availableStartTime.TimeOfDay));
+                PopulateRoutine(user.routines[routineIdx], routineIdx, GetFirstInTimeOfDay("routine", user.routines[routineIdx].availableStartTime.TimeOfDay));
                 PopulateEventsAndRoutines(eventIdx, ++routineIdx);
                 return;
             }
@@ -659,7 +659,7 @@ namespace ProjectCaitlin
 
             var tapGestureRecognizer3 = new TapGestureRecognizer();
             tapGestureRecognizer3.Tapped += async (s, e) => {
-                await Navigation.PushAsync(new PhotoDisplayPage());
+                await Navigation.PushAsync(new MonthlyViewPage());
             };
             MyPhotosButton.GestureRecognizers.Add(tapGestureRecognizer3);
 
@@ -672,11 +672,11 @@ namespace ProjectCaitlin
 
         void PrintFirebaseUser()
         {
-            OnPropertyChanged(nameof(App.user));
-            Console.WriteLine("user first name: " + App.user.firstName);
-            Console.WriteLine("user last name: " + App.user.lastName);
+            OnPropertyChanged(nameof(App.User));
+            Console.WriteLine("user first name: " + App.User.firstName);
+            Console.WriteLine("user last name: " + App.User.lastName);
 
-            foreach (routine routine in App.user.routines)
+            foreach (routine routine in App.User.routines)
             {
                 OnPropertyChanged(nameof(routine));
                 Console.WriteLine("user routine title: " + routine.title);
@@ -694,7 +694,7 @@ namespace ProjectCaitlin
                 }
             }
 
-            foreach (goal goal in App.user.goals)
+            foreach (goal goal in App.User.goals)
             {
                 OnPropertyChanged(nameof(goal));
                 Console.WriteLine("user goal title: " + goal.title);

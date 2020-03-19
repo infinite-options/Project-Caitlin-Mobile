@@ -18,7 +18,7 @@
                     Padding="10, 0, 10, 0">
 
                     <!-- BACK ARROW-->
-           
+
                     <ImageButton 
                         Source="arrowicon.png"
                         BackgroundColor="Transparent"
@@ -56,7 +56,7 @@
                 HorizontalOptions="Center"
                 VerticalOptions="StartAndExpand"/>
 
-               
+
             </StackLayout>
             <StackLayout Margin="15">
                 <CarouselView x:Name="CarouselTasks" HeightRequest="400" ItemsSource="{Binding Items}">
