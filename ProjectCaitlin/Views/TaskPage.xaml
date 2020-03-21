@@ -33,7 +33,7 @@
                             Text="{Binding TopLabel}"
                             FontSize="30"
                             HorizontalTextAlignment="Center"
-                            FontAttributes="Bold"     
+                            FontAttributes="Bold"
                             TextColor= "{Binding TitleTextColor}"
                             HorizontalOptions="CenterAndExpand"
                             VerticalOptions="Center"/>

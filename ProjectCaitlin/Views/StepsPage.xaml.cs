@@ -87,7 +87,7 @@ namespace ProjectCaitlin.Views
                 {
                     App.User.routines[a].tasks[b].isComplete = true;
                     App.User.routines[a].tasks[b].dateTimeCompleted = DateTime.Now;
-                    TaskPage.pageModel.Items[b].IsComplete = true;
+                    //TaskPage.pageModel.Items[b].IsComplete = true;
                 }
 
                 await Navigation.PopAsync();

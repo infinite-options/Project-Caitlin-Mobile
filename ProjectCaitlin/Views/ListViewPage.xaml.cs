@@ -20,7 +20,7 @@ namespace ProjectCaitlin
     {
         List<StackLayout> EventAndRoutineStackLayouts = new List<StackLayout>();
         List<StackLayout> GoalsStackLayouts = new List<StackLayout>();
-        
+
         TimeSpan morningStart = new TimeSpan(6, 0, 0);
         TimeSpan morningEnd = new TimeSpan(11, 0, 0);
         TimeSpan afternoonStart = new TimeSpan(11, 0, 0);
@@ -601,7 +601,7 @@ namespace ProjectCaitlin
 
             var tapGestureRecognizer3 = new TapGestureRecognizer();
             tapGestureRecognizer3.Tapped += async (s, e) => {
-                await Navigation.PushAsync(new PhotoDisplayPage());
+                await Navigation.PushAsync(new MonthlyViewPage());
             };
             MyPhotosButton.GestureRecognizers.Add(tapGestureRecognizer3);
 

@@ -15,7 +15,7 @@ namespace ProjectCaitlin.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TaskPage : ContentPage
     {
-        public static TaskGridViewModel pageModel;
+        readonly TaskGridViewModel pageModel;
 
         public TaskPage(int routineNum, bool isRoutine)
         {

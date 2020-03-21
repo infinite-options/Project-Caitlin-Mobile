@@ -7,120 +7,272 @@ using FFImageLoading.Work;
 using ProjectCaitlin.Services;
 using ProjectCaitlin.Views;
 using Xamarin.Forms;
+using ProjectCaitlin.ViewModel;
+using System.Globalization;
+using System.Text.RegularExpressions;
 
 namespace ProjectCaitlin
 {
     public partial class PhotoDisplayPage : ContentPage
     {
+        readonly PhotoViewModel pageModel;
+
         GooglePhotoService GooglePhotoService = new GooglePhotoService();
 
         List<string> photoURIs = new List<string>();
 
-        public PhotoDisplayPage()
+        string date;
+
+        public PhotoDisplayPage(CachedImage webImage,string date)
         {
             InitializeComponent();
+            this.date = date;
+            pageModel = new PhotoViewModel(webImage,date);
+            BindingContext = pageModel;
 
-            SetupUI();
+            dateLabel.Text = date;
+            var button1 = this.FindByName<ImageButton>("button1");
+            button1.Clicked += ButtonOne;
+
+            var button2 = this.FindByName<ImageButton>("button2");
+            button2.Clicked += ButtonTwo;
+
         }
 
-        private async void SetupUI()
+        public PhotoDisplayPage(string date)
         {
-            photoURIs = await GooglePhotoService.GetPhotos();
+            InitializeComponent();
+            this.date = date;
+            pageModel = new PhotoViewModel(date);
+            BindingContext = pageModel;
 
-            AddTapGestures();
+            dateLabel.Text = date;
+            var button1 = this.FindByName<ImageButton>("button1");
+            button1.Clicked += ButtonOne;
 
-            Grid controlGrid = new Grid();
+            var button2 = this.FindByName<ImageButton>("button2");
+            button2.Clicked += ButtonTwo;
+        }
 
-            int rowLength = 3;
-            double gridItemSize = (Application.Current.MainPage.Width / rowLength) - (1.2 * rowLength);
+        async void ButtonOne(object sender, EventArgs args)
+        {
+            Console.Write("Previous not Done");
+            date = PreviousDate();
+            Console.Write("Previous not Done");
 
-            controlGrid.RowDefinitions.Add(new RowDefinition { Height = gridItemSize });
+            await Navigation.PushAsync(new PhotoDisplayPage(date));
+        }
 
-            for (int i = 0; i < rowLength; i ++)
-                controlGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = gridItemSize});
+        async void ButtonTwo(object sender, EventArgs args)
+        {
+            Console.Write("Next not Done");
 
-            var photoCount = 0;
+            date = NextDate();
+            Console.Write("Next Done");
+            await Navigation.PushAsync(new PhotoDisplayPage(date));
+        }
 
-            try
+        public string PreviousDate() {
+
+            int Year = Int32.Parse(date.Substring(0, date.IndexOf("/")));
+            string newDate = date.Substring(date.IndexOf("/") + 1);
+            int Month = Int32.Parse(newDate.Substring(0, newDate.IndexOf("/")));
+            newDate = newDate.Substring(date.IndexOf("/") + 1);
+            int Day = Int32.Parse(newDate);
+
+
+            int maxDay = 30;
+            int lastMonth = 0;
+            if (Month == 1)
             {
-                foreach (string photoURI in photoURIs)
-                {
-                    if (photoCount % rowLength == 0)
-                    {
-                        controlGrid.RowDefinitions.Add(new RowDefinition { Height = gridItemSize });
-
-                    }
-                    CachedImage webImage = new CachedImage
-                    {
-                        Source = Xamarin.Forms.ImageSource.FromUri(new Uri(photoURI)),
-                        Transformations = new List<ITransformation>() {
-                        new CropTransformation(),
-                    },
-
-                    };
-
-                    var indicator = new ActivityIndicator { Color = Color.Gray, };
-                    indicator.SetBinding(ActivityIndicator.IsRunningProperty, "IsLoading");
-                    indicator.BindingContext = webImage;
-
-                    controlGrid.Children.Add(indicator, photoCount % rowLength, photoCount / rowLength);
-                    controlGrid.Children.Add(webImage, photoCount % rowLength, photoCount / rowLength);
-                    //controlGrid.Children.Add(indicator, photoCount % rowLength, 0);
-                    //controlGrid.Children.Add(webImage, photoCount % rowLength, 0);
-                    photoCount++;
-                }
+                maxDay = 31;
+                lastMonth = 31;
             }
-            catch (NullReferenceException e)
+            else if (Month == 2)
             {
-                var googleService = new GoogleService();
-                await googleService.RefreshToken();
-                SetupUI();
+                if ((Year % 4 == 0 && Year % 100 != 0) || Year % 400 == 0)
+                    maxDay = 29;
+                else
+                    maxDay = 28;
+                lastMonth = 31;
+            }
+            else if (Month == 3)
+            {
+                maxDay = 31;
+                if ((Year % 4 == 0 && Year % 100 != 0) || Year % 400 == 0)
+                    lastMonth = 29;
+                else
+                    lastMonth = 28;
+            }
+            else if (Month == 4)
+            {
+                maxDay = 30;
+                lastMonth = 31;
             }
 
-            photoScrollView.HeightRequest = Application.Current.MainPage.Height - NavBar.Height;
-   
-            if (photoURIs != null && photoURIs.Count != 0)
+            else if (Month == 5)
             {
-                photoScrollView.Content = controlGrid;
+                maxDay = 31;
+                lastMonth = 30;
+            }
+            else if (Month == 6)
+            {
+                maxDay = 30;
+                lastMonth = 31;
+            }
+            else if (Month == 7)
+            {
+                maxDay = 31;
+                lastMonth = 30;
+            }
+            else if (Month == 8)
+            {
+                maxDay = 31;
+                lastMonth = 31;
+            }
+            else if (Month == 9)
+            {
+                maxDay = 30;
+                lastMonth = 31;
+            }
+            else if (Month == 10)
+            {
+                maxDay = 31;
+                lastMonth = 30;
+            }
+            else if (Month == 11)
+            {
+                maxDay = 30;
+                lastMonth = 30;
+            }
+            else if (Month == 12)
+            {
+                maxDay = 31;
+                lastMonth = 30;
+            }
+
+            if (Day - 1 != 0)
+            {
+                Day = Day - 1;
             }
             else
             {
-                Label noPhotosLabel = new Label()
+                Day = lastMonth;
+                Month -= 1;
+                if (Month == 0)
                 {
-                    Text = "No photos to Show",
-                    VerticalOptions = LayoutOptions.CenterAndExpand,
-                    HorizontalOptions = LayoutOptions.CenterAndExpand,
-                    TextColor = Color.DimGray
-
-                };
-
-                photoScrollView.Content = noPhotosLabel;
+                    Month = 12;
+                    Year -= 1;
+                }
             }
+
+            DateTime result = new DateTime(Year, Month, Day);
+            Console.Write("result : " + result);
+            Calendar myCal = CultureInfo.InvariantCulture.Calendar;
+            return date;
         }
-
-        private void AddTapGestures()
+        public string NextDate()
         {
+            int Year = Int32.Parse(date.Substring(0, date.IndexOf("/")));
+            string newDate = date.Substring(date.IndexOf("/") + 1);
+            int Month = Int32.Parse(newDate.Substring(0, newDate.IndexOf("/")));
+            newDate = newDate.Substring(newDate.IndexOf("/") + 1);
+            int Day = Int32.Parse(newDate);
 
-            // for nav bar
-            // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-            var tapGestureRecognizer1 = new TapGestureRecognizer();
-            tapGestureRecognizer1.Tapped += async (s, e) => {
-                await Navigation.PushAsync(new GreetingPage());
-            };
-            AboutMeButton.GestureRecognizers.Add(tapGestureRecognizer1);
 
-            var tapGestureRecognizer2 = new TapGestureRecognizer();
-            tapGestureRecognizer2.Tapped += async (s, e) => {
-                await Navigation.PushAsync(new ListViewPage());
-            };
-            ListViewButton.GestureRecognizers.Add(tapGestureRecognizer2);
+            int maxDay = 30;
+            int lastMonth = 0;
+            if (Month == 1)
+            {
+                maxDay = 31;
+                lastMonth = 31;
+            }
+            else if (Month == 2)
+            {
+                if ((Year % 4 == 0 && Year % 100 != 0) || Year % 400 == 0)
+                    maxDay = 29;
+                else
+                    maxDay = 28;
+                lastMonth = 31;
+            }
+            else if (Month == 3)
+            {
+                maxDay = 31;
+                if ((Year % 4 == 0 && Year % 100 != 0) || Year % 400 == 0)
+                    lastMonth = 29;
+                else
+                    lastMonth = 28;
+            }
+            else if (Month == 4)
+            {
+                maxDay = 30;
+                lastMonth = 31;
+            }
 
-            var tapGestureRecognizer3 = new TapGestureRecognizer();
-            tapGestureRecognizer3.Tapped += async (s, e) => {
-                await Navigation.PushAsync(new GoalsRoutinesTemplate());
-            };
-            MyDayButton.GestureRecognizers.Add(tapGestureRecognizer3);
-            // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+            else if (Month == 5)
+            {
+                maxDay = 31;
+                lastMonth = 30;
+            }
+            else if (Month == 6)
+            {
+                maxDay = 30;
+                lastMonth = 31;
+            }
+            else if (Month == 7)
+            {
+                maxDay = 31;
+                lastMonth = 30;
+            }
+            else if (Month == 8)
+            {
+                maxDay = 31;
+                lastMonth = 31;
+            }
+            else if (Month == 9)
+            {
+                maxDay = 30;
+                lastMonth = 31;
+            }
+            else if (Month == 10)
+            {
+                maxDay = 31;
+                lastMonth = 30;
+            }
+            else if (Month == 11)
+            {
+                maxDay = 30;
+                lastMonth = 30;
+            }
+            else if (Month == 12)
+            {
+                maxDay = 31;
+                lastMonth = 30;
+            }
+
+            if (Day + 1 <= maxDay)
+            {
+                Day = Day + 1;
+            }
+            else
+            {
+                Day = 1;
+                Month += 1;
+                if (Month == 13)
+                {
+                    Month = 1;
+                    Year += 1;
+                }
+            }
+
+            DateTime result = new DateTime(Year, Month, Day);
+            Console.WriteLine("result : " + result);
+            string nextDate = result + "";
+            nextDate = nextDate.Substring(0, nextDate.IndexOf(" "));
+            Calendar myCal = CultureInfo.InvariantCulture.Calendar;
+            Console.WriteLine("nextDate : " + nextDate);
+
+            return nextDate;
         }
     }
 }

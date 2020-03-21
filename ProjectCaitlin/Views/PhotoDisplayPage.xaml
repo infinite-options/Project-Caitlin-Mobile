@@ -7,94 +7,35 @@
              Title="Photos"
              NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="False">
-    <StackLayout
-        VerticalOptions="EndAndExpand">
+    <StackLayout Padding="20">
+        <CarouselView ItemsSource="{Binding Items}">
+                <CarouselView.ItemTemplate>
+                    <DataTemplate>
+                        <StackLayout >
+                            <Frame  CornerRadius="30" HeightRequest="300" WidthRequest="300" HorizontalOptions="Center" IsClippedToBounds="True">
+                                <StackLayout>
 
-        <ScrollView
-            x:Name="photoScrollView">
+                                    <forms:CachedImage Source="{Binding Source}"
+                               Aspect="AspectFill"
+                               HeightRequest="300"
+                               WidthRequest="300"
+                               HorizontalOptions="Center" />
 
-            <!--<Label
-                Text="No Photos to show"
-                VerticalOptions="CenterAndExpand"
-                HorizontalOptions="CenterAndExpand"
-                TextColor="#262c32">
-
-            </Label>-->
-
-        </ScrollView>
-
-        <RelativeLayout>
-            <Frame
-            x:Name="NavBar"
-            HasShadow="True"
-            CornerRadius="0"
-            Padding="0,-5,0,10"
-            HeightRequest="65"
-            VerticalOptions="End"
-            RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}">
-                <Grid
-            Grid.Row="1"
-            Grid.Column="4">
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition
-                    Width="0.25*" />
-                        <ColumnDefinition
-                    Width="0.25*" />
-                        <ColumnDefinition
-                    Width="0.25*" />
-                        <ColumnDefinition
-                    Width="0.25*" />
-                    </Grid.ColumnDefinitions>
-                    <Grid.RowDefinitions>
-                        <RowDefinition
-                    Height="1*" />
-                    </Grid.RowDefinitions>
-                    <StackLayout VerticalOptions="End" Grid.Column="0">
-                        <forms:CachedImage x:Name="MyDayButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="mydayiconnotext.png" />
-                        <Label Text="My Day" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
-                            <Label.FontFamily>
-                                <OnPlatform x:TypeArguments="x:String">
-                                    <On Platform="iOS" Value="Lobster-Regular" />
-                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                </OnPlatform>
-                            </Label.FontFamily>
-                        </Label>
+                                </StackLayout>
+                            </Frame>
                     </StackLayout>
-                    <StackLayout VerticalOptions="End" Grid.Column="1">
-                        <forms:CachedImage x:Name="ListViewButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="listviewiconnotext.png" />
-                        <Label Text="Today's List" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
-                            <Label.FontFamily>
-                                <OnPlatform x:TypeArguments="x:String">
-                                    <On Platform="iOS" Value="Lobster-Regular" />
-                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                </OnPlatform>
-                            </Label.FontFamily>
-                        </Label>
-                    </StackLayout>
-                    <StackLayout VerticalOptions="End" Grid.Column="2">
-                        <forms:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="myphotosiconselectednotext.png" />
-                        <Label Text="My Photos" FontSize="12" TextColor="#d6a14b" HorizontalOptions="Center" Margin="0, -3, 0, 0">
-                            <Label.FontFamily>
-                                <OnPlatform x:TypeArguments="x:String">
-                                    <On Platform="iOS" Value="Lobster-Regular" />
-                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                </OnPlatform>
-                            </Label.FontFamily>
-                        </Label>
-                    </StackLayout>
-                    <StackLayout VerticalOptions="End" Grid.Column="3">
-                        <forms:CachedImage x:Name="AboutMeButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="aboutmeiconnotext.png" />
-                        <Label Text="About Me" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
-                            <Label.FontFamily>
-                                <OnPlatform x:TypeArguments="x:String">
-                                    <On Platform="iOS" Value="Lobster-Regular" />
-                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                </OnPlatform>
-                            </Label.FontFamily>
-                        </Label>
-                    </StackLayout>
-                </Grid>
-            </Frame>
-        </RelativeLayout>
+                    </DataTemplate>
+                </CarouselView.ItemTemplate>
+            </CarouselView>
+
+        <Label x:Name="dateLabel" Text="" FontSize="20" HorizontalOptions="Center"/>
+
+
+        <StackLayout Orientation="Horizontal">
+            <Grid Grid.Column="4" Grid.Row="1">
+                <ImageButton Grid.Column="0" x:Name= "button1" Source="previousbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
+                <ImageButton Grid.Column="3" x:Name= "button2" Source="nextbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
+            </Grid>
+        </StackLayout>
     </StackLayout>
 </ContentPage>

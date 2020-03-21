@@ -10,7 +10,7 @@ namespace ProjectCaitlin.Services
     public class GooglePhotoService
     {
 
-        public async Task<List<string>> GetPhotos()
+        public async Task<Dictionary<string,string>> GetPhotos()
         {
 
             //Make HTTP Request
@@ -32,7 +32,10 @@ namespace ProjectCaitlin.Services
             var result = JsonConvert.DeserializeObject<ProjectCaitlin.Methods.GetPhotoAlbumMethod>(json);
 
             //Create itemList
-            var itemList = new List<string>();
+            //var itemList = new List<string>();
+            var itemMap = new Dictionary<string, string>();
+
+
             String creationTime = "";
             String storePicUri = "";
             String date = "";
@@ -49,7 +52,8 @@ namespace ProjectCaitlin.Services
                     string datePicker = "5/26/2016";
                     //if (date == datePicker)
                     //{
-                    itemList.Add(product.BaseUrl.ToString());
+                    //itemList.Add(product.BaseUrl.ToString());
+                    itemMap.Add(product.BaseUrl.ToString(),date);
                     storePicUri = product.BaseUrl.ToString();
                     //System.Diagnostics.Debug.WriteLine(storePicUri);
                     //System.Diagnostics.Debug.WriteLine(date);
@@ -62,10 +66,10 @@ namespace ProjectCaitlin.Services
                 return null;
             }
 
-            if (itemList.Count == 0)
-                return new List<string>();
+            if (itemMap.Count == 0)
+                return new Dictionary<string,string>();
             else
-                return itemList;
+                return itemMap;
         }
     }
 }

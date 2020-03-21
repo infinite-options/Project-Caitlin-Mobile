@@ -22,14 +22,14 @@ namespace ProjectCaitlin.Views
         int b;
         bool isRoutine;
         readonly TaskCompletePageViewModel pageModel;
-        public TaskCompletePage(int a,int b,bool isRoutine)
+        public TaskCompletePage(int a, int b, bool isRoutine)
         {
             InitializeComponent();
 
             this.a = a;
             this.b = b;
             this.isRoutine = isRoutine;
-            pageModel = new TaskCompletePageViewModel(this, a, b,isRoutine);
+            pageModel = new TaskCompletePageViewModel(this, a, b, isRoutine);
             BindingContext = pageModel;
             itemcount = pageModel.count;
 
@@ -37,9 +37,8 @@ namespace ProjectCaitlin.Views
         }
         public async void nextpage(object sender, EventArgs args)
         {
-            if (NextButton.Text == "Done")
+            if (next.Text == "Done")
             {
-                NextButton.IsEnabled = false;
                 var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
 
                 var completeActionCounter = 0;
@@ -51,7 +50,6 @@ namespace ProjectCaitlin.Views
                 {
                     App.User.goals[a].actions[b].isComplete = true;
                     App.User.goals[a].actions[b].dateTimeCompleted = DateTime.Now;
-                    TaskPage.pageModel.Items[b].IsComplete = true;
                 }
 
                 foreach (action action in App.User.goals[a].actions)
@@ -72,22 +70,49 @@ namespace ProjectCaitlin.Views
                     }
                 }
 
-                await Navigation.PopAsync();
+                await Navigation.PushAsync(new TaskPage(a, isRoutine));
             }
 
-            else if (NextButton.Text == "Start")
+            else if (next.Text == "Start")
             {
                 CarouselTasks.Position = 0;
-                NextButton.Text = "Next";
+                //App.user.goals[a].actions[b].instructions[0].isComplete = true;
+                next.Text = "Next";
             }
             else if (CarouselTasks.Position != App.User.goals[a].actions[b].instructions.Count - 1)
             {
 
-                CarouselTasks.Position += 1;
-                Console.WriteLine("You are in page " + CarouselTasks.Position);
+                /*var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
+                var goalId = App.user.goals[a].id;
+                var actionId = App.user.goals[a].actions[b].id;
+                var isInstructionComplete = await firestoreService.UpdateInstruction(goalId, actionId, App.user.goals[a].actions[b].instructions[CarouselTasks.Position].dbIdx.ToString());
+                if (isInstructionComplete)
+                {
+                    App.user.goals[a].actions[b].instructions[CarouselTasks.Position].isComplete = true;
+                    App.user.goals[a].actions[b].instructions[CarouselTasks.Position].dateTimeCompleted = DateTime.Now;
+                }*/
+                App.User.goals[a].actions[b].instructions[CarouselTasks.Position].isComplete = true;
+                pageModel.Items[CarouselTasks.Position].OkToCheckmark = true;
 
+                CarouselTasks.Position = CarouselTasks.Position + 1;
             }
             else if (CarouselTasks.Position == App.User.goals[a].actions[b].instructions.Count - 1)
+            {
+
+                App.User.goals[a].actions[b].instructions[CarouselTasks.Position].isComplete = true;
+                pageModel.Items[CarouselTasks.Position].OkToCheckmark = true;
+
+                next.Text = "Done";
+
+            }
+            else if (CarouselTasks.Position != App.User.goals[a].actions[b].instructions.Count - 1)
+            {
+
+
+        }
+        public async void prepage(object sender, EventArgs args)
+        {
+            if (CarouselTasks.Position != 0)
             {
                 NextButton.Text = "Done";
             }

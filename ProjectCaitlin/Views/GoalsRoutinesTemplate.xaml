@@ -65,7 +65,7 @@
                             Margin="0, 0, 0, 10"/>
                 </StackLayout>
 
-                <cards:CoverFlowView 
+                <cards:CoverFlowView
                             PositionShiftValue="50"
                             IsCyclical="false"
                             VerticalOptions="FillAndExpand"
@@ -85,7 +85,7 @@
                             HorizontalOptions="CenterAndExpand"
                             VerticalOptions="FillAndExpand"
                             WidthRequest="300"
-                            Padding="0" 
+                            Padding="0"
                             HasShadow="true"
                             IsClippedToBounds="true"
                             CornerRadius="10"
