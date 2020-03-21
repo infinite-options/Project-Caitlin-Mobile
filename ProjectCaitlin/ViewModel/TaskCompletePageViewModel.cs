@@ -5,7 +5,7 @@ using Xamarin.Forms;
 using ProjectCaitlin.Models;
 using System;
 using System.ComponentModel;
-using ProjectCaitlin.Methods;
+using ProjectCaitlin.Services;
 
 namespace ProjectCaitlin.ViewModel
 {
@@ -19,7 +19,7 @@ namespace ProjectCaitlin.ViewModel
         public string TopLabel { get; set; }
         public string TopLabel2 { get; set; }
 
-        FirestoreService firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
+        FirebaseFunctionsService firebaseFunctionsService = new FirebaseFunctionsService();
 
         private ObservableCollection<object> _items = new ObservableCollection<object>() { };
         public TaskCompletePageViewModel(TaskCompletePage mainPage, int a, int b, bool isRoutine)
@@ -39,7 +39,7 @@ namespace ProjectCaitlin.ViewModel
                 completeStep = new Command(
                          async () =>
                          {
-                             var okToCheckmark = await firestoreService.UpdateStep(goalId, actionId, App.User.goals[a].actions[b].instructions[i].dbIdx.ToString());
+                             var okToCheckmark = await firebaseFunctionsService.UpdateStep(goalId, actionId, App.User.goals[a].actions[b].instructions[i].dbIdx.ToString());
 
                              if (okToCheckmark) { App.User.goals[a].actions[b].instructions[0].isComplete = true; }
                              await mainPage.Navigation.PushAsync(new StepsPage(a, b, isRoutine));

@@ -8,12 +8,14 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using ProjectCaitlin.Models;
 using Xamarin.Forms.Xaml;
-using ProjectCaitlin.Methods;
+using ProjectCaitlin.Services;
 
 namespace ProjectCaitlin.Views
 {
     public partial class StepsPage : ContentPage
     {
+        FirebaseFunctionsService firebaseFunctionsService;
+
         private int itemcount;
         int a;
         public int b;
@@ -80,9 +82,9 @@ namespace ProjectCaitlin.Views
                 var routineId = App.User.routines[a].id;
                 var taskId = App.User.routines[a].tasks[b].id;
 
-                var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
+                firebaseFunctionsService = new FirebaseFunctionsService();
 
-                var okToCheckmark = await firestoreService.UpdateTask(routineId, taskId, App.User.routines[a].tasks[b].dbIdx.ToString());
+                var okToCheckmark = await firebaseFunctionsService.UpdateTask(routineId, taskId, App.User.routines[a].tasks[b].dbIdx.ToString());
                 if (okToCheckmark)
                 {
                     App.User.routines[a].tasks[b].isComplete = true;
@@ -110,9 +112,9 @@ namespace ProjectCaitlin.Views
             {
                 var routineId = App.User.routines[a].id;
 
-                var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
+                var firebaseFunctionsService = new FirebaseFunctionsService();
 
-                var okToCheckmark = await firestoreService.CompleteRoutine(routineId, App.User.routines[a].dbIdx.ToString());
+                var okToCheckmark = await firebaseFunctionsService.CompleteRoutine(routineId, App.User.routines[a].dbIdx.ToString());
                 if (okToCheckmark)
                 {
                     App.User.routines[a].isComplete = true;

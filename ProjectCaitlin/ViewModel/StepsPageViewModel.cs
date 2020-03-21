@@ -5,14 +5,16 @@ using Xamarin.Forms;
 using ProjectCaitlin.Models;
 using System;
 using System.ComponentModel;
-using ProjectCaitlin.Methods;
 using System.Windows.Input;
 using System.Runtime.CompilerServices;
+using ProjectCaitlin.Services;
 
 namespace ProjectCaitlin.ViewModel
 {
     public class StepsPageViewModel : BindableObject, INotifyPropertyChanged
     {
+        FirebaseFunctionsService firebaseFunctionsService;
+
         private StepsPage mainPage;
         public int count = 0;
         public string Text { get; set; }
@@ -37,6 +39,7 @@ namespace ProjectCaitlin.ViewModel
             this.mainPage = mainPage;
             Items = new ObservableCollection<ListViewItemModel>();
             var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
+            firebaseFunctionsService = new FirebaseFunctionsService();
 
             if (isRoutine)
             {
@@ -68,7 +71,7 @@ namespace ProjectCaitlin.ViewModel
                                 var taskId = App.User.routines[a].tasks[b].id;
                                 var indexForCheckmark = _stepIdx;
                                 Items[_stepIdx].CheckmarkIcon = "greencheckmarkicon.png";
-                                var okToCheckmark = await firestoreService.UpdateStep(routineId, taskId, indexForCheckmark.ToString());
+                                var okToCheckmark = await firebaseFunctionsService.UpdateStep(routineId, taskId, indexForCheckmark.ToString());
 
                                 if (okToCheckmark)
                                 {
