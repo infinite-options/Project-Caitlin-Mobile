@@ -28,6 +28,18 @@ namespace ProjectCaitlin.ViewModel
             SetupUI(date, source);
         }
 
+        public PhotoViewModel(string date)
+        {
+            Items = new ObservableCollection<object>();
+            Items.Add(new
+            {
+                Source = "moon.png",
+            });
+            string source = "";
+            SetupUI(date, source);
+        }
+
+
         public async void SetupUI(string date, string source)
         {
             photoURIs = await GooglePhotoService.GetPhotos();

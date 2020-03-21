@@ -55,10 +55,10 @@ namespace ProjectCaitlin
                 StackLayoutMap.Children.Add(labels[i]);
             }
 
-            var button1 = this.FindByName<Button>("month2");
+            var button1 = this.FindByName<ImageButton>("month2");
             button1.Clicked += ButtonOne;
 
-            var button2 = this.FindByName<Button>("month1");
+            var button2 = this.FindByName<ImageButton>("month1");
             button2.Clicked += ButtonTwo;
 
             DateTime localDate = DateTime.Now;

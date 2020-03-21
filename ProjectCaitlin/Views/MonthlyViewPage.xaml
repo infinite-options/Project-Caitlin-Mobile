@@ -15,14 +15,14 @@
                 <Grid Grid.Column="4" Grid.Row="1">
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="0.25*" />
-                        <ColumnDefinition Width="0.2*" />
                         <ColumnDefinition Width="0.4*" />
                         <ColumnDefinition Width="0.2*" />
+                        <ColumnDefinition Width="0.2*" />
                     </Grid.ColumnDefinitions>
-                    <Button Grid.Column="0" x:Name= "month1" Text="Previous" />
-                    <Label Grid.Column="1" x:Name ="yearLabel" Text=" " FontSize="20"/>
-                    <Label Grid.Column="2" x:Name = "monthLabel" Text=" " FontSize="20"/>
-                    <Button Grid.Column="3" x:Name ="month2" Text="Next" />
+                    <ImageButton Grid.Column="0" x:Name= "month1" Source="previousbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23"/>
+                    <Label Grid.Column="1" x:Name = "monthLabel" Text=" " FontSize="20"/>
+                    <Label Grid.Column="2" x:Name ="yearLabel" Text=" " FontSize="20"/>
+                    <ImageButton Grid.Column="3" x:Name= "month2" Source="nextbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23"/>
                 </Grid>
             </StackLayout>
             <Grid x:Name="StackLayoutMap" Grid.Column="7" Grid.Row="6">
