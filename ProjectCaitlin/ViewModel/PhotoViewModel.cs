@@ -31,12 +31,7 @@ namespace ProjectCaitlin.ViewModel
         public PhotoViewModel(string date)
         {
             Items = new ObservableCollection<object>();
-            Items.Add(new
-            {
-                Source = "moon.png",
-            });
-            string source = "";
-            SetupUI(date, source);
+            SetupUI(date);
         }
 
 
@@ -49,7 +44,7 @@ namespace ProjectCaitlin.ViewModel
                 foreach (var pair in photoURIs)
                 {
                     string photoURI = pair.Key;
-                    string photoDate = pair.Value + "";
+                    string photoDate = pair.Value;
                     if (date.Equals(photoDate) && !(source.Equals(photoURI))) {
                         Items.Add(new { Source = photoURI });
                         Console.WriteLine("Source: "+source);
@@ -57,6 +52,33 @@ namespace ProjectCaitlin.ViewModel
                         Console.WriteLine(source.Equals(photoURI));
                     }
                     
+                }
+            }
+            catch (NullReferenceException e)
+            {
+                var googleService = new GoogleService();
+                await googleService.RefreshToken();
+            }
+
+
+        }
+
+        public async void SetupUI(string date)
+        {
+            photoURIs = await GooglePhotoService.GetPhotos();
+
+            try
+            {
+                foreach (var pair in photoURIs)
+                {
+                    string photoURI = pair.Key;
+                    string photoDate = pair.Value;
+                    if (date.Equals(photoDate) )
+                    {
+                        Items.Add(new { Source = photoURI });
+                        Console.WriteLine("photoURI: " + photoURI);
+                    }
+
                 }
             }
             catch (NullReferenceException e)

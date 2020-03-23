@@ -32,9 +32,9 @@
 
         
         <StackLayout Orientation="Horizontal">
-            <Grid Grid.Column="4" Grid.Row="1">
+            <Grid >
                 <ImageButton Grid.Column="0" x:Name= "button1" Source="previousbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
-                <ImageButton Grid.Column="3" x:Name= "button2" Source="nextbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
+                <ImageButton Grid.Column="10" x:Name= "button2" Source="nextbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
             </Grid>
         </StackLayout>
 

@@ -30,7 +30,6 @@ namespace ProjectCaitlin.Services
             //return json;
             //Deserialize JSON Result
             var result = JsonConvert.DeserializeObject<ProjectCaitlin.Methods.GetPhotoAlbumMethod>(json);
-
             //Create itemList
             //var itemList = new List<string>();
             var itemMap = new Dictionary<string, string>();
@@ -55,10 +54,15 @@ namespace ProjectCaitlin.Services
                     //itemList.Add(product.BaseUrl.ToString());
                     itemMap.Add(product.BaseUrl.ToString(),date);
                     storePicUri = product.BaseUrl.ToString();
+
+                    Console.WriteLine("product.Description.ToString() : " + product.Description.ToString());
+                    //product.ToString() : ProjectCaitlin.Methods.MediaItem
+
                     //System.Diagnostics.Debug.WriteLine(storePicUri);
                     //System.Diagnostics.Debug.WriteLine(date);
 
                     //};
+
                 }
             }
             catch (NullReferenceException e)
