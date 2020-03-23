@@ -21,7 +21,9 @@
                                WidthRequest="300"
                                HorizontalOptions="Center" />
 
-                                </StackLayout>
+                                <Label Text="{Binding Description}" FontSize="20" HorizontalOptions="Center"/>
+
+                            </StackLayout>
                             </Frame>
                     </StackLayout>
                     </DataTemplate>

@@ -13,15 +13,16 @@ namespace ProjectCaitlin.ViewModel
     public class PhotoViewModel : BindableObject
     {
         public ObservableCollection<object> Items { get; set; }
-        Dictionary<string,string> photoURIs = new Dictionary<string,string>();
+        List<List<string>> photoURIs = new List<List<string>>();
         GooglePhotoService GooglePhotoService = new GooglePhotoService();
 
-        public PhotoViewModel(CachedImage webImage, string date)
+        public PhotoViewModel(CachedImage webImage, string date, string description)
         {
             Items = new ObservableCollection<object>();
             Items.Add(new
             {
                 Source = webImage.Source,
+                Description = description
             });
             string source = webImage.Source +"";
             source = source.Substring(5);
@@ -41,15 +42,14 @@ namespace ProjectCaitlin.ViewModel
 
             try
             {
-                foreach (var pair in photoURIs)
+                foreach (List<string> list in photoURIs)
                 {
-                    string photoURI = pair.Key;
-                    string photoDate = pair.Value;
+                    string photoURI = list[0];
+                    string photoDate = list[1];
+                    string description = list[2];
+
                     if (date.Equals(photoDate) && !(source.Equals(photoURI))) {
-                        Items.Add(new { Source = photoURI });
-                        Console.WriteLine("Source: "+source);
-                        Console.WriteLine("photoURI: " + photoURI);
-                        Console.WriteLine(source.Equals(photoURI));
+                        Items.Add(new { Source = photoURI, Description = description });
                     }
                     
                 }
@@ -69,14 +69,15 @@ namespace ProjectCaitlin.ViewModel
 
             try
             {
-                foreach (var pair in photoURIs)
+                foreach (List<string> list in photoURIs)
                 {
-                    string photoURI = pair.Key;
-                    string photoDate = pair.Value;
+                    string photoURI = list[0];
+                    string photoDate = list[1];
+                    string description = list[2];
+
                     if (date.Equals(photoDate) )
                     {
-                        Items.Add(new { Source = photoURI });
-                        Console.WriteLine("photoURI: " + photoURI);
+                        Items.Add(new { Source = photoURI, Description = description});
                     }
 
                 }

@@ -23,11 +23,11 @@ namespace ProjectCaitlin
 
         string date;
 
-        public PhotoDisplayPage(CachedImage webImage,string date)
+        public PhotoDisplayPage(CachedImage webImage,string date, string description)
         {
             InitializeComponent();
             this.date = date;
-            pageModel = new PhotoViewModel(webImage,date);
+            pageModel = new PhotoViewModel(webImage,date,description);
             BindingContext = pageModel;
 
             dateLabel.Text = date;
