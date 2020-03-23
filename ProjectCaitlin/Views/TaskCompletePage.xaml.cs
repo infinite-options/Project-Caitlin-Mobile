@@ -108,13 +108,21 @@ namespace ProjectCaitlin.Views
             else if (CarouselTasks.Position != App.User.goals[a].actions[b].instructions.Count - 1)
             {
 
+                App.User.goals[a].actions[b].instructions[CarouselTasks.Position].isComplete = true;
+                pageModel.Items[CarouselTasks.Position].OkToCheckmark = true;
+
+                next.Text = "Done";
+
+            }
+
 
         }
+
         public async void prepage(object sender, EventArgs args)
         {
             if (CarouselTasks.Position != 0)
             {
-                NextButton.Text = "Done";
+                next.Text = "Done";
             }
         }
 

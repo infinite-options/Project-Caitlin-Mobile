@@ -21,6 +21,7 @@ namespace ProjectCaitlin.ViewModel
         public string TopLabel { get; set; }
         public string TopLabel2 { get; set; }
 
+
         FirestoreService firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
 
         public ObservableCollection<InstructionModel> Items { get; set; }
@@ -39,7 +40,7 @@ namespace ProjectCaitlin.ViewModel
             int i = 0;
             foreach (instruction instruction in App.User.goals[a].actions[b].instructions)
             {
-                /*Command completeInstuction;
+                /*Command completeInstuction; 
                 if (App.user.routines[a].tasks[b].steps[i].isComplete)
                 {
                     completeInstuction = new Command<int>((int _stepIdx) => { });
@@ -107,11 +108,6 @@ namespace ProjectCaitlin.ViewModel
 
             public InstructionModel(string source, string text, bool _okToCheckmark)
             {
-                Command completeStep;
-                completeStep = new Command(
-                         async () =>
-                         {
-                             var okToCheckmark = await firestoreService.UpdateStep(goalId, actionId, App.User.goals[a].actions[b].instructions[i].dbIdx.ToString());
 
                 Source = source;
                 Text = text;
