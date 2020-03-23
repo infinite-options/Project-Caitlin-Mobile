@@ -37,7 +37,7 @@ namespace ProjectCaitlin
 
         protected override async void OnAppearing()
         {
-            var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
+			var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
 			await firestoreService.LoadUser();
 
 			if (App.User.old_refresh_token != App.User.refresh_token)

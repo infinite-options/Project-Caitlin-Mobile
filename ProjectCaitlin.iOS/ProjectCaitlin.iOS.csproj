@@ -77,6 +77,8 @@
     <Compile Include="AnimationNavigationRenderer.cs" />
     <Compile Include="AnimationNavigationControllerDelegate.cs" />
     <Compile Include="TransitionAnimator.cs" />
+    <Compile Include="iOSNotificationManager.cs" />
+    <Compile Include="iOSNotificationReceiver.cs" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -148,6 +150,30 @@
     </PackageReference>
     <PackageReference Include="DLToolkit.Forms.Controls.FlowListView">
       <Version>2.0.11</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AppCenter">
+      <Version>3.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AppCenter.Analytics">
+      <Version>3.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AppCenter.Crashes">
+      <Version>3.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AppCenter.Push">
+      <Version>3.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AppCenter.Auth">
+      <Version>2.6.4</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AppCenter.Data">
+      <Version>2.6.4</Version>
+    </PackageReference>
+    <PackageReference Include="Microsoft.AppCenter.Distribute">
+      <Version>3.0.0</Version>
+    </PackageReference>
+    <PackageReference Include="AppCenter.Analytics.Metrics">
+      <Version>1.1.0</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
@@ -239,5 +265,6 @@
     <BundleResource Include="Resources\waveformicon.png" />
     <BundleResource Include="Resources\waveformiconwhite.png" />
     <BundleResource Include="Resources\redoGray.png" />
+    <BundleResource Include="Resources\xamagonBlue.png" />
   </ItemGroup>
 </Project>
