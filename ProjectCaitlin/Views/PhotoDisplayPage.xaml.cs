@@ -23,11 +23,11 @@ namespace ProjectCaitlin
 
         string date;
 
-        public PhotoDisplayPage(CachedImage webImage,string date)
+        public PhotoDisplayPage(CachedImage webImage, string date, string description)
         {
             InitializeComponent();
             this.date = date;
-            pageModel = new PhotoViewModel(webImage,date);
+            pageModel = new PhotoViewModel(webImage, date, description);
             BindingContext = pageModel;
 
             dateLabel.Text = date;
@@ -56,30 +56,25 @@ namespace ProjectCaitlin
 
         async void ButtonOne(object sender, EventArgs args)
         {
-            Console.Write("Previous not Done");
             date = PreviousDate();
-            Console.Write("Previous not Done");
-
             await Navigation.PushAsync(new PhotoDisplayPage(date));
         }
 
         async void ButtonTwo(object sender, EventArgs args)
         {
-            Console.Write("Next not Done");
-
             date = NextDate();
-            Console.Write("Next Done");
             await Navigation.PushAsync(new PhotoDisplayPage(date));
         }
 
-        public string PreviousDate() {
+        public string PreviousDate()
+        {
 
-            int Year = Int32.Parse(date.Substring(0, date.IndexOf("/")));
-            string newDate = date.Substring(date.IndexOf("/") + 1);
+            string currentDate = date;
+            int Year = Int32.Parse(currentDate.Substring(0, currentDate.IndexOf("/")));
+            string newDate = currentDate.Substring(currentDate.IndexOf("/") + 1);
             int Month = Int32.Parse(newDate.Substring(0, newDate.IndexOf("/")));
-            newDate = newDate.Substring(date.IndexOf("/") + 1);
+            newDate = newDate.Substring(newDate.IndexOf("/") + 1);
             int Day = Int32.Parse(newDate);
-
 
             int maxDay = 30;
             int lastMonth = 0;
@@ -166,15 +161,15 @@ namespace ProjectCaitlin
                 }
             }
 
-            DateTime result = new DateTime(Year, Month, Day);
-            Console.Write("result : " + result);
-            Calendar myCal = CultureInfo.InvariantCulture.Calendar;
-            return date;
+            string dateTime = new DateTime(Year, Month, Day) + "";
+            dateTime = dateTime.Substring(0, dateTime.IndexOf(" "));
+            return dateTime;
         }
         public string NextDate()
         {
-            int Year = Int32.Parse(date.Substring(0, date.IndexOf("/")));
-            string newDate = date.Substring(date.IndexOf("/") + 1);
+            string currentDate = date;
+            int Year = Int32.Parse(currentDate.Substring(0, currentDate.IndexOf("/")));
+            string newDate = currentDate.Substring(currentDate.IndexOf("/") + 1);
             int Month = Int32.Parse(newDate.Substring(0, newDate.IndexOf("/")));
             newDate = newDate.Substring(newDate.IndexOf("/") + 1);
             int Day = Int32.Parse(newDate);
@@ -265,14 +260,9 @@ namespace ProjectCaitlin
                 }
             }
 
-            DateTime result = new DateTime(Year, Month, Day);
-            Console.WriteLine("result : " + result);
-            string nextDate = result + "";
-            nextDate = nextDate.Substring(0, nextDate.IndexOf(" "));
-            Calendar myCal = CultureInfo.InvariantCulture.Calendar;
-            Console.WriteLine("nextDate : " + nextDate);
-
-            return nextDate;
+            string dateTime = new DateTime(Year, Month, Day) + "";
+            dateTime = dateTime.Substring(0, dateTime.IndexOf(" "));
+            return dateTime;
         }
     }
 }

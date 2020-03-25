@@ -10,7 +10,7 @@ namespace ProjectCaitlin.Services
     public class GooglePhotoService
     {
 
-        public async Task<Dictionary<string,string>> GetPhotos()
+        public async Task<List<List<string>>> GetPhotos()
         {
 
             //Make HTTP Request
@@ -30,21 +30,21 @@ namespace ProjectCaitlin.Services
             //return json;
             //Deserialize JSON Result
             var result = JsonConvert.DeserializeObject<ProjectCaitlin.Methods.GetPhotoAlbumMethod>(json);
-
             //Create itemList
-            //var itemList = new List<string>();
-            var itemMap = new Dictionary<string, string>();
-
+            var itemList = new List<List<string>>();
+            //var itemMap = new Dictionary<string, string>();
 
             String creationTime = "";
             String storePicUri = "";
             String date = "";
             String thumbNailAlbumUri = "";
+            String description = "";
             //Try to add "Summary" Items to list from JSON. If null, redirect to Login prompt.
             try
             {
                 foreach (var product in result.MediaItems)
                 {
+                    var subList = new List<string>();
                     //thumbNailAlbumUri = product.baseUrl.ToString();
                     creationTime = product.MediaMetadata.CreationTime.ToString();
                     date = creationTime.Substring(0, 9);
@@ -52,24 +52,33 @@ namespace ProjectCaitlin.Services
                     string datePicker = "5/26/2016";
                     //if (date == datePicker)
                     //{
-                    //itemList.Add(product.BaseUrl.ToString());
-                    itemMap.Add(product.BaseUrl.ToString(),date);
+
                     storePicUri = product.BaseUrl.ToString();
+                    //description = product.Description.ToString();
+                    //Console.WriteLine("product.Description.ToString() : " + product.Description.ToString());
+                    //product.ToString() : ProjectCaitlin.Methods.MediaItem
+
                     //System.Diagnostics.Debug.WriteLine(storePicUri);
                     //System.Diagnostics.Debug.WriteLine(date);
+                    Console.WriteLine("product: " + storePicUri);
 
                     //};
+                    subList.Add(product.BaseUrl.ToString());
+                    subList.Add(date);
+                    subList.Add(description);
+                    itemList.Add(subList);
                 }
             }
             catch (NullReferenceException e)
             {
+                Console.WriteLine("Error with photo retrival: " + e);
                 return null;
             }
 
-            if (itemMap.Count == 0)
-                return new Dictionary<string,string>();
+            if (itemList.Count == 0)
+                return new List<List<string>>();
             else
-                return itemMap;
+                return itemList;
         }
     }
 }

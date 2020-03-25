@@ -57,8 +57,8 @@ namespace ProjectCaitlin.Services
                 }
                 catch
                 {
-                    Console.WriteLine("Error with json goal/routine token:");
-                    Console.WriteLine(userJson);
+                    //Console.WriteLine("Error with json goal/routine token:");
+                    //Console.WriteLine(userJson);
                     return;
                 }
 
@@ -115,20 +115,20 @@ namespace ProjectCaitlin.Services
                                     availableEndTime = DateTime.ParseExact(jsonMapGorR["available_end_time"]["stringValue"].ToString(),
                                         "HH:mm:ss", CultureInfo.InvariantCulture)
                                 };
-                                notificationManager.ScheduleNotification("You Missed a Routine! (example)", routine.title + " is overdue. Open the app to review your tasks.", 1);
+                                //notificationManager.ScheduleNotification("You Missed a Routine! (example)", routine.title + " is overdue. Open the app to review your tasks.", 1);
 
                                 if (!(bool)jsonMapGorR["user_notification_set"]["booleanValue"]
                                     && (bool)jsonMapGorR["reminds_user"]["booleanValue"]
                                     )
                                 {
-                                    Console.WriteLine("stuck here");
+                                    //Console.WriteLine("stuck here");
                                     if (firebaseFunctionsService.GRUserNotificationSetToTrue(routine.id, routine.dbIdx.ToString()).Result)
                                     {
                                         string title = "You Missed a Routine!";
                                         //double duration = (routine.availableEndTime.TimeOfDay - DateTime.Now.TimeOfDay).TotalSeconds;
                                         double duration = 10;
                                         string message = routine.title + " is overdue. Open the app to review your tasks.";
-                                        Console.WriteLine("duration: " + duration);
+                                        //Console.WriteLine("duration: " + duration);
                                         if (duration > 0)
                                         {
                                             Console.WriteLine("notification id: " + notificationManager.ScheduleNotification(title, message, duration));
@@ -138,7 +138,7 @@ namespace ProjectCaitlin.Services
 
                                 App.User.routines.Add(routine);
 
-                                //Console.WriteLine("on Routine: " + routine.id);
+                                ////Console.WriteLine("on Routine: " + routine.id);
                             }
                             else
                             {
@@ -158,14 +158,14 @@ namespace ProjectCaitlin.Services
 
                                 App.User.goals.Add(goal);
 
-                                //Console.WriteLine("on Goal: " + goal.id);
+                                ////Console.WriteLine("on Goal: " + goal.id);
                             }
                         }
                     }
                     catch
                     {
-                        Console.WriteLine("Error with json goal/routine token:");
-                        Console.WriteLine(jsonGorR);
+                        //Console.WriteLine("Error with json goal/routine token:");
+                        //Console.WriteLine(jsonGorR);
                     }
                     dbIdx_++;
                 }
@@ -213,8 +213,8 @@ namespace ProjectCaitlin.Services
                 }
                 catch
                 {
-                    Console.WriteLine("Error with json action/task token:");
-                    Console.WriteLine(taskJson);
+                    //Console.WriteLine("Error with json action/task token:");
+                    //Console.WriteLine(taskJson);
                     return;
                 }
 
@@ -251,7 +251,7 @@ namespace ProjectCaitlin.Services
 
                                 App.User.routines[routineIdx].tasks.Add(task);
 
-                                Console.WriteLine("on Task: " + task.id);
+                                //Console.WriteLine("on Task: " + task.id);
 
                             }
                             else if (routineType == "goal")
@@ -273,14 +273,14 @@ namespace ProjectCaitlin.Services
 
                                 App.User.goals[routineIdx].actions.Add(action);
 
-                                Console.WriteLine("on Action: " + action.id);
+                                //Console.WriteLine("on Action: " + action.id);
                             }
                         }
                     }
                     catch
                     {
-                        Console.WriteLine("Error with json action/task token:");
-                        Console.WriteLine(jsonAorT);
+                        //Console.WriteLine("Error with json action/task token:");
+                        //Console.WriteLine(jsonAorT);
                     }
                     dbIdx_++;
                 }
@@ -290,7 +290,7 @@ namespace ProjectCaitlin.Services
                     int taskIdx = 0;
                     foreach (task task in App.User.routines[routineIdx].tasks)
                     {
-                        //Console.WriteLine("on Task step load: " + task.id);
+                        ////Console.WriteLine("on Task step load: " + task.id);
                         _ = LoadSteps(routineID, task.id, routineIdx, taskIdx, routineType);
                         taskIdx++;
                     }
@@ -300,7 +300,7 @@ namespace ProjectCaitlin.Services
                     int actionIdx = 0;
                     foreach (action action in App.User.goals[routineIdx].actions)
                     {
-                        //Console.WriteLine("on action step load: " + action.id);
+                        ////Console.WriteLine("on action step load: " + action.id);
                         _ = LoadSteps(routineID, action.id, routineIdx, actionIdx, routineType);
                         actionIdx++;
                     }
@@ -333,8 +333,8 @@ namespace ProjectCaitlin.Services
                 }
                 catch
                 {
-                    Console.WriteLine("Error with json action/task token:");
-                    Console.WriteLine(stepJson);
+                    //Console.WriteLine("Error with json action/task token:");
+                    //Console.WriteLine(stepJson);
                     return;
                 }
 
@@ -368,7 +368,7 @@ namespace ProjectCaitlin.Services
                                         "HH:mm:ss", CultureInfo.InvariantCulture)
                                 };
 
-                                //Console.WriteLine("on Step: " + step.isComplete);
+                                ////Console.WriteLine("on Step: " + step.isComplete);
 
                                 App.User.routines[routineIdx].tasks[taskIdx].steps.Add(step);
                             }
@@ -392,14 +392,14 @@ namespace ProjectCaitlin.Services
 
                                 App.User.goals[routineIdx].actions[taskIdx].instructions.Add(instruction);
 
-                                //Console.WriteLine("on Instruction: " + instruction.isComplete);
+                                ////Console.WriteLine("on Instruction: " + instruction.isComplete);
                             }
                         }
                     }
                     catch
                     {
-                        Console.WriteLine("Error with json action/task token:");
-                        Console.WriteLine(jsonIorS);
+                        //Console.WriteLine("Error with json action/task token:");
+                        //Console.WriteLine(jsonIorS);
                     }
                     dbIdx_++;
                 }
@@ -408,13 +408,13 @@ namespace ProjectCaitlin.Services
 
         private bool IsDateToday(string dateTimeString)
         {
-            //Console.WriteLine("checkDatestring: " + dateTimeString);
+            ////Console.WriteLine("checkDatestring: " + dateTimeString);
 
             DateTime today = DateTime.Now;
             DateTime checkDate = DateTime.Parse(dateTimeString);
 
-            //Console.WriteLine("checkDate: " + checkDate.ToString());
-            //Console.WriteLine("checkDate result: " + (today.Date == checkDate.Date).ToString());
+            ////Console.WriteLine("checkDate: " + checkDate.ToString());
+            ////Console.WriteLine("checkDate result: " + (today.Date == checkDate.Date).ToString());
 
             return (today.Date == checkDate.Date) ? true : false;
         }

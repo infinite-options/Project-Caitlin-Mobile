@@ -89,7 +89,7 @@ namespace ProjectCaitlin.Droid
 
         public void PrintPendingNotifications()
         {
-            Console.WriteLine("Need to implement");
+            Console.WriteLine("Need to implement: AndroidNotificationManager.cs -> PrintPendingNotifications()");
         }
     }
 }

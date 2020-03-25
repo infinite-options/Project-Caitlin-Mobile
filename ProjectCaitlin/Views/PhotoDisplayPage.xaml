@@ -14,14 +14,16 @@
                         <StackLayout >
                             <Frame  CornerRadius="30" HeightRequest="300" WidthRequest="300" HorizontalOptions="Center" IsClippedToBounds="True">
                                 <StackLayout>
-
+                                    
                                     <forms:CachedImage Source="{Binding Source}"
                                Aspect="AspectFill"
                                HeightRequest="300"
                                WidthRequest="300"
                                HorizontalOptions="Center" />
 
-                                </StackLayout>
+                                <Label Text="{Binding Description}" FontSize="20" HorizontalOptions="Center"/>
+
+                            </StackLayout>
                             </Frame>
                     </StackLayout>
                     </DataTemplate>
@@ -30,12 +32,15 @@
 
         <Label x:Name="dateLabel" Text="" FontSize="20" HorizontalOptions="Center"/>
 
-
-        <StackLayout Orientation="Horizontal">
-            <Grid Grid.Column="4" Grid.Row="1">
-                <ImageButton Grid.Column="0" x:Name= "button1" Source="previousbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
-                <ImageButton Grid.Column="3" x:Name= "button2" Source="nextbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
-            </Grid>
+        
+        <StackLayout Orientation="Horizontal"
+                     HorizontalOptions="FillAndExpand"
+                     Padding="0,20,0,20">
+            <ImageButton x:Name= "button1" HorizontalOptions="StartAndExpand" Source="previousbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
+            <ImageButton  x:Name= "button2" HorizontalOptions="EndAndExpand" Source="nextbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
         </StackLayout>
+
+
+
     </StackLayout>
 </ContentPage>

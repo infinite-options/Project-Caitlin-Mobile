@@ -20,7 +20,7 @@ namespace ProjectCaitlin
 
         GooglePhotoService GooglePhotoService = new GooglePhotoService();
 
-        Dictionary<string,string> photoURIs = new Dictionary<string,string>();
+        List<List<string>> photoURIs = new List<List<string>>();
         public int Year { get; set; } = 0;
         public int Month { get; set; } = 1;
         Label[] labels = new Label[42];
@@ -29,7 +29,7 @@ namespace ProjectCaitlin
         public MonthlyViewPage()
         {
             InitializeComponent();
-            
+
 
             int row = 1;
             int col = 0;
@@ -97,10 +97,11 @@ namespace ProjectCaitlin
 
             try
             {
-                foreach (var pair in photoURIs)
+                foreach (List<string> list in photoURIs)
                 {
-                    string photoURI = pair.Key;
-                    string date = pair.Value;
+                    string photoURI = list[0];
+                    string date = list[1];
+                    string description = list[2];
 
                     if (photoCount % rowLength == 0)
                     {
@@ -118,7 +119,7 @@ namespace ProjectCaitlin
 
                     var tapGestureRecognizer = new TapGestureRecognizer();
                     tapGestureRecognizer.Tapped += async (s, e) => {
-                        await Navigation.PushAsync(new PhotoDisplayPage(webImage,date));
+                        await Navigation.PushAsync(new PhotoDisplayPage(webImage, date, description));
                     };
                     webImage.GestureRecognizers.Add(tapGestureRecognizer);
 
@@ -138,13 +139,13 @@ namespace ProjectCaitlin
             {
                 var googleService = new GoogleService();
                 await googleService.RefreshToken();
-                
+
 
             }
 
             photoScrollView.HeightRequest = Application.Current.MainPage.Height - CalendarContent.Height - NavBar.Height;
 
-            if (photoURIs.Count != 0)
+            if (photoURIs != null)
             {
                 photoScrollView.Content = controlGrid;
             }
