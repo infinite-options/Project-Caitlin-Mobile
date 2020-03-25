@@ -40,12 +40,31 @@ namespace ProjectCaitlin
 			var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
 			await firestoreService.LoadUser();
 
-			if (App.User.old_refresh_token != App.User.refresh_token)
+            Console.WriteLine("----------------------------------------------------------");
+            Console.WriteLine("Made it to 1");
+            Console.WriteLine(App.User.access_token);
+            Console.WriteLine(App.User.refresh_token);
+            Console.WriteLine("----------------------------------------------------------");
+
+            if (App.User.old_refresh_token != App.User.refresh_token)
             {
-                if(App.User.access_token != null)
+                Console.WriteLine("----------------------------------------------------------");
+                Console.WriteLine("Made it to 2: First catch");
+                Console.WriteLine("----------------------------------------------------------");
+
+                if (App.User.access_token != null)
                 {
-					await GoogleService.LoadTodaysEvents();
-					await Navigation.PushAsync(new GoalsRoutinesTemplate());
+                    Console.WriteLine("----------------------------------------------------------");
+                    Console.WriteLine("Made it to 2: Second catch");
+                    Console.WriteLine("----------------------------------------------------------");
+                    if (await GoogleService.LoadTodaysEvents())
+                    {
+                        await Navigation.PushAsync(new GoalsRoutinesTemplate());
+                    }
+                    else
+                    {
+                        loginButton.IsVisible = true;
+                    }
                 }
             }
             else
@@ -194,10 +213,11 @@ namespace ProjectCaitlin
                 //Save to App.User AND Update Firebase with pertitnent info
                 var googleService = new GoogleService();
                 await googleService.SaveAccessTokenToFireBase(accessToken);
+                Console.WriteLine(refreshToken);
                 await googleService.SaveRefreshTokenToFireBase(refreshToken);
 
                 //Navigate to the Daily Page after Login
-                await Navigation.PushAsync(new LoginPage());
+                await Navigation.PushAsync(new GoalsRoutinesTemplate());
 			}
 		}
 
