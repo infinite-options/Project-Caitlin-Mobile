@@ -86,5 +86,10 @@ namespace ProjectCaitlin.Droid
 
             channelInitialized = true;
         }
+
+        public void PrintPendingNotifications()
+        {
+            Console.WriteLine("Need to implement");
+        }
     }
 }
