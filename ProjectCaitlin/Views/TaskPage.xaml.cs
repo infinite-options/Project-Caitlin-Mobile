@@ -26,8 +26,10 @@ namespace ProjectCaitlin.Views
         }
         public async void close(object sender, EventArgs args)
         {
-            await Navigation.PushAsync(new GoalsRoutinesTemplate());
-            //await Navigation.PushAsync(new GoalsRoutinesTemplate());
+            if (App.ParentPage == "ListView")
+                await Navigation.PushAsync(new ListViewPage());
+            else
+                await Navigation.PopAsync();
         }
     }
 

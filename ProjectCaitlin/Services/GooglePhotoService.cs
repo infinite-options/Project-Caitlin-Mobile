@@ -9,9 +9,10 @@ namespace ProjectCaitlin.Services
 {
     public class GooglePhotoService
     {
-
+        public HashSet<string> allDates;
         public async Task<List<List<string>>> GetPhotos()
         {
+            allDates = new HashSet<string>();
 
             //Make HTTP Request
             var request = new HttpRequestMessage();
@@ -46,23 +47,14 @@ namespace ProjectCaitlin.Services
                 foreach (var product in result.MediaItems)
                 {
                     var subList = new List<string>();
-                    //thumbNailAlbumUri = product.baseUrl.ToString();
                     creationTime = product.MediaMetadata.CreationTime.ToString();
-                    date = creationTime.Substring(0, 9);
-                    //string datePicker = DateTime.Now.ToString("dd'/'MM'/'yyyy");
-                    string datePicker = "5/26/2016";
-                    //if (date == datePicker)
-                    //{
-                    
+                    date = creationTime.Substring(0, creationTime.IndexOf(" "));
+
+                    allDates.Add(date);
+
                     storePicUri = product.BaseUrl.ToString();
-                    description = product.Description.ToString();
-                    Console.WriteLine("product.Description.ToString() : " + product.Description.ToString());
-                    //product.ToString() : ProjectCaitlin.Methods.MediaItem
+                    description = product.Description+"";
 
-                    //System.Diagnostics.Debug.WriteLine(storePicUri);
-                    //System.Diagnostics.Debug.WriteLine(date);
-
-                    //};
                     subList.Add(product.BaseUrl.ToString());
                     subList.Add(date);
                     subList.Add(description);
@@ -71,6 +63,13 @@ namespace ProjectCaitlin.Services
             }
             catch (NullReferenceException e)
             {
+                //here: 
+                /*var googleService = new GoogleService();
+                if (await googleService.RefreshToken())
+                {
+                    Console.WriteLine("RefreshToken Done!");
+                    return await GetPhotos();
+                }*/
                 return null;
             }
 

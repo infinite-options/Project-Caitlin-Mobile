@@ -21,10 +21,10 @@
                                WidthRequest="300"
                                HorizontalOptions="Center" />
 
-                                <Label Text="{Binding Description}" FontSize="20" HorizontalOptions="Center"/>
-
                             </StackLayout>
                             </Frame>
+                        <Label Text="{Binding Description}" FontSize="20" HorizontalOptions="Center"/>
+
                     </StackLayout>
                     </DataTemplate>
                 </CarouselView.ItemTemplate>

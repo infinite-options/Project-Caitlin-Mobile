@@ -14,12 +14,16 @@ namespace ProjectCaitlin.Views
         {
             InitializeComponent();
             AddTapGestures();
+            App.ParentPage = "MyDay";
             pageModel = new GoalsRoutinesTemplateViewModel(this);
             BindingContext = pageModel;
+            ContentStackLayout.HeightRequest = Application.Current.MainPage.Height - NavBar.Height;
         }
 
         private void AddTapGestures()
         {
+            // for nav bar
+            // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
             var tapGestureRecognizer1 = new TapGestureRecognizer();
             tapGestureRecognizer1.Tapped += async (s, e) => {
                 await Navigation.PushAsync(new GreetingPage());
@@ -37,6 +41,7 @@ namespace ProjectCaitlin.Views
                 await Navigation.PushAsync(new MonthlyViewPage());
             };
             MyPhotosButton.GestureRecognizers.Add(tapGestureRecognizer3);
+            // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         }
     }
 }

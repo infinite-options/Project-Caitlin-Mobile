@@ -24,7 +24,7 @@ namespace ProjectCaitlin.ViewModel
                 Source = webImage.Source,
                 Description = description
             });
-            string source = webImage.Source +"";
+            string source = webImage.Source + "";
             source = source.Substring(5);
             SetupUI(date, source);
         }
@@ -48,10 +48,11 @@ namespace ProjectCaitlin.ViewModel
                     string photoDate = list[1];
                     string description = list[2];
 
-                    if (date.Equals(photoDate) && !(source.Equals(photoURI))) {
+                    if (date.Equals(photoDate) && !(source.Equals(photoURI)))
+                    {
                         Items.Add(new { Source = photoURI, Description = description });
                     }
-                    
+
                 }
             }
             catch (NullReferenceException e)
@@ -75,9 +76,9 @@ namespace ProjectCaitlin.ViewModel
                     string photoDate = list[1];
                     string description = list[2];
 
-                    if (date.Equals(photoDate) )
+                    if (date.Equals(photoDate))
                     {
-                        Items.Add(new { Source = photoURI, Description = description});
+                        Items.Add(new { Source = photoURI, Description = description });
                     }
 
                 }

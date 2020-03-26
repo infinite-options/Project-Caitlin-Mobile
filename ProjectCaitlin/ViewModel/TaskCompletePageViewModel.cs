@@ -5,7 +5,7 @@ using Xamarin.Forms;
 using ProjectCaitlin.Models;
 using System;
 using System.ComponentModel;
-using ProjectCaitlin.Methods;
+using ProjectCaitlin.Services;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 
@@ -21,11 +21,7 @@ namespace ProjectCaitlin.ViewModel
         public string TopLabel { get; set; }
         public string TopLabel2 { get; set; }
 
-
-
-
-
-        FirestoreService firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
+        FirebaseFunctionsService firebaseFunctionsService = new FirebaseFunctionsService();
 
         public ObservableCollection<InstructionModel> Items { get; set; }
         public TaskCompletePageViewModel(TaskCompletePage mainPage, int a, int b, bool isRoutine)
@@ -43,7 +39,7 @@ namespace ProjectCaitlin.ViewModel
             int i = 0;
             foreach (instruction instruction in App.User.goals[a].actions[b].instructions)
             {
-                /*Command completeInstuction; 
+                /*Command completeInstuction;
                 if (App.user.routines[a].tasks[b].steps[i].isComplete)
                 {
                     completeInstuction = new Command<int>((int _stepIdx) => { });

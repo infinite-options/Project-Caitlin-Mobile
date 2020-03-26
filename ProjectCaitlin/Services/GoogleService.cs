@@ -56,7 +56,7 @@ namespace ProjectCaitlin.Services
         }
 
         //Use REFRESH TOKEN to receive another ACCESS TOKEN...and UPDATE App.user.access_token.
-        public async Task<string> RefreshToken()
+        public async Task<bool> RefreshToken()
         {
             string clientId = null;
             string redirectUri = null;
@@ -82,7 +82,7 @@ namespace ProjectCaitlin.Services
 
             var content = new FormUrlEncodedContent(values);
 
-            Console.WriteLine(content);
+            //Console.WriteLine(content + "THIS IS THE PROBLEM");
 
             var client = new HttpClient();
             var response = await client.PostAsync(Constants.AccessTokenUrl, content);
@@ -90,21 +90,37 @@ namespace ProjectCaitlin.Services
 
             JObject jsonParsed = JObject.Parse(json);
 
+            if (jsonParsed["error"] != null)
+            {
+                Console.WriteLine("1: HERE");
+                App.User.old_refresh_token = App.User.refresh_token;
+                await Application.Current.MainPage.Navigation.PopToRootAsync();
+                return false;
+            }
+
             try
             {
+                Console.WriteLine("2: HERE");
+
                 App.User.access_token = jsonParsed["access_token"].ToString();
             }
             catch (NullReferenceException e)
             {
+                Console.WriteLine("3: HERE");
+
                 App.User.old_refresh_token = App.User.refresh_token;
                 await Application.Current.MainPage.Navigation.PopToRootAsync();
             }
+
+            Console.WriteLine("4: HERE");
 
             await SaveAccessTokenToFireBase(App.User.access_token);
 
             Console.WriteLine(json);
 
-            return json;
+            Console.WriteLine("5: HERE");
+
+            return true;
 
             //var request = new OAuth2Request("POST", new Uri(Constants.AccessTokenUrl), dictionary, e.Account);
             //var response = await request.GetResponseAsync();
@@ -309,8 +325,10 @@ namespace ProjectCaitlin.Services
             if (jsonParsed.ContainsKey("error"))
             {
                 var googleService = new GoogleService();
-                await RefreshToken();
-                return await googleService.GetAllTodaysEventsList(publicYear, publicMonth, publicDay, timeZoneNum);
+                if (await RefreshToken())
+                {
+                    return await googleService.GetAllTodaysEventsList(publicYear, publicMonth, publicDay, timeZoneNum);
+                }          
             }
 
             return (json);
@@ -407,7 +425,7 @@ namespace ProjectCaitlin.Services
 
         }
 
-        public static async Task LoadTodaysEvents()
+        public static async Task<bool> LoadTodaysEvents()
         {
             App.User.CalendarEvents.Clear();
 
@@ -430,12 +448,12 @@ namespace ProjectCaitlin.Services
             var jsonResult = await googleService.GetAllTodaysEventsList(publicYear, publicMonth, publicDay, timeZoneNum);
             //var jsonResult = await googleService.GetEventsList();
 
-            Console.WriteLine("jsonResult event: " + jsonResult);
+            //Console.WriteLine("jsonResult event: " + jsonResult);
 
             //Return error if result is empty
             if (jsonResult == null)
             {
-                return;
+                return false;
             }
 
             //Parse the json using EventsList Method
@@ -452,12 +470,15 @@ namespace ProjectCaitlin.Services
                     Console.WriteLine(events.EventName.ToString());
                 }
             }
-            catch (ArgumentNullException e)
+            catch (NullReferenceException e)
             {
                 //LoginPage.accessToken = LoginPage.refreshToken;
                 //await Navigation.PopAsync();
                 //Console.WriteLine(LoginPage.accessToken);
+                return false;
             }
+
+            return true;
         }
     }
 }

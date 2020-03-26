@@ -7,11 +7,11 @@
              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              mc:Ignorable="d"
              x:Class="ProjectCaitlin.Views.GreetingPage"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="#1A1827">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="#1A1827">
-            <StackLayout
-                Margin="0,50,0,0">
+        <StackLayout VerticalOptions="CenterAndExpand">
+            <StackLayout>
 
 
                 <ffimage:CachedImage

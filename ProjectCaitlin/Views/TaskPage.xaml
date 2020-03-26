@@ -7,7 +7,8 @@
              xmlns:local="clr-namespace:ProjectCaitlin.Views" xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms" xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
              mc:Ignorable="d"
              x:Class="ProjectCaitlin.Views.TaskPage"
-             NavigationPage.HasNavigationBar="False">
+             NavigationPage.HasNavigationBar="False"
+             BackgroundColor="{Binding BackgroundColor}">
     <ContentPage.Content>
         <ScrollView>
 
@@ -15,33 +16,33 @@
                 <StackLayout
                     Orientation="Horizontal"
                     HorizontalOptions="FillAndExpand"
-                    Padding="10, 0, 10, 0">
+                    Margin="20, 10, 20, 10">
 
                     <!-- BACK ARROW-->
-                    <ImageButton Grid.Column="0"
-                                Source="arrowicon.png"
+                    <ImageButton
+                                Source="{Binding BackImage}"
                                 BackgroundColor="Transparent"
-                                HeightRequest="23"
-                                WidthRequest="23"
+                                HeightRequest="25"
+                                WidthRequest="25"
                                 HorizontalOptions="Start"
                                 VerticalOptions="Center"
                                 Clicked="close"/>
 
                     <!-- CURRENT ROUTINE-->
                     <Label
-                            Grid.Column="1"
                             Text="{Binding TopLabel}"
                             FontSize="30"
-                            FontAttributes="Bold"     
-                            TextColor= "Black"
+                            HorizontalTextAlignment="Center"
+                            FontAttributes="Bold"
+                            TextColor= "{Binding TitleTextColor}"
                             HorizontalOptions="CenterAndExpand"
                             VerticalOptions="Center"/>
 
                     <!-- For Spacing the Label -->
                     <ImageButton
                         BackgroundColor="Transparent"
-                        HeightRequest="23"
-                        WidthRequest="23"
+                        HeightRequest="25"
+                        WidthRequest="25"
                         HorizontalOptions="End"
                         VerticalOptions="Center"
                         />
@@ -68,10 +69,11 @@
 
                 <StackLayout>
                     <flv:FlowListView FlowColumnCount="2"
-                SeparatorVisibility="Default"
-                HasUnevenRows="False"
-                RowHeight ="260"
-                FlowItemsSource="{Binding Items}">
+                        SeparatorVisibility="Default"
+                        HasUnevenRows="False"
+                        RowHeight ="260"
+                        FlowItemsSource="{Binding Items}"
+                        BackgroundColor="{Binding BackgroundColor}">
 
                         <flv:FlowListView.FlowColumnTemplate>
                             <DataTemplate>
@@ -81,19 +83,19 @@
                                     Margin="10"
                                    Padding="0"
                                 CornerRadius="25">
-                                        <StackLayout Spacing="-100">
+                                        <Grid>
                                             <ImageButton Source="{Binding Source}"
                                                  Command="{Binding Navigate}"
-                                                 CommandParameter="{x:Type local:TaskCompletePage}"
+                                                 CommandParameter="{Binding NavigateIdx}"
                                                  VerticalOptions = "FillAndExpand"
                                                  HorizontalOptions = "FillAndExpand"
                                                  HeightRequest="200"
                                                  Aspect = "AspectFill"/>
-                                            <Image x:Name="isComplete" IsVisible="{Binding isComplete}" Source="greencheckmarkicon.png" HeightRequest="100" WidthRequest="100" HorizontalOptions="FillAndExpand" VerticalOptions="FillAndExpand"/>
-                                        </StackLayout>
+                                            <ImageButton x:Name="isComplete" Command="{Binding Navigate}" CommandParameter="{Binding NavigateIdx}" IsVisible="{Binding IsComplete}" Source="greencheckmarkicon.png" HeightRequest="125" WidthRequest="125" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                        </Grid>
                                     </Frame>
 
-                                    <Label HorizontalOptions="Center" Text="{Binding Text}" HeightRequest="35" />
+                                    <Label HorizontalOptions="Center" TextColor="{Binding TextColor}" Text="{Binding Text}" HeightRequest="35" />
                                 </StackLayout>
                             </DataTemplate>
                         </flv:FlowListView.FlowColumnTemplate>

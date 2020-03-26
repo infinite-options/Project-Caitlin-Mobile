@@ -10,37 +10,37 @@
     <ContentPage.Content>
         <StackLayout BackgroundColor="DarkSlateGray">
 
-            <StackLayout Margin="0, 20, 0, 10">
+            <StackLayout Margin="0, 30, 0, 10">
+
 
                 <StackLayout
                     Orientation="Horizontal"
                     HorizontalOptions="FillAndExpand"
-                    Padding="10, 0, 10, 0">
+                    Margin="20, 0, 20, 0">
 
                     <!-- BACK ARROW-->
 
-                    <ImageButton 
-                        Source="arrowicon.png"
+                    <ImageButton
+                        Source="arrowiconwhite.png"
                         BackgroundColor="Transparent"
-                        HeightRequest="23"
-                        WidthRequest="23"
+                        HeightRequest="25"
+                        WidthRequest="25"
                         HorizontalOptions="Start"
                         VerticalOptions="Center"
                         Clicked="back"/>
 
                     <!-- CURRENT ROUTINE-->
                     <Label
-                            Grid.Column="1"
                             Text="{Binding TopLabel}"
                             FontSize="30"
-                            FontAttributes="Bold"     
+                            FontAttributes="Bold"
                             TextColor= "White"
                             HorizontalOptions="CenterAndExpand"
                             VerticalOptions="Center"/>
 
                     <!-- EXIT BUTTON-->
                     <ImageButton
-                        Source="exiticon.png"
+                        Source="exiticonwhite.png"
                         BackgroundColor="Transparent"
                         HeightRequest="25"
                         WidthRequest="25"
@@ -49,7 +49,7 @@
                         Clicked="close"/>
 
                 </StackLayout>
-                <Label 
+                <Label
                 Text="{Binding TopLabel2}"
                 FontSize="18"
                 TextColor= "White"

@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Collections.Generic;
-using ProjectCaitlin.Methods;
+using ProjectCaitlin.Services;
 using ProjectCaitlin.Models;
 
 
@@ -17,6 +17,8 @@ namespace ProjectCaitlin.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TaskCompletePage : ContentPage
     {
+        FirebaseFunctionsService firebaseFunctionsService;
+
         private int itemcount;
         int a;
         int b;
@@ -25,6 +27,7 @@ namespace ProjectCaitlin.Views
         public TaskCompletePage(int a, int b, bool isRoutine)
         {
             InitializeComponent();
+            firebaseFunctionsService = new FirebaseFunctionsService();
 
             this.a = a;
             this.b = b;
@@ -45,7 +48,7 @@ namespace ProjectCaitlin.Views
                 var goalId = App.User.goals[a].id;
                 var actionId = App.User.goals[a].actions[b].id;
 
-                var isActionComplete = await firestoreService.UpdateTask(goalId, actionId, App.User.goals[a].actions[b].dbIdx.ToString());
+                var isActionComplete = await firebaseFunctionsService.UpdateTask(goalId, actionId, App.User.goals[a].actions[b].dbIdx.ToString());
                 if (isActionComplete)
                 {
                     App.User.goals[a].actions[b].isComplete = true;
@@ -62,7 +65,7 @@ namespace ProjectCaitlin.Views
 
                 if (completeActionCounter == App.User.goals[a].actions.Count)
                 {
-                    var isGoalComplete = await firestoreService.CompleteRoutine(goalId, App.User.goals[a].dbIdx.ToString());
+                    var isGoalComplete = await firebaseFunctionsService.CompleteRoutine(goalId, App.User.goals[a].dbIdx.ToString());
                     if (isGoalComplete)
                     {
                         App.User.goals[a].isComplete = true;
@@ -105,23 +108,36 @@ namespace ProjectCaitlin.Views
                 next.Text = "Done";
 
             }
+            else if (CarouselTasks.Position != App.User.goals[a].actions[b].instructions.Count - 1)
+            {
+
+                App.User.goals[a].actions[b].instructions[CarouselTasks.Position].isComplete = true;
+                pageModel.Items[CarouselTasks.Position].OkToCheckmark = true;
+
+                next.Text = "Done";
+
+            }
 
 
         }
+
         public async void prepage(object sender, EventArgs args)
         {
             if (CarouselTasks.Position != 0)
             {
-                CarouselTasks.Position = CarouselTasks.Position - 1;
+                next.Text = "Done";
             }
         }
+
         public async void close(object sender, EventArgs args)
         {
-            await Navigation.PushAsync(new GoalsRoutinesTemplate());
+            Navigation.PopAsync();
+            Navigation.PopAsync();
         }
+
         public async void back(object sender, EventArgs args)
         {
-            await Navigation.PushAsync(new TaskPage(a, isRoutine));
+            await Navigation.PopAsync();
         }
     }
 }
