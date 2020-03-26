@@ -5,13 +5,10 @@
 	<key>UIDeviceFamily</key>
 	<array>
 		<integer>1</integer>
-		<integer>2</integer>
 	</array>
 	<key>UISupportedInterfaceOrientations</key>
 	<array>
 		<string>UIInterfaceOrientationPortrait</string>
-		<string>UIInterfaceOrientationLandscapeLeft</string>
-		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>UISupportedInterfaceOrientations~ipad</key>
 	<array>
@@ -27,7 +24,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.infiniteoptions.ProjectCaitlin</string>
 	<key>CFBundleVersion</key>
-	<string>1.0.2</string>
+	<string>1.1.4.4</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
@@ -64,5 +61,11 @@
 	</array>
 	<key>CFBundleShortVersionString</key>
 	<string>1</string>
+	<key>UIUserInterfaceStyle</key>
+	<string>Light</string>
+	<key>UIBackgroundModes</key>
+	<array>
+		<string>remote-notification</string>
+	</array>
 </dict>
 </plist>

@@ -24,6 +24,14 @@
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
     <PackageReference Include="DLToolkit.Forms.Controls.ImageCropView" Version="1.0.7" />
     <PackageReference Include="CardsView" Version="2.4.5" />
+    <PackageReference Include="Microsoft.AppCenter" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AppCenter.Analytics" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AppCenter.Crashes" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AppCenter.Push" Version="3.0.0" />
+    <PackageReference Include="Microsoft.AppCenter.Auth" Version="2.6.4" />
+    <PackageReference Include="Microsoft.AppCenter.Data" Version="2.6.4" />
+    <PackageReference Include="Microsoft.AppCenter.Distribute" Version="3.0.0" />
+    <PackageReference Include="AppCenter.Analytics.Metrics" Version="1.1.0" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.iOS">
@@ -56,6 +64,9 @@
     <Compile Remove="Extensions\TransitionAnimator.cs" />
   </ItemGroup>
   <ItemGroup>
+    <None Remove="Icons\xamagonBlue.png" />
+  </ItemGroup>
+  <ItemGroup>
     <None Include="ViewModel\DailyViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
   </ItemGroup>
   <ItemGroup>
@@ -79,5 +90,8 @@
     <EmbeddedResource Update="Views\TaskPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Icons\xamagonBlue.png" />
   </ItemGroup>
 </Project>

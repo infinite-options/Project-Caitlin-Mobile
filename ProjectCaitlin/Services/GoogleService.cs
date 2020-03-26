@@ -92,7 +92,6 @@ namespace ProjectCaitlin.Services
 
             if (jsonParsed["error"] != null)
             {
-                Console.WriteLine("1: HERE");
                 App.User.old_refresh_token = App.User.refresh_token;
                 await Application.Current.MainPage.Navigation.PopToRootAsync();
                 return false;
@@ -117,8 +116,6 @@ namespace ProjectCaitlin.Services
             await SaveAccessTokenToFireBase(App.User.access_token);
 
             Console.WriteLine(json);
-
-            Console.WriteLine("5: HERE");
 
             return true;
 
