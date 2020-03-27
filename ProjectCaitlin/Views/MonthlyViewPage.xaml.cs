@@ -311,6 +311,8 @@ namespace ProjectCaitlin
             for (int i = startDay -1; i >= 0; i--)
             {
                 labels[i].Text = lastMonth + "";
+                labels[i].FontSize = 15;
+
                 labels[i].TextColor = Color.FromHex("#c2c6cc");
                 labels[i].FontAttributes = FontAttributes.None;//refresh the font first.
                 labels[i].GestureRecognizers.Clear();
@@ -322,6 +324,8 @@ namespace ProjectCaitlin
             for (int i = startDay; i < startDay + maxDay; i++)
             {
                 labels[i].Text = j + "";
+                labels[i].FontSize = 15;
+
                 labels[i].TextColor = Color.FromHex("#000000");
                 labels[i].FontAttributes = FontAttributes.None;//refresh the font first.
                 labels[i].GestureRecognizers.Clear();
@@ -340,7 +344,7 @@ namespace ProjectCaitlin
                     if (Year == year && Month == month && Day == j)
                     {
                         labels[i].FontAttributes = FontAttributes.Bold;
-
+                        labels[i].TextColor = Color.FromHex("#f5cb42");
                         var OnLabelClicked = new TapGestureRecognizer();
                         OnLabelClicked.Tapped += async (s, e) => {
                             await Navigation.PushAsync(new PhotoDisplayPage(date));
@@ -357,6 +361,8 @@ namespace ProjectCaitlin
             for (int i = startDay + maxDay; i < 42; i++)
             {
                 labels[i].Text = m + "";
+                labels[i].FontSize = 15;
+
                 labels[i].TextColor = Color.FromHex("#c2c6cc");
                 labels[i].FontAttributes = FontAttributes.None;//refresh the font first.
                 labels[i].GestureRecognizers.Clear();
