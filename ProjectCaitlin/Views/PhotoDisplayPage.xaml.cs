@@ -12,7 +12,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace ProjectCaitlin
-{
+{ 
     public partial class PhotoDisplayPage : ContentPage
     {
         readonly PhotoViewModel pageModel;
@@ -23,11 +23,11 @@ namespace ProjectCaitlin
 
         string date;
 
-        public PhotoDisplayPage(CachedImage webImage,string date, string description)
+        public PhotoDisplayPage(CachedImage webImage,string date, string description, string creationTime)
         {
             InitializeComponent();
             this.date = date;
-            pageModel = new PhotoViewModel(webImage,date,description);
+            pageModel = new PhotoViewModel(webImage,date,description, creationTime);
             BindingContext = pageModel;
 
             dateLabel.Text = date;
@@ -262,6 +262,10 @@ namespace ProjectCaitlin
             string dateTime = new DateTime(Year, Month, Day) + "";
             dateTime = dateTime.Substring(0, dateTime.IndexOf(" "));
             return dateTime;
+        }
+        public async void close(object sender, EventArgs args)
+        {
+            await Navigation.PushAsync(new MonthlyViewPage());
         }
     }
 }

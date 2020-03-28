@@ -81,6 +81,7 @@ namespace ProjectCaitlin
                     string photoURI = list[0];
                     string date = list[1];
                     string description = list[2];
+                    string creationTime = list[3];
 
                     if (photoCount % rowLength == 0)
                     {
@@ -96,7 +97,7 @@ namespace ProjectCaitlin
 
                     var tapGestureRecognizer = new TapGestureRecognizer();
                     tapGestureRecognizer.Tapped += async (s, e) => {
-                        await Navigation.PushAsync(new PhotoDisplayPage(webImage,date,description));
+                        await Navigation.PushAsync(new PhotoDisplayPage(webImage,date,description,creationTime));
                     };
                     webImage.GestureRecognizers.Add(tapGestureRecognizer);
                     var indicator = new ActivityIndicator { Color = Color.Gray, };

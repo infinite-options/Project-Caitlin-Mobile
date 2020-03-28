@@ -47,17 +47,20 @@ namespace ProjectCaitlin.Services
                 foreach (var product in result.MediaItems)
                 {
                     var subList = new List<string>();
-                    creationTime = product.MediaMetadata.CreationTime.ToString();
-                    date = creationTime.Substring(0, creationTime.IndexOf(" "));
+                    
+                    DateTimeOffset GreenwichMeanTime = product.MediaMetadata.CreationTime; //Google photo api sends time in GreenwichMeanTime.
+                    DateTimeOffset utcTime = GreenwichMeanTime.ToLocalTime();  //convert GreenwichMeanTime to local time.
+                    creationTime = utcTime.ToString(); 
+                    date = creationTime.Substring(0, creationTime.IndexOf(" "));// date = yyyy/mm/dd
 
                     allDates.Add(date);
 
                     storePicUri = product.BaseUrl.ToString();
                     description = product.Description+"";
-
                     subList.Add(product.BaseUrl.ToString());
                     subList.Add(date);
                     subList.Add(description);
+                    subList.Add(creationTime);
                     itemList.Add(subList);
                 }
             }

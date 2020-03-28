@@ -131,8 +131,7 @@ namespace ProjectCaitlin.Views
 
         public async void close(object sender, EventArgs args)
         {
-            Navigation.PopAsync();
-            Navigation.PopAsync();
+            await Navigation.PopAsync();
         }
 
         public async void back(object sender, EventArgs args)

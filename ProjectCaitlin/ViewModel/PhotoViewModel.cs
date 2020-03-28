@@ -16,13 +16,14 @@ namespace ProjectCaitlin.ViewModel
         List<List<string>> photoURIs = new List<List<string>>();
         GooglePhotoService GooglePhotoService = new GooglePhotoService();
 
-        public PhotoViewModel(CachedImage webImage, string date, string description)
+        public PhotoViewModel(CachedImage webImage, string date, string description, string creationTime)
         {
             Items = new ObservableCollection<object>();
             Items.Add(new
             {
                 Source = webImage.Source,
-                Description = description
+                Description = description,
+                CreationTime = creationTime
             });
             string source = webImage.Source + "";
             source = source.Substring(5);
@@ -47,10 +48,12 @@ namespace ProjectCaitlin.ViewModel
                     string photoURI = list[0];
                     string photoDate = list[1];
                     string description = list[2];
+                    string creationTime = list[3];
+
 
                     if (date.Equals(photoDate) && !(source.Equals(photoURI)))
                     {
-                        Items.Add(new { Source = photoURI, Description = description });
+                        Items.Add(new { Source = photoURI, Description = description, CreationTime = creationTime });
                     }
 
                 }
@@ -75,10 +78,11 @@ namespace ProjectCaitlin.ViewModel
                     string photoURI = list[0];
                     string photoDate = list[1];
                     string description = list[2];
+                    string creationTime = list[3];
 
                     if (date.Equals(photoDate))
                     {
-                        Items.Add(new { Source = photoURI, Description = description });
+                        Items.Add(new { Source = photoURI, Description = description, CreationTime = creationTime });
                     }
 
                 }
