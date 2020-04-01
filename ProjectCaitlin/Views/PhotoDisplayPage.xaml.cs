@@ -23,11 +23,11 @@ namespace ProjectCaitlin
 
         string date;
 
-        public PhotoDisplayPage(CachedImage webImage,string date, string description, string creationTime)
+        public PhotoDisplayPage(CachedImage webImage, string date, string description, string creationTime)
         {
             InitializeComponent();
             this.date = date;
-            pageModel = new PhotoViewModel(webImage,date,description, creationTime);
+            pageModel = new PhotoViewModel(webImage, date, description, creationTime);
             BindingContext = pageModel;
 
             dateLabel.Text = date;
@@ -162,7 +162,7 @@ namespace ProjectCaitlin
             }
 
             string dateTime = new DateTime(Year, Month, Day) + "";
-            dateTime = dateTime.Substring(0,dateTime.IndexOf(" "));
+            dateTime = dateTime.Substring(0, dateTime.IndexOf(" "));
             return dateTime;
         }
         public string NextDate()
