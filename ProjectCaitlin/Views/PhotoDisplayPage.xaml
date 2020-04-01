@@ -10,7 +10,7 @@
     <StackLayout Padding="20">
 
         <StackLayout>
-            
+
             <!-- EXIT BUTTON-->
             <ImageButton
                         Source="exiticon.png"
@@ -22,7 +22,7 @@
                         Clicked="close"/>
 
         </StackLayout>
-        
+
         <CarouselView ItemsSource="{Binding Items}">
                 <CarouselView.ItemTemplate>
                     <DataTemplate>
@@ -50,11 +50,14 @@
         <Label x:Name="dateLabel" Text="" FontSize="20" HorizontalOptions="Center"/>
 
 
-        <StackLayout Orientation="Horizontal">
-            <Grid >
-                <ImageButton Grid.Column="0" x:Name= "button1" Source="previousbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
-                <ImageButton Grid.Column="10" x:Name= "button2" Source="nextbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
-            </Grid>
+        <StackLayout Orientation="Horizontal"
+                     HorizontalOptions="FillAndExpand"
+                     Padding="0,20,0,20">
+            <ImageButton x:Name= "button1" HorizontalOptions="StartAndExpand" Source="previousbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
+            <ImageButton  x:Name= "button2" HorizontalOptions="EndAndExpand" Source="nextbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
         </StackLayout>
+
+
+
     </StackLayout>
 </ContentPage>

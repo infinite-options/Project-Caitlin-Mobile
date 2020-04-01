@@ -266,5 +266,7 @@
     <BundleResource Include="Resources\waveformiconwhite.png" />
     <BundleResource Include="Resources\redoGray.png" />
     <BundleResource Include="Resources\xamagonBlue.png" />
+    <BundleResource Include="Resources\nextbutton.png" />
+    <BundleResource Include="Resources\previousbutton.png" />
   </ItemGroup>
 </Project>

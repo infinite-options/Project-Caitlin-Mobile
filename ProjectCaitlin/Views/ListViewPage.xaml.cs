@@ -85,7 +85,7 @@ namespace ProjectCaitlin
             }
             catch (Exception e)
             {
-                Console.WriteLine(e);
+                //Console.WriteLine(e);
             }
             mainScrollView.HeightRequest = Application.Current.MainPage.Height - NavBar.Height;
         }
@@ -149,11 +149,11 @@ namespace ProjectCaitlin
 
         private void PopulateEventsAndRoutines(int eventIdx, int routineIdx)
         {
-            Console.WriteLine("eventIdx: " + eventIdx);
-            Console.WriteLine("routineIdx: " + routineIdx);
+            //Console.WriteLine("eventIdx: " + eventIdx);
+            //Console.WriteLine("routineIdx: " + routineIdx);
 
-            Console.WriteLine("eventcount: " + user.CalendarEvents.Count);
-            Console.WriteLine("routinecount: " + user.routines.Count);
+            //Console.WriteLine("eventcount: " + user.CalendarEvents.Count);
+            //Console.WriteLine("routinecount: " + user.routines.Count);
 
             if (user.CalendarEvents.Count == eventIdx && user.routines.Count == routineIdx)
                 return;
@@ -439,13 +439,13 @@ namespace ProjectCaitlin
 
         private StackLayout GetFirstInTimeOfDay(string GorR, TimeSpan startTime)
         {
-            Console.WriteLine("startTime: " + startTime.ToString());
+            //Console.WriteLine("startTime: " + startTime.ToString());
 
             //currentTime = testTime;
 
             if (startTime == new TimeSpan(0, 0, 0))
             {
-                Console.WriteLine("Morning");
+                //Console.WriteLine("Morning");
 
                 if (GorR == "routine")
                     return MorningREStackLayout;
@@ -455,7 +455,7 @@ namespace ProjectCaitlin
 
             if (morningStart <= startTime && startTime < morningEnd)
             {
-                Console.WriteLine("Morning");
+                //Console.WriteLine("Morning");
 
                 if (GorR == "routine")
                     return MorningREStackLayout;
@@ -464,7 +464,7 @@ namespace ProjectCaitlin
             }
             if (afternoonStart <= startTime && startTime < afternoonEnd)
             {
-                Console.WriteLine("Afternoon");
+                //Console.WriteLine("Afternoon");
 
                 if (GorR == "routine")
                     return AfternoonREStackLayout;
@@ -473,7 +473,7 @@ namespace ProjectCaitlin
             }
             if (eveningStart <= startTime && startTime < eveningEnd)
             {
-                Console.WriteLine("Evening");
+                //Console.WriteLine("Evening");
 
                 if (GorR == "routine")
                     return EveningREStackLayout;
@@ -482,7 +482,7 @@ namespace ProjectCaitlin
             }
             if (nightStart <= startTime && startTime < nightEnd)
             {
-                Console.WriteLine("Night");
+                //Console.WriteLine("Night");
 
                 if (GorR == "routine")
                     return NightREStackLayout;
@@ -497,33 +497,33 @@ namespace ProjectCaitlin
         {
             List<StackLayout> result = new List<StackLayout>();
 
-            Console.WriteLine("startTime: " + startTime.ToString());
-            Console.WriteLine("endTime: " + endTime.ToString());
+            //Console.WriteLine("startTime: " + startTime.ToString());
+            //Console.WriteLine("endTime: " + endTime.ToString());
             if ((startTime < morningEnd && morningStart < endTime)
                 || startTime == morningStart || morningEnd == endTime)
             {
-                Console.WriteLine("Morning");
+                //Console.WriteLine("Morning");
 
                 result.Add(MorningGoalsStackLayout);
             }
             if ((startTime < afternoonEnd && afternoonStart < endTime)
                 || startTime == afternoonStart || afternoonEnd == endTime)
             {
-                Console.WriteLine("Afternoon");
+                //Console.WriteLine("Afternoon");
 
                 result.Add(AfternoonGoalsStackLayout);
             }
             if ((startTime < eveningEnd && eveningStart < endTime)
                 || startTime == eveningStart || eveningEnd == endTime)
             {
-                Console.WriteLine("Evening");
+                //Console.WriteLine("Evening");
 
                 result.Add(EveningGoalsStackLayout);
             }
             if ((startTime < nightEnd && nightStart < endTime)
                 || startTime == nightStart || nightEnd == endTime)
             {
-                Console.WriteLine("Night");
+                //Console.WriteLine("Night");
 
                 result.Add(NightGoalsStackLayout);
             }
@@ -533,28 +533,28 @@ namespace ProjectCaitlin
 
         private StackLayout GetCompleteTimeOfDay(TimeSpan completeTime)
         {
-            Console.WriteLine("completeTime: " + completeTime.ToString());
+            //Console.WriteLine("completeTime: " + completeTime.ToString());
             if (morningStart < completeTime && completeTime < morningEnd)
             {
-                Console.WriteLine("Morning");
+                //Console.WriteLine("Morning");
 
                 return MorningREStackLayout;
             }
             if (afternoonStart < completeTime && completeTime < afternoonEnd)
             {
-                Console.WriteLine("Afternoon");
+                //Console.WriteLine("Afternoon");
 
                 return AfternoonREStackLayout;
             }
             if (eveningStart < completeTime && completeTime < eveningEnd)
             {
-                Console.WriteLine("Evening");
+                //Console.WriteLine("Evening");
 
                 return EveningREStackLayout;
             }
             if (nightStart < completeTime && completeTime < nightEnd)
             {
-                Console.WriteLine("Night");
+                //Console.WriteLine("Night");
 
                 return NightREStackLayout;
             }
@@ -619,23 +619,23 @@ namespace ProjectCaitlin
         void PrintFirebaseUser()
         {
             OnPropertyChanged(nameof(App.User));
-            Console.WriteLine("user first name: " + App.User.firstName);
-            Console.WriteLine("user last name: " + App.User.lastName);
+            //Console.WriteLine("user first name: " + App.User.firstName);
+            //Console.WriteLine("user last name: " + App.User.lastName);
 
             foreach (routine routine in App.User.routines)
             {
                 OnPropertyChanged(nameof(routine));
-                Console.WriteLine("user routine title: " + routine.title);
-                Console.WriteLine("user routine id: " + routine.id);
+                //Console.WriteLine("user routine title: " + routine.title);
+                //Console.WriteLine("user routine id: " + routine.id);
                 foreach (task task in routine.tasks)
                 {
                     OnPropertyChanged(nameof(task));
-                    Console.WriteLine("user task title: " + task.title);
-                    Console.WriteLine("user task id: " + task.id);
+                    //Console.WriteLine("user task title: " + task.title);
+                    //Console.WriteLine("user task id: " + task.id);
                     foreach (step step in task.steps)
                     {
                         OnPropertyChanged(nameof(step));
-                        Console.WriteLine("user step title: " + step.title);
+                        //Console.WriteLine("user step title: " + step.title);
                     }
                 }
             }
@@ -643,17 +643,17 @@ namespace ProjectCaitlin
             foreach (goal goal in App.User.goals)
             {
                 OnPropertyChanged(nameof(goal));
-                Console.WriteLine("user goal title: " + goal.title);
-                Console.WriteLine("user goal id: " + goal.id);
+                //Console.WriteLine("user goal title: " + goal.title);
+                //Console.WriteLine("user goal id: " + goal.id);
                 foreach (action action in goal.actions)
                 {
                     OnPropertyChanged(nameof(goal));
-                    Console.WriteLine("user action title: " + action.title);
-                    Console.WriteLine("user action id: " + action.id);
+                    //Console.WriteLine("user action title: " + action.title);
+                    //Console.WriteLine("user action id: " + action.id);
                     foreach (instruction instruction in action.instructions)
                     {
                         OnPropertyChanged(nameof(instruction));
-                        Console.WriteLine("user instruction title: " + instruction.title);
+                        //Console.WriteLine("user instruction title: " + instruction.title);
                     }
                 }
             }

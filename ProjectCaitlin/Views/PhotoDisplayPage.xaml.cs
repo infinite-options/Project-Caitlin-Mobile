@@ -12,7 +12,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 
 namespace ProjectCaitlin
-{ 
+{
     public partial class PhotoDisplayPage : ContentPage
     {
         readonly PhotoViewModel pageModel;
@@ -66,7 +66,8 @@ namespace ProjectCaitlin
             await Navigation.PushAsync(new PhotoDisplayPage(date));
         }
 
-        public string PreviousDate() {
+        public string PreviousDate()
+        {
 
             string currentDate = date;
             int Year = Int32.Parse(currentDate.Substring(0, currentDate.IndexOf("/")));

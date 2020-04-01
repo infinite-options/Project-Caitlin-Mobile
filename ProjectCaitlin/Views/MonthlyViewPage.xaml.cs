@@ -58,8 +58,8 @@ namespace ProjectCaitlin
             var button2 = this.FindByName<ImageButton>("month1");
             button2.Clicked += ButtonTwo;
 
-            
-            
+
+
             SetupUI();// add photos, update calendar by date, add navigation bar
 
         }
@@ -141,7 +141,7 @@ namespace ProjectCaitlin
             //add navigation bar
             photoScrollView.HeightRequest = Application.Current.MainPage.Height - CalendarContent.Height - NavBar.Height;
 
-            if (photoURIs.Count != 0)
+            if (photoURIs != null)
             {
                 photoScrollView.Content = controlGrid;
             }

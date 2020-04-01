@@ -47,10 +47,10 @@ namespace ProjectCaitlin.Services
                 foreach (var product in result.MediaItems)
                 {
                     var subList = new List<string>();
-                    
+
                     DateTimeOffset GreenwichMeanTime = product.MediaMetadata.CreationTime; //Google photo api sends time in GreenwichMeanTime.
                     DateTimeOffset utcTime = GreenwichMeanTime.ToLocalTime();  //convert GreenwichMeanTime to local time.
-                    creationTime = utcTime.ToString(); 
+                    creationTime = utcTime.ToString();
                     date = creationTime.Substring(0, creationTime.IndexOf(" "));// date = yyyy/mm/dd
 
                     allDates.Add(date);
@@ -66,7 +66,7 @@ namespace ProjectCaitlin.Services
             }
             catch (NullReferenceException e)
             {
-                //here: 
+                //here:
                 /*var googleService = new GoogleService();
                 if (await googleService.RefreshToken())
                 {
