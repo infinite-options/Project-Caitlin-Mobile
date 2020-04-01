@@ -76,6 +76,8 @@ namespace ProjectCaitlin.Services
                     await googleService.RefreshToken();
                 }
 
+                DateTime currentTime = DateTime.Now;
+
                 notificationManager.PrintPendingNotifications();
 
                 int dbIdx_ = 0;
@@ -115,13 +117,25 @@ namespace ProjectCaitlin.Services
                                     availableEndTime = DateTime.ParseExact(jsonMapGorR["available_end_time"]["stringValue"].ToString(),
                                         "HH:mm:ss", CultureInfo.InvariantCulture)
                                 };
-                                notificationManager.ScheduleNotification("You Missed a Routine! (example)", routine.title + " is overdue. Open the app to review your tasks.", 1);
 
-                                if (!(bool)jsonMapGorR["user_notification_set"]["booleanValue"]
+                                //time precised in minutes, can be positive or negative.
+                                int startTime = (int)(currentTime - routine.availableStartTime).TotalMinutes;
+                                int endTime = (int)(currentTime - routine.availableEndTime).TotalMinutes;
+
+                                Console.WriteLine("start time : " + startTime);
+                                Console.WriteLine("end time : " + endTime);
+
+                                if( startTime < 0 && startTime > -5)
+                                    notificationManager.ScheduleNotification("Ready for ", routine.title + "? Open the app to review your tasks.", 1);
+                                else if (!routine.isComplete && endTime > 0 && endTime < 30 )
+                                    notificationManager.ScheduleNotification("You Missed a Routine! ", routine.title + " is overdue. Open the app to review your tasks.", 1);
+                                else if (!routine.isComplete &&  currentTime > routine.availableStartTime && currentTime < routine.availableEndTime)
+                                    notificationManager.ScheduleNotification("Time for ", routine.title + ". Open the app to review your tasks.", 1);
+
+                               /* if (!(bool)jsonMapGorR["user_notification_set"]["booleanValue"]
                                     && (bool)jsonMapGorR["reminds_user"]["booleanValue"]
                                     )
                                 {
-                                    Console.WriteLine("stuck here");
                                     if (firebaseFunctionsService.GRUserNotificationSetToTrue(routine.id, routine.dbIdx.ToString()).Result)
                                     {
                                         string title = "You Missed a Routine!";
@@ -134,7 +148,7 @@ namespace ProjectCaitlin.Services
                                             Console.WriteLine("notification id: " + notificationManager.ScheduleNotification(title, message, duration));
                                         }
                                     }
-                                }
+                                }*/
 
                                 App.User.routines.Add(routine);
 
