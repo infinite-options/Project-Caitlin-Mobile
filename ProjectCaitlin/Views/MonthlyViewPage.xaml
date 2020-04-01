@@ -89,6 +89,7 @@
                             <forms:CachedImage.HeightRequest>
                                 <OnPlatform x:TypeArguments="x:Double">
                                     <On Platform="Android">20</On>
+                                    <On Platform="iOS">25</On>
                                 </OnPlatform>
                             </forms:CachedImage.HeightRequest>
                         </forms:CachedImage>
@@ -106,6 +107,7 @@
                             <forms:CachedImage.HeightRequest>
                                 <OnPlatform x:TypeArguments="x:Double">
                                     <On Platform="Android">20</On>
+                                    <On Platform="iOS">25</On>
                                 </OnPlatform>
                             </forms:CachedImage.HeightRequest>
                         </forms:CachedImage>
@@ -123,6 +125,7 @@
                             <forms:CachedImage.HeightRequest>
                                 <OnPlatform x:TypeArguments="x:Double">
                                     <On Platform="Android">20</On>
+                                    <On Platform="iOS">25</On>
                                 </OnPlatform>
                             </forms:CachedImage.HeightRequest>
                         </forms:CachedImage>
@@ -141,6 +144,7 @@
                             <forms:CachedImage.HeightRequest>
                                 <OnPlatform x:TypeArguments="x:Double">
                                     <On Platform="Android">20</On>
+                                    <On Platform="iOS">25</On>
                                 </OnPlatform>
                             </forms:CachedImage.HeightRequest>
                         </forms:CachedImage>
