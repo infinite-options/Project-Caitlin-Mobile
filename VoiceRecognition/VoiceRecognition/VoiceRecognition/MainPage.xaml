@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:VoiceRecognition.ViewModel"
+             mc:Ignorable="d"
+             x:Class="VoiceRecognition.MainPage">
+
+    <StackLayout>
+		<StackLayout.BindingContext>
+			<local:EnrollVoice/>
+		</StackLayout.BindingContext>
+        <Label x:Name="RecordingStatus" Text="{Binding Message}" />
+        <Button Text="Create Identity" Clicked="Create_Identity"/>
+        <Button Text="Get All Profiles" Clicked="Get_All_Profiles"/>
+        <Button Text="Get Profile" Clicked="Get_Profile"/>
+        <Button Text="Record" Clicked="RecordButton_Click"/>
+        <Button Text="Stop Recording" Clicked="StopRecordButton_Clicked"/>
+        <Button Text="Cmd Start Recording" Command="{Binding Commands[StartRecording]}"/>
+        <Button Text="Cmd Stop Recording" Command="{Binding Commands[StopRecording]}"/>
+    </StackLayout>
+
+</ContentPage>
