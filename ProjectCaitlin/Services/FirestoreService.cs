@@ -97,6 +97,8 @@ namespace ProjectCaitlin.Services
                         {
                             if ((bool)jsonMapGorR["is_persistent"]["booleanValue"])
                             {
+                                DateTime duration = DateTime.Parse(jsonMapGorR["expected_completion_time"]["stringValue"].ToString());
+
                                 routine routine = new routine
                                 {
                                     title = jsonMapGorR["title"]["stringValue"].ToString(),
@@ -107,6 +109,8 @@ namespace ProjectCaitlin.Services
 
                                     isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapGorR["datetime_completed"]["stringValue"].ToString()),
+
+                                    expected_completion_time = duration.Hour*60 + duration.Minute,
 
                                     dbIdx = dbIdx_,
 
@@ -119,37 +123,117 @@ namespace ProjectCaitlin.Services
                                         "HH:mm:ss", CultureInfo.InvariantCulture)
                                 };
 
+                                
+
                                 //time precised in minutes, can be positive or negative.
                                 int startTime = (int)(currentTime - routine.availableStartTime).TotalMinutes;
                                 int endTime = (int)(currentTime - routine.availableEndTime).TotalMinutes;
 
+
+                                JToken userNotification;
+                                try
+                                {
+                                    Console.WriteLine("jsonMapGorR" + jsonMapGorR["user_notifications"]["mapValue"]["fields"]);
+                                    userNotification = jsonMapGorR["user_notifications"]["mapValue"]["fields"];
+                                    if (userNotification == null)
+                                        return;
+
+                                    JToken userAfter = userNotification["after"];
+                                    JToken userAfterMap = userAfter["mapValue"]["fields"];
+                                    Console.WriteLine("userAfterMap" + userAfterMap);
+
+                                    if ((bool)userAfterMap["is_enabled"]["booleanValue"] && !(bool)userAfterMap["is_set"]["booleanValue"])
+                                    {
+                                        routine.Notification.user_after = DateTime.Parse(userAfterMap["time"]["stringValue"].ToString());
+
+                                        //TotalMinutes
+                                        int total = (routine.Notification.user_after.Hour * 60) + routine.Notification.user_after.Minute;
+                                        routine.Notification.user_after_message = userAfterMap["message"]["stringValue"].ToString();
+                                        if (!routine.isComplete && endTime > 0 && endTime < total)
+                                            notificationManager.ScheduleNotification("You Missed a Routine! ", routine.title + " is overdue. Open the app to review your tasks." + routine.Notification.user_after_message, 1);
+                                        Console.WriteLine("total : " + total);
+                                        Console.WriteLine("after message: " + routine.Notification.user_after_message);
+                                    }
+
+                                    JToken userBefore = userNotification["before"];
+                                    JToken userBeforeMap = userBefore["mapValue"]["fields"];
+                                    if ((bool)userBeforeMap["is_enabled"]["booleanValue"] && !(bool)userBeforeMap["is_set"]["booleanValue"])
+                                    {
+                                        routine.Notification.user_before = DateTime.Parse(userBeforeMap["time"]["stringValue"].ToString());
+                                        //TotalMinutes
+                                        int total = (routine.Notification.user_before.Hour * 60) + routine.Notification.user_before.Minute;
+                                        routine.Notification.user_before_message = userBeforeMap["message"]["stringValue"].ToString();
+
+                                        if (startTime < 0 && startTime + total > 0)
+                                            notificationManager.ScheduleNotification("Ready for ", routine.title + "? Open the app to review your tasks." + routine.Notification.user_before_message, 1);
+                                        Console.WriteLine("total : " + total);
+                                        Console.WriteLine("before message: " + routine.Notification.user_before_message);
+                                    }
+
+                                    JToken userDuring = userNotification["during"];
+                                    JToken userDuringMap = userDuring["mapValue"]["fields"];
+                                    if ((bool)userDuringMap["is_enabled"]["booleanValue"] && !(bool)userDuringMap["is_set"]["booleanValue"])
+                                    {
+                                        routine.Notification.user_during = DateTime.Parse(userDuringMap["time"]["stringValue"].ToString()).ToLocalTime();
+                                        //TotalMinutes
+                                        int total = (routine.Notification.user_during.Hour * 60) + routine.Notification.user_during.Minute;
+                                        routine.Notification.user_during_message = userDuringMap["message"]["stringValue"].ToString();
+
+                                        if (!routine.isComplete && startTime < total && startTime > 0)
+                                            notificationManager.ScheduleNotification("Time for ", routine.title + ". Open the app to review your tasks." + routine.Notification.user_during_message, 1);
+                                        Console.WriteLine("total : " + total);
+                                        Console.WriteLine("during message: " + routine.Notification.user_during_message);
+                                    }
+
+                                }
+                                catch
+                                {
+                                    
+                                }
+
+/*
                                 Console.WriteLine("start time : " + startTime);
                                 Console.WriteLine("end time : " + endTime);
-
-                                if( startTime < 0 && startTime > -5)
-                                    notificationManager.ScheduleNotification("Ready for ", routine.title + "? Open the app to review your tasks.", 1);
-                                else if (!routine.isComplete && endTime > 0 && endTime < 30 )
+                                if (startTime < 0 && startTime > total)
+                                    notificationManager.ScheduleNotification("You Missed a Routine! ", routine.title + " is overdue. Open the app to review your tasks.", 1);
+                                if (!routine.isComplete && endTime > 0 && endTime < 30 )
                                     notificationManager.ScheduleNotification("You Missed a Routine! ", routine.title + " is overdue. Open the app to review your tasks.", 1);
                                 else if (!routine.isComplete &&  currentTime > routine.availableStartTime && currentTime < routine.availableEndTime)
                                     notificationManager.ScheduleNotification("Time for ", routine.title + ". Open the app to review your tasks.", 1);
 
-                               /* if (!(bool)jsonMapGorR["user_notification_set"]["booleanValue"]
-                                    && (bool)jsonMapGorR["reminds_user"]["booleanValue"]
-                                    )
+*/
+                                
+
+                                /*JToken userNotification;
+                                try
                                 {
-                                    if (firebaseFunctionsService.GRUserNotificationSetToTrue(routine.id, routine.dbIdx.ToString()).Result)
-                                    {
-                                        string title = "You Missed a Routine!";
-                                        //double duration = (routine.availableEndTime.TimeOfDay - DateTime.Now.TimeOfDay).TotalSeconds;
-                                        double duration = 10;
-                                        string message = routine.title + " is overdue. Open the app to review your tasks.";
-                                        //Console.WriteLine("duration: " + duration);
-                                        if (duration > 0)
-                                        {
-                                            Console.WriteLine("notification id: " + notificationManager.ScheduleNotification(title, message, duration));
-                                        }
-                                    }
+                                    userNotification = jsonGorR["fields"]["ta_notifications"]["arrayValue"]["values"];
+                                    if (userNotification == null)
+                                        return;
+                                }
+                                catch
+                                {
+                                    return;
                                 }*/
+
+
+                                /* if (!(bool)jsonMapGorR["user_notification_set"]["booleanValue"]
+                                     && (bool)jsonMapGorR["reminds_user"]["booleanValue"]
+                                     )
+                                 {
+                                     if (firebaseFunctionsService.GRUserNotificationSetToTrue(routine.id, routine.dbIdx.ToString()).Result)
+                                     {
+                                         string title = "You Missed a Routine!";
+                                         //double duration = (routine.availableEndTime.TimeOfDay - DateTime.Now.TimeOfDay).TotalSeconds;
+                                         double duration = 10;
+                                         string message = routine.title + " is overdue. Open the app to review your tasks.";
+                                         //Console.WriteLine("duration: " + duration);
+                                         if (duration > 0)
+                                         {
+                                             Console.WriteLine("notification id: " + notificationManager.ScheduleNotification(title, message, duration));
+                                         }
+                                     }
+                                 }*/
 
                                 App.User.routines.Add(routine);
 
@@ -249,6 +333,8 @@ namespace ProjectCaitlin.Services
                         {
                             if (routineType == "routine")
                             {
+                                DateTime duration = DateTime.Parse(jsonMapAorT["expected_completion_time"]["stringValue"].ToString());
+
                                 task task = new task
                                 {
                                     title = jsonMapAorT["title"]["stringValue"].ToString(),
@@ -257,6 +343,8 @@ namespace ProjectCaitlin.Services
                                     isComplete = (bool)jsonMapAorT["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapAorT["datetime_completed"]["stringValue"].ToString()),
                                     dbIdx = dbIdx_,
+
+                                    expected_completion_time = duration.Hour * 60 + duration.Minute,
                                     dateTimeCompleted = DateTime.Parse(jsonMapAorT["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
                                     availableStartTime = DateTime.ParseExact(jsonMapAorT["available_start_time"]["stringValue"].ToString(),
                                         "HH:mm:ss", CultureInfo.InvariantCulture),
@@ -369,6 +457,8 @@ namespace ProjectCaitlin.Services
                         {
                             if (routineType == "routine")
                             {
+                                DateTime duration = DateTime.Parse(jsonMapIorS["expected_completion_time"]["stringValue"].ToString());
+
                                 step step = new step
                                 {
                                     title = jsonMapIorS["title"]["stringValue"].ToString(),
@@ -376,6 +466,7 @@ namespace ProjectCaitlin.Services
                                     isComplete = (bool)jsonMapIorS["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapIorS["datetime_completed"]["stringValue"].ToString()),
                                     dbIdx = dbIdx_,
+                                    expected_completion_time = duration.Hour * 60 + duration.Minute,
                                     dateTimeCompleted = DateTime.Parse(jsonMapIorS["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
                                     availableStartTime = DateTime.ParseExact(jsonMapIorS["available_start_time"]["stringValue"].ToString(),
                                         "HH:mm:ss", CultureInfo.InvariantCulture),

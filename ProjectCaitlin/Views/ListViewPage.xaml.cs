@@ -55,10 +55,10 @@ namespace ProjectCaitlin
             SetupUI();
 
             AddTapGestures();
-
+/*
             SetupUI();
 
-            AddTapGestures();
+            AddTapGestures();*/
 
             firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
 
