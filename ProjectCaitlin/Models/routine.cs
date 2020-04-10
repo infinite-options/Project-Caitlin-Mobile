@@ -8,6 +8,8 @@ namespace ProjectCaitlin.Models
 	[JsonObject]
 	public class routine : INotifyPropertyChanged
 	{
+		public Notification Notification = new Notification();
+
 		public string id { get; set; }
 
 		public string title { get; set; }
@@ -20,6 +22,8 @@ namespace ProjectCaitlin.Models
 
 		public int dbIdx { get; set; }
 
+		public int expected_completion_time { get; set; }
+
 		public bool isSublistAvailable { get; set; }
 
 		public DateTime dateTimeCompleted { get; set; }
@@ -27,6 +31,7 @@ namespace ProjectCaitlin.Models
 		public DateTime availableStartTime { get; set; }
 
 		public DateTime availableEndTime { get; set; }
+
 
 		public List<task> tasks { get; set; } = new List<task>();
 
