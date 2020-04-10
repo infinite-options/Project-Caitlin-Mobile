@@ -14,9 +14,13 @@ namespace ProjectCaitlin.Models
 
 		public string photo { get; set; }
 
+		public bool isInProgress { get; set; }
+
 		public bool isComplete { get; set; }
 
 		public int dbIdx { get; set; }
+
+        public bool isSublistAvailable { get; set; }
 
 		public DateTime dateTimeCompleted { get; set; }
 

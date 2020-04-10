@@ -250,8 +250,14 @@ namespace ProjectCaitlin
 
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += async (s, e) => {
-                App.ListPageScrollPosY = mainScrollView.ScrollY;
-                await Navigation.PushAsync(new TaskPage(routineIdx, true));
+                if (routine.isSublistAvailable)
+                {
+                    App.ListPageScrollPosY = mainScrollView.ScrollY;
+                    await Navigation.PushAsync(new TaskPage(routineIdx, true));
+                }
+                else
+                {
+                }
             };
             frame.GestureRecognizers.Add(tapGestureRecognizer);
 

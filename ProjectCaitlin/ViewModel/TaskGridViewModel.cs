@@ -8,11 +8,14 @@ using System.ComponentModel;
 using System.Windows.Input;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using ProjectCaitlin.Services;
 
 namespace ProjectCaitlin.ViewModel
 {
     public class TaskGridViewModel : BindableObject
     {
+        FirebaseFunctionsService firebaseFunctionsService = new FirebaseFunctionsService();
+
         private TaskPage mainPage;
         public string Text { get; set; }
         public Command ItemTappedCommand { get; set; }
@@ -58,7 +61,33 @@ namespace ProjectCaitlin.ViewModel
                         new Command<int>(
                             async (int _taskIdx) =>
                             {
-                                await mainPage.Navigation.PushAsync(new StepsPage(a, _taskIdx, isRoutine));
+                                if (App.User.routines[a].tasks[_taskIdx].isSublistAvailable)
+                                {
+                                    await mainPage.Navigation.PushAsync(new StepsPage(a, _taskIdx, isRoutine));
+                                }
+                                else
+                                {
+                                    string routineId = App.User.routines[a].id;
+                                    string taskId = App.User.routines[a].tasks[_taskIdx].id;
+                                    int taskDbIdx = App.User.routines[a].tasks[_taskIdx].dbIdx;
+                                    bool isTaskInProgress = App.User.routines[a].tasks[_taskIdx].isInProgress;
+                                    bool isTaskComplete = App.User.routines[a].tasks[_taskIdx].isComplete;
+
+                                    if (!isTaskComplete)
+                                    {
+                                        if (isTaskInProgress)
+                                        {
+                                            App.User.routines[a].tasks[_taskIdx].isInProgress = false;
+                                            App.User.routines[a].tasks[_taskIdx].isComplete = true;
+                                            await firebaseFunctionsService.UpdateTask(routineId, taskId, taskDbIdx.ToString());
+                                        }
+                                        else
+                                        {
+                                            App.User.routines[a].tasks[_taskIdx].isInProgress = true;
+                                            await firebaseFunctionsService.StartAT(routineId, taskId, taskDbIdx.ToString());
+                                        }
+                                    }
+                                }
                             }),
                         taskIdx
                     ));
