@@ -17,7 +17,7 @@ namespace ProjectCaitlin.Models
 
         public int dbIdx { get; set; }
 
-		public int expected_completion_time { get; set; }
+		public TimeSpan expectedCompletionTime { get; set; }
 
 		public DateTime dateTimeCompleted { get; set; }
 

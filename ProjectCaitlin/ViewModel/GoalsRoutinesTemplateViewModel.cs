@@ -70,12 +70,12 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // choose the greater of the two.
-                if (sum_duration > App.User.routines[0].expected_completion_time)
-                    App.User.routines[0].expected_completion_time = sum_duration;
+                if (sum_duration > App.User.routines[0].expectedCompletionTime.TotalMinutes)
+                    App.User.routines[0].expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);
 
                 Items.Add(new
                 {
@@ -85,7 +85,7 @@ namespace ProjectCaitlin.ViewModel
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
 
-                    Length = "Takes me " + App.User.routines[0].expected_completion_time + " minutes",
+                    Length = "Takes me " + App.User.routines[0].expectedCompletionTime.TotalMinutes + " minutes",
                     Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
@@ -103,12 +103,12 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // choose the greater of the two.
-                if (sum_duration > App.User.routines[1].expected_completion_time)
-                    App.User.routines[1].expected_completion_time = sum_duration;
+                if (sum_duration > App.User.routines[1].expectedCompletionTime.TotalMinutes)
+                    App.User.routines[1].expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);;
 
                 complete.Add(false);
                 Items.Add(new
@@ -118,7 +118,7 @@ namespace ProjectCaitlin.ViewModel
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
-                    Length = "Takes me " + App.User.routines[1].expected_completion_time + " minutes",
+                    Length = "Takes me " + App.User.routines[1].expectedCompletionTime.TotalMinutes + " minutes",
                     Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
@@ -136,12 +136,12 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // choose the greater of the two.
-                if (sum_duration > App.User.routines[2].expected_completion_time)
-                    App.User.routines[2].expected_completion_time = sum_duration;
+                if (sum_duration > App.User.routines[2].expectedCompletionTime.TotalMinutes)
+                    App.User.routines[2].expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);;
 
                 complete.Add(false);
                 Items.Add(new
@@ -151,7 +151,7 @@ namespace ProjectCaitlin.ViewModel
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
-                    Length = "Takes me " + App.User.routines[2].expected_completion_time + " minutes",
+                    Length = "Takes me " + App.User.routines[2].expectedCompletionTime.TotalMinutes + " minutes",
                     Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
@@ -169,12 +169,12 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // choose the greater of the two.
-                if (sum_duration > App.User.routines[3].expected_completion_time)
-                    App.User.routines[3].expected_completion_time = sum_duration;
+                if (sum_duration > App.User.routines[3].expectedCompletionTime.TotalMinutes)
+                    App.User.routines[3].expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);;
                 complete.Add(false);
                 Items.Add(new
                 {
@@ -183,7 +183,7 @@ namespace ProjectCaitlin.ViewModel
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
-                    Length = "Takes me " + App.User.routines[3].expected_completion_time + " minutes",
+                    Length = "Takes me " + App.User.routines[3].expectedCompletionTime.TotalMinutes + " minutes",
                     Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
@@ -201,12 +201,12 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // choose the greater of the two.
-                if (sum_duration > App.User.routines[4].expected_completion_time)
-                    App.User.routines[4].expected_completion_time = sum_duration;
+                if (sum_duration > App.User.routines[4].expectedCompletionTime.TotalMinutes)
+                    App.User.routines[4].expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);;
                 complete.Add(false);
                 Items.Add(new
                 {
@@ -215,7 +215,7 @@ namespace ProjectCaitlin.ViewModel
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
-                    Length = "Takes me " + App.User.routines[4].expected_completion_time + " minutes",
+                    Length = "Takes me " + App.User.routines[4].expectedCompletionTime.TotalMinutes + " minutes",
                     Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
@@ -233,12 +233,12 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // choose the greater of the two.
-                if (sum_duration > App.User.routines[5].expected_completion_time)
-                    App.User.routines[5].expected_completion_time = sum_duration;
+                if (sum_duration > App.User.routines[5].expectedCompletionTime.TotalMinutes)
+                    App.User.routines[5].expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);;
                 complete.Add(false);
                 Items.Add(new
                 {
@@ -248,7 +248,7 @@ namespace ProjectCaitlin.ViewModel
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
-                    Length = "Takes me " + App.User.routines[5].expected_completion_time + " minutes",
+                    Length = "Takes me " + App.User.routines[5].expectedCompletionTime.TotalMinutes + " minutes",
                     Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
@@ -266,12 +266,12 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // choose the greater of the two.
-                if (sum_duration > App.User.routines[6].expected_completion_time)
-                    App.User.routines[6].expected_completion_time = sum_duration;
+                if (sum_duration > App.User.routines[6].expectedCompletionTime.TotalMinutes)
+                    App.User.routines[6].expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);;
                 complete.Add(false);
                 Items.Add(new
                 {
@@ -281,7 +281,7 @@ namespace ProjectCaitlin.ViewModel
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
-                    Length = "Takes me " + App.User.routines[6].expected_completion_time + " minutes",
+                    Length = "Takes me " + App.User.routines[6].expectedCompletionTime.TotalMinutes + " minutes",
                     Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
@@ -299,12 +299,12 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // choose the greater of the two.
-                if (sum_duration > App.User.routines[7].expected_completion_time)
-                    App.User.routines[7].expected_completion_time = sum_duration;
+                if (sum_duration > App.User.routines[7].expectedCompletionTime.TotalMinutes)
+                    App.User.routines[7].expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);;
                 complete.Add(false);
                 Items.Add(new
                 {
@@ -314,7 +314,7 @@ namespace ProjectCaitlin.ViewModel
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
-                    Length = "Takes me " + App.User.routines[7].expected_completion_time + " minutes",
+                    Length = "Takes me " + App.User.routines[7].expectedCompletionTime.TotalMinutes + " minutes",
                     Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
@@ -333,12 +333,12 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // choose the greater of the two.
-                if (sum_duration > App.User.routines[8].expected_completion_time)
-                    App.User.routines[8].expected_completion_time = sum_duration;
+                if (sum_duration > App.User.routines[8].expectedCompletionTime.TotalMinutes)
+                    App.User.routines[8].expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);;
                 complete.Add(false);
                 Items.Add(new
                 {
@@ -348,7 +348,7 @@ namespace ProjectCaitlin.ViewModel
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
-                    Length = "Takes me " + App.User.routines[8].expected_completion_time + " minutes",
+                    Length = "Takes me " + App.User.routines[8].expectedCompletionTime.TotalMinutes + " minutes",
                     Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
@@ -367,12 +367,12 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // choose the greater of the two.
-                if (sum_duration > App.User.routines[9].expected_completion_time)
-                    App.User.routines[9].expected_completion_time = sum_duration;
+                if (sum_duration > App.User.routines[9].expectedCompletionTime.TotalMinutes)
+                    App.User.routines[9].expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);;
                 complete.Add(false);
                 Items.Add(new
                 {
@@ -382,7 +382,7 @@ namespace ProjectCaitlin.ViewModel
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
-                    Length = "Takes me " + App.User.routines[9].expected_completion_time + " minutes",
+                    Length = "Takes me " + App.User.routines[9].expectedCompletionTime.TotalMinutes + " minutes",
                     Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
@@ -401,12 +401,12 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // choose the greater of the two.
-                if (sum_duration > App.User.routines[10].expected_completion_time)
-                    App.User.routines[10].expected_completion_time = sum_duration;
+                if (sum_duration > App.User.routines[10].expectedCompletionTime.TotalMinutes)
+                    App.User.routines[10].expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);;
                 complete.Add(false);
 
                 Items.Add(new
@@ -416,7 +416,7 @@ namespace ProjectCaitlin.ViewModel
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
-                    Length = "Takes me " + App.User.routines[10].expected_completion_time + " minutes",
+                    Length = "Takes me " + App.User.routines[10].expectedCompletionTime.TotalMinutes + " minutes",
                     Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
@@ -434,12 +434,12 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // choose the greater of the two.
-                if (sum_duration > App.User.routines[11].expected_completion_time)
-                    App.User.routines[11].expected_completion_time = sum_duration;
+                if (sum_duration > App.User.routines[11].expectedCompletionTime.TotalMinutes)
+                    App.User.routines[11].expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);;
                 complete.Add(false);
                 Items.Add(new
                 {
@@ -448,7 +448,7 @@ namespace ProjectCaitlin.ViewModel
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
-                    Length = "Takes me " + App.User.routines[11].expected_completion_time + " minutes",
+                    Length = "Takes me " + App.User.routines[11].expectedCompletionTime.TotalMinutes + " minutes",
                     Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
@@ -466,12 +466,12 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // choose the greater of the two.
-                if (sum_duration > App.User.routines[12].expected_completion_time)
-                    App.User.routines[12].expected_completion_time = sum_duration;
+                if (sum_duration > App.User.routines[12].expectedCompletionTime.TotalMinutes)
+                    App.User.routines[12].expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);;
                 complete.Add(false);
                 Items.Add(new
                 {
@@ -480,7 +480,7 @@ namespace ProjectCaitlin.ViewModel
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
-                    Length = "Takes me " + App.User.routines[12].expected_completion_time + " minutes",
+                    Length = "Takes me " + App.User.routines[12].expectedCompletionTime.TotalMinutes + " minutes",
                     Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
@@ -498,12 +498,12 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // choose the greater of the two.
-                if (sum_duration > App.User.routines[13].expected_completion_time)
-                    App.User.routines[13].expected_completion_time = sum_duration;
+                if (sum_duration > App.User.routines[13].expectedCompletionTime.TotalMinutes)
+                    App.User.routines[13].expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);;
                 complete.Add(false);
                 Items.Add(new
                 {
@@ -512,7 +512,7 @@ namespace ProjectCaitlin.ViewModel
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
-                    Length = "Takes me " + App.User.routines[13].expected_completion_time + " minutes",
+                    Length = "Takes me " + App.User.routines[13].expectedCompletionTime.TotalMinutes + " minutes",
                     Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
@@ -530,12 +530,12 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // choose the greater of the two.
-                if (sum_duration > App.User.routines[14].expected_completion_time)
-                    App.User.routines[14].expected_completion_time = sum_duration;
+                if (sum_duration > App.User.routines[14].expectedCompletionTime.TotalMinutes)
+                    App.User.routines[14].expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);;
                 complete.Add(false);
                 Items.Add(new
                 {
@@ -544,7 +544,7 @@ namespace ProjectCaitlin.ViewModel
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
-                    Length = "Takes me " + App.User.routines[14].expected_completion_time + " minutes",
+                    Length = "Takes me " + App.User.routines[14].expectedCompletionTime.TotalMinutes + " minutes",
                     Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
@@ -562,12 +562,12 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // choose the greater of the two.
-                if (sum_duration > App.User.routines[15].expected_completion_time)
-                    App.User.routines[15].expected_completion_time = sum_duration;
+                if (sum_duration > App.User.routines[15].expectedCompletionTime.TotalMinutes)
+                    App.User.routines[15].expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);;
                 complete.Add(false);
                 Items.Add(new
                 {
@@ -577,7 +577,7 @@ namespace ProjectCaitlin.ViewModel
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
-                    Length = "Takes me " + App.User.routines[15].expected_completion_time + " minutes",
+                    Length = "Takes me " + App.User.routines[15].expectedCompletionTime.TotalMinutes + " minutes",
                     Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
@@ -595,12 +595,12 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // choose the greater of the two.
-                if (sum_duration > App.User.routines[16].expected_completion_time)
-                    App.User.routines[16].expected_completion_time = sum_duration;
+                if (sum_duration > App.User.routines[16].expectedCompletionTime.TotalMinutes)
+                    App.User.routines[16].expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);;
                 complete.Add(false);
                 Items.Add(new
                 {
@@ -610,7 +610,7 @@ namespace ProjectCaitlin.ViewModel
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
-                    Length = "Takes me " + App.User.routines[16].expected_completion_time + " minutes",
+                    Length = "Takes me " + App.User.routines[16].expectedCompletionTime.TotalMinutes + " minutes",
                     Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
@@ -628,12 +628,12 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // choose the greater of the two.
-                if (sum_duration > App.User.routines[17].expected_completion_time)
-                    App.User.routines[17].expected_completion_time = sum_duration;
+                if (sum_duration > App.User.routines[17].expectedCompletionTime.TotalMinutes)
+                    App.User.routines[17].expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);;
                 complete.Add(false);
                 Items.Add(new
                 {
@@ -643,7 +643,7 @@ namespace ProjectCaitlin.ViewModel
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
-                    Length = "Takes me " + App.User.routines[17].expected_completion_time + " minutes",
+                    Length = "Takes me " + App.User.routines[17].expectedCompletionTime.TotalMinutes + " minutes",
                     Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
@@ -661,12 +661,12 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // choose the greater of the two.
-                if (sum_duration > App.User.routines[18].expected_completion_time)
-                    App.User.routines[18].expected_completion_time = sum_duration;
+                if (sum_duration > App.User.routines[18].expectedCompletionTime.TotalMinutes)
+                    App.User.routines[18].expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);;
                 complete.Add(false);
                 Items.Add(new
                 {
@@ -676,7 +676,7 @@ namespace ProjectCaitlin.ViewModel
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
-                    Length = "Takes me " + App.User.routines[18].expected_completion_time + " minutes",
+                    Length = "Takes me " + App.User.routines[18].expectedCompletionTime.TotalMinutes + " minutes",
                     Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(
@@ -694,12 +694,12 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // choose the greater of the two.
-                if (sum_duration > App.User.routines[19].expected_completion_time)
-                    App.User.routines[19].expected_completion_time = sum_duration;
+                if (sum_duration > App.User.routines[19].expectedCompletionTime.TotalMinutes)
+                    App.User.routines[19].expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);;
                 complete.Add(false);
                 Items.Add(new
                 {
@@ -709,7 +709,7 @@ namespace ProjectCaitlin.ViewModel
                     Ind = _imageCount++,
                     BackgroundColor = Color.Default,
                     TextColor = Color.Black,
-                    Length = "Takes me " + App.User.routines[19].expected_completion_time + " minutes",
+                    Length = "Takes me " + App.User.routines[19].expectedCompletionTime.TotalMinutes + " minutes",
                     Text = "Tap to start",
                     ButtonText = "Click for More About Me",
                     Navigate = new Command(

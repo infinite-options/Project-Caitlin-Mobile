@@ -42,7 +42,7 @@ namespace ProjectCaitlin.Services
                 Method = HttpMethod.Get
             };
             var client = new HttpClient();
-            HttpResponseMessage response = await client.GetAsync(request.RequestUri);
+            HttpResponseMessage response = await client.SendAsync(request);
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 HttpContent content = response.Content;
@@ -94,10 +94,9 @@ namespace ProjectCaitlin.Services
 
                         if ((bool)jsonMapGorR["is_available"]["booleanValue"] && !isDeleted)
                         {
+
                             if ((bool)jsonMapGorR["is_persistent"]["booleanValue"])
                             {
-                                DateTime duration = DateTime.Parse(jsonMapGorR["expected_completion_time"]["stringValue"].ToString());
-
                                 routine routine = new routine
                                 {
                                     title = jsonMapGorR["title"]["stringValue"].ToString(),
@@ -111,11 +110,11 @@ namespace ProjectCaitlin.Services
                                     isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapGorR["datetime_completed"]["stringValue"].ToString()),
 
-                                    expected_completion_time = duration.Hour*60 + duration.Minute,
+                                    expectedCompletionTime = TimeSpan.Parse(jsonMapGorR["expected_completion_time"]["stringValue"].ToString()),
 
                                     dbIdx = dbIdx_,
 
-                                    isSublistAvailable = (bool)jsonMapGorR["photo"]["booleanValue"],
+                                    isSublistAvailable = (bool)jsonMapGorR["is_sublist_available"]["booleanValue"],
 
                                     dateTimeCompleted = DateTime.Parse(jsonMapGorR["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
 
@@ -126,12 +125,9 @@ namespace ProjectCaitlin.Services
                                         "HH:mm:ss", CultureInfo.InvariantCulture)
                                 };
 
-
-
                                 //time precised in minutes, can be positive or negative.
                                 int startTime = (int)(currentTime - routine.availableStartTime).TotalMinutes;
                                 int endTime = (int)(currentTime - routine.availableEndTime).TotalMinutes;
-
 
                                 JToken userNotification;
                                 try
@@ -140,6 +136,7 @@ namespace ProjectCaitlin.Services
                                     userNotification = jsonMapGorR["user_notifications"]["mapValue"]["fields"];
                                     if (userNotification == null)
                                         return;
+
 
                                     JToken userAfter = userNotification["after"];
                                     JToken userAfterMap = userAfter["mapValue"]["fields"];
@@ -157,6 +154,9 @@ namespace ProjectCaitlin.Services
                                         Console.WriteLine("total : " + total);
                                         Console.WriteLine("after message: " + routine.Notification.user_after_message);
                                     }
+
+                                    Console.WriteLine("HERE 7");
+
 
                                     JToken userBefore = userNotification["before"];
                                     JToken userBeforeMap = userBefore["mapValue"]["fields"];
@@ -189,12 +189,12 @@ namespace ProjectCaitlin.Services
                                     }
 
                                 }
-                                catch
+                                catch (Exception e)
                                 {
-
+                                    Console.WriteLine("{0} Exception caught.", e);
                                 }
 
-/*
+                                /*
                                 Console.WriteLine("start time : " + startTime);
                                 Console.WriteLine("end time : " + endTime);
                                 if (startTime < 0 && startTime > total)
@@ -204,7 +204,7 @@ namespace ProjectCaitlin.Services
                                 else if (!routine.isComplete &&  currentTime > routine.availableStartTime && currentTime < routine.availableEndTime)
                                     notificationManager.ScheduleNotification("Time for ", routine.title + ". Open the app to review your tasks.", 1);
 
-*/
+                                */
 
 
                                 /*JToken userNotification;
@@ -252,7 +252,7 @@ namespace ProjectCaitlin.Services
                                     isInProgress = (bool)jsonMapGorR["is_in_progress"]["booleanValue"],
                                     isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"],
                                     dbIdx = dbIdx_,
-                                    isSublistAvailable = (bool)jsonMapGorR["photo"]["booleanValue"],
+                                    isSublistAvailable = (bool)jsonMapGorR["is_sublist_available"]["booleanValue"],
                                     dateTimeCompleted = DateTime.Parse(jsonMapGorR["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
                                     availableStartTime = DateTime.ParseExact(jsonMapGorR["available_start_time"]["stringValue"].ToString(),
                                         "HH:mm:ss", CultureInfo.InvariantCulture),
@@ -266,10 +266,10 @@ namespace ProjectCaitlin.Services
                             }
                         }
                     }
-                    catch
+                    catch (Exception e)
                     {
-                        //Console.WriteLine("Error with json goal/routine token:");
-                        //Console.WriteLine(jsonGorR);
+                        Console.WriteLine("{0} Exception caught.", e);
+                        Console.WriteLine("GR JSON: ", jsonGorR);
                     }
                     dbIdx_++;
                 }
@@ -290,6 +290,7 @@ namespace ProjectCaitlin.Services
                     _ = LoadTasks(goal.id, goalIdx, "goal");
                     goalIdx++;
                 }
+
             }
         }
 
@@ -349,9 +350,9 @@ namespace ProjectCaitlin.Services
                                     isComplete = (bool)jsonMapAorT["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapAorT["datetime_completed"]["stringValue"].ToString()),
                                     dbIdx = dbIdx_,
-                                    isSublistAvailable = (bool)jsonMapAorT["photo"]["booleanValue"],
+                                    isSublistAvailable = (bool)jsonMapAorT["is_sublist_available"]["booleanValue"],
 
-                                    expected_completion_time = duration.Hour * 60 + duration.Minute,
+                                    expectedCompletionTime = TimeSpan.Parse(jsonMapAorT["expected_completion_time"]["StringValue"].ToString()),
                                     dateTimeCompleted = DateTime.Parse(jsonMapAorT["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
                                     availableStartTime = DateTime.ParseExact(jsonMapAorT["available_start_time"]["stringValue"].ToString(),
                                         "HH:mm:ss", CultureInfo.InvariantCulture),
@@ -375,7 +376,7 @@ namespace ProjectCaitlin.Services
                                     isComplete = (bool)jsonMapAorT["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapAorT["datetime_completed"]["stringValue"].ToString()),
                                     dbIdx = dbIdx_,
-                                    isSublistAvailable = (bool)jsonMapAorT["photo"]["booleanValue"],
+                                    isSublistAvailable = (bool)jsonMapAorT["is_sublist_available"]["booleanValue"],
                                     dateTimeCompleted = DateTime.Parse(jsonMapAorT["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
                                     availableStartTime = DateTime.ParseExact(jsonMapAorT["available_start_time"]["stringValue"].ToString(),
                                         "HH:mm:ss", CultureInfo.InvariantCulture),
@@ -476,7 +477,7 @@ namespace ProjectCaitlin.Services
                                     isComplete = (bool)jsonMapIorS["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapIorS["datetime_completed"]["stringValue"].ToString()),
                                     dbIdx = dbIdx_,
-                                    expected_completion_time = duration.Hour * 60 + duration.Minute,
+                                    expectedCompletionTime = TimeSpan.Parse(jsonMapIorS["expected_completion_time"]["StringValue"].ToString()),
                                     dateTimeCompleted = DateTime.Parse(jsonMapIorS["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
                                     availableStartTime = DateTime.ParseExact(jsonMapIorS["available_start_time"]["stringValue"].ToString(),
                                         "HH:mm:ss", CultureInfo.InvariantCulture),
