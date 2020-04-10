@@ -351,8 +351,7 @@ namespace ProjectCaitlin.Services
                                         && IsDateToday(jsonMapAorT["datetime_completed"]["stringValue"].ToString()),
                                     dbIdx = dbIdx_,
                                     isSublistAvailable = (bool)jsonMapAorT["is_sublist_available"]["booleanValue"],
-
-                                    expectedCompletionTime = TimeSpan.Parse(jsonMapAorT["expected_completion_time"]["StringValue"].ToString()),
+                                    expectedCompletionTime = TimeSpan.Parse(jsonMapAorT["expected_completion_time"]["stringValue"].ToString()),
                                     dateTimeCompleted = DateTime.Parse(jsonMapAorT["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
                                     availableStartTime = DateTime.ParseExact(jsonMapAorT["available_start_time"]["stringValue"].ToString(),
                                         "HH:mm:ss", CultureInfo.InvariantCulture),
@@ -392,8 +391,8 @@ namespace ProjectCaitlin.Services
                     }
                     catch
                     {
-                        //Console.WriteLine("Error with json action/task token:");
-                        //Console.WriteLine(jsonAorT);
+                        Console.WriteLine("Error with json action/task token:");
+                        Console.WriteLine(jsonAorT);
                     }
                     dbIdx_++;
                 }
@@ -477,7 +476,7 @@ namespace ProjectCaitlin.Services
                                     isComplete = (bool)jsonMapIorS["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapIorS["datetime_completed"]["stringValue"].ToString()),
                                     dbIdx = dbIdx_,
-                                    expectedCompletionTime = TimeSpan.Parse(jsonMapIorS["expected_completion_time"]["StringValue"].ToString()),
+                                    expectedCompletionTime = TimeSpan.Parse(jsonMapIorS["expected_completion_time"]["stringValue"].ToString()),
                                     dateTimeCompleted = DateTime.Parse(jsonMapIorS["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
                                     availableStartTime = DateTime.ParseExact(jsonMapIorS["available_start_time"]["stringValue"].ToString(),
                                         "HH:mm:ss", CultureInfo.InvariantCulture),
