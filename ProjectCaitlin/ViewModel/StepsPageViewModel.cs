@@ -53,44 +53,42 @@ namespace ProjectCaitlin.ViewModel
 
                 foreach (step step in App.User.routines[a].tasks[b].steps)
                 {
-                    string _checkmarkIcon;
-                    Command<int> _completeStep;
+                    string _checkmarkIcon = "graycheckmarkicon.png";
+                    Command<int> _completeStep = new Command<int>((int _stepIdx) => { }); ;
 
                     if (App.User.routines[a].tasks[b].steps[stepIdx].isComplete)
                     {
                         _checkmarkIcon = "greencheckmarkicon.png";
-                        _completeStep = new Command<int>((int _stepIdx) => { });
                     }
                     else
                     {
-                        _checkmarkIcon = "graycheckmarkicon.png";
+                        if (App.User.routines[a].tasks[b].steps[stepIdx].isInProgress)
+                            _checkmarkIcon = "yellowclockicon.png";
+
                         _completeStep = new Command<int>(
                             async (int _stepIdx) =>
                             {
                                 var routineId = App.User.routines[a].id;
                                 var taskId = App.User.routines[a].tasks[b].id;
+                                string stepDbIdx = App.User.routines[a].tasks[b].steps[_stepIdx].dbIdx.ToString();
                                 bool isStepInProgress = App.User.routines[a].tasks[b].steps[_stepIdx].isInProgress;
                                 bool isStepComplete = App.User.routines[a].tasks[b].steps[_stepIdx].isComplete;
                                 var indexForCheckmark = _stepIdx;
 
-                                if (!isStepComplete)
+                                if (isStepInProgress)
                                 {
-                                    if (isStepInProgress)
-                                    {
-                                        App.User.routines[a].tasks[b].steps[indexForCheckmark].isInProgress = false;
-                                        App.User.routines[a].tasks[b].steps[indexForCheckmark].isComplete = true;
-                                        Items[_stepIdx].CheckmarkIcon = "greencheckmarkicon.png";
+                                    App.User.routines[a].tasks[b].steps[indexForCheckmark].isInProgress = false;
+                                    App.User.routines[a].tasks[b].steps[indexForCheckmark].isComplete = true;
+                                    Items[_stepIdx].CheckmarkIcon = "greencheckmarkicon.png";
 
-                                        firebaseFunctionsService.UpdateStep(routineId, taskId, indexForCheckmark.ToString());
-                                    }
-                                    else
-                                    {
-                                        Items[_stepIdx].CheckmarkIcon = "yellowclockicon.png";
-                                        App.User.routines[a].tasks[b].steps[indexForCheckmark].isInProgress = false;
+                                    firebaseFunctionsService.UpdateStep(routineId, taskId, stepDbIdx);
+                                }
+                                else
+                                {
+                                    Items[_stepIdx].CheckmarkIcon = "yellowclockicon.png";
+                                    App.User.routines[a].tasks[b].steps[indexForCheckmark].isInProgress = true;
 
-
-                                        firebaseFunctionsService.UpdateStep(routineId, taskId, indexForCheckmark.ToString());
-                                    }
+                                    firebaseFunctionsService.StartIS(routineId, taskId, stepDbIdx);
                                 }
 
                             }

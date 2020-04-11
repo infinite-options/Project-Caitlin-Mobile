@@ -9,6 +9,7 @@ using System.Collections.Generic;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using ProjectCaitlin.Services;
 
 namespace ProjectCaitlin.Views
 {
@@ -17,12 +18,35 @@ namespace ProjectCaitlin.Views
     {
         public TaskGridViewModel taskGridViewModel;
 
+        FirebaseFunctionsService firebaseFunctionsService = new FirebaseFunctionsService();
+
         public TaskPage(int routineNum, bool isRoutine)
         {
             InitializeComponent();
 
-            if (!App.User.routines[routineNum].isComplete)
-                App.User.routines[routineNum].isInProgress = true;
+            if (isRoutine)
+            {
+                string routineId = App.User.routines[routineNum].id.ToString();
+                string routineDbIdx = App.User.routines[routineNum].dbIdx.ToString();
+
+                if (!App.User.routines[routineNum].isComplete)
+                {
+                    App.User.routines[routineNum].isInProgress = true;
+                    firebaseFunctionsService.startGR(routineId, routineDbIdx);
+                }
+            }
+            else
+            {
+                string goalId = App.User.goals[routineNum].id.ToString();
+                string goalDbIdx = App.User.goals[routineNum].dbIdx.ToString();
+
+                if (!App.User.goals[routineNum].isComplete)
+                {
+                    App.User.goals[routineNum].isInProgress = true;
+                    firebaseFunctionsService.startGR(goalId, goalDbIdx);
+                }
+
+            }
 
             taskGridViewModel = new TaskGridViewModel(this, routineNum, isRoutine);
             BindingContext = taskGridViewModel;

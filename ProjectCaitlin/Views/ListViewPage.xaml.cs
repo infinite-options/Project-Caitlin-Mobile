@@ -36,6 +36,8 @@ namespace ProjectCaitlin
 
         FirestoreService firestoreService;
 
+        FirebaseFunctionsService firebaseFunctionsService = new FirebaseFunctionsService();
+
         user user;
         //public DailyViewModel dailyViewModel;
 
@@ -187,6 +189,8 @@ namespace ProjectCaitlin
 
         private void PopulateRoutine(routine routine, int routineIdx, StackLayout stackLayout)
         {
+            int stackLayoutIdx = stackLayout.Children.Count;
+
             Frame frame = new Frame
             {
                 CornerRadius = 10,
@@ -248,6 +252,40 @@ namespace ProjectCaitlin
 
             frame.Content = stackLayoutOuter;
 
+            if (routine.isComplete || routine.isInProgress)
+            {
+                StackLayout completeStackLayout = new StackLayout()
+                {
+                    Orientation = StackOrientation.Horizontal
+                };
+
+                CachedImage checkmarkImage = new CachedImage()
+                {
+                    Source = "",
+                    WidthRequest = 30,
+                    HeightRequest = 30,
+                    HorizontalOptions = LayoutOptions.Start,
+                    VerticalOptions = LayoutOptions.CenterAndExpand
+                };
+
+                if (routine.isInProgress)
+                    checkmarkImage.Source = "yellowclockicon.png ";
+                else
+                {
+                    if (routine.isComplete)
+                        checkmarkImage.Source = "greencheckmarkicon.png";
+                }
+
+                completeStackLayout.Children.Add(checkmarkImage);
+
+                frame.HorizontalOptions = LayoutOptions.FillAndExpand;
+                completeStackLayout.Children.Add(frame);
+
+                stackLayout.Children.Add(completeStackLayout);
+            }
+            else
+                stackLayout.Children.Add(frame);
+
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += async (s, e) => {
                 if (routine.isSublistAvailable)
@@ -257,46 +295,53 @@ namespace ProjectCaitlin
                 }
                 else
                 {
+                    if (!routine.isComplete)
+                    {
+                        StackLayout completeStackLayout = new StackLayout()
+                        {
+                            Orientation = StackOrientation.Horizontal
+                        };
+
+                        CachedImage checkmarkImage = new CachedImage()
+                        {
+                            Source = "",
+                            WidthRequest = 30,
+                            HeightRequest = 30,
+                            HorizontalOptions = LayoutOptions.Start,
+                            VerticalOptions = LayoutOptions.CenterAndExpand
+                        };
+
+                        if (routine.isInProgress)
+                        {
+                            checkmarkImage.Source = "greencheckmarkicon.png";
+                            routine.isInProgress = false;
+                            routine.isComplete = true;
+
+                            firebaseFunctionsService.CompleteRoutine(routine.id.ToString(), routine.dbIdx.ToString());
+                        }
+                        else
+                        {
+                            checkmarkImage.Source = "yellowclockicon.png";
+                            routine.isInProgress = true;
+                            firebaseFunctionsService.startGR(routine.id.ToString(), routine.dbIdx.ToString());
+                        }
+
+                        completeStackLayout.Children.Add(checkmarkImage);
+
+                        frame.HorizontalOptions = LayoutOptions.FillAndExpand;
+                        completeStackLayout.Children.Add(frame);
+
+                        if (routine.isComplete)
+                        {
+                            checkmarkImage.Source = "greencheckmarkicon.png";
+                        }
+                        Console.WriteLine("stackLayoutIdx: " + stackLayoutIdx);
+                        Console.WriteLine("stackLayout.children.count: " + stackLayout.Children.Count);
+                        stackLayout.Children[stackLayoutIdx] = completeStackLayout;
+                    }
                 }
             };
-            frame.GestureRecognizers.Add(tapGestureRecognizer);
-
-            if (routine.isComplete)
-            {
-                StackLayout completeStackLayout = new StackLayout()
-                {
-                    Orientation = StackOrientation.Horizontal
-                };
-
-                string progressImageSource = "";
-                if (routine.isInProgress)
-                    progressImageSource = "yellowclockicon.png ";
-                else
-                {
-                    if (routine.isComplete)
-                        progressImageSource = "greencheckmarkicon.png";
-                }
-
-                CachedImage checkmarkImage = new CachedImage()
-                {
-                    Source = progressImageSource,
-                    WidthRequest = 30,
-                    HeightRequest = 30,
-                    HorizontalOptions = LayoutOptions.Start,
-                    VerticalOptions = LayoutOptions.CenterAndExpand
-                };
-
-                completeStackLayout.Children.Add(checkmarkImage);
-
-                frame.HorizontalOptions = LayoutOptions.FillAndExpand;
-                completeStackLayout.Children.Add(frame);
-
-                stackLayout = GetCompleteTimeOfDay(routine.dateTimeCompleted.TimeOfDay);
-                stackLayout.Children.Add(completeStackLayout);
-
-            }
-            else
-                stackLayout.Children.Add(frame);
+            stackLayout.Children[stackLayoutIdx].GestureRecognizers.Add(tapGestureRecognizer);
         }
 
         private void PopulateEvent(EventsItems event_, StackLayout stackLayout)
@@ -395,17 +440,27 @@ namespace ProjectCaitlin
                     new RoundedTransformation(30, 120, 90),
                 },
             };
-            if (goal.isComplete)
+            if (goal.isComplete || goal.isInProgress)
             {
                 image.Opacity = .6;
             }
+
+            CachedImage inProgressImage = new CachedImage()
+            {
+                Source = Xamarin.Forms.ImageSource.FromFile("yellowclockicon.png"),
+                WidthRequest = 70,
+                HeightRequest = 70,
+                IsVisible = goal.isInProgress,
+                HorizontalOptions = LayoutOptions.CenterAndExpand,
+                VerticalOptions = LayoutOptions.CenterAndExpand
+            };
 
             CachedImage checkmarkImage = new CachedImage()
             {
                 Source = Xamarin.Forms.ImageSource.FromFile("greencheckmarkicon.png"),
                 WidthRequest = 70,
                 HeightRequest = 70,
-                IsVisible = goal.isComplete,
+                IsVisible = goal.isComplete && !goal.isInProgress,
                 HorizontalOptions = LayoutOptions.CenterAndExpand,
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
@@ -432,6 +487,7 @@ namespace ProjectCaitlin
 
             grid.Children.Add(image, 0, 0);
             grid.Children.Add(checkmarkImage, 0, 0);
+            grid.Children.Add(inProgressImage, 0, 0);
 
             goalStackLayout.Children.Add(grid);
             goalStackLayout.Children.Add(goalLabel);
