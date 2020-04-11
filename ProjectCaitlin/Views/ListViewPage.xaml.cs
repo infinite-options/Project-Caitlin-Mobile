@@ -191,10 +191,16 @@ namespace ProjectCaitlin
         {
             int stackLayoutIdx = stackLayout.Children.Count;
 
+            StackLayout itemStackLayout = new StackLayout()
+            {
+                Orientation = StackOrientation.Horizontal
+            };
+
             Frame frame = new Frame
             {
                 CornerRadius = 10,
                 HasShadow = false,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
                 Padding = new Thickness(10, 10, 10, 10),
                 Margin = new Thickness(0, 2, 0, 2)
             };
@@ -252,22 +258,17 @@ namespace ProjectCaitlin
 
             frame.Content = stackLayoutOuter;
 
+            CachedImage checkmarkImage = new CachedImage()
+            {
+                Source = "",
+                WidthRequest = 0,
+                HeightRequest = 0,
+                HorizontalOptions = LayoutOptions.Start,
+                VerticalOptions = LayoutOptions.CenterAndExpand
+            };
+
             if (routine.isComplete || routine.isInProgress)
             {
-                StackLayout completeStackLayout = new StackLayout()
-                {
-                    Orientation = StackOrientation.Horizontal
-                };
-
-                CachedImage checkmarkImage = new CachedImage()
-                {
-                    Source = "",
-                    WidthRequest = 30,
-                    HeightRequest = 30,
-                    HorizontalOptions = LayoutOptions.Start,
-                    VerticalOptions = LayoutOptions.CenterAndExpand
-                };
-
                 if (routine.isInProgress)
                     checkmarkImage.Source = "yellowclockicon.png ";
                 else
@@ -275,16 +276,13 @@ namespace ProjectCaitlin
                     if (routine.isComplete)
                         checkmarkImage.Source = "greencheckmarkicon.png";
                 }
-
-                completeStackLayout.Children.Add(checkmarkImage);
-
-                frame.HorizontalOptions = LayoutOptions.FillAndExpand;
-                completeStackLayout.Children.Add(frame);
-
-                stackLayout.Children.Add(completeStackLayout);
+                checkmarkImage.WidthRequest = 30;
+                checkmarkImage.HeightRequest = 30;
             }
-            else
-                stackLayout.Children.Add(frame);
+
+            itemStackLayout.Children.Add(checkmarkImage);
+            itemStackLayout.Children.Add(frame);
+            stackLayout.Children.Add(itemStackLayout);
 
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += async (s, e) => {
@@ -297,23 +295,13 @@ namespace ProjectCaitlin
                 {
                     if (!routine.isComplete)
                     {
-                        StackLayout completeStackLayout = new StackLayout()
-                        {
-                            Orientation = StackOrientation.Horizontal
-                        };
-
-                        CachedImage checkmarkImage = new CachedImage()
-                        {
-                            Source = "",
-                            WidthRequest = 30,
-                            HeightRequest = 30,
-                            HorizontalOptions = LayoutOptions.Start,
-                            VerticalOptions = LayoutOptions.CenterAndExpand
-                        };
+                        StackLayout updatedStackLayout = (StackLayout) s;
+                        updatedStackLayout.Children[0].WidthRequest = 30;
+                        updatedStackLayout.Children[0].HeightRequest = 30;
 
                         if (routine.isInProgress)
                         {
-                            checkmarkImage.Source = "greencheckmarkicon.png";
+                            ((CachedImage)updatedStackLayout.Children[0]).Source = "greencheckmarkicon.png";
                             routine.isInProgress = false;
                             routine.isComplete = true;
 
@@ -321,23 +309,10 @@ namespace ProjectCaitlin
                         }
                         else
                         {
-                            checkmarkImage.Source = "yellowclockicon.png";
+                            ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
                             routine.isInProgress = true;
                             firebaseFunctionsService.startGR(routine.id.ToString(), routine.dbIdx.ToString());
                         }
-
-                        completeStackLayout.Children.Add(checkmarkImage);
-
-                        frame.HorizontalOptions = LayoutOptions.FillAndExpand;
-                        completeStackLayout.Children.Add(frame);
-
-                        if (routine.isComplete)
-                        {
-                            checkmarkImage.Source = "greencheckmarkicon.png";
-                        }
-                        Console.WriteLine("stackLayoutIdx: " + stackLayoutIdx);
-                        Console.WriteLine("stackLayout.children.count: " + stackLayout.Children.Count);
-                        stackLayout.Children[stackLayoutIdx] = completeStackLayout;
                     }
                 }
             };
@@ -477,7 +452,36 @@ namespace ProjectCaitlin
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += async (s, e) => {
                 App.ListPageScrollPosY = mainScrollView.ScrollY;
-                await Navigation.PushAsync(new TaskPage(goalIdx, false));
+
+                if (goal.isSublistAvailable)
+                {
+                    await Navigation.PushAsync(new TaskPage(goalIdx, false));
+                }
+                else
+                {
+                    if (!goal.isComplete)
+                    {
+                        StackLayout updatedStackLayout = (StackLayout) s;
+                        Grid updatedGrid = (Grid) updatedStackLayout.Children[0];
+                        ((CachedImage) updatedGrid.Children[0]).Opacity = .6;
+
+                        if (goal.isInProgress)
+                        {
+                            updatedGrid.Children[1].IsVisible = true;
+                            updatedGrid.Children[2].IsVisible = false;
+                            goal.isInProgress = false;
+                            goal.isComplete = true;
+
+                            firebaseFunctionsService.CompleteRoutine(goal.id.ToString(), goal.dbIdx.ToString());
+                        }
+                        else
+                        {
+                            updatedGrid.Children[2].IsVisible = true;
+                            goal.isInProgress = true;
+                            firebaseFunctionsService.startGR(goal.id.ToString(), goal.dbIdx.ToString());
+                        }
+                    }
+                }
             };
             goalStackLayout.GestureRecognizers.Add(tapGestureRecognizer);
 
