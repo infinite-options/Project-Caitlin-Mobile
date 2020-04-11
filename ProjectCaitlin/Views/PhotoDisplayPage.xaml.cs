@@ -268,5 +268,10 @@ namespace ProjectCaitlin
         {
             await Navigation.PushAsync(new MonthlyViewPage());
         }
+        void EditorCompleted(object sender, EventArgs e)
+        {
+            var text = ((Editor)sender).Text; // sender is cast to an Editor to enable reading the `Text` property of the view.
+            Console.WriteLine(text);
+        }
     }
 }

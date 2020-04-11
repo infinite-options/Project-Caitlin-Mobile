@@ -138,6 +138,7 @@
                                     <Button
                                     Text="{Binding Text}"
                                     Command="{Binding Navigate}"
+                                    CommandParameter="{Binding NavigateIdx}"
                                     CornerRadius="20"
                                     VerticalOptions="EndAndExpand"
                                     Margin="70,0,70,10"

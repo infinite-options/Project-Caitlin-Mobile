@@ -53,7 +53,7 @@ namespace ProjectCaitlin.ViewModel
 
                     if (date.Equals(photoDate) && !(source.Equals(photoURI)))
                     {
-                        Items.Add(new { Source = photoURI, Description = description, CreationTime = creationTime });
+                        Items.Add(new { Source = photoURI, Description = description, CreationTime = creationTime});
                     }
 
                 }
@@ -63,8 +63,6 @@ namespace ProjectCaitlin.ViewModel
                 var googleService = new GoogleService();
                 await googleService.RefreshToken();
             }
-
-
         }
 
         public async void SetupUI(string date)
@@ -82,7 +80,7 @@ namespace ProjectCaitlin.ViewModel
 
                     if (date.Equals(photoDate))
                     {
-                        Items.Add(new { Source = photoURI, Description = description, CreationTime = creationTime });
+                        Items.Add(new { Source = photoURI, Description = description, CreationTime = creationTime});
                     }
 
                 }
@@ -95,5 +93,7 @@ namespace ProjectCaitlin.ViewModel
 
 
         }
+
+        
     }
 }
