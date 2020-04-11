@@ -10,7 +10,6 @@ namespace ProjectCaitlin.Services
         {
             try
             {
-                Console.WriteLine("stuck here2");
                 HttpRequestMessage request = new HttpRequestMessage
                 {
                     RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/GRUserNotificationSetToTrue"),
@@ -61,9 +60,11 @@ namespace ProjectCaitlin.Services
 
         public async Task<bool> StartAT(string routineId, string taskId, string taskIndex)
         {
-            var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/StartActionOrTask");
-            request.Method = HttpMethod.Post;
+            HttpRequestMessage request = new HttpRequestMessage
+            {
+                RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/StartActionOrTask"),
+                Method = HttpMethod.Post
+            };
 
             //Format Headers of Request with included Token
             request.Headers.Add("userId", "7R6hAVmDrNutRkG3sVRy");
@@ -76,6 +77,9 @@ namespace ProjectCaitlin.Services
 
             HttpContent content = response.Content;
             var routineResponse = await content.ReadAsStringAsync();
+
+            Console.WriteLine("routineResponse: " + routineResponse);
+
 
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {

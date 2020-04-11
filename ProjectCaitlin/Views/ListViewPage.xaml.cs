@@ -268,9 +268,18 @@ namespace ProjectCaitlin
                     Orientation = StackOrientation.Horizontal
                 };
 
+                string progressImageSource = "";
+                if (routine.isInProgress)
+                    progressImageSource = "yellowclockicon.png ";
+                else
+                {
+                    if (routine.isComplete)
+                        progressImageSource = "greencheckmarkicon.png";
+                }
+
                 CachedImage checkmarkImage = new CachedImage()
                 {
-                    Source = Xamarin.Forms.ImageSource.FromFile("greencheckmarkicon.png"),
+                    Source = progressImageSource,
                     WidthRequest = 30,
                     HeightRequest = 30,
                     HorizontalOptions = LayoutOptions.Start,

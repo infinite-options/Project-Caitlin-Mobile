@@ -22,14 +22,16 @@ namespace ProjectCaitlin.Views
         bool isRoutine;
         List<bool> complete;
         readonly StepsPageViewModel pageModel;
+        TaskItemModel taskItemModel;
 
-        public StepsPage(int a, int b, bool isRoutine)
+        public StepsPage(int a, int b, bool isRoutine, TaskItemModel _taskItemModel)
         {
             InitializeComponent();
 
 
             this.a = a;
             this.b = b;
+            taskItemModel = _taskItemModel;
             this.isRoutine = isRoutine;
             pageModel = new StepsPageViewModel(this, a, b, isRoutine);
             BindingContext = pageModel;
@@ -87,7 +89,11 @@ namespace ProjectCaitlin.Views
                 var okToCheckmark = await firebaseFunctionsService.UpdateTask(routineId, taskId, App.User.routines[a].tasks[b].dbIdx.ToString());
                 if (okToCheckmark)
                 {
+                    taskItemModel.IsComplete = true;
+                    taskItemModel.IsInProgress = false;
+
                     App.User.routines[a].tasks[b].isComplete = true;
+                    App.User.routines[a].tasks[b].isInProgress = false;
                     App.User.routines[a].tasks[b].dateTimeCompleted = DateTime.Now;
                     //TaskPage.pageModel.Items[b].IsComplete = true;
                 }
@@ -118,6 +124,7 @@ namespace ProjectCaitlin.Views
                 if (okToCheckmark)
                 {
                     App.User.routines[a].isComplete = true;
+                    App.User.routines[a].isInProgress = false;
                     App.User.routines[a].dateTimeCompleted = DateTime.Now;
                 }
             }

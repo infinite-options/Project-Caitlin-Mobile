@@ -52,6 +52,7 @@ namespace ProjectCaitlin.Views
                 if (isActionComplete)
                 {
                     App.User.goals[a].actions[b].isComplete = true;
+                    App.User.goals[a].actions[b].isInProgress = false;
                     App.User.goals[a].actions[b].dateTimeCompleted = DateTime.Now;
                 }
 
@@ -69,6 +70,7 @@ namespace ProjectCaitlin.Views
                     if (isGoalComplete)
                     {
                         App.User.goals[a].isComplete = true;
+                        App.User.goals[a].isInProgress = false;
                         App.User.goals[a].dateTimeCompleted = DateTime.Now;
                     }
                 }

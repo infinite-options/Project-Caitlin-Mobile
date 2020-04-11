@@ -79,6 +79,8 @@
     <Compile Include="TransitionAnimator.cs" />
     <Compile Include="iOSNotificationManager.cs" />
     <Compile Include="iOSNotificationReceiver.cs" />
+    <None Include="yellowclockicon.png" />
+    <None Include="GoogleService-Info.plist" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -270,5 +272,6 @@
     <BundleResource Include="Resources\xamagonBlue.png" />
     <BundleResource Include="Resources\nextbutton.png" />
     <BundleResource Include="Resources\previousbutton.png" />
+    <BundleResource Include="Resources\yellowclockicon.png" />
   </ItemGroup>
 </Project>

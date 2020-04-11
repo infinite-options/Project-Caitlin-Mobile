@@ -58,32 +58,42 @@ namespace ProjectCaitlin.ViewModel
                         Color.FromHex("#272E32"),
 
                         App.User.routines[a].tasks[taskIdx].isComplete,
+                        App.User.routines[a].tasks[taskIdx].isInProgress,
                         new Command<int>(
                             async (int _taskIdx) =>
                             {
+                                string routineId = App.User.routines[a].id;
+                                string taskId = App.User.routines[a].tasks[_taskIdx].id;
+                                int taskDbIdx = App.User.routines[a].tasks[_taskIdx].dbIdx;
+                                bool isTaskInProgress = App.User.routines[a].tasks[_taskIdx].isInProgress;
+                                bool isTaskComplete = App.User.routines[a].tasks[_taskIdx].isComplete;
+
                                 if (App.User.routines[a].tasks[_taskIdx].isSublistAvailable)
                                 {
-                                    await mainPage.Navigation.PushAsync(new StepsPage(a, _taskIdx, isRoutine));
+                                    if(!isTaskComplete)
+                                    {
+                                        App.User.routines[a].tasks[_taskIdx].isInProgress = true;
+                                        Items[_taskIdx].IsInProgress = true;
+                                        await firebaseFunctionsService.StartAT(routineId, taskId, taskDbIdx.ToString());
+                                    }
+                                    await mainPage.Navigation.PushAsync(new StepsPage(a, _taskIdx, isRoutine, Items[_taskIdx]));
                                 }
                                 else
                                 {
-                                    string routineId = App.User.routines[a].id;
-                                    string taskId = App.User.routines[a].tasks[_taskIdx].id;
-                                    int taskDbIdx = App.User.routines[a].tasks[_taskIdx].dbIdx;
-                                    bool isTaskInProgress = App.User.routines[a].tasks[_taskIdx].isInProgress;
-                                    bool isTaskComplete = App.User.routines[a].tasks[_taskIdx].isComplete;
-
                                     if (!isTaskComplete)
                                     {
                                         if (isTaskInProgress)
                                         {
                                             App.User.routines[a].tasks[_taskIdx].isInProgress = false;
                                             App.User.routines[a].tasks[_taskIdx].isComplete = true;
+                                            Items[_taskIdx].IsInProgress = false;
+                                            Items[_taskIdx].IsComplete = true;
                                             await firebaseFunctionsService.UpdateTask(routineId, taskId, taskDbIdx.ToString());
                                         }
                                         else
                                         {
                                             App.User.routines[a].tasks[_taskIdx].isInProgress = true;
+                                            Items[_taskIdx].IsInProgress = true;
                                             await firebaseFunctionsService.StartAT(routineId, taskId, taskDbIdx.ToString());
                                         }
                                     }
@@ -102,24 +112,61 @@ namespace ProjectCaitlin.ViewModel
                 TitleTextColor = Color.WhiteSmoke;
                 BackImage = "arrowiconwhite.png";
 
-                int taskIdx = 0;
+                int actionIdx = 0;
                 foreach (action action in App.User.goals[a].actions)
                 {
                     Items.Add(new TaskItemModel(
 
-                        App.User.goals[a].actions[taskIdx].photo,
-                        App.User.goals[a].actions[taskIdx].title,
+                        App.User.goals[a].actions[actionIdx].photo,
+                        App.User.goals[a].actions[actionIdx].title,
                         Color.WhiteSmoke,
 
-                        App.User.goals[a].actions[taskIdx].isComplete,
+                        App.User.goals[a].actions[actionIdx].isComplete,
+                        App.User.goals[a].actions[actionIdx].isInProgress,
                         new Command<int>(
-                            async (int _taskIdx) =>
+                            async (int _actionIdx) =>
                             {
-                                await mainPage.Navigation.PushAsync(new TaskCompletePage(a, _taskIdx, isRoutine));
+                                string goalId = App.User.goals[a].id;
+                                string actionId = App.User.goals[a].actions[_actionIdx].id;
+                                int actionDbIdx = App.User.goals[a].actions[_actionIdx].dbIdx;
+                                bool isActionInProgress = App.User.goals[a].actions[_actionIdx].isInProgress;
+                                bool isActionComplete = App.User.goals[a].actions[_actionIdx].isComplete;
+
+                                if (App.User.goals[a].actions[_actionIdx].isSublistAvailable)
+                                {
+                                    if (!isActionComplete)
+                                    {
+                                        App.User.goals[a].actions[_actionIdx].isInProgress = true;
+                                        Items[_actionIdx].IsInProgress = true;
+                                        await firebaseFunctionsService.StartAT(goalId, actionId, actionDbIdx.ToString());
+                                    }
+
+                                    await mainPage.Navigation.PushAsync(new TaskCompletePage(a, _actionIdx, isRoutine));
+                                }
+                                else
+                                {
+                                    if (!isActionComplete)
+                                    {
+                                        if (isActionInProgress)
+                                        {
+                                            App.User.goals[a].actions[_actionIdx].isInProgress = false;
+                                            App.User.goals[a].actions[_actionIdx].isComplete = true;
+                                            Items[_actionIdx].IsInProgress = false;
+                                            Items[_actionIdx].IsComplete = true;
+                                            await firebaseFunctionsService.UpdateTask(goalId, actionId, actionDbIdx.ToString());
+                                        }
+                                        else
+                                        {
+                                            App.User.goals[a].actions[_actionIdx].isInProgress = true;
+                                            Items[_actionIdx].IsInProgress = true;
+                                            await firebaseFunctionsService.StartAT(goalId, actionId, actionDbIdx.ToString());
+                                        }
+                                    }
+                                }
                             }),
-                       taskIdx
+                       actionIdx
                     ));
-                    taskIdx++;
+                    actionIdx++;
                 }
             }
         }
@@ -160,6 +207,20 @@ namespace ProjectCaitlin.ViewModel
             }
         }
 
+        private bool isInProgress;
+        public bool IsInProgress
+        {
+            get => isInProgress;
+            set
+            {
+                if (isInProgress != value)
+                {
+                    isInProgress = value;
+                    OnPropertyChanged(nameof(IsInProgress));
+                }
+            }
+        }
+
         private Command<int> navigate;
         public Command<int> Navigate
         {
@@ -188,12 +249,13 @@ namespace ProjectCaitlin.ViewModel
             }
         }
 
-        public TaskItemModel(string _source, string _text, Color _textColor, bool _isComplete, Command<int> _navigate, int _navigateIdx)
+        public TaskItemModel(string _source, string _text, Color _textColor, bool _isComplete, bool _isInProgress, Command<int> _navigate, int _navigateIdx)
         {
             source = _source;
             text = _text;
             textColor = _textColor;
             isComplete = _isComplete;
+            isInProgress = _isInProgress;
             navigate = _navigate;
             navigateIdx = _navigateIdx;
         }

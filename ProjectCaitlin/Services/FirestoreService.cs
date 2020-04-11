@@ -108,7 +108,8 @@ namespace ProjectCaitlin.Services
                                     isInProgress = (bool)jsonMapGorR["is_in_progress"]["booleanValue"],
 
                                     isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"]
-                                        && IsDateToday(jsonMapGorR["datetime_completed"]["stringValue"].ToString()),
+                                        && IsDateToday(jsonMapGorR["datetime_completed"]["stringValue"].ToString())
+                                        && !(bool)jsonMapGorR["is_in_progress"]["booleanValue"],
 
                                     expectedCompletionTime = TimeSpan.Parse(jsonMapGorR["expected_completion_time"]["stringValue"].ToString()),
 
@@ -250,7 +251,9 @@ namespace ProjectCaitlin.Services
                                     id = jsonMapGorR["id"]["stringValue"].ToString(),
                                     photo = jsonMapGorR["photo"]["stringValue"].ToString(),
                                     isInProgress = (bool)jsonMapGorR["is_in_progress"]["booleanValue"],
-                                    isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"],
+                                    isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"]
+                                        && IsDateToday(jsonMapGorR["datetime_completed"]["stringValue"].ToString())
+                                        && !(bool)jsonMapGorR["is_in_progress"]["booleanValue"],
                                     dbIdx = dbIdx_,
                                     isSublistAvailable = (bool)jsonMapGorR["is_sublist_available"]["booleanValue"],
                                     dateTimeCompleted = DateTime.Parse(jsonMapGorR["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
@@ -348,7 +351,8 @@ namespace ProjectCaitlin.Services
                                     photo = jsonMapAorT["photo"]["stringValue"].ToString(),
                                     isInProgress = (bool)jsonMapAorT["is_in_progress"]["booleanValue"],
                                     isComplete = (bool)jsonMapAorT["is_complete"]["booleanValue"]
-                                        && IsDateToday(jsonMapAorT["datetime_completed"]["stringValue"].ToString()),
+                                        && IsDateToday(jsonMapAorT["datetime_completed"]["stringValue"].ToString())
+                                        && !(bool)jsonMapAorT["is_in_progress"]["booleanValue"],
                                     dbIdx = dbIdx_,
                                     isSublistAvailable = (bool)jsonMapAorT["is_sublist_available"]["booleanValue"],
                                     expectedCompletionTime = TimeSpan.Parse(jsonMapAorT["expected_completion_time"]["stringValue"].ToString()),
@@ -373,7 +377,8 @@ namespace ProjectCaitlin.Services
                                     photo = jsonMapAorT["photo"]["stringValue"].ToString(),
                                     isInProgress = (bool)jsonMapAorT["is_in_progress"]["booleanValue"],
                                     isComplete = (bool)jsonMapAorT["is_complete"]["booleanValue"]
-                                        && IsDateToday(jsonMapAorT["datetime_completed"]["stringValue"].ToString()),
+                                        && IsDateToday(jsonMapAorT["datetime_completed"]["stringValue"].ToString())
+                                        && !(bool)jsonMapAorT["is_in_progress"]["booleanValue"],
                                     dbIdx = dbIdx_,
                                     isSublistAvailable = (bool)jsonMapAorT["is_sublist_available"]["booleanValue"],
                                     dateTimeCompleted = DateTime.Parse(jsonMapAorT["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
@@ -474,7 +479,8 @@ namespace ProjectCaitlin.Services
                                     photo = jsonMapIorS["photo"]["stringValue"].ToString(),
                                     isInProgress = (bool)jsonMapIorS["is_in_progress"]["booleanValue"],
                                     isComplete = (bool)jsonMapIorS["is_complete"]["booleanValue"]
-                                        && IsDateToday(jsonMapIorS["datetime_completed"]["stringValue"].ToString()),
+                                        && IsDateToday(jsonMapIorS["datetime_completed"]["stringValue"].ToString())
+                                        && !(bool)jsonMapIorS["is_in_progress"]["booleanValue"],
                                     dbIdx = dbIdx_,
                                     expectedCompletionTime = TimeSpan.Parse(jsonMapIorS["expected_completion_time"]["stringValue"].ToString()),
                                     dateTimeCompleted = DateTime.Parse(jsonMapIorS["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
@@ -496,7 +502,9 @@ namespace ProjectCaitlin.Services
                                     photo = jsonMapIorS["photo"]["stringValue"].ToString(),
                                     isInProgress = (bool)jsonMapIorS["is_in_progress"]["booleanValue"],
                                     isComplete = (bool)jsonMapIorS["is_complete"]["booleanValue"]
-                                        && IsDateToday(jsonMapIorS["datetime_completed"]["stringValue"].ToString()),
+                                        && IsDateToday(jsonMapIorS["datetime_completed"]["stringValue"].ToString())
+                                        && !(bool)jsonMapIorS["is_in_progress"]["booleanValue"],
+
                                     dbIdx = dbIdx_,
                                     dateTimeCompleted = DateTime.Parse(jsonMapIorS["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
                                     availableStartTime = DateTime.ParseExact(jsonMapIorS["available_start_time"]["stringValue"].ToString(),

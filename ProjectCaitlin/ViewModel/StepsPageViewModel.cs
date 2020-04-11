@@ -69,13 +69,28 @@ namespace ProjectCaitlin.ViewModel
                             {
                                 var routineId = App.User.routines[a].id;
                                 var taskId = App.User.routines[a].tasks[b].id;
+                                bool isStepInProgress = App.User.routines[a].tasks[b].steps[_stepIdx].isInProgress;
+                                bool isStepComplete = App.User.routines[a].tasks[b].steps[_stepIdx].isComplete;
                                 var indexForCheckmark = _stepIdx;
-                                Items[_stepIdx].CheckmarkIcon = "greencheckmarkicon.png";
-                                var okToCheckmark = await firebaseFunctionsService.UpdateStep(routineId, taskId, indexForCheckmark.ToString());
 
-                                if (okToCheckmark)
+                                if (!isStepComplete)
                                 {
-                                    App.User.routines[a].tasks[b].steps[indexForCheckmark].isComplete = true;
+                                    if (isStepInProgress)
+                                    {
+                                        App.User.routines[a].tasks[b].steps[indexForCheckmark].isInProgress = false;
+                                        App.User.routines[a].tasks[b].steps[indexForCheckmark].isComplete = true;
+                                        Items[_stepIdx].CheckmarkIcon = "greencheckmarkicon.png";
+
+                                        firebaseFunctionsService.UpdateStep(routineId, taskId, indexForCheckmark.ToString());
+                                    }
+                                    else
+                                    {
+                                        Items[_stepIdx].CheckmarkIcon = "yellowclockicon.png";
+                                        App.User.routines[a].tasks[b].steps[indexForCheckmark].isInProgress = false;
+
+
+                                        firebaseFunctionsService.UpdateStep(routineId, taskId, indexForCheckmark.ToString());
+                                    }
                                 }
 
                             }

@@ -15,13 +15,17 @@ namespace ProjectCaitlin.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TaskPage : ContentPage
     {
-        readonly TaskGridViewModel pageModel;
+        public TaskGridViewModel taskGridViewModel;
 
         public TaskPage(int routineNum, bool isRoutine)
         {
             InitializeComponent();
-            pageModel = new TaskGridViewModel(this, routineNum, isRoutine);
-            BindingContext = pageModel;
+
+            if (!App.User.routines[routineNum].isComplete)
+                App.User.routines[routineNum].isInProgress = true;
+
+            taskGridViewModel = new TaskGridViewModel(this, routineNum, isRoutine);
+            BindingContext = taskGridViewModel;
 
         }
         public async void close(object sender, EventArgs args)
