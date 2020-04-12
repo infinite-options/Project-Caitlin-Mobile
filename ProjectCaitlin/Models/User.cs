@@ -22,7 +22,9 @@ namespace ProjectCaitlin.Models
 
         public string old_refresh_token { get; set; }
 
-        public List<routine> routines { get; set; } = new List<routine>();
+		public aboutMe Me { get; set; } = new aboutMe();
+
+		public List<routine> routines { get; set; } = new List<routine>();
 
 		public List<goal> goals { get; set; } = new List<goal>();
 
