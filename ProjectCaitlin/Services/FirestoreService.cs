@@ -75,7 +75,7 @@ namespace ProjectCaitlin.Services
                     try
                     {
                         String people_id = jsonPeople["referenceValue"].ToString();
-                        Console.WriteLine(jsonPeople["referenceValue"]);
+                        // Console.WriteLine(jsonPeople["referenceValue"]);
                         var request_people = new HttpRequestMessage
                         {
                             RequestUri = new Uri("https://firestore.googleapis.com/v1/" + people_id),
