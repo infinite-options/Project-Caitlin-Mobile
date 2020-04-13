@@ -85,7 +85,7 @@ namespace ProjectCaitlin.Services
                         HttpResponseMessage response_people = await client.SendAsync(request_people);
 
                     
-                    if (response_people.StatusCode == System.Net.HttpStatusCode.OK)
+                        if (response_people.StatusCode == System.Net.HttpStatusCode.OK)
                         {
                             HttpContent content_people = response_people.Content;
                             var peopleResponse = await content_people.ReadAsStringAsync();
