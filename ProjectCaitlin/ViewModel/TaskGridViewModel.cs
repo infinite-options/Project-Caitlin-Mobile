@@ -33,10 +33,14 @@ namespace ProjectCaitlin.ViewModel
 
         public ObservableCollection<TaskItemModel> Items { get; set; }
 
-        public TaskGridViewModel(TaskPage mainPage, int a, bool isRoutine)
+        GRItemModel GRItemModel;
+
+        public TaskGridViewModel(TaskPage mainPage, int a, bool isRoutine, GRItemModel _GRItemModel)
         {
             this.mainPage = mainPage;
             Items = new ObservableCollection<TaskItemModel>();
+
+            GRItemModel = _GRItemModel;
 
             if (isRoutine)
             {
@@ -74,9 +78,9 @@ namespace ProjectCaitlin.ViewModel
                                     {
                                         App.User.routines[a].tasks[_taskIdx].isInProgress = true;
                                         Items[_taskIdx].IsInProgress = true;
-                                        await firebaseFunctionsService.StartAT(routineId, taskId, taskDbIdx.ToString());
+                                        firebaseFunctionsService.StartAT(routineId, taskId, taskDbIdx.ToString());
                                     }
-                                    await mainPage.Navigation.PushAsync(new StepsPage(a, _taskIdx, isRoutine, Items[_taskIdx]));
+                                    await mainPage.Navigation.PushAsync(new StepsPage(a, _taskIdx, isRoutine, Items[_taskIdx], GRItemModel));
                                 }
                                 else
                                 {
@@ -88,13 +92,13 @@ namespace ProjectCaitlin.ViewModel
                                             App.User.routines[a].tasks[_taskIdx].isComplete = true;
                                             Items[_taskIdx].IsInProgress = false;
                                             Items[_taskIdx].IsComplete = true;
-                                            await firebaseFunctionsService.UpdateTask(routineId, taskId, taskDbIdx.ToString());
+                                            firebaseFunctionsService.UpdateTask(routineId, taskId, taskDbIdx.ToString());
                                         }
                                         else
                                         {
                                             App.User.routines[a].tasks[_taskIdx].isInProgress = true;
                                             Items[_taskIdx].IsInProgress = true;
-                                            await firebaseFunctionsService.StartAT(routineId, taskId, taskDbIdx.ToString());
+                                            firebaseFunctionsService.StartAT(routineId, taskId, taskDbIdx.ToString());
                                         }
                                     }
                                 }
@@ -138,10 +142,10 @@ namespace ProjectCaitlin.ViewModel
                                     {
                                         App.User.goals[a].actions[_actionIdx].isInProgress = true;
                                         Items[_actionIdx].IsInProgress = true;
-                                        await firebaseFunctionsService.StartAT(goalId, actionId, actionDbIdx.ToString());
+                                        firebaseFunctionsService.StartAT(goalId, actionId, actionDbIdx.ToString());
                                     }
 
-                                    await mainPage.Navigation.PushAsync(new TaskCompletePage(a, _actionIdx, isRoutine));
+                                    await mainPage.Navigation.PushAsync(new TaskCompletePage(a, _actionIdx, isRoutine, GRItemModel));
                                 }
                                 else
                                 {
@@ -153,13 +157,13 @@ namespace ProjectCaitlin.ViewModel
                                             App.User.goals[a].actions[_actionIdx].isComplete = true;
                                             Items[_actionIdx].IsInProgress = false;
                                             Items[_actionIdx].IsComplete = true;
-                                            await firebaseFunctionsService.UpdateTask(goalId, actionId, actionDbIdx.ToString());
+                                            firebaseFunctionsService.UpdateTask(goalId, actionId, actionDbIdx.ToString());
                                         }
                                         else
                                         {
                                             App.User.goals[a].actions[_actionIdx].isInProgress = true;
                                             Items[_actionIdx].IsInProgress = true;
-                                            await firebaseFunctionsService.StartAT(goalId, actionId, actionDbIdx.ToString());
+                                            firebaseFunctionsService.StartAT(goalId, actionId, actionDbIdx.ToString());
                                         }
                                     }
                                 }

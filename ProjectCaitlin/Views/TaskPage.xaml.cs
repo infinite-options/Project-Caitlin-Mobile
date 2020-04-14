@@ -20,35 +20,24 @@ namespace ProjectCaitlin.Views
 
         FirebaseFunctionsService firebaseFunctionsService = new FirebaseFunctionsService();
 
+        GRItemModel GRItemModel;
+
         public TaskPage(int routineNum, bool isRoutine)
         {
             InitializeComponent();
 
-            if (isRoutine)
-            {
-                string routineId = App.User.routines[routineNum].id.ToString();
-                string routineDbIdx = App.User.routines[routineNum].dbIdx.ToString();
+            taskGridViewModel = new TaskGridViewModel(this, routineNum, isRoutine, GRItemModel);
+            BindingContext = taskGridViewModel;
 
-                if (!App.User.routines[routineNum].isComplete)
-                {
-                    App.User.routines[routineNum].isInProgress = true;
-                    firebaseFunctionsService.startGR(routineId, routineDbIdx);
-                }
-            }
-            else
-            {
-                string goalId = App.User.goals[routineNum].id.ToString();
-                string goalDbIdx = App.User.goals[routineNum].dbIdx.ToString();
+        }
 
-                if (!App.User.goals[routineNum].isComplete)
-                {
-                    App.User.goals[routineNum].isInProgress = true;
-                    firebaseFunctionsService.startGR(goalId, goalDbIdx);
-                }
+        public TaskPage(int routineNum, bool isRoutine, GRItemModel _GRItemModel)
+        {
+            InitializeComponent();
 
-            }
+            GRItemModel = _GRItemModel;
 
-            taskGridViewModel = new TaskGridViewModel(this, routineNum, isRoutine);
+            taskGridViewModel = new TaskGridViewModel(this, routineNum, isRoutine, GRItemModel);
             BindingContext = taskGridViewModel;
 
         }

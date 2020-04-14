@@ -27,7 +27,7 @@
 
     <ContentPage.Content>
         <StackLayout
-            VerticalOptions="EndAndExpand">
+            VerticalOptions="FillAndExpand">
             <StackLayout
                 x:Name="ContentStackLayout"
                 VerticalOptions="Start">
@@ -93,15 +93,39 @@
                                 <StackLayout
                                 Padding="10">
 
+                                    <Grid>
+                                        <ffimage:CachedImage
+                                        Source="{Binding Source}"
+                                        HeightRequest="100"
+                                        WidthRequest="100"
+                                            Opacity="{Binding GrImageOpactiy}">
+                                            <ffimage:CachedImage.Transformations>
+                                                <fftransformations:CircleTransformation/>
+                                            </ffimage:CachedImage.Transformations>
+                                        </ffimage:CachedImage>
 
-                                    <ffimage:CachedImage
-                                    Source="{Binding Source}"
-                                    HeightRequest="100"
-                                    WidthRequest="100">
-                                        <ffimage:CachedImage.Transformations>
-                                            <fftransformations:CircleTransformation/>
-                                        </ffimage:CachedImage.Transformations>
-                                    </ffimage:CachedImage>
+                                        <ffimage:CachedImage
+                                            Source="greencheckmarkicon.png"
+                                            HeightRequest="90"
+                                            WidthRequest="90"
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="Center"
+                                            Opacity=".9"
+                                            IsVisible="{Binding IsComplete, FallbackValue=Collapsed}"
+                                            Aspect="AspectFit">
+                                        </ffimage:CachedImage>
+
+                                        <ffimage:CachedImage
+                                            Source="yellowclockicon.png"
+                                            HeightRequest="75"
+                                            WidthRequest="75"
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="Center"
+                                            Opacity=".9"
+                                            IsVisible="{Binding IsInProgress, FallbackValue=Collapsed}"
+                                            Aspect="AspectFit">
+                                        </ffimage:CachedImage>
+                                    </Grid>
 
                                     <Label
                                     Text="{Binding Title}"
@@ -154,7 +178,8 @@
                     <controls:IndicatorsControl SelectedIndicatorStyle="{StaticResource ActiveIndicator}" UnselectedIndicatorStyle="{StaticResource InactiveIndicator}"/>
                 </cards:CoverFlowView>
             </StackLayout>
-            <RelativeLayout>
+            <RelativeLayout
+                VerticalOptions="End">
                 <Frame x:Name="NavBar" HasShadow="True" CornerRadius="0" Padding="0,-5,0,10" HeightRequest="65" VerticalOptions="End" RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}">
                     <Grid Grid.Row="1" Grid.Column="4">
                         <Grid.ColumnDefinitions>

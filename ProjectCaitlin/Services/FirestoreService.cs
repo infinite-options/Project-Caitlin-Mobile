@@ -248,17 +248,28 @@ namespace ProjectCaitlin.Services
                                 goal goal = new goal
                                 {
                                     title = jsonMapGorR["title"]["stringValue"].ToString(),
+
                                     id = jsonMapGorR["id"]["stringValue"].ToString(),
+
                                     photo = jsonMapGorR["photo"]["stringValue"].ToString(),
+
                                     isInProgress = (bool)jsonMapGorR["is_in_progress"]["booleanValue"],
+
                                     isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapGorR["datetime_completed"]["stringValue"].ToString())
                                         && !(bool)jsonMapGorR["is_in_progress"]["booleanValue"],
+
                                     dbIdx = dbIdx_,
+
                                     isSublistAvailable = (bool)jsonMapGorR["is_sublist_available"]["booleanValue"],
+
+                                    expectedCompletionTime = TimeSpan.Parse(jsonMapGorR["expected_completion_time"]["stringValue"].ToString()),
+
                                     dateTimeCompleted = DateTime.Parse(jsonMapGorR["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
+
                                     availableStartTime = DateTime.ParseExact(jsonMapGorR["available_start_time"]["stringValue"].ToString(),
                                         "HH:mm:ss", CultureInfo.InvariantCulture),
+
                                     availableEndTime = DateTime.ParseExact(jsonMapGorR["available_end_time"]["stringValue"].ToString(),
                                         "HH:mm:ss", CultureInfo.InvariantCulture)
                                 };
@@ -381,6 +392,7 @@ namespace ProjectCaitlin.Services
                                         && !(bool)jsonMapAorT["is_in_progress"]["booleanValue"],
                                     dbIdx = dbIdx_,
                                     isSublistAvailable = (bool)jsonMapAorT["is_sublist_available"]["booleanValue"],
+                                    expectedCompletionTime = TimeSpan.Parse(jsonMapAorT["expected_completion_time"]["stringValue"].ToString()),
                                     dateTimeCompleted = DateTime.Parse(jsonMapAorT["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
                                     availableStartTime = DateTime.ParseExact(jsonMapAorT["available_start_time"]["stringValue"].ToString(),
                                         "HH:mm:ss", CultureInfo.InvariantCulture),
@@ -506,6 +518,7 @@ namespace ProjectCaitlin.Services
                                         && !(bool)jsonMapIorS["is_in_progress"]["booleanValue"],
 
                                     dbIdx = dbIdx_,
+                                    expectedCompletionTime = TimeSpan.Parse(jsonMapIorS["expected_completion_time"]["stringValue"].ToString()),
                                     dateTimeCompleted = DateTime.Parse(jsonMapIorS["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
                                     availableStartTime = DateTime.ParseExact(jsonMapIorS["available_start_time"]["stringValue"].ToString(),
                                         "HH:mm:ss", CultureInfo.InvariantCulture),

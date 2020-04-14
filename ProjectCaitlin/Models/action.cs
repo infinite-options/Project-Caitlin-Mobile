@@ -22,6 +22,8 @@ namespace ProjectCaitlin.Models
 
 		public bool isSublistAvailable { get; set; }
 
+		public TimeSpan expectedCompletionTime { get; set; }
+
 		public DateTime dateTimeCompleted { get; set; }
 
 		public DateTime availableStartTime { get; set; }
