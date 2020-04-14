@@ -144,7 +144,7 @@ namespace ProjectCaitlin
 
             int goalIdx = 0;
             foreach (goal goal in user.goals)
-                PopulateGoal(goal, goalIdx++, GetFirstInTimeOfDay("goal", goal.availableStartTime.TimeOfDay));
+                PopulateGoal(goal, goalIdx++, GetFirstInTimeOfDay("goal", goal.availableStartTime));
 
             PopulateEventsAndRoutines(0, 0);
         }
@@ -162,7 +162,7 @@ namespace ProjectCaitlin
 
             if (user.CalendarEvents.Count == eventIdx)
             {
-                PopulateRoutine(user.routines[routineIdx], routineIdx, GetFirstInTimeOfDay("routine", user.routines[routineIdx].availableStartTime.TimeOfDay));
+                PopulateRoutine(user.routines[routineIdx], routineIdx, GetFirstInTimeOfDay("routine", user.routines[routineIdx].availableStartTime));
                 PopulateEventsAndRoutines(eventIdx, ++routineIdx);
                 return;
             }
@@ -173,9 +173,9 @@ namespace ProjectCaitlin
                 return;
             }
 
-            if (user.routines[routineIdx].availableStartTime.TimeOfDay < user.CalendarEvents[eventIdx].Start.DateTime.TimeOfDay)
+            if (user.routines[routineIdx].availableStartTime < user.CalendarEvents[eventIdx].Start.DateTime.TimeOfDay)
             {
-                PopulateRoutine(user.routines[routineIdx], routineIdx, GetFirstInTimeOfDay("routine", user.routines[routineIdx].availableStartTime.TimeOfDay));
+                PopulateRoutine(user.routines[routineIdx], routineIdx, GetFirstInTimeOfDay("routine", user.routines[routineIdx].availableStartTime));
                 PopulateEventsAndRoutines(eventIdx, ++routineIdx);
                 return;
             }
@@ -226,7 +226,7 @@ namespace ProjectCaitlin
 
             Label expectedTimeLabel = new Label
             {
-                Text = "Takes me " + "x".ToString() + " minutes",
+                Text = "Takes me " + routine.expectedCompletionTime.TotalMinutes.ToString() + " minutes",
                 FontSize = 10,
                 TextColor = Color.DimGray,
                 VerticalOptions = LayoutOptions.EndAndExpand,
@@ -263,12 +263,14 @@ namespace ProjectCaitlin
                 Source = "",
                 WidthRequest = 0,
                 HeightRequest = 0,
+                IsVisible = false,
                 HorizontalOptions = LayoutOptions.Start,
                 VerticalOptions = LayoutOptions.CenterAndExpand
             };
 
             if (routine.isComplete || routine.isInProgress)
             {
+                checkmarkImage.IsVisible = true;
                 if (routine.isInProgress)
                     checkmarkImage.Source = "yellowclockicon.png ";
                 else
@@ -286,18 +288,27 @@ namespace ProjectCaitlin
 
             var tapGestureRecognizer = new TapGestureRecognizer();
             tapGestureRecognizer.Tapped += async (s, e) => {
+
+                StackLayout updatedStackLayout = (StackLayout)s;
+                updatedStackLayout.Children[0].WidthRequest = 30;
+                updatedStackLayout.Children[0].HeightRequest = 30;
+                ((CachedImage)updatedStackLayout.Children[0]).IsVisible = true;
+
                 if (routine.isSublistAvailable)
                 {
-                    App.ListPageScrollPosY = mainScrollView.ScrollY;
+                    if (!routine.isInProgress)
+                    {
+                        ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
+                        routine.isInProgress = true;
+                        firebaseFunctionsService.startGR(routine.id.ToString(), routine.dbIdx.ToString());
+                        App.ListPageScrollPosY = mainScrollView.ScrollY;
+                    }
                     await Navigation.PushAsync(new TaskPage(routineIdx, true));
                 }
                 else
                 {
                     if (!routine.isComplete)
                     {
-                        StackLayout updatedStackLayout = (StackLayout) s;
-                        updatedStackLayout.Children[0].WidthRequest = 30;
-                        updatedStackLayout.Children[0].HeightRequest = 30;
 
                         if (routine.isInProgress)
                         {
@@ -399,10 +410,7 @@ namespace ProjectCaitlin
                 Margin = new Thickness(0, 0, 10, 0)
             };
 
-            Grid grid = new Grid()
-            {
-
-            };
+            Grid grid = new Grid();
 
             CachedImage image = new CachedImage()
             {
@@ -453,17 +461,26 @@ namespace ProjectCaitlin
             tapGestureRecognizer.Tapped += async (s, e) => {
                 App.ListPageScrollPosY = mainScrollView.ScrollY;
 
+                StackLayout updatedStackLayout = (StackLayout)s;
+                Grid updatedGrid = (Grid)updatedStackLayout.Children[0];
+                ((CachedImage)updatedGrid.Children[0]).Opacity = .6;
+
                 if (goal.isSublistAvailable)
                 {
+
+                    if (!goal.isInProgress)
+                    {
+                        ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
+                        goal.isInProgress = true;
+                        firebaseFunctionsService.startGR(goal.id.ToString(), goal.dbIdx.ToString());
+                        App.ListPageScrollPosY = mainScrollView.ScrollY;
+                    }
                     await Navigation.PushAsync(new TaskPage(goalIdx, false));
                 }
                 else
                 {
                     if (!goal.isComplete)
                     {
-                        StackLayout updatedStackLayout = (StackLayout) s;
-                        Grid updatedGrid = (Grid) updatedStackLayout.Children[0];
-                        ((CachedImage) updatedGrid.Children[0]).Opacity = .6;
 
                         if (goal.isInProgress)
                         {

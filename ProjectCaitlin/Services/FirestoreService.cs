@@ -76,7 +76,7 @@ namespace ProjectCaitlin.Services
                     await googleService.RefreshToken();
                 }
 
-                DateTime currentTime = DateTime.Now;
+                TimeSpan currentTime = DateTime.Now.TimeOfDay;
 
                 notificationManager.PrintPendingNotifications();
 
@@ -94,7 +94,6 @@ namespace ProjectCaitlin.Services
 
                         if ((bool)jsonMapGorR["is_available"]["booleanValue"] && !isDeleted)
                         {
-
                             if ((bool)jsonMapGorR["is_persistent"]["booleanValue"])
                             {
                                 routine routine = new routine
@@ -105,7 +104,7 @@ namespace ProjectCaitlin.Services
 
                                     photo = jsonMapGorR["photo"]["stringValue"].ToString(),
 
-                                    isInProgress = (bool)jsonMapGorR["is_in_progress"]["booleanValue"],
+                                    isInProgress = (jsonMapGorR["is_in_progress"] == null) ? false : (bool)jsonMapGorR["is_in_progress"]["booleanValue"],
 
                                     isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapGorR["datetime_completed"]["stringValue"].ToString())
@@ -119,11 +118,9 @@ namespace ProjectCaitlin.Services
 
                                     dateTimeCompleted = DateTime.Parse(jsonMapGorR["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
 
-                                    availableStartTime = DateTime.ParseExact(jsonMapGorR["available_start_time"]["stringValue"].ToString(),
-                                        "HH:mm:ss", CultureInfo.InvariantCulture),
+                                    availableStartTime = TimeSpan.Parse(jsonMapGorR["available_start_time"]["stringValue"].ToString()),
 
-                                    availableEndTime = DateTime.ParseExact(jsonMapGorR["available_end_time"]["stringValue"].ToString(),
-                                        "HH:mm:ss", CultureInfo.InvariantCulture)
+                                    availableEndTime = TimeSpan.Parse(jsonMapGorR["available_end_time"]["stringValue"].ToString())
                                 };
 
                                 //time precised in minutes, can be positive or negative.
@@ -267,11 +264,9 @@ namespace ProjectCaitlin.Services
 
                                     dateTimeCompleted = DateTime.Parse(jsonMapGorR["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
 
-                                    availableStartTime = DateTime.ParseExact(jsonMapGorR["available_start_time"]["stringValue"].ToString(),
-                                        "HH:mm:ss", CultureInfo.InvariantCulture),
+                                    availableStartTime = TimeSpan.Parse(jsonMapGorR["available_start_time"]["stringValue"].ToString()),
 
-                                    availableEndTime = DateTime.ParseExact(jsonMapGorR["available_end_time"]["stringValue"].ToString(),
-                                        "HH:mm:ss", CultureInfo.InvariantCulture)
+                                    availableEndTime = TimeSpan.Parse(jsonMapGorR["available_end_time"]["stringValue"].ToString())
                                 };
 
                                 App.User.goals.Add(goal);
@@ -288,8 +283,8 @@ namespace ProjectCaitlin.Services
                     dbIdx_++;
                 }
 
-                App.User.routines.Sort((x, y) => TimeSpan.Compare(x.availableStartTime.TimeOfDay, y.availableStartTime.TimeOfDay));
-                App.User.goals.Sort((x, y) => TimeSpan.Compare(x.availableStartTime.TimeOfDay, y.availableStartTime.TimeOfDay));
+                App.User.routines.Sort((x, y) => TimeSpan.Compare(x.availableStartTime, y.availableStartTime));
+                App.User.goals.Sort((x, y) => TimeSpan.Compare(x.availableStartTime, y.availableStartTime));
 
                 int routineIdx = 0;
                 foreach (routine routine in App.User.routines)
@@ -353,8 +348,6 @@ namespace ProjectCaitlin.Services
                         {
                             if (routineType == "routine")
                             {
-                                DateTime duration = DateTime.Parse(jsonMapAorT["expected_completion_time"]["stringValue"].ToString());
-
                                 task task = new task
                                 {
                                     title = jsonMapAorT["title"]["stringValue"].ToString(),
@@ -362,16 +355,13 @@ namespace ProjectCaitlin.Services
                                     photo = jsonMapAorT["photo"]["stringValue"].ToString(),
                                     isInProgress = (bool)jsonMapAorT["is_in_progress"]["booleanValue"],
                                     isComplete = (bool)jsonMapAorT["is_complete"]["booleanValue"]
-                                        && IsDateToday(jsonMapAorT["datetime_completed"]["stringValue"].ToString())
-                                        && !(bool)jsonMapAorT["is_in_progress"]["booleanValue"],
+                                        && IsDateToday(jsonMapAorT["datetime_completed"]["stringValue"].ToString()),
                                     dbIdx = dbIdx_,
                                     isSublistAvailable = (bool)jsonMapAorT["is_sublist_available"]["booleanValue"],
                                     expectedCompletionTime = TimeSpan.Parse(jsonMapAorT["expected_completion_time"]["stringValue"].ToString()),
                                     dateTimeCompleted = DateTime.Parse(jsonMapAorT["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
-                                    availableStartTime = DateTime.ParseExact(jsonMapAorT["available_start_time"]["stringValue"].ToString(),
-                                        "HH:mm:ss", CultureInfo.InvariantCulture),
-                                    availableEndTime = DateTime.ParseExact(jsonMapAorT["available_end_time"]["stringValue"].ToString(),
-                                        "HH:mm:ss", CultureInfo.InvariantCulture)
+                                    availableStartTime = TimeSpan.Parse(jsonMapAorT["available_start_time"]["stringValue"].ToString()),
+                                    availableEndTime = TimeSpan.Parse(jsonMapAorT["available_end_time"]["stringValue"].ToString())
                                 };
 
                                 App.User.routines[routineIdx].tasks.Add(task);
@@ -394,10 +384,8 @@ namespace ProjectCaitlin.Services
                                     isSublistAvailable = (bool)jsonMapAorT["is_sublist_available"]["booleanValue"],
                                     expectedCompletionTime = TimeSpan.Parse(jsonMapAorT["expected_completion_time"]["stringValue"].ToString()),
                                     dateTimeCompleted = DateTime.Parse(jsonMapAorT["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
-                                    availableStartTime = DateTime.ParseExact(jsonMapAorT["available_start_time"]["stringValue"].ToString(),
-                                        "HH:mm:ss", CultureInfo.InvariantCulture),
-                                    availableEndTime = DateTime.ParseExact(jsonMapAorT["available_end_time"]["stringValue"].ToString(),
-                                        "HH:mm:ss", CultureInfo.InvariantCulture)
+                                    availableStartTime = TimeSpan.Parse(jsonMapAorT["available_start_time"]["stringValue"].ToString()),
+                                    availableEndTime = TimeSpan.Parse(jsonMapAorT["available_end_time"]["stringValue"].ToString())
                                 };
 
                                 App.User.goals[routineIdx].actions.Add(action);
@@ -496,10 +484,8 @@ namespace ProjectCaitlin.Services
                                     dbIdx = dbIdx_,
                                     expectedCompletionTime = TimeSpan.Parse(jsonMapIorS["expected_completion_time"]["stringValue"].ToString()),
                                     dateTimeCompleted = DateTime.Parse(jsonMapIorS["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
-                                    availableStartTime = DateTime.ParseExact(jsonMapIorS["available_start_time"]["stringValue"].ToString(),
-                                        "HH:mm:ss", CultureInfo.InvariantCulture),
-                                    availableEndTime = DateTime.ParseExact(jsonMapIorS["available_end_time"]["stringValue"].ToString(),
-                                        "HH:mm:ss", CultureInfo.InvariantCulture)
+                                    availableStartTime = TimeSpan.Parse(jsonMapIorS["available_start_time"]["stringValue"].ToString()),
+                                    availableEndTime = TimeSpan.Parse(jsonMapIorS["available_end_time"]["stringValue"].ToString())
                                 };
 
                                 ////Console.WriteLine("on Step: " + step.isComplete);
@@ -520,10 +506,8 @@ namespace ProjectCaitlin.Services
                                     dbIdx = dbIdx_,
                                     expectedCompletionTime = TimeSpan.Parse(jsonMapIorS["expected_completion_time"]["stringValue"].ToString()),
                                     dateTimeCompleted = DateTime.Parse(jsonMapIorS["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
-                                    availableStartTime = DateTime.ParseExact(jsonMapIorS["available_start_time"]["stringValue"].ToString(),
-                                        "HH:mm:ss", CultureInfo.InvariantCulture),
-                                    availableEndTime = DateTime.ParseExact(jsonMapIorS["available_end_time"]["stringValue"].ToString(),
-                                        "HH:mm:ss", CultureInfo.InvariantCulture)
+                                    availableStartTime = TimeSpan.Parse(jsonMapIorS["available_start_time"]["stringValue"].ToString()),
+                                    availableEndTime = TimeSpan.Parse(jsonMapIorS["available_end_time"]["stringValue"].ToString())
                                 };
 
 
@@ -555,6 +539,18 @@ namespace ProjectCaitlin.Services
             ////Console.WriteLine("checkDate result: " + (today.Date == checkDate.Date).ToString());
 
             return (today.Date == checkDate.Date) ? true : false;
+        }
+
+        private string formatTimeSpanString(string inputString)
+        {
+            string result = "";
+
+            string[] componants = inputString.Split(':');
+
+            foreach (var componant in componants)
+                result += componant.PadLeft(2, '0');
+
+            return result;
         }
     }
 }

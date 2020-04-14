@@ -23,9 +23,9 @@ namespace ProjectCaitlin.Models
 
 		public DateTime dateTimeCompleted { get; set; }
 
-		public DateTime availableStartTime { get; set; }
+		public TimeSpan availableStartTime { get; set; }
 
-		public DateTime availableEndTime { get; set; }
+		public TimeSpan availableEndTime { get; set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 	}

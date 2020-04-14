@@ -71,26 +71,33 @@ namespace ProjectCaitlin.ViewModel
                                 var routineId = App.User.routines[a].id;
                                 var taskId = App.User.routines[a].tasks[b].id;
                                 string stepDbIdx = App.User.routines[a].tasks[b].steps[_stepIdx].dbIdx.ToString();
+                                bool isPrevStepInProgress =
+                                    (_stepIdx == 0) ? false : App.User.routines[a].tasks[b].steps[_stepIdx - 1].isInProgress;
+                                bool isPrevStepComplete =
+                                    (_stepIdx == 0) ? true : App.User.routines[a].tasks[b].steps[_stepIdx - 1].isComplete;
                                 bool isStepInProgress = App.User.routines[a].tasks[b].steps[_stepIdx].isInProgress;
                                 bool isStepComplete = App.User.routines[a].tasks[b].steps[_stepIdx].isComplete;
                                 var indexForCheckmark = _stepIdx;
 
-                                if (isStepInProgress)
+
+                                if (!isStepComplete)
                                 {
-                                    App.User.routines[a].tasks[b].steps[indexForCheckmark].isInProgress = false;
-                                    App.User.routines[a].tasks[b].steps[indexForCheckmark].isComplete = true;
-                                    Items[_stepIdx].CheckmarkIcon = "greencheckmarkicon.png";
+                                    if (isStepInProgress)
+                                    {
+                                        App.User.routines[a].tasks[b].steps[indexForCheckmark].isInProgress = false;
+                                        App.User.routines[a].tasks[b].steps[indexForCheckmark].isComplete = true;
+                                        Items[_stepIdx].CheckmarkIcon = "greencheckmarkicon.png";
 
-                                    firebaseFunctionsService.UpdateStep(routineId, taskId, stepDbIdx);
+                                        firebaseFunctionsService.UpdateStep(routineId, taskId, stepDbIdx);
+                                    }
+                                    else
+                                    {
+                                        Items[_stepIdx].CheckmarkIcon = "yellowclockicon.png";
+                                        App.User.routines[a].tasks[b].steps[indexForCheckmark].isInProgress = true;
+
+                                        firebaseFunctionsService.StartIS(routineId, taskId, stepDbIdx);
+                                    }
                                 }
-                                else
-                                {
-                                    Items[_stepIdx].CheckmarkIcon = "yellowclockicon.png";
-                                    App.User.routines[a].tasks[b].steps[indexForCheckmark].isInProgress = true;
-
-                                    firebaseFunctionsService.StartIS(routineId, taskId, stepDbIdx);
-                                }
-
                             }
                         );
                     }
