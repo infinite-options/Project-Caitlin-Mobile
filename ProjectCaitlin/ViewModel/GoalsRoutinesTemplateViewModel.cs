@@ -14,6 +14,7 @@ using ProjectCaitlin.Views;
 using System.Globalization;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
+using ProjectCaitlin.Services;
 
 namespace ProjectCaitlin.ViewModel
 {
@@ -23,6 +24,8 @@ namespace ProjectCaitlin.ViewModel
         List<bool> complete;
         private int _currentIndex;
         private int _imageCount = 1078;
+        private FirebaseFunctionsService firebaseFunctionsService;
+
         public ObservableCollection<object> Items { get; set; }
 
         public ICommand AboutMeCommand { private set; get; }
@@ -32,6 +35,7 @@ namespace ProjectCaitlin.ViewModel
         public GoalsRoutinesTemplateViewModel(GoalsRoutinesTemplate mainPage)
         {
             this.mainPage = mainPage;
+            firebaseFunctionsService = new FirebaseFunctionsService();
 
             setUpTime();
             complete = new List<bool>();
@@ -50,9 +54,12 @@ namespace ProjectCaitlin.ViewModel
                 TextColor = Color.Black,
                 Length = "You are a strong, independant person. \n This App helps you take control of your life!",
                 Text = "Tap to Learn More",
+                IsComplete = false,
+                IsInProgress = false,
                 ButtonText = "Click for More About Me",
                 Navigate = AboutMeCommand
             });
+            int itemCount = 1;
 
             int routineNum = 0;
             foreach (routine routine in App.User.routines)
@@ -63,106 +70,170 @@ namespace ProjectCaitlin.ViewModel
                 {
                     foreach (step step in task.steps)
                     {
-                        sum_duration += step.expected_completion_time;
+                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
                     }
                 }
                 // set the duration for routine
                 if (sum_duration != 0)
-                    routine.expected_completion_time = sum_duration;
+                    routine.expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);
 
-                complete.Add(false);
+                string buttonText = "Tap to Start";
+                if (routine.isInProgress)
+                    buttonText = "Tap to Continue";
+                else if (routine.isComplete)
+                    buttonText = "Done";
+
+                    complete.Add(false);
                 Items.Add(new GRItemModel(
                    routine.photo,
                    routine.title,
                    Color.Default,
                    Color.Black,
-                   "Tap to start",
-                   "Takes me " + routine.expected_completion_time + " minutes",
+                   buttonText,
+                   "Takes me " + routine.expectedCompletionTime.TotalMinutes + " minutes",
+                   (routine.isComplete || routine.isInProgress) ? .6 : 1,
+                   routine.isComplete,
+                   routine.isInProgress,
 
-                   new Command<int>(
-                        async (int _GRIdx) =>
+                   new Command<MyDayIndexes>(
+                        async (MyDayIndexes indexes) =>
                         {
-                            Console.WriteLine("GRIDX :" + _GRIdx);
-                            await mainPage.Navigation.PushAsync(new TaskPage(_GRIdx, true));
+                            string routineId = App.User.routines[indexes.RoutineIndex].id;
+                            string routineDbIdx = App.User.routines[indexes.RoutineIndex].dbIdx.ToString();
+                            bool isRoutineInProgress = App.User.routines[indexes.RoutineIndex].isInProgress;
+                            bool isRoutineComplete = App.User.routines[indexes.RoutineIndex].isComplete;
+
+                            Console.WriteLine("indexes.ItemsIndex: " + indexes.ItemsIndex);
+                            Console.WriteLine("indexes.RoutineIndex: " + indexes.RoutineIndex);
+
+                            ((GRItemModel)Items[indexes.ItemsIndex]).GrImageOpactiy = .6;
+
+                            if (App.User.routines[indexes.RoutineIndex].isSublistAvailable)
+                            {
+                                if (!isRoutineComplete)
+                                {
+                                    App.User.routines[indexes.RoutineIndex].isInProgress = true;
+                                    ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
+                                    ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
+                                    firebaseFunctionsService.startGR(routineId, routineDbIdx);
+                                }
+                                await mainPage.Navigation.PushAsync(new TaskPage(indexes.RoutineIndex, true, (GRItemModel) Items[indexes.ItemsIndex]));
+                            }
+                            else
+                            {
+                                if (!isRoutineComplete)
+                                {
+                                    if (isRoutineInProgress)
+                                    {
+                                        App.User.routines[indexes.RoutineIndex].isInProgress = false;
+                                        App.User.routines[indexes.RoutineIndex].isComplete = true;
+                                        ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = false;
+                                        ((GRItemModel)Items[indexes.ItemsIndex]).IsComplete = true;
+                                        ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Done";
+                                        firebaseFunctionsService.CompleteRoutine(routineId, routineDbIdx);
+                                    }
+                                    else
+                                    {
+                                        App.User.routines[indexes.RoutineIndex].isInProgress = true;
+                                        ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
+                                        ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
+                                        firebaseFunctionsService.startGR(routineId, routineDbIdx);
+                                    }
+                                }
+                            }
                         }),
-                   routineNum
+                    new MyDayIndexes(itemCount, routineNum, 0)
                     ));
                 routineNum++;
+                itemCount++;
             }
 
             int goalNum = 0;
             foreach (goal goal in App.User.goals)
             {
+                //calculate the sum duration for the routine from step level.
+                int sum_duration = 0;
+                foreach (action action in goal.actions)
+                {
+                    foreach (instruction instruction in action.instructions)
+                    {
+                        sum_duration += (int)instruction.expectedCompletionTime.TotalMinutes;
+                    }
+                }
+                // set the duration for routine
+                if (sum_duration != 0)
+                    goal.expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);
+
+                string buttonText = "Tap to Start";
+                if (goal.isInProgress)
+                    buttonText = "Tap to Continue";
+                else if (goal.isComplete)
+                    buttonText = "Done";
+
                 complete.Add(false);
                 Items.Add(new GRItemModel(
                    goal.photo,
                    goal.title,
-                   Color.Black,
+                   Color.FromHex("#272E32"),
                    Color.White,
-                   "Tap to start",
-                   "Takes me 30 minutes",
+                   buttonText,
+                   "Takes me " + goal.expectedCompletionTime.TotalMinutes + " minutes",
+                   (goal.isComplete || goal.isInProgress) ? .6 : 1,
+                   goal.isComplete,
+                   goal.isInProgress,
 
-                   new Command<int>(
-                        async (int _GRIdx) =>
+                   new Command<MyDayIndexes>(
+                        async (MyDayIndexes indexes) =>
                         {
-                            Console.WriteLine("GRIDX :" + _GRIdx);
-                            await mainPage.Navigation.PushAsync(new TaskPage(_GRIdx, false));
+                            string goalId = App.User.goals[indexes.GoalIndex].id;
+                            string goalDbIdx = App.User.goals[indexes.GoalIndex].dbIdx.ToString();
+                            bool isGoalInProgress = App.User.goals[indexes.GoalIndex].isInProgress;
+                            bool isGoalComplete = App.User.goals[indexes.GoalIndex].isComplete;
+
+                            Console.WriteLine("indexes.ItemsIndex: " + indexes.ItemsIndex);
+                            Console.WriteLine("indexes.GoalIndex: " + indexes.GoalIndex);
+
+                            ((GRItemModel)Items[indexes.ItemsIndex]).GrImageOpactiy = .6;
+
+                            if (App.User.goals[indexes.GoalIndex].isSublistAvailable)
+                            {
+                                if (!isGoalComplete)
+                                {
+                                    App.User.goals[indexes.GoalIndex].isInProgress = true;
+                                    ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
+                                    ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
+                                    firebaseFunctionsService.startGR(goalId, goalDbIdx);
+                                }
+                                await mainPage.Navigation.PushAsync(new TaskPage(indexes.GoalIndex, false, (GRItemModel)Items[indexes.ItemsIndex]));
+                            }
+                            else
+                            {
+                                if (!isGoalComplete)
+                                {
+                                    if (isGoalInProgress)
+                                    {
+                                        App.User.goals[indexes.GoalIndex].isInProgress = false;
+                                        App.User.goals[indexes.GoalIndex].isComplete = true;
+                                        ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = false;
+                                        ((GRItemModel)Items[indexes.ItemsIndex]).IsComplete = true;
+                                        ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Done";
+                                        firebaseFunctionsService.CompleteRoutine(goalId, goalDbIdx);
+                                    }
+                                    else
+                                    {
+                                        App.User.goals[indexes.GoalIndex].isInProgress = true;
+                                        ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
+                                        ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
+                                        firebaseFunctionsService.startGR(goalId, goalDbIdx);
+                                    }
+                                }
+                            }
                         }),
-                   goalNum
+                   new MyDayIndexes(itemCount, 0, goalNum)
                     ));
                 goalNum++;
+                itemCount++;
             }
-
-            /*int goalNum = 0;
-            foreach (goal goal in App.User.goals)
-            {
-                Console.WriteLine("goal Num : " + goalNum);
-                Items.Add(new
-                {
-                    Source = goal.photo,
-                    Title = goal.title,
-                    BackgroundColor = "#272E32",
-                    TextColor = Color.White,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                     async () =>
-                     {
-                         await mainPage.Navigation.PushAsync(new TaskPage(goalNum, false));
-                     })
-                });
-                goalNum++;
-            }
-
-            PanPositionChangedCommand = new Command(v =>
-            {
-                if (IsAutoAnimationRunning || IsUserInteractionRunning)
-                {
-                    return;
-                }
-
-                var index = CurrentIndex + (bool.Parse(v.ToString()) ? 1 : -1);
-                if (index < 0 || index >= Items.Count)
-                {
-                    return;
-                }
-                CurrentIndex = index;
-            });
-
-            RemoveCurrentItemCommand = new Command(() =>
-            {
-                if (!Items.Any())
-                {
-                    return;
-                }
-                Items.RemoveAt(CurrentIndex.ToCyclicalIndex(Items.Count));
-            });
-
-            GoToLastCommand = new Command(() =>
-            {
-                CurrentIndex = Items.Count - 1;
-            });*/
         }
 
         public ICommand PanPositionChangedCommand { get; }
@@ -222,6 +293,14 @@ namespace ProjectCaitlin.ViewModel
         public string Text
         {
             get => text;
+            set
+            {
+                if (!text.Equals(value))
+                {
+                    text = value;
+                    OnPropertyChanged(nameof(Text));
+                }
+            }
         }
 
 
@@ -259,9 +338,50 @@ namespace ProjectCaitlin.ViewModel
             }
         }
 
+        private double grImageOpactiy;
+        public double GrImageOpactiy
+        {
+            get => grImageOpactiy;
+            set
+            {
+                if (grImageOpactiy != value)
+                {
+                    grImageOpactiy = value;
+                    OnPropertyChanged(nameof(GrImageOpactiy));
+                }
+            }
+        }
 
-        private Command<int> navigate;
-        public Command<int> Navigate
+        private bool isComplete;
+        public bool IsComplete
+        {
+            get => isComplete;
+            set
+            {
+                if (isComplete != value)
+                {
+                    isComplete = value;
+                    OnPropertyChanged(nameof(IsComplete));
+                }
+            }
+        }
+
+        private bool isInProgress;
+        public bool IsInProgress
+        {
+            get => isInProgress;
+            set
+            {
+                if (isInProgress != value)
+                {
+                    isInProgress = value;
+                    OnPropertyChanged(nameof(IsInProgress));
+                }
+            }
+        }
+
+        private Command<MyDayIndexes> navigate;
+        public Command<MyDayIndexes> Navigate
         {
             get => navigate;
             set
@@ -274,13 +394,12 @@ namespace ProjectCaitlin.ViewModel
             }
         }
 
-        private int navigateIdx;
-        public int NavigateIdx
+        private MyDayIndexes navigateIdx;
+        public MyDayIndexes NavigateIdx
         {
             get => navigateIdx;
             set
-            {
-                if (navigateIdx != value)
+            { if (!NavigateIdx.Equals(navigateIdx))
                 {
                     navigateIdx = value;
                     OnPropertyChanged(nameof(NavigateIdx));
@@ -288,7 +407,7 @@ namespace ProjectCaitlin.ViewModel
             }
         }
 
-        public GRItemModel(string _source, string _title, Color _backgroundColor, Color _textColor, string _text, string _length, Command<int> _navigate, int _navigateIdx)
+        public GRItemModel(string _source, string _title, Color _backgroundColor, Color _textColor, string _text, string _length, double _grImageOpactiy, bool _isComplete, bool _isInProgress, Command<MyDayIndexes> _navigate, MyDayIndexes _navigateIdx)
         {
             source = _source;
             title = _title;
@@ -296,6 +415,9 @@ namespace ProjectCaitlin.ViewModel
             textColor = _textColor;
             text = _text;
             length = _length;
+            grImageOpactiy = _grImageOpactiy;
+            isComplete = _isComplete;
+            isInProgress = _isInProgress;
             navigate = _navigate;
             navigateIdx = _navigateIdx;
         }
@@ -306,5 +428,21 @@ namespace ProjectCaitlin.ViewModel
         {
             PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
         }
+    }
+
+    public struct MyDayIndexes
+    {
+        public MyDayIndexes(int itemsIndex, int routineIndex, int goalIndex)
+        {
+            ItemsIndex = itemsIndex;
+            RoutineIndex = routineIndex;
+            GoalIndex = goalIndex;
+        }
+
+        public int ItemsIndex { get; }
+        public int RoutineIndex { get; }
+        public int GoalIndex { get; }
+
+        public override string ToString() => $"(ItemsIndex: {ItemsIndex}, GoalIndex: {GoalIndex}, RoutineIndex: {RoutineIndex})";
     }
 }

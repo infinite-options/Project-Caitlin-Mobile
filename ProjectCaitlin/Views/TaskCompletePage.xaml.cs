@@ -18,17 +18,19 @@ namespace ProjectCaitlin.Views
     public partial class TaskCompletePage : ContentPage
     {
         FirebaseFunctionsService firebaseFunctionsService;
+        GRItemModel GRItemModel;
 
         private int itemcount;
         int a;
         int b;
         bool isRoutine;
         readonly TaskCompletePageViewModel pageModel;
-        public TaskCompletePage(int a, int b, bool isRoutine)
+        public TaskCompletePage(int a, int b, bool isRoutine, GRItemModel _GRItemModel)
         {
             InitializeComponent();
             firebaseFunctionsService = new FirebaseFunctionsService();
 
+            GRItemModel = _GRItemModel;
             this.a = a;
             this.b = b;
             this.isRoutine = isRoutine;
@@ -52,6 +54,7 @@ namespace ProjectCaitlin.Views
                 if (isActionComplete)
                 {
                     App.User.goals[a].actions[b].isComplete = true;
+                    App.User.goals[a].actions[b].isInProgress = false;
                     App.User.goals[a].actions[b].dateTimeCompleted = DateTime.Now;
                 }
 
@@ -69,11 +72,15 @@ namespace ProjectCaitlin.Views
                     if (isGoalComplete)
                     {
                         App.User.goals[a].isComplete = true;
+                        App.User.goals[a].isInProgress = false;
+                        GRItemModel.IsComplete = true;
+                        GRItemModel.IsInProgress = true;
+                        GRItemModel.Text = "Done";
                         App.User.goals[a].dateTimeCompleted = DateTime.Now;
                     }
                 }
 
-                await Navigation.PushAsync(new TaskPage(a, isRoutine));
+                await Navigation.PopAsync();
             }
 
             else if (next.Text == "Start")
