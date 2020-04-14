@@ -29,6 +29,7 @@ namespace ProjectCaitlin
         public MonthlyViewPage()
         {
             InitializeComponent();
+            AddTapGestures();
             //Add empty calendar
             int row = 1;
             int col = 0;
@@ -83,21 +84,18 @@ namespace ProjectCaitlin
                     string description = list[2];
                     string creationTime = list[3];
 
-                    if (photoCount % rowLength == 0)
-                    {
-                        controlGrid.RowDefinitions.Add(new RowDefinition { Height = gridItemSize });
-                    }
                     CachedImage webImage = new CachedImage
                     {
                         Source = Xamarin.Forms.ImageSource.FromUri(new Uri(photoURI)),
                         Transformations = new List<ITransformation>() {
-                        new CropTransformation(),
-                    },
+                            new CropTransformation(),
+                        },
                     };
 
                     var tapGestureRecognizer = new TapGestureRecognizer();
-                    tapGestureRecognizer.Tapped += async (s, e) => {
-                        await Navigation.PushAsync(new PhotoDisplayPage(webImage,date,description,creationTime));
+                    tapGestureRecognizer.Tapped += async (s, e) =>
+                    {
+                        await Navigation.PushAsync(new PhotoDisplayPage(webImage, date, description, creationTime));
                     };
                     webImage.GestureRecognizers.Add(tapGestureRecognizer);
                     var indicator = new ActivityIndicator { Color = Color.Gray, };
@@ -120,26 +118,10 @@ namespace ProjectCaitlin
                 }
 
                 //var googleService = new GoogleService();
-               // await googleService.RefreshToken();
-               // Console.WriteLine("Here");
+                // await googleService.RefreshToken();
+                // Console.WriteLine("Here");
                 //SetupUI();
             }
-
-            //update calendar
-            DateTime localDate = DateTime.Now;
-            Calendar myCal = CultureInfo.InvariantCulture.Calendar;
-            var currentYear = myCal.GetYear(localDate);
-            var currentMonth = myCal.GetMonth(localDate);
-            var currentDay = myCal.GetDayOfWeek(localDate);
-
-            Year = currentYear;
-            Month = currentMonth;
-            yearLabel.Text = Year + "";
-            setMonthLabel(Month);
-            SetCalendar(currentYear, currentMonth);
-
-            //add navigation bar
-            photoScrollView.HeightRequest = Application.Current.MainPage.Height - CalendarContent.Height - NavBar.Height;
 
             if (photoURIs != null)
             {
@@ -157,8 +139,22 @@ namespace ProjectCaitlin
                 };
                 photoScrollView.Content = noPhotosLabel;
             }
-                        AddTapGestures();
 
+            //update calendar
+            DateTime localDate = DateTime.Now;
+            Calendar myCal = CultureInfo.InvariantCulture.Calendar;
+            var currentYear = myCal.GetYear(localDate);
+            var currentMonth = myCal.GetMonth(localDate);
+            var currentDay = myCal.GetDayOfWeek(localDate);
+
+            Year = currentYear;
+            Month = currentMonth;
+            yearLabel.Text = Year + "";
+            setMonthLabel(Month);
+            SetCalendar(currentYear, currentMonth);
+
+            //add navigation bar
+            photoScrollView.HeightRequest = Application.Current.MainPage.Height - CalendarContent.Height - NavBar.Height;
         }
 
         void setMonthLabel(int month)
