@@ -10,7 +10,7 @@
 
 
     <StackLayout>
-        <StackLayout x:Name="CalendarContent">
+        <StackLayout x:Name="CalendarContent" HeightRequest="250">
             <StackLayout Orientation="Horizontal" HorizontalOptions="Center" >
                 <Grid Grid.Column="4" Grid.Row="1">
                     <Grid.ColumnDefinitions>
