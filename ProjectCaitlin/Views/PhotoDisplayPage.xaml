@@ -58,11 +58,11 @@
         
         
 
-        <StackLayout Orientation="Horizontal">
-            <Grid >
-                <ImageButton Grid.Column="0" x:Name= "button1" Source="previousbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
-                <ImageButton Grid.Column="10" x:Name= "button2" Source="nextbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
-            </Grid>
+        <StackLayout Orientation="Horizontal"
+                     HorizontalOptions="FillAndExpand"
+                     Padding="10,0,10,0">
+                <ImageButton HorizontalOptions="StartAndExpand" x:Name= "button1" Source="previousbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
+                <ImageButton HorizontalOptions="EndAndExpand" x:Name= "button2" Source="nextbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
         </StackLayout>
     </StackLayout>
 </ContentPage>

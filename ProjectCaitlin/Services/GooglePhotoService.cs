@@ -45,9 +45,9 @@ namespace ProjectCaitlin.Services
             Console.WriteLine("request.RequestUri : " + request.RequestUri);
 
             Console.WriteLine("NextPageToken" + result.NextPageToken);
-           /* if (!result.NextPageToken.Equals("")) {
-                request.RequestUri += "?" + result.NextPageToken;
-            }*/
+            /* if (!result.NextPageToken.Equals("")) {
+                 request.RequestUri += "?" + result.NextPageToken;
+             }*/
 
             try
             {
