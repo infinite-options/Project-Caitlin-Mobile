@@ -59,7 +59,7 @@
 
                         <Label
                             Text="Morning"
-                            FontSize="14"
+                            FontSize="20"
                             VerticalOptions="Center">
                             <Label.FontFamily>
                                 <OnPlatform x:TypeArguments="x:String">
@@ -85,7 +85,7 @@
                     <!-- Morning Goals Label -->
                     <Label
                         Text="Morning Goals"
-                        FontSize="14"
+                        FontSize="20"
                         VerticalOptions="Center">
                         <Label.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
@@ -122,12 +122,12 @@
 
                         <Image
                             Source="fullsun.png"
-                            WidthRequest="30"
-                            HeightRequest="30"/>
+                            WidthRequest="40"
+                            HeightRequest="40"/>
 
                         <Label
                             Text="Afternoon"
-                            FontSize="14"
+                            FontSize="20"
                             VerticalOptions="Center">
                             <Label.FontFamily>
                                 <OnPlatform x:TypeArguments="x:String">
@@ -149,7 +149,7 @@
                     Padding="0,20,0,0">
                     <Label
                         Text="Afternoon Goals"
-                        FontSize="14"
+                        FontSize="20"
                         VerticalOptions="Center">
                         <Label.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
@@ -184,12 +184,12 @@
 
                         <Image
                             Source="sunriselow.png"
-                            WidthRequest="30"
-                            HeightRequest="30"/>
+                            WidthRequest="40"
+                            HeightRequest="40"/>
 
                         <Label
                             Text="Evening"
-                            FontSize="14"
+                            FontSize="20"
                             VerticalOptions="Center">
                             <Label.FontFamily>
                                 <OnPlatform x:TypeArguments="x:String">
@@ -213,7 +213,7 @@
                     Padding="0,20,0,0">
                     <Label
                         Text="Evening Goals"
-                        FontSize="14"
+                        FontSize="20"
                         VerticalOptions="Center">
                         <Label.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
@@ -248,12 +248,12 @@
 
                         <Image
                             Source="moon.png"
-                            WidthRequest="30"
-                            HeightRequest="30"/>
+                            WidthRequest="40"
+                            HeightRequest="40"/>
 
                         <Label
                             Text="Night"
-                            FontSize="14"
+                            FontSize="20"
                             VerticalOptions="Center">
                             <Label.FontFamily>
                                 <OnPlatform x:TypeArguments="x:String">
@@ -277,7 +277,7 @@
                     Padding="0,20,0,0">
                     <Label
                         Text="Night Goals"
-                        FontSize="14"
+                        FontSize="20"
                         VerticalOptions="Center">
                         <Label.FontFamily>
                             <OnPlatform x:TypeArguments="x:String">
@@ -343,6 +343,7 @@
                             <forms:CachedImage.HeightRequest>
                                 <OnPlatform x:TypeArguments="x:Double">
                                     <On Platform="Android">20</On>
+                                    <On Platform="iOS">25</On>
                                 </OnPlatform>
                             </forms:CachedImage.HeightRequest>
                         </forms:CachedImage>
@@ -360,6 +361,7 @@
                             <forms:CachedImage.HeightRequest>
                                 <OnPlatform x:TypeArguments="x:Double">
                                     <On Platform="Android">20</On>
+                                    <On Platform="iOS">25</On>
                                 </OnPlatform>
                             </forms:CachedImage.HeightRequest>
                         </forms:CachedImage>
@@ -377,6 +379,7 @@
                             <forms:CachedImage.HeightRequest>
                                 <OnPlatform x:TypeArguments="x:Double">
                                     <On Platform="Android">20</On>
+                                    <On Platform="iOS">25</On>
                                 </OnPlatform>
                             </forms:CachedImage.HeightRequest>
                         </forms:CachedImage>
@@ -394,6 +397,7 @@
                             <forms:CachedImage.HeightRequest>
                                 <OnPlatform x:TypeArguments="x:Double">
                                     <On Platform="Android">20</On>
+                                    <On Platform="iOS">25</On>
                                 </OnPlatform>
                             </forms:CachedImage.HeightRequest>
                         </forms:CachedImage>

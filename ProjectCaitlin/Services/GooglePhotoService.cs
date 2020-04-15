@@ -16,7 +16,7 @@ namespace ProjectCaitlin.Services
 
             //Make HTTP Request
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://photoslibrary.googleapis.com/v1/mediaItems");
+            request.RequestUri = new Uri("https://photoslibrary.googleapis.com/v1/mediaItems?pageSize=100");
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
@@ -42,21 +42,28 @@ namespace ProjectCaitlin.Services
             String thumbNailAlbumUri = "";
             String description = "";
             //Try to add "Summary" Items to list from JSON. If null, redirect to Login prompt.
+            Console.WriteLine("request.RequestUri : " + request.RequestUri);
+
+            Console.WriteLine("NextPageToken" + result.NextPageToken);
+           /* if (!result.NextPageToken.Equals("")) {
+                request.RequestUri += "?" + result.NextPageToken;
+            }*/
+
             try
             {
                 foreach (var product in result.MediaItems)
                 {
                     var subList = new List<string>();
-                    
+
                     DateTimeOffset GreenwichMeanTime = product.MediaMetadata.CreationTime; //Google photo api sends time in GreenwichMeanTime.
                     DateTimeOffset utcTime = GreenwichMeanTime.ToLocalTime();  //convert GreenwichMeanTime to local time.
-                    creationTime = utcTime.ToString(); 
+                    creationTime = utcTime.ToString();
                     date = creationTime.Substring(0, creationTime.IndexOf(" "));// date = yyyy/mm/dd
 
                     allDates.Add(date);
 
                     storePicUri = product.BaseUrl.ToString();
-                    description = product.Description+"";
+                    description = product.Description + "";
                     subList.Add(product.BaseUrl.ToString());
                     subList.Add(date);
                     subList.Add(description);
@@ -66,7 +73,7 @@ namespace ProjectCaitlin.Services
             }
             catch (NullReferenceException e)
             {
-                //here: 
+                //here:
                 /*var googleService = new GoogleService();
                 if (await googleService.RefreshToken())
                 {
@@ -75,11 +82,50 @@ namespace ProjectCaitlin.Services
                 }*/
                 return null;
             }
-
             if (itemList.Count == 0)
                 return new List<List<string>>();
             else
                 return itemList;
+        }
+
+
+
+        public async Task<bool> UpdateDescription(string id)
+        {
+            var itemList = GetPhotos();
+
+
+            //Make HTTP Request
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://photoslibrary.googleapis.com/v1/mediaItems");
+            request.Method = HttpMethod.Put;
+
+            //Format Headers of Request with included Token
+            string bearerString = string.Format("Bearer {0}", App.User.access_token);
+            request.Headers.Add("Authorization", bearerString);
+            request.Headers.Add("Accept", "application/json");
+
+            // find the item by id.
+            /*foreach (List<string> item in itemList) { 
+            
+            }*/
+
+            // change its description.
+
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+
+
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+
         }
     }
 }

@@ -15,7 +15,7 @@
 
 
                 <ffimage:CachedImage
-                    Source="caitlinheadshot.jpg"
+                    x:Name = "UserImage"
                     HeightRequest="140"
                     WidthRequest="140">
                     <ffimage:CachedImage.Transformations>
@@ -24,18 +24,18 @@
                 </ffimage:CachedImage>
             </StackLayout>
             <StackLayout>
-                <Label Text="Good Morning," TextColor="White" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <Label Text="Caitlin"  TextColor="White" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <Label Text="You are safe, and you are loved."  TextColor="White" FontSize="Small" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <Label Text="It's ok to ask questions."  TextColor="White" FontSize="Small" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <Label Text="Your family and friends want to help."  TextColor="White" FontSize="Small" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <Label Text="This app will help you manage your day."  TextColor="White" FontSize="Small" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <Label Text=" "  TextColor="White" FontSize="Small" HorizontalOptions="Center" VerticalOptions="Center"/>
-                <Label Text=" "  TextColor="White" FontSize="Small" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label x:Name ="GreetingsTitleLabel" Text="Good Morning," TextColor="White" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label x:Name ="FirstNameLabel" Text="Caitlin"  TextColor="White" FontSize="Large" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label x:Name ="MessageLabel" Text=""  TextColor="White" Margin="20,20" FontSize="Small" HorizontalOptions="Center" VerticalOptions="Center"/>
+                <Label x:Name ="MessageCardLabel" Text=""  TextColor="White" Margin="20,20" FontSize="Small" HorizontalOptions="Center" VerticalOptions="Center"/>
             </StackLayout>
+            
             <StackLayout>
                 <Button Text="View Today's List" CornerRadius="10" Margin="20" Clicked ="btn1Clicked" TextColor="White"  BackgroundColor="#59556D" />
                 <Button Text="Manage My Day " CornerRadius="10" Margin="20" Clicked="btn2Clicked" TextColor="White" BackgroundColor="#59556D"/>
+            </StackLayout>
+            <StackLayout>
+                
             </StackLayout>
 
         </StackLayout>

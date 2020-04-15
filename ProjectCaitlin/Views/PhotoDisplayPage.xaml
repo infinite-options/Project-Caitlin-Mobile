@@ -10,7 +10,7 @@
     <StackLayout Padding="20">
 
         <StackLayout>
-            
+
             <!-- EXIT BUTTON-->
             <ImageButton
                         Source="exiticon.png"
@@ -22,33 +22,41 @@
                         Clicked="close"/>
 
         </StackLayout>
-        
-        <CarouselView ItemsSource="{Binding Items}">
-                <CarouselView.ItemTemplate>
-                    <DataTemplate>
-                        <StackLayout >
-                            <Frame  CornerRadius="30" HeightRequest="300" WidthRequest="300" HorizontalOptions="Center" IsClippedToBounds="True">
-                                <StackLayout>
 
-                                    <forms:CachedImage Source="{Binding Source}"
+        <CarouselView ItemsSource="{Binding Items}">
+            <CarouselView.ItemTemplate>
+                <DataTemplate>
+                    <StackLayout >
+                        <Frame  CornerRadius="30" HeightRequest="300" WidthRequest="300" HorizontalOptions="Center" IsClippedToBounds="True">
+                            <StackLayout>
+
+                                <forms:CachedImage Source="{Binding Source}"
                                Aspect="AspectFill"
                                HeightRequest="300"
                                WidthRequest="300"
                                HorizontalOptions="Center" />
 
                             </StackLayout>
-                            </Frame>
-                        <Label Text="{Binding Description}" FontSize="20" HorizontalOptions="Center"/>
+                        </Frame>
+                        <Editor Placeholder="{Binding Description}"
+                        AutoSize="TextChanges"
+                        MaxLength="20"
+                        IsSpellCheckEnabled="true"
+                        IsTextPredictionEnabled="true" 
+                        Completed="EditorCompleted"/>
+                        
+                        
                         <Label Text="{Binding CreationTime}" FontSize="20" HorizontalOptions="Center"/>
 
 
                     </StackLayout>
-                    </DataTemplate>
-                </CarouselView.ItemTemplate>
-            </CarouselView>
+                </DataTemplate>
+            </CarouselView.ItemTemplate>
+        </CarouselView>
 
         <Label x:Name="dateLabel" Text="" FontSize="20" HorizontalOptions="Center"/>
-
+        
+        
 
         <StackLayout Orientation="Horizontal">
             <Grid >

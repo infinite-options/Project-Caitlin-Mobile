@@ -92,6 +92,7 @@
                                                  HeightRequest="200"
                                                  Aspect = "AspectFill"/>
                                             <ImageButton x:Name="isComplete" Command="{Binding Navigate}" CommandParameter="{Binding NavigateIdx}" IsVisible="{Binding IsComplete}" Source="greencheckmarkicon.png" HeightRequest="125" WidthRequest="125" VerticalOptions="Center" HorizontalOptions="Center"/>
+                                            <ImageButton x:Name="isInProgress" Command="{Binding Navigate}" CommandParameter="{Binding NavigateIdx}" IsVisible="{Binding IsInProgress}" Source="yellowclockicon.png" HeightRequest="125" WidthRequest="125" VerticalOptions="Center" HorizontalOptions="Center"/>
                                         </Grid>
                                     </Frame>
 
