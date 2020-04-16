@@ -69,12 +69,16 @@ namespace ProjectCaitlin
         public string PreviousDate()
         {
 
-            string currentDate = date;
-            int Year = Int32.Parse(currentDate.Substring(0, currentDate.IndexOf("/")));
-            string newDate = currentDate.Substring(currentDate.IndexOf("/") + 1);
-            int Month = Int32.Parse(newDate.Substring(0, newDate.IndexOf("/")));
-            newDate = newDate.Substring(newDate.IndexOf("/") + 1);
-            int Day = Int32.Parse(newDate);
+            DateTime currentDate = DateTime.Parse(date);
+            Console.WriteLine("currentDate: " + currentDate);
+            int Year = currentDate.Year;
+            int Month = currentDate.Month;
+            int Day = currentDate.Day;
+
+            Console.WriteLine("Before");
+            Console.WriteLine("Year: " + Year);
+            Console.WriteLine("Month: " + Month);
+            Console.WriteLine("Day: " + Day);
 
             int maxDay = 30;
             int lastMonth = 0;
@@ -167,12 +171,16 @@ namespace ProjectCaitlin
         }
         public string NextDate()
         {
-            string currentDate = date;
-            int Year = Int32.Parse(currentDate.Substring(0, currentDate.IndexOf("/")));
-            string newDate = currentDate.Substring(currentDate.IndexOf("/") + 1);
-            int Month = Int32.Parse(newDate.Substring(0, newDate.IndexOf("/")));
-            newDate = newDate.Substring(newDate.IndexOf("/") + 1);
-            int Day = Int32.Parse(newDate);
+            DateTime currentDate = DateTime.Parse(date);
+            Console.WriteLine("currentDate: " + currentDate);
+            int Year = currentDate.Year;
+            int Month = currentDate.Month;
+            int Day = currentDate.Day;
+
+            Console.WriteLine("Before");
+            Console.WriteLine("Year: " + Year);
+            Console.WriteLine("Month: " + Month);
+            Console.WriteLine("Day: " + Day);
 
 
             int maxDay = 30;
@@ -259,6 +267,11 @@ namespace ProjectCaitlin
                     Year += 1;
                 }
             }
+
+            Console.WriteLine("After");
+            Console.WriteLine("Year: " + Year);
+            Console.WriteLine("Month: " + Month);
+            Console.WriteLine("Day: " + Day);
 
             string dateTime = new DateTime(Year, Month, Day) + "";
             dateTime = dateTime.Substring(0, dateTime.IndexOf(" "));

@@ -90,42 +90,42 @@ namespace ProjectCaitlin.Services
 
 
 
-        public async Task<bool> UpdateDescription(string id)
-        {
-            var itemList = GetPhotos();
+        //public async Task<bool> UpdateDescription(string id)
+        //{
+        //    var itemList = GetPhotos();
 
 
-            //Make HTTP Request
-            var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://photoslibrary.googleapis.com/v1/mediaItems");
-            request.Method = HttpMethod.Put;
+        //    //Make HTTP Request
+        //    var request = new HttpRequestMessage();
+        //    request.RequestUri = new Uri("https://photoslibrary.googleapis.com/v1/mediaItems");
+        //    request.Method = HttpMethod.Put;
 
-            //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", App.User.access_token);
-            request.Headers.Add("Authorization", bearerString);
-            request.Headers.Add("Accept", "application/json");
+        //    //Format Headers of Request with included Token
+        //    string bearerString = string.Format("Bearer {0}", App.User.access_token);
+        //    request.Headers.Add("Authorization", bearerString);
+        //    request.Headers.Add("Accept", "application/json");
 
-            // find the item by id.
-            /*foreach (List<string> item in itemList) { 
+        //    // find the item by id.
+        //    /*foreach (List<string> item in itemList) { 
             
-            }*/
+        //    }*/
 
-            // change its description.
+        //    // change its description.
 
-            var client = new HttpClient();
-            HttpResponseMessage response = await client.SendAsync(request);
+        //    var client = new HttpClient();
+        //    HttpResponseMessage response = await client.SendAsync(request);
 
 
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+        //    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+        //    {
+        //        return true;
+        //    }
+        //    else
+        //    {
+        //        return false;
+        //    }
 
-        }
+        //}
     }
 }

@@ -35,7 +35,6 @@ namespace ProjectCaitlin.iOS
             foreach (var notification in pendingNotificationRequests)
             {
                 Console.WriteLine("Title: " + notification.Content.Title);
-                Console.WriteLine("Duration: " + notification.Content.Body);
                 Console.WriteLine("badge: " + notification.Content.Badge);
             }
             Console.WriteLine("=============GetPendingNotifications=============");

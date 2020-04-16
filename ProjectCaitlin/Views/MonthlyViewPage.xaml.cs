@@ -128,7 +128,7 @@ namespace ProjectCaitlin
             //update calendar
             DateTime localDate = DateTime.Now;
             Calendar myCal = CultureInfo.InvariantCulture.Calendar;
-            var currentYear = myCal.GetYear(localDate);
+            int currentYear = myCal.GetYear(localDate);
             var currentMonth = myCal.GetMonth(localDate);
             var currentDay = myCal.GetDayOfWeek(localDate);
 
@@ -137,6 +137,10 @@ namespace ProjectCaitlin
             yearLabel.Text = Year + "";
             setMonthLabel(Month);
             SetCalendar(currentYear, currentMonth);
+
+            Console.WriteLine("Before");
+            Console.WriteLine("Year: " + Year);
+            Console.WriteLine("Month: " + Month);
 
             //add navigation bar
             photoScrollView.HeightRequest = Application.Current.MainPage.Height - CalendarContent.Height - NavBar.Height;
@@ -335,12 +339,16 @@ namespace ProjectCaitlin
                 // make the label bold if there are images in that day.
                 foreach (string date in GooglePhotoService.allDates)
                 {
-                    string currentDate = date;
-                    int Year = Int32.Parse(currentDate.Substring(0, currentDate.IndexOf("/")));
-                    string newDate = currentDate.Substring(currentDate.IndexOf("/") + 1);
-                    int Month = Int32.Parse(newDate.Substring(0, newDate.IndexOf("/")));
-                    newDate = newDate.Substring(newDate.IndexOf("/") + 1);
-                    int Day = Int32.Parse(newDate);
+                    DateTime currentDate = DateTime.Parse(date);
+                    Console.WriteLine("currentDate: " + currentDate);
+                    int Year = currentDate.Year;
+                    int Month = currentDate.Month;
+                    int Day = currentDate.Day;
+
+                    Console.WriteLine("Before");
+                    Console.WriteLine("Year: " + Year);
+                    Console.WriteLine("Month: " + Month);
+                    Console.WriteLine("Day: " + Day);
 
                     if (Year == year && Month == month && Day == j)
                     {

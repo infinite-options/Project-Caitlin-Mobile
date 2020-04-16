@@ -143,15 +143,14 @@ namespace ProjectCaitlin.Services
                 }
 
                 TimeSpan currentTime = DateTime.Now.TimeOfDay;
-
-                notificationManager.PrintPendingNotifications();
-
                 int dbIdx_ = 0;
                 foreach (JToken jsonGorR in userJsonGoalsAndRoutines)
                 {
                     try
                     {
                         JToken jsonMapGorR = jsonGorR["mapValue"]["fields"];
+
+                        Console.WriteLine("routine: " + jsonMapGorR["title"]["stringValue"].ToString());
 
                         var isDeleted = false;
                         if (jsonMapGorR["deleted"] != null)
@@ -160,6 +159,7 @@ namespace ProjectCaitlin.Services
 
                         if ((bool)jsonMapGorR["is_available"]["booleanValue"] && !isDeleted)
                         {
+                            bool isInProgressCheck = (jsonMapGorR["is_in_progress"] == null) ? false : (bool)jsonMapGorR["is_in_progress"]["booleanValue"];
                             if ((bool)jsonMapGorR["is_persistent"]["booleanValue"])
                             {
                                 routine routine = new routine
@@ -170,11 +170,11 @@ namespace ProjectCaitlin.Services
 
                                     photo = jsonMapGorR["photo"]["stringValue"].ToString(),
 
-                                    isInProgress = (jsonMapGorR["is_in_progress"] == null) ? false : (bool)jsonMapGorR["is_in_progress"]["booleanValue"],
+                                    isInProgress = isInProgressCheck,
 
                                     isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapGorR["datetime_completed"]["stringValue"].ToString())
-                                        && !(bool)jsonMapGorR["is_in_progress"]["booleanValue"],
+                                        && !isInProgressCheck,
 
                                     expectedCompletionTime = TimeSpan.Parse(jsonMapGorR["expected_completion_time"]["stringValue"].ToString()),
 
@@ -196,67 +196,100 @@ namespace ProjectCaitlin.Services
                                 JToken userNotification;
                                 try
                                 {
-                                    Console.WriteLine("jsonMapGorR" + jsonMapGorR["user_notifications"]["mapValue"]["fields"]);
+                                    //Console.WriteLine("jsonMapGorR" + jsonMapGorR["user_notifications"]["mapValue"]["fields"]);
                                     userNotification = jsonMapGorR["user_notifications"]["mapValue"]["fields"];
                                     if (userNotification == null)
                                         return;
+                                    routine.Notification = new Notification();
+                                    routine.Notification.user = new NotificationTime();
 
+                                    JToken userBefore = userNotification["before"];
+                                    JToken userBeforeMap = userBefore["mapValue"]["fields"];
+
+                                    routine.Notification.user.before.is_set = (bool)userBeforeMap["is_set"]["booleanValue"]
+                                        && ((userBeforeMap["date_set"] != null) ? IsDateToday(userBeforeMap["date_set"]["stringValue"].ToString()) : false);
+
+                                    routine.Notification.user.before.is_enabled = (bool)userBeforeMap["is_enabled"]["booleanValue"];
+
+                                    if (routine.Notification.user.before.is_enabled && !routine.Notification.user.before.is_set)
+                                    {
+
+                                        routine.Notification.user.before.time = TimeSpan.Parse(userBeforeMap["time"]["stringValue"].ToString());
+                                        //TotalMinutes
+
+                                        double total = routine.Notification.user.before.time.TotalSeconds - (routine.availableStartTime - DateTime.Now.TimeOfDay).TotalSeconds;
+
+                                        //routine.Notification.user.before.message = userBefore["message"]["stringValue"].ToString();
+
+                                        if (!routine.isComplete && total > 0 && !routine.Notification.user.before.is_set)
+                                        {
+                                            notificationManager.ScheduleNotification("Ready for ", routine.title + "? Open the app to review your tasks." + routine.Notification.user.before.message, total);
+                                            firebaseFunctionsService.GRUserNotificationSetToTrue(routine.id, routine.dbIdx.ToString(), "before");
+
+                                        }
+                                        Console.WriteLine("total : " + total);
+                                        Console.WriteLine("before message: " + routine.Notification.user.before.message);
+                                    }
+
+                                    JToken userDuring = userNotification["during"];
+                                    JToken userDuringMap = userDuring["mapValue"]["fields"];
+
+                                    routine.Notification.user.during.is_set = (bool)userDuringMap["is_set"]["booleanValue"]
+                                        && (userDuringMap["date_set"] != null) ? IsDateToday(userDuringMap["date_set"]["stringValue"].ToString()) : false;
+
+                                    routine.Notification.user.during.is_enabled = (bool)userDuringMap["is_enabled"]["booleanValue"];
+
+                                    if (routine.Notification.user.during.is_enabled && !routine.Notification.user.during.is_set)
+                                    {
+                                        routine.Notification.user.during.time = TimeSpan.Parse(userDuringMap["time"]["stringValue"].ToString());
+                                        //TotalMinutes
+                                        double total = routine.Notification.user.during.time.TotalSeconds + (routine.availableStartTime - DateTime.Now.TimeOfDay).TotalSeconds;
+                                        routine.Notification.user.during.message = userDuringMap["message"]["stringValue"].ToString();
+
+                                        if (!routine.isComplete && total > 0 && !routine.Notification.user.during.is_set)
+                                        {
+                                            notificationManager.ScheduleNotification("Time for ", routine.title + ". Open the app to review your tasks." + routine.Notification.user.during.message, total);
+                                            firebaseFunctionsService.GRUserNotificationSetToTrue(routine.id, routine.dbIdx.ToString(), "during");
+                                        }
+                                        Console.WriteLine("total : " + total);
+                                        Console.WriteLine("during message: " + routine.Notification.user.during.message);
+                                    }
 
                                     JToken userAfter = userNotification["after"];
                                     JToken userAfterMap = userAfter["mapValue"]["fields"];
                                     Console.WriteLine("userAfterMap" + userAfterMap);
 
-                                    if ((bool)userAfterMap["is_enabled"]["booleanValue"] && !(bool)userAfterMap["is_set"]["booleanValue"])
+                                    // is_set to make sure notification is not already stored on phone
+                                    routine.Notification.user.after.is_set = (bool)userAfterMap["is_set"]["booleanValue"]
+                                        && (userAfterMap["date_set"] != null) ? IsDateToday(userAfterMap["date_set"]["stringValue"].ToString()) : false;
+
+                                    routine.Notification.user.during.is_enabled = (bool)userDuringMap["is_enabled"]["booleanValue"];
+
+                                    if (routine.Notification.user.during.is_enabled && !routine.Notification.user.after.is_set)
                                     {
-                                        routine.Notification.user_after = DateTime.Parse(userAfterMap["time"]["stringValue"].ToString());
+                                        routine.Notification.user.after.time = TimeSpan.Parse(userAfterMap["time"]["stringValue"].ToString());
 
                                         //TotalMinutes
-                                        int total = (routine.Notification.user_after.Hour * 60) + routine.Notification.user_after.Minute;
-                                        routine.Notification.user_after_message = userAfterMap["message"]["stringValue"].ToString();
-                                        if (!routine.isComplete && endTime > 0 && endTime < total)
-                                            notificationManager.ScheduleNotification("You Missed a Routine! ", routine.title + " is overdue. Open the app to review your tasks." + routine.Notification.user_after_message, 1);
+                                        double total = routine.Notification.user.after.time.TotalSeconds +  (routine.availableEndTime - DateTime.Now.TimeOfDay).TotalSeconds;
+                                        routine.Notification.user.after.message = userAfterMap["message"]["stringValue"].ToString();
+                                        if (!routine.isComplete && total > 0 && !routine.Notification.user.after.is_set)
+                                        {
+                                            notificationManager.ScheduleNotification("You Missed a Routine! ", routine.title + " is overdue. Open the app to review your tasks." + routine.Notification.user.after.message, total);
+                                            firebaseFunctionsService.GRUserNotificationSetToTrue(routine.id, routine.dbIdx.ToString(), "after");
+                                        }
                                         Console.WriteLine("total : " + total);
-                                        Console.WriteLine("after message: " + routine.Notification.user_after_message);
-                                    }
-
-                                    Console.WriteLine("HERE 7");
-
-
-                                    JToken userBefore = userNotification["before"];
-                                    JToken userBeforeMap = userBefore["mapValue"]["fields"];
-                                    if ((bool)userBeforeMap["is_enabled"]["booleanValue"] && !(bool)userBeforeMap["is_set"]["booleanValue"])
-                                    {
-                                        routine.Notification.user_before = DateTime.Parse(userBeforeMap["time"]["stringValue"].ToString());
-                                        //TotalMinutes
-                                        int total = (routine.Notification.user_before.Hour * 60) + routine.Notification.user_before.Minute;
-                                        routine.Notification.user_before_message = userBeforeMap["message"]["stringValue"].ToString();
-
-                                        if (startTime < 0 && startTime + total > 0)
-                                            notificationManager.ScheduleNotification("Ready for ", routine.title + "? Open the app to review your tasks." + routine.Notification.user_before_message, 1);
-                                        Console.WriteLine("total : " + total);
-                                        Console.WriteLine("before message: " + routine.Notification.user_before_message);
-                                    }
-
-                                    JToken userDuring = userNotification["during"];
-                                    JToken userDuringMap = userDuring["mapValue"]["fields"];
-                                    if ((bool)userDuringMap["is_enabled"]["booleanValue"] && !(bool)userDuringMap["is_set"]["booleanValue"])
-                                    {
-                                        routine.Notification.user_during = DateTime.Parse(userDuringMap["time"]["stringValue"].ToString()).ToLocalTime();
-                                        //TotalMinutes
-                                        int total = (routine.Notification.user_during.Hour * 60) + routine.Notification.user_during.Minute;
-                                        routine.Notification.user_during_message = userDuringMap["message"]["stringValue"].ToString();
-
-                                        if (!routine.isComplete && startTime < total && startTime > 0)
-                                            notificationManager.ScheduleNotification("Time for ", routine.title + ". Open the app to review your tasks." + routine.Notification.user_during_message, 1);
-                                        Console.WriteLine("total : " + total);
-                                        Console.WriteLine("during message: " + routine.Notification.user_during_message);
+                                        Console.WriteLine("after message: " + routine.Notification.user.after.message);
                                     }
 
                                 }
                                 catch (Exception e)
                                 {
+                                    Console.WriteLine("NOTIFICATION ERROR");
                                     Console.WriteLine("{0} Exception caught.", e);
                                 }
+
+                                notificationManager.PrintPendingNotifications();
+
 
                                 /*
                                 Console.WriteLine("start time : " + startTime);
@@ -304,7 +337,7 @@ namespace ProjectCaitlin.Services
 
                                 App.User.routines.Add(routine);
 
-                                Console.WriteLine("on Routine: " + routine.title + " " + routine.id);
+                                //Console.WriteLine("on Routine: " + routine.title + " " + routine.id);
                             }
                             else
                             {
@@ -316,11 +349,11 @@ namespace ProjectCaitlin.Services
 
                                     photo = jsonMapGorR["photo"]["stringValue"].ToString(),
 
-                                    isInProgress = (bool)jsonMapGorR["is_in_progress"]["booleanValue"],
+                                    isInProgress = isInProgressCheck,
 
                                     isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapGorR["datetime_completed"]["stringValue"].ToString())
-                                        && !(bool)jsonMapGorR["is_in_progress"]["booleanValue"],
+                                        && !isInProgressCheck,
 
                                     dbIdx = dbIdx_,
 
@@ -344,7 +377,6 @@ namespace ProjectCaitlin.Services
                     catch (Exception e)
                     {
                         Console.WriteLine("{0} Exception caught.", e);
-                        Console.WriteLine("GR JSON: ", jsonGorR);
                     }
                     dbIdx_++;
                 }
@@ -355,14 +387,14 @@ namespace ProjectCaitlin.Services
                 int routineIdx = 0;
                 foreach (routine routine in App.User.routines)
                 {
-                    _ = LoadTasks(routine.id, routineIdx, "routine");
+                    LoadTasks(routine.id, routineIdx, "routine");
                     routineIdx++;
                 }
 
                 int goalIdx = 0;
                 foreach (goal goal in App.User.goals)
                 {
-                    _ = LoadTasks(goal.id, goalIdx, "goal");
+                    LoadTasks(goal.id, goalIdx, "goal");
                     goalIdx++;
                 }
 
@@ -384,18 +416,26 @@ namespace ProjectCaitlin.Services
                 var routineResponse = await content.ReadAsStringAsync();
                 JObject taskJson = JObject.Parse(routineResponse);
 
-                JToken jsonActionsAndTasks;
+                JToken jsonActionsAndTasks = null;
                 try
                 {
                     jsonActionsAndTasks = taskJson["fields"]["actions&tasks"]["arrayValue"]["values"];
                     if (jsonActionsAndTasks == null)
+                    {
+                        if (routineType == "routine")
+                        {
+                            App.User.routines[routineIdx].isSublistAvailable = false;
+                        }
+                        else
+                        {
+                            App.User.goals[routineIdx].isSublistAvailable = false;
+                        }
                         return;
+                    }
                 }
-                catch
+                catch (Exception e)
                 {
-                    //Console.WriteLine("Error with json action/task token:");
-                    //Console.WriteLine(taskJson);
-                    return;
+                    Console.WriteLine("{0} Exception caught.", e);
                 }
 
                 int dbIdx_ = 0;
@@ -412,6 +452,8 @@ namespace ProjectCaitlin.Services
 
                         if ((bool)jsonAorT["mapValue"]["fields"]["is_available"]["booleanValue"] && !isDeleted)
                         {
+                            bool isInProgressCheck = (jsonMapAorT["is_in_progress"] == null) ? false : (bool)jsonMapAorT["is_in_progress"]["booleanValue"];
+
                             if (routineType == "routine")
                             {
                                 task task = new task
@@ -419,9 +461,10 @@ namespace ProjectCaitlin.Services
                                     title = jsonMapAorT["title"]["stringValue"].ToString(),
                                     id = jsonMapAorT["id"]["stringValue"].ToString(),
                                     photo = jsonMapAorT["photo"]["stringValue"].ToString(),
-                                    isInProgress = (bool)jsonMapAorT["is_in_progress"]["booleanValue"],
+                                    isInProgress = (bool)isInProgressCheck,
                                     isComplete = (bool)jsonMapAorT["is_complete"]["booleanValue"]
-                                        && IsDateToday(jsonMapAorT["datetime_completed"]["stringValue"].ToString()),
+                                        && IsDateToday(jsonMapAorT["datetime_completed"]["stringValue"].ToString())
+                                        && !isInProgressCheck,
                                     dbIdx = dbIdx_,
                                     isSublistAvailable = (bool)jsonMapAorT["is_sublist_available"]["booleanValue"],
                                     expectedCompletionTime = TimeSpan.Parse(jsonMapAorT["expected_completion_time"]["stringValue"].ToString()),
@@ -445,7 +488,7 @@ namespace ProjectCaitlin.Services
                                     isInProgress = (bool)jsonMapAorT["is_in_progress"]["booleanValue"],
                                     isComplete = (bool)jsonMapAorT["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapAorT["datetime_completed"]["stringValue"].ToString())
-                                        && !(bool)jsonMapAorT["is_in_progress"]["booleanValue"],
+                                        && !isInProgressCheck,
                                     dbIdx = dbIdx_,
                                     isSublistAvailable = (bool)jsonMapAorT["is_sublist_available"]["booleanValue"],
                                     expectedCompletionTime = TimeSpan.Parse(jsonMapAorT["expected_completion_time"]["stringValue"].ToString()),
@@ -460,10 +503,10 @@ namespace ProjectCaitlin.Services
                             }
                         }
                     }
-                    catch
+                    catch (Exception e)
                     {
-                        Console.WriteLine("Error with json action/task token:");
-                        Console.WriteLine(jsonAorT);
+                        Console.WriteLine("{0}", e);
+                        Console.WriteLine("{0}", jsonAorT);
                     }
                     dbIdx_++;
                 }
@@ -471,6 +514,8 @@ namespace ProjectCaitlin.Services
                 if (routineType == "routine")
                 {
                     int taskIdx = 0;
+                    if (App.User.routines[routineIdx].tasks.Count == 0)
+                        App.User.routines[routineIdx].isSublistAvailable = false;
                     foreach (task task in App.User.routines[routineIdx].tasks)
                     {
                         ////Console.WriteLine("on Task step load: " + task.id);
@@ -481,6 +526,8 @@ namespace ProjectCaitlin.Services
                 else
                 {
                     int actionIdx = 0;
+                    if (App.User.goals[routineIdx].actions.Count == 0)
+                        App.User.goals[routineIdx].isSublistAvailable = false;
                     foreach (action action in App.User.goals[routineIdx].actions)
                     {
                         ////Console.WriteLine("on action step load: " + action.id);
@@ -512,7 +559,17 @@ namespace ProjectCaitlin.Services
                 {
                     jsonInstructionsAndSteps = stepJson["fields"]["instructions&steps"]["arrayValue"]["values"];
                     if (jsonInstructionsAndSteps == null)
+                    {
+                        if (routineType == "routine")
+                        {
+                            App.User.routines[routineIdx].tasks[taskIdx].isSublistAvailable = false;
+                        }
+                        else
+                        {
+                            App.User.goals[routineIdx].actions[taskIdx].isSublistAvailable = false;
+                        }
                         return;
+                    }
                 }
                 catch
                 {
@@ -535,6 +592,8 @@ namespace ProjectCaitlin.Services
 
                         if ((bool)jsonMapIorS["is_available"]["booleanValue"] && !isDeleted)
                         {
+                            bool isInProgressCheck = (jsonMapIorS["is_in_progress"] == null) ? false : (bool)jsonMapIorS["is_in_progress"]["booleanValue"];
+
                             if (routineType == "routine")
                             {
                                 DateTime duration = DateTime.Parse(jsonMapIorS["expected_completion_time"]["stringValue"].ToString());
@@ -543,10 +602,10 @@ namespace ProjectCaitlin.Services
                                 {
                                     title = jsonMapIorS["title"]["stringValue"].ToString(),
                                     photo = jsonMapIorS["photo"]["stringValue"].ToString(),
-                                    isInProgress = (bool)jsonMapIorS["is_in_progress"]["booleanValue"],
+                                    isInProgress = isInProgressCheck,
                                     isComplete = (bool)jsonMapIorS["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapIorS["datetime_completed"]["stringValue"].ToString())
-                                        && !(bool)jsonMapIorS["is_in_progress"]["booleanValue"],
+                                        && !isInProgressCheck,
                                     dbIdx = dbIdx_,
                                     expectedCompletionTime = TimeSpan.Parse(jsonMapIorS["expected_completion_time"]["stringValue"].ToString()),
                                     dateTimeCompleted = DateTime.Parse(jsonMapIorS["datetime_completed"]["stringValue"].ToString()).ToLocalTime(),
@@ -564,10 +623,10 @@ namespace ProjectCaitlin.Services
                                 {
                                     title = jsonMapIorS["title"]["stringValue"].ToString(),
                                     photo = jsonMapIorS["photo"]["stringValue"].ToString(),
-                                    isInProgress = (bool)jsonMapIorS["is_in_progress"]["booleanValue"],
+                                    isInProgress = isInProgressCheck,
                                     isComplete = (bool)jsonMapIorS["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapIorS["datetime_completed"]["stringValue"].ToString())
-                                        && !(bool)jsonMapIorS["is_in_progress"]["booleanValue"],
+                                        && !isInProgressCheck,
 
                                     dbIdx = dbIdx_,
                                     expectedCompletionTime = TimeSpan.Parse(jsonMapIorS["expected_completion_time"]["stringValue"].ToString()),
@@ -584,12 +643,21 @@ namespace ProjectCaitlin.Services
                             }
                         }
                     }
-                    catch
+                    catch (Exception e)
                     {
-                        //Console.WriteLine("Error with json action/task token:");
-                        //Console.WriteLine(jsonIorS);
+                        Console.WriteLine("{0} Exception caught.", e);
                     }
                     dbIdx_++;
+                }
+                if (routineType == "routine")
+                {
+                    if (App.User.routines[routineIdx].tasks[taskIdx].steps.Count == 0)
+                        App.User.routines[routineIdx].tasks[taskIdx].isSublistAvailable = false;
+                }
+                else
+                {
+                    if (App.User.goals[routineIdx].actions[taskIdx].instructions.Count == 0)
+                        App.User.goals[routineIdx].actions[taskIdx].isSublistAvailable = false;
                 }
             }
         }

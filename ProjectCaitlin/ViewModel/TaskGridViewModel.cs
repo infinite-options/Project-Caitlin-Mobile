@@ -145,7 +145,7 @@ namespace ProjectCaitlin.ViewModel
                                         firebaseFunctionsService.StartAT(goalId, actionId, actionDbIdx.ToString());
                                     }
 
-                                    await mainPage.Navigation.PushAsync(new TaskCompletePage(a, _actionIdx, isRoutine, GRItemModel));
+                                    await mainPage.Navigation.PushAsync(new TaskCompletePage(a, _actionIdx, isRoutine, Items[_actionIdx], GRItemModel));
                                 }
                                 else
                                 {
