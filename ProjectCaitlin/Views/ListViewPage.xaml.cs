@@ -13,6 +13,7 @@ using ProjectCaitlin.Views;
 using ProjectCaitlin.Methods;
 using System.Threading;
 using System.ComponentModel;
+using System.Globalization;
 
 namespace ProjectCaitlin
 {
@@ -219,17 +220,26 @@ namespace ProjectCaitlin
             {
                 Text = routine.title,
                 FontSize = 20,
-                VerticalOptions = LayoutOptions.StartAndExpand,
+                VerticalOptions = LayoutOptions.Start,
                 FontFamily = labelFont
 
             };
 
-            Label expectedTimeLabel = new Label
+            Label startTimeLabel = new Label
             {
-                Text = "Takes me " + routine.expectedCompletionTime.TotalMinutes.ToString() + " minutes",
+                Text = "Starts at " + DateTime.ParseExact(routine.availableStartTime.ToString(), "HH:mm:ss", null).ToString("hh:mm tt", CultureInfo.GetCultureInfo("en-US")),
                 FontSize = 10,
                 TextColor = Color.DimGray,
                 VerticalOptions = LayoutOptions.EndAndExpand,
+                FontFamily = labelFont
+            };
+
+            Label expectedTimeLabel = new Label
+            {
+                Text = "Expected to take " + routine.expectedCompletionTime.TotalMinutes.ToString() + " minutes",
+                FontSize = 10,
+                TextColor = Color.DimGray,
+                VerticalOptions = LayoutOptions.StartAndExpand,
                 FontFamily = labelFont
 
             };
@@ -251,6 +261,7 @@ namespace ProjectCaitlin
             indicator.BindingContext = image;
 
             stackLayoutInner.Children.Add(routineTitleLabel);
+            stackLayoutInner.Children.Add(startTimeLabel);
             stackLayoutInner.Children.Add(expectedTimeLabel);
 
             stackLayoutOuter.Children.Add(stackLayoutInner);

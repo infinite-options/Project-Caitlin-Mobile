@@ -63,7 +63,7 @@ namespace ProjectCaitlin.ViewModel
             int routineNum = 0;
             foreach (routine routine in App.User.routines)
             {
-                if (isInTimeRange(routine.availableEndTime, routine.availableEndTime))
+                if (isInTimeRange(routine.availableStartTime, routine.availableEndTime))
                 {
                     //calculate the sum duration for the routine from step level.
                     int sum_duration = 0;
@@ -91,7 +91,7 @@ namespace ProjectCaitlin.ViewModel
                        Color.Default,
                        Color.Black,
                        buttonText,
-                       "Takes me " + routine.expectedCompletionTime.TotalMinutes + " minutes",
+                       "Expected to take " + routine.expectedCompletionTime.TotalMinutes + " minutes",
                        (routine.isComplete || routine.isInProgress) ? .6 : 1,
                        routine.isComplete,
                        routine.isInProgress,
@@ -145,15 +145,15 @@ namespace ProjectCaitlin.ViewModel
                             }),
                         new MyDayIndexes(itemCount, routineNum, 0)
                         ));
-                    routineNum++;
                     itemCount++;
                 }
+                routineNum++;
             }
 
             int goalNum = 0;
             foreach (goal goal in App.User.goals)
             {
-                if (isInTimeRange(goal.availableEndTime, goal.availableEndTime))
+                if (isInTimeRange(goal.availableStartTime, goal.availableEndTime))
                 {
                     //calculate the sum duration for the routine from step level.
                     int sum_duration = 0;
@@ -181,7 +181,7 @@ namespace ProjectCaitlin.ViewModel
                        Color.FromHex("#272E32"),
                        Color.White,
                        buttonText,
-                       "Takes me " + goal.expectedCompletionTime.TotalMinutes + " minutes",
+                       "Expected to take " + goal.expectedCompletionTime.TotalMinutes + " minutes",
                        (goal.isComplete || goal.isInProgress) ? .6 : 1,
                        goal.isComplete,
                        goal.isInProgress,
@@ -235,9 +235,9 @@ namespace ProjectCaitlin.ViewModel
                             }),
                        new MyDayIndexes(itemCount, 0, goalNum)
                         ));
-                    goalNum++;
                     itemCount++;
                 }
+                goalNum++;
             }
         }
 
@@ -251,8 +251,8 @@ namespace ProjectCaitlin.ViewModel
         private bool isInTimeRange(TimeSpan start, TimeSpan end)
         {
             DateTime dateTimeNow = DateTime.Now;
-            //DateTime dateTimeNow = new DateTime(1999, 12, 1, 23, 59, 59);
-            if (start <= dateTimeNow.TimeOfDay.Add(TimeSpan.FromHours(4)) && dateTimeNow.TimeOfDay <= end)
+            //DateTime dateTimeNow = new DateTime(1999, 12, 1, 00, 00, 00);
+            if (start.Subtract(TimeSpan.FromHours(4)) <= dateTimeNow.TimeOfDay && dateTimeNow.TimeOfDay <= end)
                 return true;
             return false;
         }

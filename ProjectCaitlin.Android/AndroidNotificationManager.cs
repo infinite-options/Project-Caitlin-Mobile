@@ -60,14 +60,17 @@ namespace ProjectCaitlin.Droid
             return messageId;
         }
 
-        public void ReceiveNotification(string title, string message)
+        public void ReceiveNotification(string title, string message, bool isValid)
         {
-            var args = new NotificationEventArgs()
+            if (isValid)
             {
-                Title = title,
-                Message = message,
-            };
-            NotificationReceived?.Invoke(null, args);
+                var args = new NotificationEventArgs()
+                {
+                    Title = title,
+                    Message = message,
+                };
+                NotificationReceived?.Invoke(null, args);
+            }
         }
 
         void CreateNotificationChannel()

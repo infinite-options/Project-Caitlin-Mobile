@@ -44,23 +44,22 @@ namespace ProjectCaitlin.Views
         }
         public async void nextpage(object sender, EventArgs args)
         {
+            var completeActionCounter = 0;
+            var goalId = App.User.goals[a].id;
+            var actionId = App.User.goals[a].actions[b].id;
+
             if (next.Text == "Done")
             {
                 var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
 
-                var completeActionCounter = 0;
-                var goalId = App.User.goals[a].id;
-                var actionId = App.User.goals[a].actions[b].id;
+                firebaseFunctionsService.UpdateTask(goalId, actionId, App.User.goals[a].actions[b].dbIdx.ToString());
 
-                var isActionComplete = await firebaseFunctionsService.UpdateTask(goalId, actionId, App.User.goals[a].actions[b].dbIdx.ToString());
-                if (isActionComplete)
-                {
-                    App.User.goals[a].actions[b].isComplete = true;
-                    App.User.goals[a].actions[b].isInProgress = false;
-                    TaskItemModel.IsComplete = true;
-                    TaskItemModel.IsInProgress = false;
-                    App.User.goals[a].actions[b].dateTimeCompleted = DateTime.Now;
-                }
+                // Set data model completion status
+                App.User.goals[a].actions[b].isComplete = true;
+                App.User.goals[a].actions[b].isInProgress = false;
+                TaskItemModel.IsComplete = true;
+                TaskItemModel.IsInProgress = false;
+                App.User.goals[a].actions[b].dateTimeCompleted = DateTime.Now;
 
                 foreach (action action in App.User.goals[a].actions)
                 {
@@ -72,19 +71,18 @@ namespace ProjectCaitlin.Views
 
                 if (completeActionCounter == App.User.goals[a].actions.Count)
                 {
-                    var isGoalComplete = await firebaseFunctionsService.CompleteRoutine(goalId, App.User.goals[a].dbIdx.ToString());
-                    if (isGoalComplete)
+                    firebaseFunctionsService.CompleteRoutine(goalId, App.User.goals[a].dbIdx.ToString());
+
+                    // Set data model completion status
+                    App.User.goals[a].isComplete = true;
+                    App.User.goals[a].isInProgress = false;
+                    if (App.ParentPage != "ListView")
                     {
-                        App.User.goals[a].isComplete = true;
-                        App.User.goals[a].isInProgress = false;
-                        if (App.ParentPage != "ListView")
-                        {
-                            GRItemModel.IsComplete = true;
-                            GRItemModel.IsInProgress = false;
-                            GRItemModel.Text = "Done";
-                        }
-                        App.User.goals[a].dateTimeCompleted = DateTime.Now;
+                        GRItemModel.IsComplete = true;
+                        GRItemModel.IsInProgress = false;
+                        GRItemModel.Text = "Done";
                     }
+                    App.User.goals[a].dateTimeCompleted = DateTime.Now;
                 }
 
                 await Navigation.PopAsync();
@@ -92,10 +90,19 @@ namespace ProjectCaitlin.Views
 
             else if (next.Text == "Start")
             {
-                CarouselTasks.Position = 0;
+                int idx = 0;
+                while (App.User.goals[a].actions[b].instructions[idx].isComplete)
+                {
+                    idx++;
+                    Console.WriteLine("instruction complete idx: " + idx);
+                }
                 //App.user.goals[a].actions[b].instructions[0].isComplete = true;
                 next.Text = "Next";
+                CarouselTasks.Position = 2;
+                Console.WriteLine("CarouselTasks.Position: " + CarouselTasks.Position);
+                await Task.Delay(2000);
             }
+
             else if (CarouselTasks.Position != App.User.goals[a].actions[b].instructions.Count - 1)
             {
 
@@ -110,6 +117,7 @@ namespace ProjectCaitlin.Views
                 }*/
                 App.User.goals[a].actions[b].instructions[CarouselTasks.Position].isComplete = true;
                 pageModel.Items[CarouselTasks.Position].OkToCheckmark = true;
+                firebaseFunctionsService.UpdateInstruction(goalId, actionId, App.User.goals[a].actions[b].instructions[CarouselTasks.Position].dbIdx.ToString());
 
                 CarouselTasks.Position = CarouselTasks.Position + 1;
             }
@@ -118,6 +126,7 @@ namespace ProjectCaitlin.Views
 
                 App.User.goals[a].actions[b].instructions[CarouselTasks.Position].isComplete = true;
                 pageModel.Items[CarouselTasks.Position].OkToCheckmark = true;
+                firebaseFunctionsService.UpdateInstruction(goalId, actionId, App.User.goals[a].actions[b].instructions[CarouselTasks.Position].dbIdx.ToString());
 
                 next.Text = "Done";
 
@@ -127,6 +136,8 @@ namespace ProjectCaitlin.Views
 
                 App.User.goals[a].actions[b].instructions[CarouselTasks.Position].isComplete = true;
                 pageModel.Items[CarouselTasks.Position].OkToCheckmark = true;
+                                firebaseFunctionsService.UpdateInstruction(goalId, actionId, App.User.goals[a].actions[b].instructions[CarouselTasks.Position].dbIdx.ToString());
+
 
                 next.Text = "Done";
 
@@ -145,7 +156,8 @@ namespace ProjectCaitlin.Views
 
         public async void close(object sender, EventArgs args)
         {
-            await Navigation.PopAsync();
+            Navigation.PopAsync();
+            Navigation.PopAsync();
         }
 
         public async void back(object sender, EventArgs args)

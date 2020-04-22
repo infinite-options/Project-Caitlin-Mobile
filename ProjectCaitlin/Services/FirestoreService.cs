@@ -144,6 +144,8 @@ namespace ProjectCaitlin.Services
 
                 TimeSpan currentTime = DateTime.Now.TimeOfDay;
                 int dbIdx_ = 0;
+                int routineIdx = 0;
+                int goalIdx = 0;
                 foreach (JToken jsonGorR in userJsonGoalsAndRoutines)
                 {
                     try
@@ -170,7 +172,8 @@ namespace ProjectCaitlin.Services
 
                                     photo = jsonMapGorR["photo"]["stringValue"].ToString(),
 
-                                    isInProgress = isInProgressCheck,
+                                    isInProgress = isInProgressCheck
+                                        && IsDateToday(jsonMapGorR["datetime_started"]["stringValue"].ToString()),
 
                                     isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapGorR["datetime_completed"]["stringValue"].ToString())
@@ -223,7 +226,7 @@ namespace ProjectCaitlin.Services
 
                                         if (!routine.isComplete && total > 0 && !routine.Notification.user.before.is_set)
                                         {
-                                            notificationManager.ScheduleNotification("Ready for ", routine.title + "? Open the app to review your tasks." + routine.Notification.user.before.message, total);
+                                            notificationManager.ScheduleNotification(routineIdx + "Ready for ", routine.title + "? Open the app to review your tasks." + routine.Notification.user.before.message, total);
                                             firebaseFunctionsService.GRUserNotificationSetToTrue(routine.id, routine.dbIdx.ToString(), "before");
 
                                         }
@@ -248,7 +251,7 @@ namespace ProjectCaitlin.Services
 
                                         if (!routine.isComplete && total > 0 && !routine.Notification.user.during.is_set)
                                         {
-                                            notificationManager.ScheduleNotification("Time for ", routine.title + ". Open the app to review your tasks." + routine.Notification.user.during.message, total);
+                                            notificationManager.ScheduleNotification(routineIdx + "Time for ", routine.title + ". Open the app to review your tasks." + routine.Notification.user.during.message, total);
                                             firebaseFunctionsService.GRUserNotificationSetToTrue(routine.id, routine.dbIdx.ToString(), "during");
                                         }
                                         Console.WriteLine("total : " + total);
@@ -274,7 +277,7 @@ namespace ProjectCaitlin.Services
                                         routine.Notification.user.after.message = userAfterMap["message"]["stringValue"].ToString();
                                         if (!routine.isComplete && total > 0 && !routine.Notification.user.after.is_set)
                                         {
-                                            notificationManager.ScheduleNotification("You Missed a Routine! ", routine.title + " is overdue. Open the app to review your tasks." + routine.Notification.user.after.message, total);
+                                            notificationManager.ScheduleNotification(routineIdx + "You Missed a Routine! ", routine.title + " is overdue. Open the app to review your tasks." + routine.Notification.user.after.message, total);
                                             firebaseFunctionsService.GRUserNotificationSetToTrue(routine.id, routine.dbIdx.ToString(), "after");
                                         }
                                         Console.WriteLine("total : " + total);
@@ -336,6 +339,7 @@ namespace ProjectCaitlin.Services
                                  }*/
 
                                 App.User.routines.Add(routine);
+                                routineIdx++;
 
                                 //Console.WriteLine("on Routine: " + routine.title + " " + routine.id);
                             }
@@ -349,7 +353,8 @@ namespace ProjectCaitlin.Services
 
                                     photo = jsonMapGorR["photo"]["stringValue"].ToString(),
 
-                                    isInProgress = isInProgressCheck,
+                                    isInProgress = isInProgressCheck
+                                        && IsDateToday(jsonMapGorR["datetime_started"]["stringValue"].ToString()),
 
                                     isComplete = (bool)jsonMapGorR["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapGorR["datetime_completed"]["stringValue"].ToString())
@@ -369,6 +374,7 @@ namespace ProjectCaitlin.Services
                                 };
 
                                 App.User.goals.Add(goal);
+                                goalIdx++;
 
                                 ////Console.WriteLine("on Goal: " + goal.id);
                             }
@@ -384,14 +390,14 @@ namespace ProjectCaitlin.Services
                 App.User.routines.Sort((x, y) => TimeSpan.Compare(x.availableStartTime, y.availableStartTime));
                 App.User.goals.Sort((x, y) => TimeSpan.Compare(x.availableStartTime, y.availableStartTime));
 
-                int routineIdx = 0;
+                routineIdx = 0;
                 foreach (routine routine in App.User.routines)
                 {
                     LoadTasks(routine.id, routineIdx, "routine");
                     routineIdx++;
                 }
 
-                int goalIdx = 0;
+                goalIdx = 0;
                 foreach (goal goal in App.User.goals)
                 {
                     LoadTasks(goal.id, goalIdx, "goal");
@@ -461,7 +467,8 @@ namespace ProjectCaitlin.Services
                                     title = jsonMapAorT["title"]["stringValue"].ToString(),
                                     id = jsonMapAorT["id"]["stringValue"].ToString(),
                                     photo = jsonMapAorT["photo"]["stringValue"].ToString(),
-                                    isInProgress = (bool)isInProgressCheck,
+                                    isInProgress = (bool)isInProgressCheck
+                                        && IsDateToday(jsonMapAorT["datetime_started"]["stringValue"].ToString()),
                                     isComplete = (bool)jsonMapAorT["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapAorT["datetime_completed"]["stringValue"].ToString())
                                         && !isInProgressCheck,
@@ -485,7 +492,8 @@ namespace ProjectCaitlin.Services
                                     title = jsonMapAorT["title"]["stringValue"].ToString(),
                                     id = jsonMapAorT["id"]["stringValue"].ToString(),
                                     photo = jsonMapAorT["photo"]["stringValue"].ToString(),
-                                    isInProgress = (bool)jsonMapAorT["is_in_progress"]["booleanValue"],
+                                    isInProgress = (bool)jsonMapAorT["is_in_progress"]["booleanValue"]
+                                        && IsDateToday(jsonMapAorT["datetime_started"]["stringValue"].ToString()),
                                     isComplete = (bool)jsonMapAorT["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapAorT["datetime_completed"]["stringValue"].ToString())
                                         && !isInProgressCheck,
@@ -602,7 +610,8 @@ namespace ProjectCaitlin.Services
                                 {
                                     title = jsonMapIorS["title"]["stringValue"].ToString(),
                                     photo = jsonMapIorS["photo"]["stringValue"].ToString(),
-                                    isInProgress = isInProgressCheck,
+                                    isInProgress = isInProgressCheck
+                                        && IsDateToday(jsonMapIorS["datetime_started"]["stringValue"].ToString()),
                                     isComplete = (bool)jsonMapIorS["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapIorS["datetime_completed"]["stringValue"].ToString())
                                         && !isInProgressCheck,
@@ -623,7 +632,8 @@ namespace ProjectCaitlin.Services
                                 {
                                     title = jsonMapIorS["title"]["stringValue"].ToString(),
                                     photo = jsonMapIorS["photo"]["stringValue"].ToString(),
-                                    isInProgress = isInProgressCheck,
+                                    isInProgress = isInProgressCheck
+                                        && IsDateToday(jsonMapIorS["datetime_started"]["stringValue"].ToString()),
                                     isComplete = (bool)jsonMapIorS["is_complete"]["booleanValue"]
                                         && IsDateToday(jsonMapIorS["datetime_completed"]["stringValue"].ToString())
                                         && !isInProgressCheck,

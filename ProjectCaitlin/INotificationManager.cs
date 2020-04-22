@@ -8,7 +8,7 @@ namespace ProjectCaitlin
 
         void Initialize();
 
-        void ReceiveNotification(string title, string message);
+        void ReceiveNotification(string title, string message, bool isValid);
         int ScheduleNotification(string title, string message, double duration);
         void PrintPendingNotifications();
     }
