@@ -24,7 +24,7 @@
 	<key>CFBundleIdentifier</key>
 	<string>com.infiniteoptions.ProjectCaitlin</string>
 	<key>CFBundleVersion</key>
-	<string>1.1.5.1</string>
+	<string>1.1.6.0</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>

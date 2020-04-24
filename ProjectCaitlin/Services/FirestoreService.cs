@@ -70,48 +70,51 @@ namespace ProjectCaitlin.Services
                 App.User.Me.pic = userAboutMe["pic"]["stringValue"].ToString();
 
                 //int peopleIdx = 0;
-                foreach (JToken jsonPeople in userAboutMe["important_people"]["arrayValue"]["values"])
+                if (userAboutMe["important_people"] != null)
                 {
-                    try
+                    foreach (JToken jsonPeople in userAboutMe["important_people"]["arrayValue"]["values"])
                     {
-                        String people_id = jsonPeople["referenceValue"].ToString();
-                        // Console.WriteLine(jsonPeople["referenceValue"]);
-                        var request_people = new HttpRequestMessage
+                        try
                         {
-                            RequestUri = new Uri("https://firestore.googleapis.com/v1/" + people_id),
-                            Method = HttpMethod.Get
-                        };
-                        var client_people = new HttpClient();
-                        HttpResponseMessage response_people = await client.SendAsync(request_people);
+                            String people_id = jsonPeople["referenceValue"].ToString();
+                            // Console.WriteLine(jsonPeople["referenceValue"]);
+                            var request_people = new HttpRequestMessage
+                            {
+                                RequestUri = new Uri("https://firestore.googleapis.com/v1/" + people_id),
+                                Method = HttpMethod.Get
+                            };
+                            var client_people = new HttpClient();
+                            HttpResponseMessage response_people = await client.SendAsync(request_people);
 
-                    
-                        if (response_people.StatusCode == System.Net.HttpStatusCode.OK)
+
+                            if (response_people.StatusCode == System.Net.HttpStatusCode.OK)
+                            {
+                                HttpContent content_people = response_people.Content;
+                                var peopleResponse = await content_people.ReadAsStringAsync();
+                                JObject peopleJson = JObject.Parse(peopleResponse);
+
+                                people people = new people();
+
+                                people.have_pic = (bool)peopleJson["fields"]["have_pic"]["booleanValue"];
+                                people.name = peopleJson["fields"]["name"]["stringValue"].ToString();
+                                people.phone_number = peopleJson["fields"]["phone_number"]["stringValue"].ToString();
+                                people.pic = peopleJson["fields"]["pic"]["stringValue"].ToString();
+                                people.unique_id = peopleJson["fields"]["unique_id"]["stringValue"].ToString();
+
+
+                                //Console.WriteLine("People values");
+                                App.User.Me.peoples.Add(people);
+
+                                /*Console.WriteLine("People Values");
+                                Console.WriteLine(peopleJson["fields"]["name"]["stringValue"].ToString());
+                                Console.WriteLine(peopleJson["createTime"]);*/
+
+                            }
+                        }
+                        catch
                         {
-                            HttpContent content_people = response_people.Content;
-                            var peopleResponse = await content_people.ReadAsStringAsync();
-                            JObject peopleJson = JObject.Parse(peopleResponse);
-
-                            people people = new people();
-                            
-                            people.have_pic = (bool) peopleJson["fields"]["have_pic"]["booleanValue"];           
-                            people.name = peopleJson["fields"]["name"]["stringValue"].ToString();
-                            people.phone_number = peopleJson["fields"]["phone_number"]["stringValue"].ToString();
-                            people.pic = peopleJson["fields"]["pic"]["stringValue"].ToString();
-                            people.unique_id = peopleJson["fields"]["unique_id"]["stringValue"].ToString();
-                            
-
-                            //Console.WriteLine("People values");
-                            App.User.Me.peoples.Add(people);
-
-                            /*Console.WriteLine("People Values");
-                            Console.WriteLine(peopleJson["fields"]["name"]["stringValue"].ToString());
-                            Console.WriteLine(peopleJson["createTime"]);*/
 
                         }
-                    }
-                    catch
-                    {
-
                     }
                 }
                 // Goals and routines
