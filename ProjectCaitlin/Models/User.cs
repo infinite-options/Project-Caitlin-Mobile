@@ -24,6 +24,7 @@ namespace ProjectCaitlin.Models
 
 		public aboutMe Me { get; set; } = new aboutMe();
 
+		public List<photo> photos { get; set; } = new List<photo>();
 		public List<routine> routines { get; set; } = new List<routine>();
 
 		public List<goal> goals { get; set; } = new List<goal>();

@@ -47,16 +47,15 @@ namespace ProjectCaitlin.ViewModel
             });
             Items.Add(new
             {
-                Source = "caitlinheadshot.jpg",
+                Source = App.User.Me.pic,
                 Title = "About Me",
                 Ind = _imageCount++,
                 BackgroundColor = Color.Default,
                 TextColor = Color.Black,
-                Length = "You are a strong, independant person. \n This App helps you take control of your life!",
+                Length = App.User.Me.message_day,
                 Text = "Tap to Learn More",
                 IsComplete = false,
                 IsInProgress = false,
-                ButtonText = "Click for More About Me",
                 Navigate = AboutMeCommand
             });
             int itemCount = 1;

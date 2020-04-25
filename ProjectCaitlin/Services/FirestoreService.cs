@@ -49,7 +49,7 @@ namespace ProjectCaitlin.Services
                 var userResponse = await content.ReadAsStringAsync();
                 JObject userJson = JObject.Parse(userResponse);
                 
-                // About me 
+                /*// About me 
                 JToken userAboutMe;
                 try
                 {
@@ -103,9 +103,9 @@ namespace ProjectCaitlin.Services
                             //Console.WriteLine("People values");
                             App.User.Me.peoples.Add(people);
 
-                            /*Console.WriteLine("People Values");
+                            *//*Console.WriteLine("People Values");
                             Console.WriteLine(peopleJson["fields"]["name"]["stringValue"].ToString());
-                            Console.WriteLine(peopleJson["createTime"]);*/
+                            Console.WriteLine(peopleJson["createTime"]);*//*
 
                         }
                     }
@@ -113,6 +113,44 @@ namespace ProjectCaitlin.Services
                     {
 
                     }
+                }*/
+
+                // Photos
+                JToken userPhotos;
+                try
+                {
+                    userPhotos = userJson["fields"]["photo"]["arrayValue"]["values"];
+                    if (userPhotos == null)
+                        return;
+                }
+                catch
+                {
+                    return;
+                }
+
+                //int peopleIdx = 0;
+                foreach (JToken jsonPhotos in userPhotos)
+                {
+                    try
+                    {
+                        JToken jsonMapPhoto = jsonPhotos["mapValue"]["fields"];
+                        photo photo = new photo
+                        {
+                            id = jsonMapPhoto["id"]["stringValue"].ToString(),
+                            description = jsonMapPhoto["description"]["stringValue"].ToString(),
+                            note = jsonMapPhoto["note"]["stringValue"].ToString()
+                        };
+                        Console.WriteLine("photo id : " + jsonMapPhoto["id"]["stringValue"].ToString());
+                        Console.WriteLine("photo description : " + jsonMapPhoto["description"]["stringValue"].ToString());
+                        Console.WriteLine("photo note : " + jsonMapPhoto["note"]["stringValue"].ToString());
+                        App.User.photos.Add(photo);
+                    }
+                    catch
+                    {
+
+                    }
+                    
+
                 }
                 // Goals and routines
                 JToken userJsonGoalsAndRoutines;

@@ -67,7 +67,7 @@ namespace ProjectCaitlin.ViewModel
 
         public async void SetupUI(string date)
         {
-            photoURIs = await GooglePhotoService.GetPhotos();
+            //photoURIs = await GooglePhotoService.GetPhotos();
 
             try
             {

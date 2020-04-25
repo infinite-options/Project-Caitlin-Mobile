@@ -97,7 +97,7 @@ namespace ProjectCaitlin
 
                     var tapGestureRecognizer = new TapGestureRecognizer();
                     tapGestureRecognizer.Tapped += async (s, e) => {
-                        await Navigation.PushAsync(new PhotoDisplayPage(webImage,date,description,creationTime));
+                        await Navigation.PushAsync(new PhotoDisplayPage(webImage, date, description, creationTime));
                     };
                     webImage.GestureRecognizers.Add(tapGestureRecognizer);
                     var indicator = new ActivityIndicator { Color = Color.Gray, };
@@ -120,8 +120,8 @@ namespace ProjectCaitlin
                 }
 
                 //var googleService = new GoogleService();
-               // await googleService.RefreshToken();
-               // Console.WriteLine("Here");
+                // await googleService.RefreshToken();
+                // Console.WriteLine("Here");
                 //SetupUI();
             }
 
@@ -157,7 +157,7 @@ namespace ProjectCaitlin
                 };
                 photoScrollView.Content = noPhotosLabel;
             }
-                        AddTapGestures();
+            AddTapGestures();
 
         }
 
@@ -309,7 +309,7 @@ namespace ProjectCaitlin
             }
 
             //update calendar before the start day.
-            for (int i = startDay -1; i >= 0; i--)
+            for (int i = startDay - 1; i >= 0; i--)
             {
                 labels[i].Text = lastMonth + "";
                 labels[i].FontSize = 15;
@@ -373,13 +373,15 @@ namespace ProjectCaitlin
             }
 
         }
-        private int increaseMonth(int month) {
+        private int increaseMonth(int month)
+        {
             int newMonth = month + 1;
             if (newMonth > 12)
                 newMonth = 1;
             return newMonth;
         }
-        private int decreaseMonth(int month) {
+        private int decreaseMonth(int month)
+        {
             int newMonth = month - 1;
             if (newMonth < 1)
                 newMonth = 12;

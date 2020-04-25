@@ -144,6 +144,32 @@ namespace ProjectCaitlin.Services
             }
         }
 
+        /*public async Task<bool> UpdatePhoto(string photoId,string description,string note)
+        {
+            HttpRequestMessage request = new HttpRequestMessage
+            {
+                RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/CompleteInstructionOrStep"),
+                Method = HttpMethod.Post
+            };
+
+            //Format Headers of Request with included Token
+            request.Headers.Add("userId", "7R6hAVmDrNutRkG3sVRy");
+            request.Headers.Add("routineId", routineId);
+            request.Headers.Add("taskId", taskId);
+            request.Headers.Add("stepNumber", stepNumber);
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }*/
+
         public async Task<bool> CompleteRoutine(string routineId, string routineIdx)
         {
             var request = new HttpRequestMessage();

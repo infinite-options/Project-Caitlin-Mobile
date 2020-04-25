@@ -470,7 +470,7 @@ namespace ProjectCaitlin
 
                     if (!goal.isInProgress)
                     {
-                        ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
+                        updatedGrid.Children[2].IsVisible = true;
                         goal.isInProgress = true;
                         firebaseFunctionsService.startGR(goal.id.ToString(), goal.dbIdx.ToString());
                         App.ListPageScrollPosY = mainScrollView.ScrollY;
