@@ -20,10 +20,9 @@ namespace ProjectCaitlin.Services
 
         INotificationManager notificationManager;
 
-        public FirestoreService(string _uid)
+        public FirestoreService()
         {
-            App.User.id = uid;
-            uid = _uid;
+            uid = App.User.id;
             notificationManager = DependencyService.Get<INotificationManager>();
             googleService = new GoogleService();
             firebaseFunctionsService = new FirebaseFunctionsService();
@@ -134,16 +133,6 @@ namespace ProjectCaitlin.Services
 
                 App.User.firstName = userJson["fields"]["first_name"]["stringValue"].ToString();
                 App.User.lastName = userJson["fields"]["last_name"]["stringValue"].ToString();
-
-                try
-                {
-                    App.User.access_token = userJson["fields"]["google_auth_token"]["stringValue"].ToString();
-                    App.User.refresh_token = userJson["fields"]["google_refresh_token"]["stringValue"].ToString();
-                }
-                catch
-                {
-                    await googleService.RefreshToken();
-                }
 
                 TimeSpan currentTime = DateTime.Now.TimeOfDay;
                 int dbIdx_ = 0;
@@ -698,6 +687,42 @@ namespace ProjectCaitlin.Services
                 result += componant.PadLeft(2, '0');
 
             return result;
+        }
+
+        void PrintFirebaseUser()
+        {
+            Console.WriteLine("user first name: " + App.User.firstName);
+            Console.WriteLine("user last name: " + App.User.lastName);
+
+            foreach (routine routine in App.User.routines)
+            {
+                Console.WriteLine("user routine title: " + routine.title);
+                Console.WriteLine("user routine id: " + routine.id);
+                foreach (task task in routine.tasks)
+                {
+                    Console.WriteLine("user task title: " + task.title);
+                    Console.WriteLine("user task id: " + task.id);
+                    foreach (step step in task.steps)
+                    {
+                        Console.WriteLine("user step title: " + step.title);
+                    }
+                }
+            }
+
+            foreach (goal goal in App.User.goals)
+            {
+                Console.WriteLine("user goal title: " + goal.title);
+                Console.WriteLine("user goal id: " + goal.id);
+                foreach (action action in goal.actions)
+                {
+                    Console.WriteLine("user action title: " + goal.title);
+                    Console.WriteLine("user action id: " + goal.id);
+                    foreach (instruction instruction in action.instructions)
+                    {
+                        Console.WriteLine("user instruction title: " + instruction.title);
+                    }
+                }
+            }
         }
     }
 }

@@ -92,7 +92,7 @@ namespace ProjectCaitlin.Services
 
             if (jsonParsed["error"] != null)
             {
-                App.User.old_refresh_token = App.User.refresh_token;
+                Application.Current.Properties.Remove("refreshToken");
                 await Application.Current.MainPage.Navigation.PopToRootAsync();
                 return false;
             }
@@ -106,8 +106,7 @@ namespace ProjectCaitlin.Services
             catch (NullReferenceException e)
             {
                 Console.WriteLine("3: HERE");
-
-                App.User.old_refresh_token = App.User.refresh_token;
+                Application.Current.Properties.Remove("refreshToken");
                 await Application.Current.MainPage.Navigation.PopToRootAsync();
             }
 

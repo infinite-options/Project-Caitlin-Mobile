@@ -35,86 +35,26 @@ namespace ProjectCaitlin
 			InitializeComponent();
         }
 
-        protected override async void OnAppearing()
-        {
-			var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
-			await firestoreService.LoadUser();
-
-            Console.WriteLine("----------------------------------------------------------");
-            Console.WriteLine("Made it to 1");
-            Console.WriteLine(App.User.access_token);
-            Console.WriteLine(App.User.refresh_token);
-            Console.WriteLine("----------------------------------------------------------");
-
-            if (App.User.old_refresh_token != App.User.refresh_token)
+		protected override async void OnAppearing()
+		{
+			if (Application.Current.Properties.ContainsKey("accessToken")
+                && Application.Current.Properties.ContainsKey("refreshToken")
+				&& Application.Current.Properties.ContainsKey("user_id"))
             {
-                Console.WriteLine("----------------------------------------------------------");
-                Console.WriteLine("Made it to 2: First catch");
-                Console.WriteLine("----------------------------------------------------------");
 
-                if (App.User.access_token != null)
-                {
-                    Console.WriteLine("----------------------------------------------------------");
-                    Console.WriteLine("Made it to 2: Second catch");
-                    Console.WriteLine("----------------------------------------------------------");
-                    if (await GoogleService.LoadTodaysEvents())
-                    {
-                        await Navigation.PushAsync(new GoalsRoutinesTemplate());
-                    }
-                    else
-                    {
-                        loginButton.IsVisible = true;
-                    }
-                }
-            }
+				LoadApplicationProperties();
+
+				firestoreService = new FirestoreService();
+
+				await firestoreService.LoadUser();
+				await GoogleService.LoadTodaysEvents();
+
+				await Navigation.PushAsync(new GoalsRoutinesTemplate());
+			}
             else
             {
-                // await Application.Current.MainPage.DisplayAlert("Alert", "Please re-login to continue", "OK");
                 loginButton.IsVisible = true;
             }
-        }
-
-        void PrintFirebaseUser()
-        {
-			OnPropertyChanged(nameof(App.User));
-			Console.WriteLine("user first name: " + App.User.firstName);
-			Console.WriteLine("user last name: " + App.User.lastName);
-
-            foreach (routine routine in App.User.routines)
-            {
-				OnPropertyChanged(nameof(routine));
-				Console.WriteLine("user routine title: " + routine.title);
-				Console.WriteLine("user routine id: " + routine.id);
-				foreach (task task in routine.tasks)
-				{
-					OnPropertyChanged(nameof(task));
-					Console.WriteLine("user task title: " + task.title);
-					Console.WriteLine("user task id: " + task.id);
-					foreach (step step in task.steps)
-					{
-						OnPropertyChanged(nameof(step));
-						Console.WriteLine("user step title: " + step.title);
-					}
-				}
-			}
-
-			foreach (goal goal in App.User.goals)
-			{
-				OnPropertyChanged(nameof(goal));
-				Console.WriteLine("user goal title: " + goal.title);
-				Console.WriteLine("user goal id: " + goal.id);
-				foreach (action action in goal.actions)
-				{
-					OnPropertyChanged(nameof(goal));
-					Console.WriteLine("user action title: " + goal.title);
-					Console.WriteLine("user action id: " + goal.id);
-					foreach (instruction instruction in action.instructions)
-					{
-						OnPropertyChanged(nameof(instruction));
-						Console.WriteLine("user instruction title: " + instruction.title);
-					}
-				}
-			}
 		}
 
 		async void LoginClicked(object sender, EventArgs e)
@@ -152,7 +92,6 @@ namespace ProjectCaitlin
 
 			var presenter = new Xamarin.Auth.Presenters.OAuthLoginPresenter();
 			presenter.Login(authenticator);
-
 		}
 
 
@@ -176,48 +115,66 @@ namespace ProjectCaitlin
 
 			if (e.IsAuthenticated)
 			{
+				loginButton.IsVisible = false;
+
 				// If the user is authenticated, request their basic user data from Google
 				// UserInfoUrl = https://www.googleapis.com/oauth2/v2/userinfo
 				var request = new OAuth2Request("GET", new Uri(Constants.UserInfoUrl), null, e.Account);
 				var response = await request.GetResponseAsync();
+				JObject userJson = null;
 				if (response != null)
 				{
 					// Deserialize the data and store it in the account store
 					// The users email address will be used to identify data in SimpleDB
-					string userJson = await response.GetResponseTextAsync();
-					//user = JsonConvert.DeserializeObject<user>(userJson);
+					string userJsonString = await response.GetResponseTextAsync();
+					userJson = JObject.Parse(userJsonString);
 				}
 
-				if (account != null)
+				if (userJson != null)
 				{
 					//store.Delete(account, Constants.AppName);
+					//await store.SaveAsync(account = e.Account, Constants.AppName);
+					//await DisplayAlert("Login Successful", "", "OK");
+
+					//Display Successful Login Alert
+					//await DisplayAlert("Login Successful", "", "OK");
+
+					//Write the Toekn to console, in case it changes
+					Console.WriteLine("HERE is the TOKEN------------------------------------------------");
+					Console.WriteLine(e.Account.Properties["access_token"]);
+					Console.WriteLine("HERE is the REFRESH TOKEN----------------------------------------");
+					Console.WriteLine(e.Account.Properties["refresh_token"]);
+					Console.WriteLine("----------------------------------------------------------------");
+
+					//Reset accessToken
+					accessToken = e.Account.Properties["access_token"];
+					refreshToken = e.Account.Properties["refresh_token"];
+
+                    //Query for email in Users collection
+					App.User.email = userJson["email"].ToString();
+					App.User.id = "7R6hAVmDrNutRkG3sVRy";
+
+					firestoreService = new FirestoreService();
+
+					//Save to App.User AND Update Firebase with pertitnent info
+					var googleService = new GoogleService();
+					await googleService.SaveAccessTokenToFireBase(accessToken);
+					Console.WriteLine(refreshToken);
+					await googleService.SaveRefreshTokenToFireBase(refreshToken);
+
+                    //Save Properies inside phone for auto login
+					Application.Current.Properties["accessToken"] = accessToken;
+					Application.Current.Properties["refreshToken"] = refreshToken;
+					Application.Current.Properties["user_id"] = App.User.id;
+
+					LoadApplicationProperties();
+
+					await firestoreService.LoadUser();
+					await GoogleService.LoadTodaysEvents();
+
+					//Navigate to the Daily Page after Login
+					await Navigation.PushAsync(new GoalsRoutinesTemplate());
 				}
-
-				//await store.SaveAsync(account = e.Account, Constants.AppName);
-				//await DisplayAlert("Login Successful", "", "OK");
-
-                //Display Successful Login Alert
-				//await DisplayAlert("Login Successful", "", "OK");
-
-                //Write the Toekn to console, in case it changes
-                Console.WriteLine("HERE is the TOKEN------------------------------------------------");
-                Console.WriteLine(e.Account.Properties["access_token"]);
-                Console.WriteLine("HERE is the REFRESH TOKEN----------------------------------------");
-                Console.WriteLine(e.Account.Properties["refresh_token"]);
-                Console.WriteLine("----------------------------------------------------------------");
-
-                //Reset accessToken
-                accessToken = e.Account.Properties["access_token"];
-                refreshToken = e.Account.Properties["refresh_token"];
-
-                //Save to App.User AND Update Firebase with pertitnent info
-                var googleService = new GoogleService();
-                await googleService.SaveAccessTokenToFireBase(accessToken);
-                Console.WriteLine(refreshToken);
-                await googleService.SaveRefreshTokenToFireBase(refreshToken);
-
-                //Navigate to the Daily Page after Login
-                await Navigation.PushAsync(new GoalsRoutinesTemplate());
 			}
 		}
 
@@ -238,50 +195,11 @@ namespace ProjectCaitlin
 			await Navigation.PushAsync(new ListViewPage());
 		}
 
-		async Task LoginGoogleAsync()
-		{
-			//try
-			//{
-			//	if (!string.IsNullOrEmpty(_googleService.ActiveToken))
-			//	{
-			//		//Always require user authentication
-			//		_googleService.Logout();
-			//	}
-
-			//	EventHandler<GoogleClientResultEventArgs<GoogleUser>> userLoginDelegate = null;
-			//	userLoginDelegate = async (object sender, GoogleClientResultEventArgs<GoogleUser> e) =>
-			//	{
-			//		switch (e.Status)
-			//		{
-			//			case GoogleActionStatus.Completed:
-   //                         #if DEBUG
-			//				var googleUserString = JsonConvert.SerializeObject(e.Data);
-			//				Debug.WriteLine($"Google Logged in succesfully: {googleUserString}");
-   //                         #endif
-			//				//await App.Current.MainPage.Navigation.PushModalAsync(new HomePage(socialLoginData));
-			//				break;
-			//			case GoogleActionStatus.Canceled:
-			//				await App.Current.MainPage.DisplayAlert("Google Auth", "Canceled", "Ok");
-			//				break;
-			//			case GoogleActionStatus.Error:
-			//				await App.Current.MainPage.DisplayAlert("Google Auth", "Error", "Ok");
-			//				break;
-			//			case GoogleActionStatus.Unauthorized:
-			//				await App.Current.MainPage.DisplayAlert("Google Auth", "Unauthorized", "Ok");
-			//				break;
-			//		}
-
-			//		_googleService.OnLogin -= userLoginDelegate;
-			//	};
-
-			//	_googleService.OnLogin += userLoginDelegate;
-
-			//	await _googleService.LoginAsync();
-			//}
-			//catch (Exception ex)
-			//{
-			//	Debug.WriteLine(ex.ToString());
-			//}
+        private void LoadApplicationProperties()
+        {
+			App.User.access_token = Application.Current.Properties["accessToken"].ToString();
+			App.User.refresh_token = Application.Current.Properties["refreshToken"].ToString();
+			App.User.id = Application.Current.Properties["user_id"].ToString();
 		}
 	}
 }

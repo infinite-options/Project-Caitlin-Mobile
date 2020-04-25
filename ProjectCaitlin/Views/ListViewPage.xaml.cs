@@ -63,7 +63,7 @@ namespace ProjectCaitlin
 
             AddTapGestures();*/
 
-            firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
+            firestoreService = new FirestoreService();
 
             StartTimer();
         }

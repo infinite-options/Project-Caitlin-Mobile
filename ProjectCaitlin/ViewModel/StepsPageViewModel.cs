@@ -40,7 +40,7 @@ namespace ProjectCaitlin.ViewModel
         {
             this.mainPage = mainPage;
             Items = new ObservableCollection<ListViewItemModel>();
-            var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
+            var firestoreService = new FirestoreService();
             firebaseFunctionsService = new FirebaseFunctionsService();
 
             if (isRoutine)
