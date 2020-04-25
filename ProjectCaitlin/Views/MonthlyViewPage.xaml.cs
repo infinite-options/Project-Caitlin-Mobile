@@ -20,7 +20,7 @@ namespace ProjectCaitlin
 
         GooglePhotoService GooglePhotoService = new GooglePhotoService();
 
-        List<List<string>> photoURIs = new List<List<string>>();
+        //List<List<string>> photoURIs = new List<List<string>>();
         public int Year { get; set; } = 0;
         public int Month { get; set; } = 1;
         Label[] labels = new Label[42];
@@ -66,7 +66,7 @@ namespace ProjectCaitlin
 
         private async void SetupUI()
         {
-            photoURIs = await GooglePhotoService.GetPhotos();
+            App.User.photoURIs = await GooglePhotoService.GetPhotos();
             Grid controlGrid = new Grid();
             int rowLength = 3;
             double gridItemSize = (Application.Current.MainPage.Width / rowLength) - (1.2 * rowLength);
@@ -76,7 +76,7 @@ namespace ProjectCaitlin
             var photoCount = 0;
             try
             {
-                foreach (List<string> list in photoURIs)
+                foreach (List<string> list in App.User.photoURIs)
                 {
                     string photoURI = list[0];
                     string date = list[1];
@@ -115,7 +115,7 @@ namespace ProjectCaitlin
                 if (await googleService.RefreshToken())
                 {
                     Console.WriteLine("RefreshToken Done!");
-                    photoURIs = await GooglePhotoService.GetPhotos();
+                    App.User.photoURIs = await GooglePhotoService.GetPhotos();
                     //return await GetPhotos();
                 }
 
@@ -128,7 +128,7 @@ namespace ProjectCaitlin
             //update calendar
             DateTime localDate = DateTime.Now;
             Calendar myCal = CultureInfo.InvariantCulture.Calendar;
-            int currentYear = myCal.GetYear(localDate);
+            var currentYear = myCal.GetYear(localDate);
             var currentMonth = myCal.GetMonth(localDate);
             var currentDay = myCal.GetDayOfWeek(localDate);
 
@@ -138,14 +138,10 @@ namespace ProjectCaitlin
             setMonthLabel(Month);
             SetCalendar(currentYear, currentMonth);
 
-            Console.WriteLine("Before");
-            Console.WriteLine("Year: " + Year);
-            Console.WriteLine("Month: " + Month);
-
             //add navigation bar
             photoScrollView.HeightRequest = Application.Current.MainPage.Height - CalendarContent.Height - NavBar.Height;
 
-            if (photoURIs != null)
+            if (App.User.photoURIs != null)
             {
                 photoScrollView.Content = controlGrid;
             }
@@ -339,16 +335,12 @@ namespace ProjectCaitlin
                 // make the label bold if there are images in that day.
                 foreach (string date in GooglePhotoService.allDates)
                 {
-                    DateTime currentDate = DateTime.Parse(date);
-                    Console.WriteLine("currentDate: " + currentDate);
-                    int Year = currentDate.Year;
-                    int Month = currentDate.Month;
-                    int Day = currentDate.Day;
-
-                    Console.WriteLine("Before");
-                    Console.WriteLine("Year: " + Year);
-                    Console.WriteLine("Month: " + Month);
-                    Console.WriteLine("Day: " + Day);
+                    string currentDate = date;
+                    int Year = Int32.Parse(currentDate.Substring(0, currentDate.IndexOf("/")));
+                    string newDate = currentDate.Substring(currentDate.IndexOf("/") + 1);
+                    int Month = Int32.Parse(newDate.Substring(0, newDate.IndexOf("/")));
+                    newDate = newDate.Substring(newDate.IndexOf("/") + 1);
+                    int Day = Int32.Parse(newDate);
 
                     if (Year == year && Month == month && Day == j)
                     {

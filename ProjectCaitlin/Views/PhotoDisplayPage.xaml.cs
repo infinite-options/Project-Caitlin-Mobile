@@ -19,7 +19,7 @@ namespace ProjectCaitlin
 
         GooglePhotoService GooglePhotoService = new GooglePhotoService();
 
-        List<string> photoURIs = new List<string>();
+        //List<string> photoURIs = new List<string>();
 
         string date;
 
@@ -44,6 +44,7 @@ namespace ProjectCaitlin
             InitializeComponent();
             this.date = date;
             pageModel = new PhotoViewModel(date);
+            
             BindingContext = pageModel;
 
             dateLabel.Text = date;
@@ -57,6 +58,7 @@ namespace ProjectCaitlin
         async void ButtonOne(object sender, EventArgs args)
         {
             date = PreviousDate();
+            //pageModel.SetupUI(date);
             await Navigation.PushAsync(new PhotoDisplayPage(date));
         }
 
@@ -69,16 +71,12 @@ namespace ProjectCaitlin
         public string PreviousDate()
         {
 
-            DateTime currentDate = DateTime.Parse(date);
-            Console.WriteLine("currentDate: " + currentDate);
-            int Year = currentDate.Year;
-            int Month = currentDate.Month;
-            int Day = currentDate.Day;
-
-            Console.WriteLine("Before");
-            Console.WriteLine("Year: " + Year);
-            Console.WriteLine("Month: " + Month);
-            Console.WriteLine("Day: " + Day);
+            string currentDate = date;
+            int Year = Int32.Parse(currentDate.Substring(0, currentDate.IndexOf("/")));
+            string newDate = currentDate.Substring(currentDate.IndexOf("/") + 1);
+            int Month = Int32.Parse(newDate.Substring(0, newDate.IndexOf("/")));
+            newDate = newDate.Substring(newDate.IndexOf("/") + 1);
+            int Day = Int32.Parse(newDate);
 
             int maxDay = 30;
             int lastMonth = 0;
@@ -171,16 +169,12 @@ namespace ProjectCaitlin
         }
         public string NextDate()
         {
-            DateTime currentDate = DateTime.Parse(date);
-            Console.WriteLine("currentDate: " + currentDate);
-            int Year = currentDate.Year;
-            int Month = currentDate.Month;
-            int Day = currentDate.Day;
-
-            Console.WriteLine("Before");
-            Console.WriteLine("Year: " + Year);
-            Console.WriteLine("Month: " + Month);
-            Console.WriteLine("Day: " + Day);
+            string currentDate = date;
+            int Year = Int32.Parse(currentDate.Substring(0, currentDate.IndexOf("/")));
+            string newDate = currentDate.Substring(currentDate.IndexOf("/") + 1);
+            int Month = Int32.Parse(newDate.Substring(0, newDate.IndexOf("/")));
+            newDate = newDate.Substring(newDate.IndexOf("/") + 1);
+            int Day = Int32.Parse(newDate);
 
 
             int maxDay = 30;
@@ -267,11 +261,6 @@ namespace ProjectCaitlin
                     Year += 1;
                 }
             }
-
-            Console.WriteLine("After");
-            Console.WriteLine("Year: " + Year);
-            Console.WriteLine("Month: " + Month);
-            Console.WriteLine("Day: " + Day);
 
             string dateTime = new DateTime(Year, Month, Day) + "";
             dateTime = dateTime.Substring(0, dateTime.IndexOf(" "));

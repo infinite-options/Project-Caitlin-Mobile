@@ -55,13 +55,13 @@ namespace ProjectCaitlin.Services
                 {
                     var subList = new List<string>();
 
-                    DateTimeOffset GreenwichMeanTime = product.MediaMetadata.CreationTime; //Google photo api sends time in GreenwichMeanTime.
+                    DateTimeOffset GreenwichMeanTime = product.MediaMetadata.CreationTime; //Google photo api sends time in GreenwichMeanTime. 
                     DateTimeOffset utcTime = GreenwichMeanTime.ToLocalTime();  //convert GreenwichMeanTime to local time.
 
+                    //creationTime = utcTime.ToString();
                     creationTime = utcTime.ToString();
-                    //creationTime = GreenwichMeanTime.ToString();
                     date = creationTime.Substring(0, creationTime.IndexOf(" "));// date = yyyy/mm/dd
-
+                    creationTime = utcTime.TimeOfDay.ToString();
                     allDates.Add(date);
 
                     storePicUri = product.BaseUrl.ToString();
@@ -71,10 +71,6 @@ namespace ProjectCaitlin.Services
                     subList.Add(description);
                     subList.Add(creationTime);
                     itemList.Add(subList);
-
-                    Console.WriteLine("creationTime : " + creationTime);
-                    Console.WriteLine("storePicUri : " + storePicUri);
-                    Console.WriteLine("description : " + description);
 
                 }
             }

@@ -13,7 +13,7 @@ namespace ProjectCaitlin.ViewModel
     public class PhotoViewModel : BindableObject
     {
         public ObservableCollection<object> Items { get; set; }
-        List<List<string>> photoURIs = new List<List<string>>();
+        //List<List<string>> photoURIs = new List<List<string>>();
         GooglePhotoService GooglePhotoService = new GooglePhotoService();
 
         public PhotoViewModel(CachedImage webImage, string date, string description, string creationTime)
@@ -39,11 +39,11 @@ namespace ProjectCaitlin.ViewModel
 
         public async void SetupUI(string date, string source)
         {
-            photoURIs = await GooglePhotoService.GetPhotos();
+            //photoURIs = await GooglePhotoService.GetPhotos();
 
             try
             {
-                foreach (List<string> list in photoURIs)
+                foreach (List<string> list in App.User.photoURIs)
                 {
                     string photoURI = list[0];
                     string photoDate = list[1];
@@ -71,7 +71,7 @@ namespace ProjectCaitlin.ViewModel
 
             try
             {
-                foreach (List<string> list in photoURIs)
+                foreach (List<string> list in App.User.photoURIs)
                 {
                     string photoURI = list[0];
                     string photoDate = list[1];
