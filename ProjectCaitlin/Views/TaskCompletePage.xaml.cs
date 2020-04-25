@@ -50,7 +50,7 @@ namespace ProjectCaitlin.Views
 
             if (next.Text == "Done")
             {
-                var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
+                var firestoreService = new FirestoreService();
 
                 firebaseFunctionsService.UpdateTask(goalId, actionId, App.User.goals[a].actions[b].dbIdx.ToString());
 

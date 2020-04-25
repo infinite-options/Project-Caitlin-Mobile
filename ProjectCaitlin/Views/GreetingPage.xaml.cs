@@ -78,5 +78,14 @@ namespace ProjectCaitlin.Views
             await Navigation.PushAsync(new GoalsRoutinesTemplate());
 
         }
+
+        async void LogoutBtnClick(object sender, EventArgs e)
+        {
+            Application.Current.Properties.Remove("accessToken");
+            Application.Current.Properties.Remove("refreshToken");
+            Application.Current.Properties.Remove("user_id");
+
+            await Navigation.PushAsync(new LoginPage());
+        }
     }
 }
