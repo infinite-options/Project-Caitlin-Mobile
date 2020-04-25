@@ -8,7 +8,7 @@
              NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="False">
     <StackLayout Padding="20">
-        
+
         <StackLayout Orientation="Horizontal"
                      HorizontalOptions="FillAndExpand"
                      Padding="10,0,10,0">
@@ -34,12 +34,12 @@
                             </StackLayout>
                         </Frame>
                         <Label Text="{Binding CreationTime}" FontSize="20" HorizontalOptions="Center"/>
-                        
+
                         <Editor Placeholder="{Binding Description}"
                         AutoSize="TextChanges"
                         MaxLength="20"
                         IsSpellCheckEnabled="true"
-                        IsTextPredictionEnabled="true" 
+                        IsTextPredictionEnabled="true"
                         Completed="EditorCompleted"/>
 
                     </StackLayout>
@@ -47,11 +47,11 @@
             </CarouselView.ItemTemplate>
         </CarouselView>
 
-        
-        
-        
 
-        
+
+
+
+
 
 
         <StackLayout>

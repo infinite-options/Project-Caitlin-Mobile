@@ -1,6 +1,7 @@
 ﻿using System;
 using UserNotifications;
 using Xamarin.Forms;
+using ProjectCaitlin.Models;
 
 namespace ProjectCaitlin.iOS
 {
@@ -8,11 +9,18 @@ namespace ProjectCaitlin.iOS
     {
         public override void WillPresentNotification(UNUserNotificationCenter center, UNNotification notification, Action<UNNotificationPresentationOptions> completionHandler)
         {
-            DependencyService.Get<INotificationManager>().ReceiveNotification(notification.Request.Content.Title, notification.Request.Content.Body);
+            int routineIdx = int.Parse(notification.Request.Content.Title.Substring(0,1));
+            string title = notification.Request.Content.Title.Substring(1);
+            bool isRoutineComplete = App.User.routines[routineIdx].isComplete;
+
+            DependencyService.Get<INotificationManager>().ReceiveNotification(title, notification.Request.Content.Body, isRoutineComplete);
 
             // alerts are always shown for demonstration but this can be set to "None"
             // to avoid showing alerts if the app is in the foreground
-            completionHandler(UNNotificationPresentationOptions.Alert);
+            if (isRoutineComplete)
+                completionHandler(UNNotificationPresentationOptions.None);
+            else
+                completionHandler(UNNotificationPresentationOptions.Alert);
         }
     }
 }

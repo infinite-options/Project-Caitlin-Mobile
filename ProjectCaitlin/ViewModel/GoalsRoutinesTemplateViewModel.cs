@@ -63,175 +63,181 @@ namespace ProjectCaitlin.ViewModel
             int routineNum = 0;
             foreach (routine routine in App.User.routines)
             {
-                //calculate the sum duration for the routine from step level.
-                int sum_duration = 0;
-                foreach (task task in routine.tasks)
+                if (isInTimeRange(routine.availableStartTime, routine.availableEndTime))
                 {
-                    foreach (step step in task.steps)
+                    //calculate the sum duration for the routine from step level.
+                    int sum_duration = 0;
+                    foreach (task task in routine.tasks)
                     {
-                        sum_duration += (int) step.expectedCompletionTime.TotalMinutes;
+                        foreach (step step in task.steps)
+                        {
+                            sum_duration += (int)step.expectedCompletionTime.TotalMinutes;
+                        }
                     }
-                }
-                // set the duration for routine
-                if (sum_duration != 0)
-                    routine.expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);
+                    // set the duration for routine
+                    if (sum_duration != 0)
+                        routine.expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);
 
-                string buttonText = "Tap to Start";
-                if (routine.isInProgress)
-                    buttonText = "Tap to Continue";
-                else if (routine.isComplete)
-                    buttonText = "Done";
+                    string buttonText = "Tap to Start";
+                    if (routine.isInProgress)
+                        buttonText = "Tap to Continue";
+                    else if (routine.isComplete)
+                        buttonText = "Done";
 
                     complete.Add(false);
-                Items.Add(new GRItemModel(
-                   routine.photo,
-                   routine.title,
-                   Color.Default,
-                   Color.Black,
-                   buttonText,
-                   "Takes me " + routine.expectedCompletionTime.TotalMinutes + " minutes",
-                   (routine.isComplete || routine.isInProgress) ? .6 : 1,
-                   routine.isComplete,
-                   routine.isInProgress,
+                    Items.Add(new GRItemModel(
+                       routine.photo,
+                       routine.title,
+                       Color.Default,
+                       Color.Black,
+                       buttonText,
+                       "Expected to take " + routine.expectedCompletionTime.TotalMinutes + " minutes",
+                       (routine.isComplete || routine.isInProgress) ? .6 : 1,
+                       routine.isComplete,
+                       routine.isInProgress,
 
-                   new Command<MyDayIndexes>(
-                        async (MyDayIndexes indexes) =>
-                        {
-                            string routineId = App.User.routines[indexes.RoutineIndex].id;
-                            string routineDbIdx = App.User.routines[indexes.RoutineIndex].dbIdx.ToString();
-                            bool isRoutineInProgress = App.User.routines[indexes.RoutineIndex].isInProgress;
-                            bool isRoutineComplete = App.User.routines[indexes.RoutineIndex].isComplete;
-
-                            Console.WriteLine("indexes.ItemsIndex: " + indexes.ItemsIndex);
-                            Console.WriteLine("indexes.RoutineIndex: " + indexes.RoutineIndex);
-
-                            ((GRItemModel)Items[indexes.ItemsIndex]).GrImageOpactiy = .6;
-
-                            if (App.User.routines[indexes.RoutineIndex].isSublistAvailable)
+                       new Command<MyDayIndexes>(
+                            async (MyDayIndexes indexes) =>
                             {
-                                if (!isRoutineComplete)
+                                string routineId = App.User.routines[indexes.RoutineIndex].id;
+                                string routineDbIdx = App.User.routines[indexes.RoutineIndex].dbIdx.ToString();
+                                bool isRoutineInProgress = App.User.routines[indexes.RoutineIndex].isInProgress;
+                                bool isRoutineComplete = App.User.routines[indexes.RoutineIndex].isComplete;
+
+                                Console.WriteLine("indexes.ItemsIndex: " + indexes.ItemsIndex);
+                                Console.WriteLine("indexes.RoutineIndex: " + indexes.RoutineIndex);
+
+                                ((GRItemModel)Items[indexes.ItemsIndex]).GrImageOpactiy = .6;
+
+                                if (App.User.routines[indexes.RoutineIndex].isSublistAvailable)
                                 {
-                                    App.User.routines[indexes.RoutineIndex].isInProgress = true;
-                                    ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
-                                    ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
-                                    firebaseFunctionsService.startGR(routineId, routineDbIdx);
-                                }
-                                await mainPage.Navigation.PushAsync(new TaskPage(indexes.RoutineIndex, true, (GRItemModel) Items[indexes.ItemsIndex]));
-                            }
-                            else
-                            {
-                                if (!isRoutineComplete)
-                                {
-                                    if (isRoutineInProgress)
-                                    {
-                                        App.User.routines[indexes.RoutineIndex].isInProgress = false;
-                                        App.User.routines[indexes.RoutineIndex].isComplete = true;
-                                        ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = false;
-                                        ((GRItemModel)Items[indexes.ItemsIndex]).IsComplete = true;
-                                        ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Done";
-                                        firebaseFunctionsService.CompleteRoutine(routineId, routineDbIdx);
-                                    }
-                                    else
+                                    if (!isRoutineComplete)
                                     {
                                         App.User.routines[indexes.RoutineIndex].isInProgress = true;
                                         ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
                                         ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
                                         firebaseFunctionsService.startGR(routineId, routineDbIdx);
                                     }
+                                    await mainPage.Navigation.PushAsync(new TaskPage(indexes.RoutineIndex, true, (GRItemModel)Items[indexes.ItemsIndex]));
                                 }
-                            }
-                        }),
-                    new MyDayIndexes(itemCount, routineNum, 0)
-                    ));
+                                else
+                                {
+                                    if (!isRoutineComplete)
+                                    {
+                                        if (isRoutineInProgress)
+                                        {
+                                            App.User.routines[indexes.RoutineIndex].isInProgress = false;
+                                            App.User.routines[indexes.RoutineIndex].isComplete = true;
+                                            ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = false;
+                                            ((GRItemModel)Items[indexes.ItemsIndex]).IsComplete = true;
+                                            ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Done";
+                                            firebaseFunctionsService.CompleteRoutine(routineId, routineDbIdx);
+                                        }
+                                        else
+                                        {
+                                            App.User.routines[indexes.RoutineIndex].isInProgress = true;
+                                            ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
+                                            ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
+                                            firebaseFunctionsService.startGR(routineId, routineDbIdx);
+                                        }
+                                    }
+                                }
+                            }),
+                        new MyDayIndexes(itemCount, routineNum, 0)
+                        ));
+                    itemCount++;
+                }
                 routineNum++;
-                itemCount++;
             }
 
             int goalNum = 0;
             foreach (goal goal in App.User.goals)
             {
-                //calculate the sum duration for the routine from step level.
-                int sum_duration = 0;
-                foreach (action action in goal.actions)
+                if (isInTimeRange(goal.availableStartTime, goal.availableEndTime))
                 {
-                    foreach (instruction instruction in action.instructions)
+                    //calculate the sum duration for the routine from step level.
+                    int sum_duration = 0;
+                    foreach (action action in goal.actions)
                     {
-                        sum_duration += (int)instruction.expectedCompletionTime.TotalMinutes;
-                    }
-                }
-                // set the duration for routine
-                if (sum_duration != 0)
-                    goal.expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);
-
-                string buttonText = "Tap to Start";
-                if (goal.isInProgress)
-                    buttonText = "Tap to Continue";
-                else if (goal.isComplete)
-                    buttonText = "Done";
-
-                complete.Add(false);
-                Items.Add(new GRItemModel(
-                   goal.photo,
-                   goal.title,
-                   Color.FromHex("#272E32"),
-                   Color.White,
-                   buttonText,
-                   "Takes me " + goal.expectedCompletionTime.TotalMinutes + " minutes",
-                   (goal.isComplete || goal.isInProgress) ? .6 : 1,
-                   goal.isComplete,
-                   goal.isInProgress,
-
-                   new Command<MyDayIndexes>(
-                        async (MyDayIndexes indexes) =>
+                        foreach (instruction instruction in action.instructions)
                         {
-                            string goalId = App.User.goals[indexes.GoalIndex].id;
-                            string goalDbIdx = App.User.goals[indexes.GoalIndex].dbIdx.ToString();
-                            bool isGoalInProgress = App.User.goals[indexes.GoalIndex].isInProgress;
-                            bool isGoalComplete = App.User.goals[indexes.GoalIndex].isComplete;
+                            sum_duration += (int)instruction.expectedCompletionTime.TotalMinutes;
+                        }
+                    }
+                    // set the duration for routine
+                    if (sum_duration != 0)
+                        goal.expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);
 
-                            Console.WriteLine("indexes.ItemsIndex: " + indexes.ItemsIndex);
-                            Console.WriteLine("indexes.GoalIndex: " + indexes.GoalIndex);
+                    string buttonText = "Tap to Start";
+                    if (goal.isInProgress)
+                        buttonText = "Tap to Continue";
+                    else if (goal.isComplete)
+                        buttonText = "Done";
 
-                            ((GRItemModel)Items[indexes.ItemsIndex]).GrImageOpactiy = .6;
+                    complete.Add(false);
+                    Items.Add(new GRItemModel(
+                       goal.photo,
+                       goal.title,
+                       Color.FromHex("#272E32"),
+                       Color.White,
+                       buttonText,
+                       "Expected to take " + goal.expectedCompletionTime.TotalMinutes + " minutes",
+                       (goal.isComplete || goal.isInProgress) ? .6 : 1,
+                       goal.isComplete,
+                       goal.isInProgress,
 
-                            if (App.User.goals[indexes.GoalIndex].isSublistAvailable)
+                       new Command<MyDayIndexes>(
+                            async (MyDayIndexes indexes) =>
                             {
-                                if (!isGoalComplete)
+                                string goalId = App.User.goals[indexes.GoalIndex].id;
+                                string goalDbIdx = App.User.goals[indexes.GoalIndex].dbIdx.ToString();
+                                bool isGoalInProgress = App.User.goals[indexes.GoalIndex].isInProgress;
+                                bool isGoalComplete = App.User.goals[indexes.GoalIndex].isComplete;
+
+                                Console.WriteLine("indexes.ItemsIndex: " + indexes.ItemsIndex);
+                                Console.WriteLine("indexes.GoalIndex: " + indexes.GoalIndex);
+
+                                ((GRItemModel)Items[indexes.ItemsIndex]).GrImageOpactiy = .6;
+
+                                if (App.User.goals[indexes.GoalIndex].isSublistAvailable)
                                 {
-                                    App.User.goals[indexes.GoalIndex].isInProgress = true;
-                                    ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
-                                    ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
-                                    firebaseFunctionsService.startGR(goalId, goalDbIdx);
-                                }
-                                await mainPage.Navigation.PushAsync(new TaskPage(indexes.GoalIndex, false, (GRItemModel)Items[indexes.ItemsIndex]));
-                            }
-                            else
-                            {
-                                if (!isGoalComplete)
-                                {
-                                    if (isGoalInProgress)
-                                    {
-                                        App.User.goals[indexes.GoalIndex].isInProgress = false;
-                                        App.User.goals[indexes.GoalIndex].isComplete = true;
-                                        ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = false;
-                                        ((GRItemModel)Items[indexes.ItemsIndex]).IsComplete = true;
-                                        ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Done";
-                                        firebaseFunctionsService.CompleteRoutine(goalId, goalDbIdx);
-                                    }
-                                    else
+                                    if (!isGoalComplete)
                                     {
                                         App.User.goals[indexes.GoalIndex].isInProgress = true;
-                                        ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
                                         ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
+                                        ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
                                         firebaseFunctionsService.startGR(goalId, goalDbIdx);
                                     }
+                                    await mainPage.Navigation.PushAsync(new TaskPage(indexes.GoalIndex, false, (GRItemModel)Items[indexes.ItemsIndex]));
                                 }
-                            }
-                        }),
-                   new MyDayIndexes(itemCount, 0, goalNum)
-                    ));
+                                else
+                                {
+                                    if (!isGoalComplete)
+                                    {
+                                        if (isGoalInProgress)
+                                        {
+                                            App.User.goals[indexes.GoalIndex].isInProgress = false;
+                                            App.User.goals[indexes.GoalIndex].isComplete = true;
+                                            ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = false;
+                                            ((GRItemModel)Items[indexes.ItemsIndex]).IsComplete = true;
+                                            ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Done";
+                                            firebaseFunctionsService.CompleteRoutine(goalId, goalDbIdx);
+                                        }
+                                        else
+                                        {
+                                            App.User.goals[indexes.GoalIndex].isInProgress = true;
+                                            ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
+                                            ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
+                                            firebaseFunctionsService.startGR(goalId, goalDbIdx);
+                                        }
+                                    }
+                                }
+                            }),
+                       new MyDayIndexes(itemCount, 0, goalNum)
+                        ));
+                    itemCount++;
+                }
                 goalNum++;
-                itemCount++;
             }
         }
 
@@ -245,8 +251,8 @@ namespace ProjectCaitlin.ViewModel
         private bool isInTimeRange(TimeSpan start, TimeSpan end)
         {
             DateTime dateTimeNow = DateTime.Now;
-            //DateTime dateTimeNow = new DateTime(1999, 12, 1, 23, 59, 59);
-            if (start <= dateTimeNow.TimeOfDay.Add(TimeSpan.FromHours(4)) && dateTimeNow.TimeOfDay <= end)
+            //DateTime dateTimeNow = new DateTime(1999, 12, 1, 00, 00, 00);
+            if (start.Subtract(TimeSpan.FromHours(4)) <= dateTimeNow.TimeOfDay && dateTimeNow.TimeOfDay <= end)
                 return true;
             return false;
         }

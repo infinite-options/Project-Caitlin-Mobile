@@ -56,7 +56,7 @@ namespace ProjectCaitlin.ViewModel
                 foreach (task task in App.User.routines[a].tasks)
                 {
                     Items.Add( new TaskItemModel(
-                    
+
                         App.User.routines[a].tasks[taskIdx].photo,
                         App.User.routines[a].tasks[taskIdx].title,
                         Color.FromHex("#272E32"),
@@ -145,7 +145,7 @@ namespace ProjectCaitlin.ViewModel
                                         firebaseFunctionsService.StartAT(goalId, actionId, actionDbIdx.ToString());
                                     }
 
-                                    await mainPage.Navigation.PushAsync(new TaskCompletePage(a, _actionIdx, isRoutine, GRItemModel));
+                                    await mainPage.Navigation.PushAsync(new TaskCompletePage(a, _actionIdx, isRoutine, Items[_actionIdx], GRItemModel));
                                 }
                                 else
                                 {

@@ -6,7 +6,7 @@ namespace ProjectCaitlin.Services
 {
     public class FirebaseFunctionsService
     {
-        public async Task<bool> GRUserNotificationSetToTrue(string routineId, string routineIdx)
+        public async Task<bool> GRUserNotificationSetToTrue(string routineId, string routineIdx, string status)
         {
             try
             {
@@ -20,6 +20,8 @@ namespace ProjectCaitlin.Services
                 request.Headers.Add("userId", App.User.id);
                 request.Headers.Add("routineId", routineId);
                 request.Headers.Add("routineNumber", routineIdx);
+                request.Headers.Add("status", status);
+
                 var client = new HttpClient();
 
                 // without async, will get stuck, needs bug fix

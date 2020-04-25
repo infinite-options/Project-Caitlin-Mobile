@@ -16,41 +16,19 @@
             HorizontalOptions="Center"
             TextColor="DimGray"
             FontSize="35"
-            Margin="0, 23"
+            Margin="0, 10"
             />
 
-        <Button
-            Text="Login"
+        <ImageButton
             x:Name="loginButton"
             Clicked="LoginClicked"
-            IsVisible="false"
-            Margin="60, 10"
-            BackgroundColor="#4682B4"
-            TextColor="White"
-            />
-
-        <!--<Button
-            Text="IO Dev Access"
-            Margin="60, 0"
-            BackgroundColor="#4682B4"
-            TextColor="White"
-            />
-
-        <Button
-            Text="CardView Page"
-            Clicked="CardViewPageClicked"
-            Margin="60, 0"
-            BackgroundColor="#4682B4"
-            TextColor="White"
-            />-->
-
-        <!--<Button
-            Text="ListView Page"
-            Clicked="ListViewClicked"
-            Margin="60, 0"
-            BackgroundColor="#4682B4"
-            TextColor="White"
-            />-->
-
+            IsVisible="true"
+            WidthRequest="224"
+            HeightRequest="54"
+            HorizontalOptions="Center"
+            BackgroundColor="Transparent"
+            Source="btn_google_signin_light_normal_web"
+            >
+            </ImageButton>
     </StackLayout>
 </ContentPage>

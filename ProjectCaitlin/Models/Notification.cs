@@ -8,19 +8,33 @@ namespace ProjectCaitlin.Models
 
 	public class Notification : INotifyPropertyChanged
 	{
-		public DateTime ta_before { get; set; }//???
-		public DateTime ta_after { get; set; }
-		public DateTime ta_during { get; set; }
-		public DateTime user_before { get; set; }
-		public DateTime user_after { get; set; }
-		public DateTime user_during { get; set; }
+		public NotificationTime user { get; set; } = new NotificationTime();
 
-		public string ta_before_message { get; set; }
-		public string ta_after_message { get; set; }
-		public string ta_during_message { get; set; }
-		public string user_before_message { get; set; }
-		public string user_after_message { get; set; }
-		public string user_during_message { get; set; }//???
+		public event PropertyChangedEventHandler PropertyChanged;
+	}
+
+	public class NotificationTime : INotifyPropertyChanged
+	{
+		public NotificationAttributes before { get; set; } = new NotificationAttributes();
+
+		public NotificationAttributes during { get; set; } = new NotificationAttributes();
+
+		public NotificationAttributes after { get; set; } = new NotificationAttributes();
+
+		public event PropertyChangedEventHandler PropertyChanged;
+	}
+
+	public class NotificationAttributes : INotifyPropertyChanged
+	{
+		public TimeSpan time { get; set; }
+
+		public string message { get; set; }
+
+		public bool is_enabled { get; set; }
+
+		public bool is_set { get; set; }
+
+		public bool date_set { get; set; }
 
 		public event PropertyChangedEventHandler PropertyChanged;
 	}
