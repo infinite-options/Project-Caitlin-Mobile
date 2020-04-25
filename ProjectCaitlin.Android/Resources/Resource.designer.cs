@@ -16150,34 +16150,37 @@ namespace ProjectCaitlin.Droid
 			public const int previousbutton = 2131165551;
 			
 			// aapt resource value: 0x7F070170
-			public const int redo = 2131165552;
+			public const int purpletopinkgradient = 2131165552;
 			
 			// aapt resource value: 0x7F070171
-			public const int redoGray = 2131165553;
+			public const int redo = 2131165553;
 			
 			// aapt resource value: 0x7F070172
-			public const int sunriselow = 2131165554;
+			public const int redoGray = 2131165554;
 			
 			// aapt resource value: 0x7F070173
-			public const int sunrisemid = 2131165555;
+			public const int sunriselow = 2131165555;
 			
 			// aapt resource value: 0x7F070174
-			public const int tooltip_frame_dark = 2131165556;
+			public const int sunrisemid = 2131165556;
 			
 			// aapt resource value: 0x7F070175
-			public const int tooltip_frame_light = 2131165557;
+			public const int tooltip_frame_dark = 2131165557;
 			
 			// aapt resource value: 0x7F070176
-			public const int toothbrushCircle = 2131165558;
+			public const int tooltip_frame_light = 2131165558;
 			
 			// aapt resource value: 0x7F070177
-			public const int waveformicon = 2131165559;
+			public const int toothbrushCircle = 2131165559;
 			
 			// aapt resource value: 0x7F070178
-			public const int waveformiconwhite = 2131165560;
+			public const int waveformicon = 2131165560;
 			
 			// aapt resource value: 0x7F070179
-			public const int xamagonBlue = 2131165561;
+			public const int waveformiconwhite = 2131165561;
+			
+			// aapt resource value: 0x7F07017A
+			public const int xamagonBlue = 2131165562;
 			
 			static Drawable()
 			{

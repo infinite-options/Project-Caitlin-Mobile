@@ -106,6 +106,7 @@ namespace ProjectCaitlin
 
 		async void OnAuthCompleted(object sender, AuthenticatorCompletedEventArgs e)
 		{
+			loginButton.IsVisible = false;
 			var authenticator = sender as OAuth2Authenticator;
 			if (authenticator != null)
 			{
@@ -115,8 +116,6 @@ namespace ProjectCaitlin
 
 			if (e.IsAuthenticated)
 			{
-				loginButton.IsVisible = false;
-
 				// If the user is authenticated, request their basic user data from Google
 				// UserInfoUrl = https://www.googleapis.com/oauth2/v2/userinfo
 				var request = new OAuth2Request("GET", new Uri(Constants.UserInfoUrl), null, e.Account);
@@ -152,7 +151,7 @@ namespace ProjectCaitlin
 
                     //Query for email in Users collection
 					App.User.email = userJson["email"].ToString();
-					App.User.id = "7R6hAVmDrNutRkG3sVRy";
+					App.User.id = "q0LcoTbnxI49arthgQ09";
 
 					firestoreService = new FirestoreService();
 
