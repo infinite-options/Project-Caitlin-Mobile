@@ -27,7 +27,8 @@ namespace ProjectCaitlin
 		Account account;
 		public static string accessToken;
 		FirestoreService firestoreService;
-        public static string refreshToken;
+		FirebaseFunctionsService firebaseFunctionsService;
+		public static string refreshToken;
         public string clientId;
 
         public LoginPage()
@@ -45,6 +46,7 @@ namespace ProjectCaitlin
 				LoadApplicationProperties();
 
 				firestoreService = new FirestoreService();
+				firebaseFunctionsService = new FirebaseFunctionsService();
 
 				await firestoreService.LoadUser();
 				await GoogleService.LoadTodaysEvents();
@@ -54,7 +56,8 @@ namespace ProjectCaitlin
             else
             {
                 loginButton.IsVisible = true;
-            }
+				firebaseFunctionsService = new FirebaseFunctionsService();
+			}
 		}
 
 		async void LoginClicked(object sender, EventArgs e)
@@ -151,7 +154,7 @@ namespace ProjectCaitlin
 
                     //Query for email in Users collection
 					App.User.email = userJson["email"].ToString();
-					App.User.id = "q0LcoTbnxI49arthgQ09";
+                    App.User.id = firebaseFunctionsService.FindUserDoc(App.User.email).Result;
 
 					firestoreService = new FirestoreService();
 

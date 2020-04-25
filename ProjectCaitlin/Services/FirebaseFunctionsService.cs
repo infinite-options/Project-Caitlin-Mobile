@@ -1,11 +1,50 @@
 ﻿using System;
 using System.Net.Http;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
 
 namespace ProjectCaitlin.Services
 {
     public class FirebaseFunctionsService
     {
+        public async Task<string> FindUserDoc(string email)
+        {
+            try
+            {
+                HttpRequestMessage request = new HttpRequestMessage
+                {
+                    RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/FindUserDoc"),
+                    Method = HttpMethod.Post
+                };
+
+                //Format Headers of Request
+                JObject data = new JObject();
+                data["emailId"] = email;
+                request.Headers.Add("data", data.ToString());
+
+                var client = new HttpClient();
+
+                // without async, will get stuck, needs bug fix
+                HttpResponseMessage response = await client.SendAsync(request);
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    HttpContent content = response.Content;
+                    var responseString = await content.ReadAsStringAsync();
+                    JObject responseJson = JObject.Parse(responseString);
+                    return responseJson["id"].ToString();
+                }
+                else
+                {
+                    return "";
+                }
+            }
+            catch
+            {
+                Console.WriteLine("error while calling find user id");
+                return "";
+            }
+        }
+
         public async Task<bool> GRUserNotificationSetToTrue(string routineId, string routineIdx, string status)
         {
             try
