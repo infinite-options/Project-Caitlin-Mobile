@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 
@@ -18,9 +19,12 @@ namespace ProjectCaitlin.Services
                 };
 
                 //Format Headers of Request
-                JObject data = new JObject();
-                data["emailId"] = email;
-                request.Headers.Add("data", data.ToString());
+                var formContent = new FormUrlEncodedContent(new[]
+                {
+                    new KeyValuePair<string, string>("somekey", "1"),
+                });
+
+
 
                 var client = new HttpClient();
 
