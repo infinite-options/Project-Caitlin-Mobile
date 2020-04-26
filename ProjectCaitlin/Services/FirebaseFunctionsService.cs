@@ -3,6 +3,9 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using ModernHttpClient;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace ProjectCaitlin.Services
 {
@@ -19,27 +22,38 @@ namespace ProjectCaitlin.Services
                 };
 
                 //Format Headers of Request
-                var formContent = new FormUrlEncodedContent(new[]
+
+
+                var requestData = new Dictionary<string, Dictionary<string, string>>
                 {
-                    new KeyValuePair<string, string>("somekey", "1"),
-                });
+                    {
+                        "data",
+                        new Dictionary<string, string>
+                        {
+                            {"emailId", email},
+                        }
+                    },
+                };
 
+                string dataString = JsonConvert.SerializeObject(requestData);
+                var fromContent = new StringContent(dataString, Encoding.UTF8, "application/json");
 
-
-                var client = new HttpClient();
-
-                // without async, will get stuck, needs bug fix
-                HttpResponseMessage response = await client.SendAsync(request);
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                using(var client = new HttpClient(new NativeMessageHandler()))
                 {
-                    HttpContent content = response.Content;
-                    var responseString = await content.ReadAsStringAsync();
-                    JObject responseJson = JObject.Parse(responseString);
-                    return responseJson["id"].ToString();
-                }
-                else
-                {
-                    return "";
+
+                    // without async, will get stuck, needs bug fix
+                    HttpResponseMessage response = client.PostAsync(request.RequestUri, fromContent).Result;
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        HttpContent content = response.Content;
+                        var responseString = await content.ReadAsStringAsync();
+                        JObject responseJson = JObject.Parse(responseString);
+                        return responseJson["result"]["id"].ToString();
+                    }
+                    else
+                    {
+                        return "";
+                    }
                 }
             }
             catch

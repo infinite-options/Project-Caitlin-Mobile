@@ -156,6 +156,13 @@ namespace ProjectCaitlin
 					App.User.email = userJson["email"].ToString();
                     App.User.id = firebaseFunctionsService.FindUserDoc(App.User.email).Result;
 
+                    if (App.User.id == "")
+                    {
+						DisplayAlert("Oops!", "Looks like your trusted advisor hasn't registered your account yet. Please ask for their assistance!", "OK");
+						loginButton.IsVisible = true;
+						return;
+                    }
+
 					firestoreService = new FirestoreService();
 
 					//Save to App.User AND Update Firebase with pertitnent info
@@ -171,8 +178,10 @@ namespace ProjectCaitlin
 
 					LoadApplicationProperties();
 
+					loginButton.IsVisible = false;
 					await firestoreService.LoadUser();
 					await GoogleService.LoadTodaysEvents();
+					loginButton.IsVisible = false;
 
 					//Navigate to the Daily Page after Login
 					await Navigation.PushAsync(new GoalsRoutinesTemplate());
