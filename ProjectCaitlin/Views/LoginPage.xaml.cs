@@ -109,7 +109,6 @@ namespace ProjectCaitlin
 
 		async void OnAuthCompleted(object sender, AuthenticatorCompletedEventArgs e)
 		{
-			loginButton.IsVisible = false;
 			var authenticator = sender as OAuth2Authenticator;
 			if (authenticator != null)
 			{
@@ -178,10 +177,8 @@ namespace ProjectCaitlin
 
 					LoadApplicationProperties();
 
-					loginButton.IsVisible = false;
 					await firestoreService.LoadUser();
 					await GoogleService.LoadTodaysEvents();
-					loginButton.IsVisible = false;
 
 					//Navigate to the Daily Page after Login
 					await Navigation.PushAsync(new GoalsRoutinesTemplate());
