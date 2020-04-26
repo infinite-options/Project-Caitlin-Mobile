@@ -98,7 +98,7 @@ namespace ProjectCaitlin.Views
                 }
                 //App.user.goals[a].actions[b].instructions[0].isComplete = true;
                 next.Text = "Next";
-                CarouselTasks.Position = 2;
+                CarouselTasks.Position = idx;
                 Console.WriteLine("CarouselTasks.Position: " + CarouselTasks.Position);
                 await Task.Delay(2000);
             }

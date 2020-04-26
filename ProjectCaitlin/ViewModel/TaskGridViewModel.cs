@@ -56,7 +56,7 @@ namespace ProjectCaitlin.ViewModel
                 foreach (task task in App.User.routines[a].tasks)
                 {
                     Items.Add( new TaskItemModel(
-                    
+
                         App.User.routines[a].tasks[taskIdx].photo,
                         App.User.routines[a].tasks[taskIdx].title,
                         Color.FromHex("#272E32"),

@@ -22,7 +22,7 @@ namespace ProjectCaitlin.Views
         TimeSpan nightEnd = new TimeSpan(6, 0, 0);
         public GreetingPage()
         {
-            
+
             InitializeComponent();
             var navigationPage = Application.Current.MainPage as NavigationPage;
             navigationPage.BarBackgroundColor = Color.FromHex("#E9E8E8");
