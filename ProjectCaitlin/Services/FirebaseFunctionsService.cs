@@ -1,11 +1,68 @@
 ﻿using System;
 using System.Net.Http;
+using System.Text;
 using System.Threading.Tasks;
+using Newtonsoft.Json.Linq;
+using ModernHttpClient;
+using System.Collections.Generic;
+using Newtonsoft.Json;
 
 namespace ProjectCaitlin.Services
 {
     public class FirebaseFunctionsService
     {
+        public async Task<string> FindUserDoc(string email)
+        {
+            try
+            {
+                HttpRequestMessage request = new HttpRequestMessage
+                {
+                    RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/FindUserDoc"),
+                    Method = HttpMethod.Post
+                };
+
+                //Format Headers of Request
+
+
+                var requestData = new Dictionary<string, Dictionary<string, string>>
+                {
+                    {
+                        "data",
+                        new Dictionary<string, string>
+                        {
+                            {"emailId", email},
+                        }
+                    },
+                };
+
+                string dataString = JsonConvert.SerializeObject(requestData);
+                var fromContent = new StringContent(dataString, Encoding.UTF8, "application/json");
+
+                using(var client = new HttpClient(new NativeMessageHandler()))
+                {
+
+                    // without async, will get stuck, needs bug fix
+                    HttpResponseMessage response = client.PostAsync(request.RequestUri, fromContent).Result;
+                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                    {
+                        HttpContent content = response.Content;
+                        var responseString = await content.ReadAsStringAsync();
+                        JObject responseJson = JObject.Parse(responseString);
+                        return responseJson["result"]["id"].ToString();
+                    }
+                    else
+                    {
+                        return "";
+                    }
+                }
+            }
+            catch
+            {
+                Console.WriteLine("error while calling find user id");
+                return "";
+            }
+        }
+
         public async Task<bool> GRUserNotificationSetToTrue(string routineId, string routineIdx, string status)
         {
             try

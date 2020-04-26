@@ -27,7 +27,8 @@ namespace ProjectCaitlin
 		Account account;
 		public static string accessToken;
 		FirestoreService firestoreService;
-        public static string refreshToken;
+		FirebaseFunctionsService firebaseFunctionsService;
+		public static string refreshToken;
         public string clientId;
 
         public LoginPage()
@@ -45,6 +46,7 @@ namespace ProjectCaitlin
 				LoadApplicationProperties();
 
 				firestoreService = new FirestoreService();
+				firebaseFunctionsService = new FirebaseFunctionsService();
 
 				await firestoreService.LoadUser();
 				await GoogleService.LoadTodaysEvents();
@@ -54,7 +56,8 @@ namespace ProjectCaitlin
             else
             {
                 loginButton.IsVisible = true;
-            }
+				firebaseFunctionsService = new FirebaseFunctionsService();
+			}
 		}
 
 		async void LoginClicked(object sender, EventArgs e)
@@ -106,6 +109,7 @@ namespace ProjectCaitlin
 
 		async void OnAuthCompleted(object sender, AuthenticatorCompletedEventArgs e)
 		{
+			loginButton.IsVisible = false;
 			var authenticator = sender as OAuth2Authenticator;
 			if (authenticator != null)
 			{
@@ -115,8 +119,6 @@ namespace ProjectCaitlin
 
 			if (e.IsAuthenticated)
 			{
-				loginButton.IsVisible = false;
-
 				// If the user is authenticated, request their basic user data from Google
 				// UserInfoUrl = https://www.googleapis.com/oauth2/v2/userinfo
 				var request = new OAuth2Request("GET", new Uri(Constants.UserInfoUrl), null, e.Account);
@@ -152,7 +154,14 @@ namespace ProjectCaitlin
 
                     //Query for email in Users collection
 					App.User.email = userJson["email"].ToString();
-					App.User.id = "7R6hAVmDrNutRkG3sVRy";
+                    App.User.id = firebaseFunctionsService.FindUserDoc(App.User.email).Result;
+
+                    if (App.User.id == "")
+                    {
+						DisplayAlert("Oops!", "Looks like your trusted advisor hasn't registered your account yet. Please ask for their assistance!", "OK");
+						loginButton.IsVisible = true;
+						return;
+                    }
 
 					firestoreService = new FirestoreService();
 
@@ -169,8 +178,10 @@ namespace ProjectCaitlin
 
 					LoadApplicationProperties();
 
+					loginButton.IsVisible = false;
 					await firestoreService.LoadUser();
 					await GoogleService.LoadTodaysEvents();
+					loginButton.IsVisible = false;
 
 					//Navigate to the Daily Page after Login
 					await Navigation.PushAsync(new GoalsRoutinesTemplate());

@@ -32,6 +32,7 @@
     <PackageReference Include="Microsoft.AppCenter.Distribute" Version="3.1.0" />
     <PackageReference Include="AppCenter.Analytics.Metrics" Version="1.1.0" />
     <PackageReference Include="Xamarin.Forms" Version="4.4.0.991477" />
+    <PackageReference Include="modernhttpclient" Version="2.4.2" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.iOS">
