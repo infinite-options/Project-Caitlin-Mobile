@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using ModernHttpClient;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
@@ -38,7 +37,7 @@ namespace ProjectCaitlin.Services
                 string dataString = JsonConvert.SerializeObject(requestData);
                 var fromContent = new StringContent(dataString, Encoding.UTF8, "application/json");
 
-                using(var client = new HttpClient(new NativeMessageHandler()))
+                using (var client = new HttpClient())
                 {
 
                     // without async, will get stuck, needs bug fix
