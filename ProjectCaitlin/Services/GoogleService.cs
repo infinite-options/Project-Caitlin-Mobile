@@ -28,7 +28,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Post;
 
             //Format Headers of Request with included Token
-            request.Headers.Add("userID", "7R6hAVmDrNutRkG3sVRy");
+            request.Headers.Add("userID", App.User.id);
             request.Headers.Add("token", accessToken);
             var client = new HttpClient();
             HttpResponseMessage response = await client.SendAsync(request);
@@ -46,7 +46,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Post;
 
             //Format Headers of Request with included Token
-            request.Headers.Add("userID", "7R6hAVmDrNutRkG3sVRy");
+            request.Headers.Add("userID", App.User.id);
             request.Headers.Add("token", refreshToken);
             var client = new HttpClient();
             HttpResponseMessage response = await client.SendAsync(request);
@@ -94,6 +94,7 @@ namespace ProjectCaitlin.Services
             {
                 Application.Current.Properties.Remove("refreshToken");
                 await Application.Current.MainPage.Navigation.PopToRootAsync();
+                Navigation.PushAsync(new LoginPage());
                 return false;
             }
 
@@ -108,6 +109,7 @@ namespace ProjectCaitlin.Services
                 Console.WriteLine("3: HERE");
                 Application.Current.Properties.Remove("refreshToken");
                 await Application.Current.MainPage.Navigation.PopToRootAsync();
+                Navigation.PushAsync(new LoginPage());
             }
 
             Console.WriteLine("4: HERE");
