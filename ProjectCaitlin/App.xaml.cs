@@ -20,7 +20,10 @@ namespace ProjectCaitlin
 
         public static bool IsPushNotifyEnabled { get; set; }
 
+
         public static double ListPageScrollPosY { get; set; } = -20;
+
+        public static bool isAuthenticating { get; set; } = false;
 
         [assembly: XamlCompilation(XamlCompilationsOptions.Compile)]
         public App()

@@ -22,7 +22,7 @@
         <ImageButton
             x:Name="loginButton"
             Clicked="LoginClicked"
-            IsVisible="true"
+            IsVisible="false"
             WidthRequest="224"
             HeightRequest="54"
             HorizontalOptions="Center"

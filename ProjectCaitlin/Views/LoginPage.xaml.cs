@@ -42,7 +42,6 @@ namespace ProjectCaitlin
                 && Application.Current.Properties.ContainsKey("refreshToken")
 				&& Application.Current.Properties.ContainsKey("user_id"))
             {
-
 				LoadApplicationProperties();
 
 				firestoreService = new FirestoreService();
@@ -55,7 +54,8 @@ namespace ProjectCaitlin
 			}
             else
             {
-                loginButton.IsVisible = true;
+                if (!App.isAuthenticating)
+                    loginButton.IsVisible = true;
 				firebaseFunctionsService = new FirebaseFunctionsService();
 			}
 		}
@@ -109,6 +109,8 @@ namespace ProjectCaitlin
 
 		async void OnAuthCompleted(object sender, AuthenticatorCompletedEventArgs e)
 		{
+			App.isAuthenticating = true;
+			loginButton.IsVisible = false;
 			var authenticator = sender as OAuth2Authenticator;
 			if (authenticator != null)
 			{
@@ -180,6 +182,7 @@ namespace ProjectCaitlin
 					await firestoreService.LoadUser();
 					await GoogleService.LoadTodaysEvents();
 
+					App.isAuthenticating = false;
 					//Navigate to the Daily Page after Login
 					await Navigation.PushAsync(new GoalsRoutinesTemplate());
 				}
