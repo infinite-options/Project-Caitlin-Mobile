@@ -153,7 +153,9 @@ namespace ProjectCaitlin
 					accessToken = e.Account.Properties["access_token"];
 					refreshToken = e.Account.Properties["refresh_token"];
 
-                    //Query for email in Users collection
+					App.User = new user();
+
+					//Query for email in Users collection
 					App.User.email = userJson["email"].ToString();
                     App.User.id = firebaseFunctionsService.FindUserDoc(App.User.email).Result;
 

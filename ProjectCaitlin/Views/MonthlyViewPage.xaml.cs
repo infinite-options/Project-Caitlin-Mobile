@@ -83,10 +83,6 @@ namespace ProjectCaitlin
                     string description = list[2];
                     string creationTime = list[3];
 
-                    if (photoCount % rowLength == 0)
-                    {
-                        controlGrid.RowDefinitions.Add(new RowDefinition { Height = gridItemSize });
-                    }
                     CachedImage webImage = new CachedImage
                     {
                         Source = Xamarin.Forms.ImageSource.FromUri(new Uri(photoURI)),
@@ -335,12 +331,10 @@ namespace ProjectCaitlin
                 // make the label bold if there are images in that day.
                 foreach (string date in GooglePhotoService.allDates)
                 {
-                    string currentDate = date;
-                    int Year = Int32.Parse(currentDate.Substring(0, currentDate.IndexOf("/")));
-                    string newDate = currentDate.Substring(currentDate.IndexOf("/") + 1);
-                    int Month = Int32.Parse(newDate.Substring(0, newDate.IndexOf("/")));
-                    newDate = newDate.Substring(newDate.IndexOf("/") + 1);
-                    int Day = Int32.Parse(newDate);
+                    DateTime currentDate = DateTime.Parse(date);
+                    int Year = currentDate.Year;
+                    int Month = currentDate.Month;
+                    int Day = currentDate.Day;
 
                     if (Year == year && Month == month && Day == j)
                     {
