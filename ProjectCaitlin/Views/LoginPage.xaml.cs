@@ -21,7 +21,7 @@ namespace ProjectCaitlin
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
-    public partial class LoginPage : ContentPage
+	public partial class LoginPage : ContentPage
     {
 
 		Account account;
@@ -35,30 +35,6 @@ namespace ProjectCaitlin
         {
 			InitializeComponent();
         }
-
-		protected override async void OnAppearing()
-		{
-			if (Application.Current.Properties.ContainsKey("accessToken")
-                && Application.Current.Properties.ContainsKey("refreshToken")
-				&& Application.Current.Properties.ContainsKey("user_id"))
-            {
-				LoadApplicationProperties();
-
-				firestoreService = new FirestoreService();
-				firebaseFunctionsService = new FirebaseFunctionsService();
-
-				await firestoreService.LoadUser();
-				await GoogleService.LoadTodaysEvents();
-
-				await Navigation.PushAsync(new GoalsRoutinesTemplate());
-			}
-            else
-            {
-                if (!App.isAuthenticating)
-                    loginButton.IsVisible = true;
-				firebaseFunctionsService = new FirebaseFunctionsService();
-			}
-		}
 
 		async void LoginClicked(object sender, EventArgs e)
         {
@@ -109,8 +85,6 @@ namespace ProjectCaitlin
 
 		async void OnAuthCompleted(object sender, AuthenticatorCompletedEventArgs e)
 		{
-			App.isAuthenticating = true;
-			loginButton.IsVisible = false;
 			var authenticator = sender as OAuth2Authenticator;
 			if (authenticator != null)
 			{
@@ -120,6 +94,8 @@ namespace ProjectCaitlin
 
 			if (e.IsAuthenticated)
 			{
+				Navigation.PushAsync(new LoadingPage());
+
 				// If the user is authenticated, request their basic user data from Google
 				// UserInfoUrl = https://www.googleapis.com/oauth2/v2/userinfo
 				var request = new OAuth2Request("GET", new Uri(Constants.UserInfoUrl), null, e.Account);
@@ -154,6 +130,7 @@ namespace ProjectCaitlin
 					refreshToken = e.Account.Properties["refresh_token"];
 
 					App.User = new user();
+					firebaseFunctionsService = new FirebaseFunctionsService();
 
 					//Query for email in Users collection
 					App.User.email = userJson["email"].ToString();
@@ -162,7 +139,6 @@ namespace ProjectCaitlin
                     if (App.User.id == "")
                     {
 						DisplayAlert("Oops!", "Looks like your trusted advisor hasn't registered your account yet. Please ask for their assistance!", "OK");
-						loginButton.IsVisible = true;
 						return;
                     }
 
@@ -179,12 +155,11 @@ namespace ProjectCaitlin
 					Application.Current.Properties["refreshToken"] = refreshToken;
 					Application.Current.Properties["user_id"] = App.User.id;
 
-					LoadApplicationProperties();
+					App.LoadApplicationProperties();
 
 					await firestoreService.LoadUser();
 					await GoogleService.LoadTodaysEvents();
 
-					App.isAuthenticating = false;
 					//Navigate to the Daily Page after Login
 					await Navigation.PushAsync(new GoalsRoutinesTemplate());
 				}
@@ -206,13 +181,6 @@ namespace ProjectCaitlin
 		public async void ListViewClicked(object sender, EventArgs e)
 		{
 			await Navigation.PushAsync(new ListViewPage());
-		}
-
-        private void LoadApplicationProperties()
-        {
-			App.User.access_token = Application.Current.Properties["accessToken"].ToString();
-			App.User.refresh_token = Application.Current.Properties["refreshToken"].ToString();
-			App.User.id = Application.Current.Properties["user_id"].ToString();
 		}
 	}
 }

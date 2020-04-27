@@ -4,7 +4,6 @@ using System.Linq;
 using FFImageLoading.Forms.Platform;
 using FFImageLoading.Transformations;
 using Foundation;
-using Microsoft.AppCenter.Push;
 using PanCardView.iOS;
 using UIKit;
 using UserNotifications;
@@ -40,19 +39,6 @@ namespace ProjectCaitlin.iOS
             global::Xamarin.Auth.Presenters.XamarinIOS.AuthenticationConfiguration.Init();
 
             return base.FinishedLaunching(app, options);
-        }
-
-        public override void DidReceiveRemoteNotification(UIApplication application, NSDictionary userInfo, System.Action<UIBackgroundFetchResult> completionHandler)
-        {
-            var result = Push.DidReceiveRemoteNotification(userInfo);
-            if (result)
-            {
-                completionHandler?.Invoke(UIBackgroundFetchResult.NewData);
-            }
-            else
-            {
-                completionHandler?.Invoke(UIBackgroundFetchResult.NoData);
-            }
         }
 
         public override bool OpenUrl(UIApplication app, NSUrl url, NSDictionary options)
