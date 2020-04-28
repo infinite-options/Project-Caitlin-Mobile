@@ -3,7 +3,6 @@ using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
-using ModernHttpClient;
 using System.Collections.Generic;
 using Newtonsoft.Json;
 
@@ -38,7 +37,7 @@ namespace ProjectCaitlin.Services
                 string dataString = JsonConvert.SerializeObject(requestData);
                 var fromContent = new StringContent(dataString, Encoding.UTF8, "application/json");
 
-                using(var client = new HttpClient(new NativeMessageHandler()))
+                using (var client = new HttpClient())
                 {
 
                     // without async, will get stuck, needs bug fix
@@ -98,7 +97,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Post;
 
             //Format Headers of Request with included Token
-            request.Headers.Add("userId", "7R6hAVmDrNutRkG3sVRy");
+            request.Headers.Add("userId", App.User.id);
             request.Headers.Add("routineId", routineId);
             request.Headers.Add("routineNumber", routineIdx);
 
@@ -126,7 +125,7 @@ namespace ProjectCaitlin.Services
             };
 
             //Format Headers of Request with included Token
-            request.Headers.Add("userId", "7R6hAVmDrNutRkG3sVRy");
+            request.Headers.Add("userId", App.User.id);
             request.Headers.Add("routineId", routineId);
             request.Headers.Add("taskId", taskId);
             request.Headers.Add("taskNumber", taskIndex);
@@ -157,7 +156,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Post;
 
             //Format Headers of Request with included Token
-            request.Headers.Add("userId", "7R6hAVmDrNutRkG3sVRy");
+            request.Headers.Add("userId", App.User.id);
             request.Headers.Add("routineId", goalId);
             request.Headers.Add("taskId", actionId);
             request.Headers.Add("stepNumber", instructionNumber);
@@ -186,7 +185,7 @@ namespace ProjectCaitlin.Services
             };
 
             //Format Headers of Request with included Token
-            request.Headers.Add("userId", "7R6hAVmDrNutRkG3sVRy");
+            request.Headers.Add("userId", App.User.id);
             request.Headers.Add("routineId", routineId);
             request.Headers.Add("taskId", taskId);
             request.Headers.Add("stepNumber", stepNumber);
@@ -212,7 +211,7 @@ namespace ProjectCaitlin.Services
             };
 
             //Format Headers of Request with included Token
-            request.Headers.Add("userId", "7R6hAVmDrNutRkG3sVRy");
+            request.Headers.Add("userId", App.User.id);
             request.Headers.Add("routineId", routineId);
             request.Headers.Add("taskId", taskId);
             request.Headers.Add("stepNumber", stepNumber);
@@ -236,7 +235,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Post;
 
             //Format Headers of Request with included Token
-            request.Headers.Add("userId", "7R6hAVmDrNutRkG3sVRy");
+            request.Headers.Add("userId", App.User.id);
             request.Headers.Add("routineId", routineId);
             request.Headers.Add("routineNumber", routineIdx);
 
@@ -262,7 +261,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Post;
 
             //Format Headers of Request with included Token
-            request.Headers.Add("userId", "7R6hAVmDrNutRkG3sVRy");
+            request.Headers.Add("userId", App.User.id);
             request.Headers.Add("routineId", routineId);
             request.Headers.Add("taskId", taskId);
             request.Headers.Add("taskNumber", taskIndex);
@@ -290,7 +289,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Post;
 
             //Format Headers of Request with included Token
-            request.Headers.Add("userId", "7R6hAVmDrNutRkG3sVRy");
+            request.Headers.Add("userId", App.User.id);
             request.Headers.Add("routineId", goalId);
             request.Headers.Add("taskId", actionId);
             request.Headers.Add("stepNumber", instructionNumber);

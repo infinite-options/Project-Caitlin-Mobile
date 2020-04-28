@@ -49,7 +49,7 @@ namespace ProjectCaitlin.ViewModel
                     completeInstuction = new Command(
                             async () =>
                             {
-                                var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
+                                var firestoreService = new FirestoreService(App.User.id);
                                 var goalId = App.user.goals[a].id;
                                 var actionId = App.user.goals[a].actions[b].id;
                                 var isInstructionComplete = await firestoreService.UpdateInstruction(goalId, actionId, App.user.goals[a].actions[b].instructions[i].dbIdx.ToString());

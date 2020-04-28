@@ -77,9 +77,7 @@ namespace ProjectCaitlin
 
 		async void CardViewPageClicked(object sender, EventArgs e)
 		{
-
 			await Navigation.PushAsync(new GoalsRoutinesTemplate());
-
 		}
 
 
@@ -138,7 +136,8 @@ namespace ProjectCaitlin
 
                     if (App.User.id == "")
                     {
-						DisplayAlert("Oops!", "Looks like your trusted advisor hasn't registered your account yet. Please ask for their assistance!", "OK");
+						await DisplayAlert("Oops!", "Looks like your trusted advisor hasn't registered your account yet. Please ask for their assistance!", "OK");
+						await Navigation.PushAsync(new LoginPage());
 						return;
                     }
 
