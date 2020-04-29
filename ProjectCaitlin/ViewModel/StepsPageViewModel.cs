@@ -49,7 +49,7 @@ namespace ProjectCaitlin.ViewModel
                 TopLabel = App.User.routines[a].tasks[b].title;
                 TaskName = App.User.routines[a].title;
                 ExpectedCompletionTime = "Expected to take " +
-                    ((int) App.User.routines[a].tasks[b].expectedCompletionTime.TotalMinutes).ToString()
+                    ((int) App.User.routines[a].expectedCompletionTime.TotalMinutes).ToString()
                     + " minutes";
 
                 int stepIdx = 0;

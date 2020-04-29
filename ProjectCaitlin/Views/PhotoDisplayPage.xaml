@@ -2,12 +2,13 @@
 <ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              xmlns:forms="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              x:Class="ProjectCaitlin.PhotoDisplayPage"
              BackgroundColor="#E9E8E8"
              Title="Photos"
              NavigationPage.HasBackButton="False"
              NavigationPage.HasNavigationBar="False">
-    <StackLayout Padding="20">
+    <StackLayout>
         
         <StackLayout Orientation="Horizontal"
                      HorizontalOptions="FillAndExpand"
@@ -51,17 +52,94 @@
             </CarouselView.ItemTemplate>
         </CarouselView>
 
-        <StackLayout>
-            <!-- EXIT BUTTON-->
-            <ImageButton
-                        Source="myphotosicon.png"
-                        BackgroundColor="Transparent"
-                        HeightRequest="50"
-                        WidthRequest="50"
-                        HorizontalOptions="End"
-                        VerticalOptions="Center"
-                        Clicked="close"/>
+        <RelativeLayout
+                VerticalOptions="End">
+            <Frame x:Name="NavBar" HasShadow="True" CornerRadius="0" Padding="0,-5,0,10" HeightRequest="65" VerticalOptions="End" RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}">
+                <Grid Grid.Row="1" Grid.Column="4">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="0.25*" />
+                        <ColumnDefinition Width="0.25*" />
+                        <ColumnDefinition Width="0.25*" />
+                        <ColumnDefinition Width="0.25*" />
+                    </Grid.ColumnDefinitions>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*" />
+                    </Grid.RowDefinitions>
+                    <StackLayout VerticalOptions="End" Grid.Column="0">
+                        <ffimage:CachedImage x:Name="MyDayButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="mydayiconnotext.png" >
+                            <ffimage:CachedImage.HeightRequest>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <On Platform="Android">20</On>
+                                    <On Platform="iOS">25</On>
+                                </OnPlatform>
+                            </ffimage:CachedImage.HeightRequest>
+                        </ffimage:CachedImage>
+                        <Label Text="My Day" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                            <Label.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                </OnPlatform>
+                            </Label.FontFamily>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout VerticalOptions="End" Grid.Column="1">
+                        <ffimage:CachedImage x:Name="ListViewButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="listviewiconnotext.png" >
+                            <ffimage:CachedImage.HeightRequest>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <On Platform="Android">20</On>
+                                    <On Platform="iOS">25</On>
+                                </OnPlatform>
+                            </ffimage:CachedImage.HeightRequest>
+                        </ffimage:CachedImage>
+                        <Label Text="Today's List" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                            <Label.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                </OnPlatform>
+                            </Label.FontFamily>
+                        </Label>
+                    </StackLayout>
+                    <StackLayout VerticalOptions="End" Grid.Column="2">
+                        <ffimage:CachedImage x:Name="MyPhotosButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="myphotosiconnotext.png" >
+                            <ffimage:CachedImage.HeightRequest>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <On Platform="Android">20</On>
+                                    <On Platform="iOS">25</On>
+                                </OnPlatform>
+                            </ffimage:CachedImage.HeightRequest>
+                        </ffimage:CachedImage>
+                        <Label Text="My Photos" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                            <Label.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                </OnPlatform>
+                            </Label.FontFamily>
+                        </Label>
+                    </StackLayout>
 
-        </StackLayout>
+                    <StackLayout VerticalOptions="End" Grid.Column="3">
+                        <ffimage:CachedImage x:Name="AboutMeButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="aboutmeiconnotext.png" >
+                            <ffimage:CachedImage.HeightRequest>
+                                <OnPlatform x:TypeArguments="x:Double">
+                                    <On Platform="Android">20</On>
+                                    <On Platform="iOS">25</On>
+                                </OnPlatform>
+                            </ffimage:CachedImage.HeightRequest>
+                        </ffimage:CachedImage>
+                        <Label Text="About Me" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                            <Label.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                </OnPlatform>
+                            </Label.FontFamily>
+                        </Label>
+                    </StackLayout>
+                </Grid>
+            </Frame>
+        </RelativeLayout>
     </StackLayout>
 </ContentPage>

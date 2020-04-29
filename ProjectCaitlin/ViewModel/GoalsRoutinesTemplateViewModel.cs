@@ -63,21 +63,45 @@ namespace ProjectCaitlin.ViewModel
             int routineNum = 0;
             foreach (routine routine in App.User.routines)
             {
-                if (isInTimeRange(routine.availableStartTime, routine.availableEndTime))
+
+                //calculate the sum duration for the routine from step level.
+                if (routine.isSublistAvailable == true)
                 {
-                    //calculate the sum duration for the routine from step level.
                     int sum_duration = 0;
                     foreach (task task in routine.tasks)
                     {
-                        foreach (step step in task.steps)
+                        Console.WriteLine("Task here: " + task.title);
+                        Console.WriteLine("Task sum_duration: " + sum_duration);
+                        if (task.isSublistAvailable == true)
                         {
-                            sum_duration += (int)step.expectedCompletionTime.TotalMinutes;
+                            int step_duration = 0;
+                            foreach (step step in task.steps)
+                            {
+                                step_duration += (int)step.expectedCompletionTime.TotalMinutes;
+                                Console.WriteLine("step_duration : " + step_duration);
+                            }
+                            if (step_duration == 0)
+                                sum_duration += (int)task.expectedCompletionTime.TotalMinutes;
+                            else
+                                sum_duration += step_duration;
+                            Console.WriteLine("In if: " + sum_duration);
+
                         }
+                        else
+                        {
+                            sum_duration += (int)task.expectedCompletionTime.TotalMinutes;
+                            Console.WriteLine("In else: " + sum_duration);
+                        }
+                        Console.WriteLine("Task end: " + sum_duration);
                     }
-                    // set the duration for routine
+                    // update the duration for routine
                     if (sum_duration != 0)
                         routine.expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);
+                }
 
+                if (isInTimeRange(routine.availableStartTime, routine.availableEndTime))
+                {
+                   
                     string buttonText = "Tap to Start";
                     if (routine.isInProgress)
                         buttonText = "Tap to Continue";

@@ -26,6 +26,7 @@ namespace ProjectCaitlin
         public PhotoDisplayPage(CachedImage webImage, string date, string description, string creationTime)
         {
             InitializeComponent();
+            AddTapGestures();
             this.date = date;
             pageModel = new PhotoViewModel(webImage, date, description, creationTime);
             BindingContext = pageModel;
@@ -262,14 +263,37 @@ namespace ProjectCaitlin
             dateTime = dateTime.Substring(0, dateTime.IndexOf(" "));
             return dateTime;
         }
-        public async void close(object sender, EventArgs args)
-        {
-            await Navigation.PushAsync(new MonthlyViewPage());
-        }
         void EditorCompleted(object sender, EventArgs e)
         {
             var text = ((Editor)sender).Text; // sender is cast to an Editor to enable reading the `Text` property of the view.
             Console.WriteLine(text);
+        }
+
+        private void AddTapGestures()
+        {
+            var tapGestureRecognizer1 = new TapGestureRecognizer();
+            tapGestureRecognizer1.Tapped += async (s, e) => {
+                await Navigation.PushAsync(new GreetingPage());
+            };
+            AboutMeButton.GestureRecognizers.Add(tapGestureRecognizer1);
+
+            var tapGestureRecognizer2 = new TapGestureRecognizer();
+            tapGestureRecognizer2.Tapped += async (s, e) => {
+                await Navigation.PushAsync(new ListViewPage());
+            };
+            ListViewButton.GestureRecognizers.Add(tapGestureRecognizer2);
+
+            var tapGestureRecognizer3 = new TapGestureRecognizer();
+            tapGestureRecognizer3.Tapped += async (s, e) => {
+                await Navigation.PushAsync(new MonthlyViewPage());
+            };
+            MyPhotosButton.GestureRecognizers.Add(tapGestureRecognizer3);
+
+            var tapGestureRecognizer4 = new TapGestureRecognizer();
+            tapGestureRecognizer4.Tapped += async (s, e) => {
+                await Navigation.PushAsync(new GoalsRoutinesTemplate());
+            };
+            MyDayButton.GestureRecognizers.Add(tapGestureRecognizer4);
         }
     }
 }
