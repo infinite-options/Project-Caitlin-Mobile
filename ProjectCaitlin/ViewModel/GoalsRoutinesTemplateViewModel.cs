@@ -32,6 +32,7 @@ namespace ProjectCaitlin.ViewModel
         public string DayLabel { get; set; }
         public string TimeLabel { get; set; }
         public string DayImage { get; set; }
+        
         public GoalsRoutinesTemplateViewModel(GoalsRoutinesTemplate mainPage)
         {
             this.mainPage = mainPage;
@@ -63,36 +64,28 @@ namespace ProjectCaitlin.ViewModel
             int routineNum = 0;
             foreach (routine routine in App.User.routines)
             {
-
                 //calculate the sum duration for the routine from step level.
                 if (routine.isSublistAvailable == true)
                 {
                     int sum_duration = 0;
                     foreach (task task in routine.tasks)
                     {
-                        Console.WriteLine("Task here: " + task.title);
-                        Console.WriteLine("Task sum_duration: " + sum_duration);
                         if (task.isSublistAvailable == true)
                         {
                             int step_duration = 0;
                             foreach (step step in task.steps)
                             {
                                 step_duration += (int)step.expectedCompletionTime.TotalMinutes;
-                                Console.WriteLine("step_duration : " + step_duration);
                             }
                             if (step_duration == 0)
                                 sum_duration += (int)task.expectedCompletionTime.TotalMinutes;
                             else
                                 sum_duration += step_duration;
-                            Console.WriteLine("In if: " + sum_duration);
-
                         }
                         else
                         {
                             sum_duration += (int)task.expectedCompletionTime.TotalMinutes;
-                            Console.WriteLine("In else: " + sum_duration);
                         }
-                        Console.WriteLine("Task end: " + sum_duration);
                     }
                     // update the duration for routine
                     if (sum_duration != 0)
@@ -177,21 +170,36 @@ namespace ProjectCaitlin.ViewModel
             int goalNum = 0;
             foreach (goal goal in App.User.goals)
             {
-                if (isInTimeRange(goal.availableStartTime, goal.availableEndTime))
+                //calculate the sum duration for the goal from instruction level.
+                if (goal.isSublistAvailable == true)
                 {
-                    //calculate the sum duration for the routine from step level.
-                    int sum_duration = 0;
+                    int goal_duration = 0;
                     foreach (action action in goal.actions)
                     {
-                        foreach (instruction instruction in action.instructions)
+                        if (action.isSublistAvailable == true)
                         {
-                            sum_duration += (int)instruction.expectedCompletionTime.TotalMinutes;
+                            int instruction_duration = 0;
+                            foreach (instruction instruction in action.instructions)
+                            {
+                                instruction_duration += (int)instruction.expectedCompletionTime.TotalMinutes;
+                            }
+                            if (instruction_duration == 0)
+                                goal_duration += (int)action.expectedCompletionTime.TotalMinutes;
+                            else
+                                goal_duration += instruction_duration;
+                        }
+                        else
+                        {
+                            goal_duration += (int)action.expectedCompletionTime.TotalMinutes;
                         }
                     }
-                    // set the duration for routine
-                    if (sum_duration != 0)
-                        goal.expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);
+                    // update the duration for goal
+                    if (goal_duration != 0)
+                        goal.expectedCompletionTime = TimeSpan.FromMinutes(goal_duration);
+                }
 
+                if (isInTimeRange(goal.availableStartTime, goal.availableEndTime))
+                {
                     string buttonText = "Tap to Start";
                     if (goal.isInProgress)
                         buttonText = "Tap to Continue";

@@ -43,6 +43,7 @@ namespace ProjectCaitlin
         public PhotoDisplayPage(string date)
         {
             InitializeComponent();
+            AddTapGestures();
             this.date = date;
             pageModel = new PhotoViewModel(date);
             
