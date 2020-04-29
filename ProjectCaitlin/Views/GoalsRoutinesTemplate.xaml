@@ -64,8 +64,7 @@
                             Margin="0, 0, 0, 10"/>
                 </StackLayout>
 
-                <cards:CoverFlowView
-                            PositionShiftValue="50"
+                <cards:CubeView
                             IsCyclical="false"
                             VerticalOptions="FillAndExpand"
                             SelectedIndex="{Binding CurrentIndex}"
@@ -76,7 +75,7 @@
                         <proc:BaseCoverFlowBackViewProcessor  ScaleFactor="0.75" OpacityFactor=".9" RotationFactor="-0.009" />
                     </x:Arguments>
 
-                    <cards:CoverFlowView.ItemTemplate>
+                    <cards:CubeView.ItemTemplate>
                         <DataTemplate>
                             <!-- Card Definition-->
                             <Frame
@@ -174,9 +173,9 @@
 
                             </Frame>
                         </DataTemplate>
-                    </cards:CoverFlowView.ItemTemplate>
+                    </cards:CubeView.ItemTemplate>
                     <controls:IndicatorsControl SelectedIndicatorStyle="{StaticResource ActiveIndicator}" UnselectedIndicatorStyle="{StaticResource InactiveIndicator}"/>
-                </cards:CoverFlowView>
+                </cards:CubeView>
             </StackLayout>
             <RelativeLayout
                 VerticalOptions="End">
