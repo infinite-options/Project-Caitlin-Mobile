@@ -64,7 +64,7 @@
                             Margin="0, 0, 0, 10"/>
                 </StackLayout>
 
-                <cards:CubeView
+                <cards:CoverFlowView
                             IsCyclical="false"
                             VerticalOptions="FillAndExpand"
                             SelectedIndex="{Binding CurrentIndex}"
@@ -75,35 +75,36 @@
                         <proc:BaseCoverFlowBackViewProcessor  ScaleFactor="0.75" OpacityFactor=".9" RotationFactor="-0.009" />
                     </x:Arguments>
 
-                    <cards:CubeView.ItemTemplate>
+                    <cards:CoverFlowView.ItemTemplate>
                         <DataTemplate>
                             <!-- Card Definition-->
-                            <Frame
-                            Margin="0, 0, 0, 45"
-                            HorizontalOptions="CenterAndExpand"
-                            VerticalOptions="FillAndExpand"
-                            WidthRequest="300"
-                            Padding="0"
-                            HasShadow="true"
-                            IsClippedToBounds="true"
-                            CornerRadius="10"
-                            BackgroundColor="{Binding BackgroundColor}">
+                            <StackLayout>
+                                <Frame
+                                Margin="0, 0, 0, 45"
+                                HorizontalOptions="CenterAndExpand"
+                                VerticalOptions="FillAndExpand"
+                                WidthRequest="300"
+                                Padding="0"
+                                IsClippedToBounds="False"
+                                HasShadow="False"
+                                CornerRadius="10"
+                                BackgroundColor="{Binding BackgroundColor}">
 
-                                <StackLayout
+                                    <StackLayout
                                 Padding="10">
 
-                                    <Grid>
-                                        <ffimage:CachedImage
+                                        <Grid>
+                                            <ffimage:CachedImage
                                         Source="{Binding Source}"
                                         HeightRequest="100"
                                         WidthRequest="100"
                                             Opacity="{Binding GrImageOpactiy}">
-                                            <ffimage:CachedImage.Transformations>
-                                                <fftransformations:CircleTransformation/>
-                                            </ffimage:CachedImage.Transformations>
-                                        </ffimage:CachedImage>
+                                                <ffimage:CachedImage.Transformations>
+                                                    <fftransformations:CircleTransformation/>
+                                                </ffimage:CachedImage.Transformations>
+                                            </ffimage:CachedImage>
 
-                                        <ffimage:CachedImage
+                                            <ffimage:CachedImage
                                             Source="greencheckmarkicon.png"
                                             HeightRequest="90"
                                             WidthRequest="90"
@@ -112,9 +113,9 @@
                                             Opacity=".9"
                                             IsVisible="{Binding IsComplete, FallbackValue=Collapsed}"
                                             Aspect="AspectFit">
-                                        </ffimage:CachedImage>
+                                            </ffimage:CachedImage>
 
-                                        <ffimage:CachedImage
+                                            <ffimage:CachedImage
                                             Source="yellowclockicon.png"
                                             HeightRequest="75"
                                             WidthRequest="75"
@@ -123,41 +124,41 @@
                                             Opacity=".9"
                                             IsVisible="{Binding IsInProgress, FallbackValue=Collapsed}"
                                             Aspect="AspectFit">
-                                        </ffimage:CachedImage>
-                                    </Grid>
+                                            </ffimage:CachedImage>
+                                        </Grid>
 
-                                    <Label
+                                        <Label
                                     Text="{Binding Title}"
                                     TextColor="{Binding TextColor}"
                                     FontSize="35"
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center">
 
-                                        <Label.FontFamily>
-                                            <OnPlatform x:TypeArguments="x:String">
-                                                <On Platform="iOS" Value="Lobster-Regular" />
-                                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
-                                            </OnPlatform>
-                                        </Label.FontFamily>
-                                    </Label>
+                                            <Label.FontFamily>
+                                                <OnPlatform x:TypeArguments="x:String">
+                                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                                </OnPlatform>
+                                            </Label.FontFamily>
+                                        </Label>
 
 
-                                    <Label
+                                        <Label
                                     Text="{Binding Length}"
                                     FontSize="15"
                                     TextColor="#6C7072"
                                     HorizontalOptions="Center"
                                     HorizontalTextAlignment="Center">
 
-                                        <Label.FontFamily>
-                                            <OnPlatform x:TypeArguments="x:String">
-                                                <On Platform="iOS" Value="Lobster-Regular" />
-                                                <On Platform="Android" Value="CircularStd-Book.otf#Circular Std"/>
-                                            </OnPlatform>
-                                        </Label.FontFamily>
-                                    </Label>
+                                            <Label.FontFamily>
+                                                <OnPlatform x:TypeArguments="x:String">
+                                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                                    <On Platform="Android" Value="CircularStd-Book.otf#Circular Std"/>
+                                                </OnPlatform>
+                                            </Label.FontFamily>
+                                        </Label>
 
-                                    <Button
+                                        <Button
                                     Text="{Binding Text}"
                                     Command="{Binding Navigate}"
                                     CommandParameter="{Binding NavigateIdx}"
@@ -169,13 +170,14 @@
                                     TextColor="#272E32"
                                     BorderWidth="0" />
 
-                                </StackLayout>
+                                    </StackLayout>
 
-                            </Frame>
+                                </Frame>
+                            </StackLayout>
                         </DataTemplate>
-                    </cards:CubeView.ItemTemplate>
+                    </cards:CoverFlowView.ItemTemplate>
                     <controls:IndicatorsControl SelectedIndicatorStyle="{StaticResource ActiveIndicator}" UnselectedIndicatorStyle="{StaticResource InactiveIndicator}"/>
-                </cards:CubeView>
+                </cards:CoverFlowView>
             </StackLayout>
             <RelativeLayout
                 VerticalOptions="End">
@@ -192,12 +194,12 @@
                         </Grid.RowDefinitions>
                         <StackLayout VerticalOptions="End" Grid.Column="0">
                             <ffimage:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="mydayiconselectednotext.png" >
-                            <ffimage:CachedImage.HeightRequest>
-                                <OnPlatform x:TypeArguments="x:Double">
-                                    <On Platform="Android">20</On>
-                                    <On Platform="iOS">25</On>
-                                </OnPlatform>
-                            </ffimage:CachedImage.HeightRequest>
+                                <ffimage:CachedImage.HeightRequest>
+                                    <OnPlatform x:TypeArguments="x:Double">
+                                        <On Platform="Android">20</On>
+                                        <On Platform="iOS">25</On>
+                                    </OnPlatform>
+                                </ffimage:CachedImage.HeightRequest>
                             </ffimage:CachedImage>
                             <Label Text="My Day" FontSize="12" TextColor="#d6a14b" HorizontalOptions="Center" Margin="0, -3, 0, 0">
                                 <Label.FontFamily>
