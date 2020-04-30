@@ -12,7 +12,8 @@
         
         <StackLayout Orientation="Horizontal"
                      HorizontalOptions="FillAndExpand"
-                     Padding="10,0,10,0">
+                     Padding="60, 0, 60, 0"
+                     Margin="0,20,0,0">
             <ImageButton HorizontalOptions="StartAndExpand" x:Name= "button1" Source="previousbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
             <Label x:Name="dateLabel" Text="" FontSize="20" HorizontalOptions="Center"/>
             <ImageButton HorizontalOptions="EndAndExpand" x:Name= "button2" Source="nextbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
@@ -102,7 +103,7 @@
                         </Label>
                     </StackLayout>
                     <StackLayout VerticalOptions="End" Grid.Column="2">
-                        <ffimage:CachedImage x:Name="MyPhotosButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="myphotosiconnotext.png" >
+                        <ffimage:CachedImage x:Name="MyPhotosButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="myphotosiconselectednotext.png" >
                             <ffimage:CachedImage.HeightRequest>
                                 <OnPlatform x:TypeArguments="x:Double">
                                     <On Platform="Android">20</On>
@@ -110,7 +111,7 @@
                                 </OnPlatform>
                             </ffimage:CachedImage.HeightRequest>
                         </ffimage:CachedImage>
-                        <Label Text="My Photos" FontSize="12" TextColor="#262c32" HorizontalOptions="Center" Margin="0, -3, 0, 0">
+                        <Label Text="My Photos" FontSize="12" TextColor="#d6a14b" HorizontalOptions="Center" Margin="0, -3, 0, 0">
                             <Label.FontFamily>
                                 <OnPlatform x:TypeArguments="x:String">
                                     <On Platform="iOS" Value="Lobster-Regular" />
