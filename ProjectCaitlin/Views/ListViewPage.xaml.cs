@@ -97,8 +97,78 @@ namespace ProjectCaitlin
         {
             await firestoreService.LoadUser();
             await GoogleService.LoadTodaysEvents();
+            
+            //recalculate goals/routines durations
+            calculateDuration();
+
             SetupUI();
             PrintFirebaseUser();
+
+        }
+
+        public void calculateDuration()
+        {
+            foreach (routine routine in App.User.routines)
+            {
+                //calculate the sum duration for the routine from step level.
+                if (routine.isSublistAvailable == true)
+                {
+                    int sum_duration = 0;
+                    foreach (task task in routine.tasks)
+                    {
+                        if (task.isSublistAvailable == true)
+                        {
+                            int step_duration = 0;
+                            foreach (step step in task.steps)
+                            {
+                                step_duration += (int)step.expectedCompletionTime.TotalMinutes;
+                            }
+                            if (step_duration == 0)
+                                sum_duration += (int)task.expectedCompletionTime.TotalMinutes;
+                            else
+                                sum_duration += step_duration;
+                        }
+                        else
+                        {
+                            sum_duration += (int)task.expectedCompletionTime.TotalMinutes;
+                        }
+                    }
+                    // update the duration for routine
+                    if (sum_duration != 0)
+                        routine.expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);
+                }
+
+                foreach (goal goal in App.User.goals)
+                {
+                    //calculate the sum duration for the goal from instruction level.
+                    if (goal.isSublistAvailable == true)
+                    {
+                        int goal_duration = 0;
+                        foreach (action action in goal.actions)
+                        {
+                            if (action.isSublistAvailable == true)
+                            {
+                                int instruction_duration = 0;
+                                foreach (instruction instruction in action.instructions)
+                                {
+                                    instruction_duration += (int)instruction.expectedCompletionTime.TotalMinutes;
+                                }
+                                if (instruction_duration == 0)
+                                    goal_duration += (int)action.expectedCompletionTime.TotalMinutes;
+                                else
+                                    goal_duration += instruction_duration;
+                            }
+                            else
+                            {
+                                goal_duration += (int)action.expectedCompletionTime.TotalMinutes;
+                            }
+                        }
+                        // update the duration for goal
+                        if (goal_duration != 0)
+                            goal.expectedCompletionTime = TimeSpan.FromMinutes(goal_duration);
+                    }
+                }
+            }
 
         }
 
