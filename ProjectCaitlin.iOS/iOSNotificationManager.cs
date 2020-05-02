@@ -1,4 +1,5 @@
 ﻿using System;
+using Foundation;
 using UserNotifications;
 using Xamarin.Forms;
 
@@ -48,14 +49,14 @@ namespace ProjectCaitlin.iOS
             {
                 var args = new NotificationEventArgs()
                 {
-                    Title = title,
+                    Title = title.Substring(21),
                     Message = message
                 };
                 NotificationReceived?.Invoke(null, args);
             }
         }
 
-        public int ScheduleNotification(string title, string message, double duration)
+        public int ScheduleNotification(string title, string subtitle, string message, double duration)
         {
             // EARLY OUT: app doesn't have permissions
             if (!hasNotificationsPermission)
@@ -65,11 +66,24 @@ namespace ProjectCaitlin.iOS
 
             messageId++;
 
+            //
+            // Using C# objects, strings and ints, produces
+            // a dictionary with 2 NSString keys, "key1" and "key2"
+            // and two NSNumbers with the values 1 and 2
+            //
+            var key1 = new NSString("routineNum");
+            var value1 = new NSNumber(Int32.Parse(subtitle.Substring(0, 1)));
+            var key2 = new NSString("routineId");
+            var value2 = new NSString(subtitle.Substring(1, 20));
+
+            var userInfo = new NSDictionary(key1, value1, key2, value2);
+
             var content = new UNMutableNotificationContent()
             {
                 Title = title,
                 Subtitle = "",
                 Body = message,
+                UserInfo = userInfo,
                 Badge = 1
             };
 
@@ -84,11 +98,11 @@ namespace ProjectCaitlin.iOS
             {
                 if (err != null)
                 {
-                    throw new Exception($"Failed to schedule notification: {err}");
+                    Console.WriteLine($"Failed to schedule notification: {err}");
                 }
                 else
                 {
-                    Console.WriteLine("notification: " + request.ToString() + " made to notify in " + duration.ToString() + " seconds.");
+                    Console.WriteLine($"notification: {request} made to notify in {duration} seconds.");
                 }
             });
 

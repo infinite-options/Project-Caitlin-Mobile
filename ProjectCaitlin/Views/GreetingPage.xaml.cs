@@ -32,6 +32,7 @@ namespace ProjectCaitlin.Views
         {
             UserImage.Source = App.User.Me.pic;
             GreetingsTitleLabel.Text = GetTitleDayMessage();
+            FirstNameLabel.Text = App.User.firstName;
             MessageCardLabel.Text = App.User.Me.message_card;
             MessageLabel.Text = App.User.Me.message_day;
         }

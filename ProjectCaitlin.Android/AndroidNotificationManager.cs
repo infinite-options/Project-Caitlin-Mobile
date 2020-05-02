@@ -31,7 +31,7 @@ namespace ProjectCaitlin.Droid
             CreateNotificationChannel();
         }
 
-        public int ScheduleNotification(string title, string message, double duration)
+        public int ScheduleNotification(string title, string subtitle, string message, double duration)
         {
             if (!channelInitialized)
             {

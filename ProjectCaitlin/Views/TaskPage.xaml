@@ -10,63 +10,67 @@
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="{Binding BackgroundColor}">
     <ContentPage.Content>
-        <ScrollView>
 
+        <StackLayout
+                VerticalOptions="StartAndExpand"
+                Margin="0, 40, 0, 0">
+            <StackLayout
+                Orientation="Horizontal"
+                HorizontalOptions="FillAndExpand"
+                Margin="20, 0, 20, 0">
+
+                <!-- BACK ARROW-->
+                <ImageButton
+                            Source="{Binding BackImage}"
+                            BackgroundColor="Transparent"
+                            HeightRequest="25"
+                            WidthRequest="25"
+                            HorizontalOptions="Start"
+                            VerticalOptions="Center"
+                            Clicked="close"/>
+
+                <!-- CURRENT ROUTINE-->
+                <Label
+                        Text="{Binding TopLabel}"
+                        FontSize="30"
+                        HorizontalTextAlignment="Center"
+                        FontAttributes="Bold"
+                        TextColor= "{Binding TitleTextColor}"
+                        HorizontalOptions="CenterAndExpand"
+                        VerticalOptions="Center"/>
+
+                <!-- For Spacing the Label -->
+                <ImageButton
+                    BackgroundColor="Transparent"
+                    HeightRequest="25"
+                    WidthRequest="25"
+                    HorizontalOptions="End"
+                    VerticalOptions="Center"
+                    />
+
+            </StackLayout>
             <StackLayout>
+                <StackLayout Margin="20">
+                    <ffimage:CachedImage Source="{Binding TopImage}" WidthRequest="100" HeightRequest="100">
+                        <ffimage:CachedImage.Transformations>
+                            <fftransformations:CircleTransformation/>
+                        </ffimage:CachedImage.Transformations>
+                    </ffimage:CachedImage>
+                </StackLayout>
                 <StackLayout
                     Orientation="Horizontal"
                     HorizontalOptions="FillAndExpand"
-                    Margin="20, 10, 20, 10">
-
-                    <!-- BACK ARROW-->
-                    <ImageButton
-                                Source="{Binding BackImage}"
-                                BackgroundColor="Transparent"
-                                HeightRequest="25"
-                                WidthRequest="25"
-                                HorizontalOptions="Start"
-                                VerticalOptions="Center"
-                                Clicked="close"/>
-
-                    <!-- CURRENT ROUTINE-->
-                    <Label
-                            Text="{Binding TopLabel}"
-                            FontSize="30"
-                            HorizontalTextAlignment="Center"
-                            FontAttributes="Bold"
-                            TextColor= "{Binding TitleTextColor}"
-                            HorizontalOptions="CenterAndExpand"
-                            VerticalOptions="Center"/>
-
-                    <!-- For Spacing the Label -->
-                    <ImageButton
-                        BackgroundColor="Transparent"
-                        HeightRequest="25"
-                        WidthRequest="25"
-                        HorizontalOptions="End"
-                        VerticalOptions="Center"
-                        />
-
+                    Padding="10, 0, 10, 0"
+                    IsVisible="false">
+                    <ImageButton Source="waveformicon.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="60" HorizontalOptions="StartAndExpand"/>
+                    <ImageButton Source="moon.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="60" HorizontalOptions="CenterAndExpand"/>
+                    <Button x:Name="next" Text="Start" FontAttributes="Bold" TextColor="White" BackgroundColor="#cef7b5" HorizontalOptions="EndAndExpand"/>
                 </StackLayout>
-                <StackLayout>
-                    <StackLayout Margin="20">
-                        <ffimage:CachedImage Source="{Binding TopImage}" WidthRequest="100" HeightRequest="100">
-                            <ffimage:CachedImage.Transformations>
-                                <fftransformations:CircleTransformation/>
-                            </ffimage:CachedImage.Transformations>
-                        </ffimage:CachedImage>
-                    </StackLayout>
-                    <StackLayout
-                        Orientation="Horizontal"
-                        HorizontalOptions="FillAndExpand"
-                        Padding="10, 0, 10, 0"
-                        IsVisible="false">
-                        <ImageButton Source="waveformicon.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="60" HorizontalOptions="StartAndExpand"/>
-                        <ImageButton Source="moon.png" BackgroundColor="Transparent" HeightRequest="30" WidthRequest="60" HorizontalOptions="CenterAndExpand"/>
-                        <Button x:Name="next" Text="Start" FontAttributes="Bold" TextColor="White" BackgroundColor="#cef7b5" HorizontalOptions="EndAndExpand"/>
-                    </StackLayout>
-                </StackLayout>
+            </StackLayout>
 
+            <ScrollView
+                VerticalOptions="FillAndExpand"
+                Padding="0">
                 <StackLayout>
                     <flv:FlowListView FlowColumnCount="2"
                         SeparatorVisibility="Default"
@@ -102,9 +106,8 @@
                         </flv:FlowListView.FlowColumnTemplate>
                     </flv:FlowListView>
                 </StackLayout>
-
-            </StackLayout>
-        </ScrollView>
+            </ScrollView>
+        </StackLayout>
 
     </ContentPage.Content>
 </ContentPage>

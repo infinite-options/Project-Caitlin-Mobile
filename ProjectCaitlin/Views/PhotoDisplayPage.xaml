@@ -13,7 +13,7 @@
         <StackLayout Orientation="Horizontal"
                      HorizontalOptions="FillAndExpand"
                      Padding="60, 0, 60, 0"
-                     Margin="0,20,0,0">
+                     Margin="0,40,0,0">
             <ImageButton HorizontalOptions="StartAndExpand" x:Name= "button1" Source="previousbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
             <Label x:Name="dateLabel" Text="" FontSize="20" HorizontalOptions="Center"/>
             <ImageButton HorizontalOptions="EndAndExpand" x:Name= "button2" Source="nextbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />

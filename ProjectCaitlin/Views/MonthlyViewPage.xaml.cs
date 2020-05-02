@@ -96,7 +96,12 @@ namespace ProjectCaitlin
                         await Navigation.PushAsync(new PhotoDisplayPage(webImage, date, description, creationTime));
                     };
                     webImage.GestureRecognizers.Add(tapGestureRecognizer);
-                    var indicator = new ActivityIndicator { Color = Color.Gray, };
+                    var indicator = new ActivityIndicator
+                    {
+                        Color = Color.Gray,
+                        WidthRequest = gridItemSize,
+                        HeightRequest = gridItemSize,
+                    };
                     indicator.SetBinding(ActivityIndicator.IsRunningProperty, "IsLoading");
                     indicator.BindingContext = webImage;
 
