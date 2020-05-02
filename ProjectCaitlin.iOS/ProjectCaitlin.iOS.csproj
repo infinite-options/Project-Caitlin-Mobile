@@ -251,5 +251,6 @@
     <BundleResource Include="Resources\previousbutton.png" />
     <BundleResource Include="Resources\yellowclockicon.png" />
     <BundleResource Include="Resources\btn_google_signin_light_normal_web.png" />
+    <BundleResource Include="GoogleService-Info.plist" />
   </ItemGroup>
 </Project>

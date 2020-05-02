@@ -24,6 +24,8 @@
     <PackageReference Include="DLToolkit.Forms.Controls.ImageCropView" Version="1.0.7" />
     <PackageReference Include="CardsView" Version="2.5.1" />
     <PackageReference Include="Xamarin.Forms" Version="4.6.0.726" />
+    <PackageReference Include="Google.Cloud.Firestore" Version="1.1.0" />
+    <PackageReference Include="Plugin.CloudFirestore" Version="3.0.1" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.iOS">

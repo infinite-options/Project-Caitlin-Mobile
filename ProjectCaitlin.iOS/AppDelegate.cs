@@ -36,6 +36,8 @@ namespace ProjectCaitlin.iOS
             var ignore = new CircleTransformation();
             CachedImageRenderer.InitImageSourceHandler();
 
+            Firebase.Core.App.Configure();
+
             global::Xamarin.Auth.Presenters.XamarinIOS.AuthenticationConfiguration.Init();
 
             return base.FinishedLaunching(app, options);

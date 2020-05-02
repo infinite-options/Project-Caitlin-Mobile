@@ -5,6 +5,7 @@ using System.Globalization;
 using System.Net.Http;
 using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
+using Plugin.CloudFirestore;
 using ProjectCaitlin.Models;
 using Xamarin.Forms;
 
@@ -34,6 +35,13 @@ namespace ProjectCaitlin.Services
             // reset current user and goals values (in case of reload)
             App.User.routines = new List<routine>();
             App.User.goals = new List<goal>();
+
+            var document = await CrossCloudFirestore.Current
+                                        .Instance
+                                        .GetCollection("users")
+                                        .GetDocument(uid)
+                                        .GetDocumentAsync();
+
 
             var request = new HttpRequestMessage
             {
