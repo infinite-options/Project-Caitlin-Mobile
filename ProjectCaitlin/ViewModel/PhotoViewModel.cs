@@ -14,7 +14,6 @@ namespace ProjectCaitlin.ViewModel
     {
         public ObservableCollection<object> Items { get; set; }
         //List<List<string>> photoURIs = new List<List<string>>();
-        GooglePhotoService GooglePhotoService = new GooglePhotoService();
 
         public PhotoViewModel(CachedImage webImage, string date, string description, string creationTime)
         {
@@ -43,13 +42,13 @@ namespace ProjectCaitlin.ViewModel
 
             try
             {
+                
                 foreach (List<string> list in App.User.photoURIs)
                 {
                     string photoURI = list[0];
                     string photoDate = list[1];
                     string description = list[2];
                     string creationTime = list[3];
-
 
                     if (date.Equals(photoDate) && !(source.Equals(photoURI)))
                     {

@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using ProjectCaitlin.ViewModel;
+using ProjectCaitlin.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,6 +13,9 @@ namespace ProjectCaitlin.Views
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class GreetingPage : ContentPage
     {
+
+        public GreetingViewModel greetingViewModel;
+
         TimeSpan morningStart = new TimeSpan(6, 0, 0);
         TimeSpan morningEnd = new TimeSpan(11, 0, 0);
         TimeSpan afternoonStart = new TimeSpan(11, 0, 0);
@@ -24,6 +28,9 @@ namespace ProjectCaitlin.Views
         {
 
             InitializeComponent();
+            greetingViewModel = new GreetingViewModel(this);
+            BindingContext = greetingViewModel;
+
             var navigationPage = Application.Current.MainPage as NavigationPage;
             navigationPage.BarBackgroundColor = Color.FromHex("#E9E8E8");
             SetupUI();
@@ -34,6 +41,8 @@ namespace ProjectCaitlin.Views
             GreetingsTitleLabel.Text = GetTitleDayMessage();
             MessageCardLabel.Text = App.User.Me.message_card;
             MessageLabel.Text = App.User.Me.message_day;
+
+
         }
 
         public String GetTitleDayMessage()
@@ -87,5 +96,6 @@ namespace ProjectCaitlin.Views
 
             await Navigation.PushAsync(new LoginPage());
         }
+
     }
 }

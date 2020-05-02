@@ -5,6 +5,7 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
              mc:Ignorable="d"
              x:Class="ProjectCaitlin.Views.GreetingPage"
              NavigationPage.HasNavigationBar="False"
@@ -22,35 +23,61 @@
                 Clicked="LogoutBtnClick">
 
             </Button>
-            <StackLayout VerticalOptions="CenterAndExpand">
+            
                 <StackLayout>
-
-
                     <ffimage:CachedImage
                     x:Name = "UserImage"
-                    HeightRequest="140"
-                    WidthRequest="140">
+                    HeightRequest="100"
+                    WidthRequest="100">
                         <ffimage:CachedImage.Transformations>
                             <fftransformations:CircleTransformation/>
                         </ffimage:CachedImage.Transformations>
                     </ffimage:CachedImage>
                 </StackLayout>
-                <StackLayout>
+                <StackLayout >
                     <Label x:Name ="GreetingsTitleLabel" Text="Good Morning," TextColor="White" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
                     <Label x:Name ="FirstNameLabel" Text="Caitlin"  TextColor="White" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
-                    <Label x:Name ="MessageLabel" Text=""  TextColor="White" Margin="20,20" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
-                    <Label x:Name ="MessageCardLabel" Text=""  TextColor="White" Margin="20,20" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Label x:Name ="MessageLabel" Text=""  TextColor="White" Margin="10,10" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    <Label x:Name ="MessageCardLabel" Text=""  TextColor="White" Margin="10,10" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
                 </StackLayout>
 
-                <StackLayout>
-                    <Button Text="View Today's List" CornerRadius="10" Margin="20" Clicked ="btn1Clicked" TextColor="White"  BackgroundColor="#59556D" />
-                    <Button Text="Manage My Day " CornerRadius="10" Margin="20" Clicked="btn2Clicked" TextColor="White" BackgroundColor="#59556D"/>
-                </StackLayout>
-                <StackLayout>
-
+                <StackLayout >
+                    <Button Text="View Today's List" CornerRadius="10" Margin="5" Clicked ="btn1Clicked" TextColor="White"  BackgroundColor="#59556D" />
+                    <Button Text="Manage My Day " CornerRadius="10" Margin="5" Clicked="btn2Clicked" TextColor="White" BackgroundColor="#59556D"/>
                 </StackLayout>
 
+            <StackLayout>
+                <flv:FlowListView FlowColumnCount="3"
+                        SeparatorVisibility="Default"
+                        HasUnevenRows="False"
+                        RowHeight ="280"
+                        FlowItemsSource="{Binding Items}">
+
+                    <flv:FlowListView.FlowColumnTemplate>
+                        <DataTemplate>
+                            <StackLayout>
+                                <Frame
+                                    Margin="5"
+                                   Padding="10"
+                                   CornerRadius="50">
+
+                                    <ImageButton Source="{Binding Source}"
+                                                 Command="{Binding Navigate}"
+                                                 CommandParameter="{Binding NavigateIdx}"
+                                                 HeightRequest="80"
+                                                 WidthRequest="80"
+                                                 Aspect="AspectFill"/>
+
+                                </Frame>
+
+                                <Label HorizontalOptions="Center" TextColor="White" Text="{Binding Text}"  />
+                            </StackLayout>
+                        </DataTemplate>
+                    </flv:FlowListView.FlowColumnTemplate>
+                </flv:FlowListView>
             </StackLayout>
         </StackLayout>
+
+        
     </ContentPage.Content>
 </ContentPage>

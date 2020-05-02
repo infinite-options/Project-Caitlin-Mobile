@@ -33,6 +33,8 @@ namespace ProjectCaitlin.Models
 
 		public List<List<string>> photoURIs { get; set; } = new List<List<string>>();
 
+		public HashSet<string> allDates;
+
 		public event PropertyChangedEventHandler PropertyChanged;
     }
 }

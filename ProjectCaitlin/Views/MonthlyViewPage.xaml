@@ -20,7 +20,7 @@
                 <Label x:Name ="yearLabel" Text=" " FontSize="20"/>
                 <ImageButton x:Name= "month2" HorizontalOptions="EndAndExpand" Source="nextbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23"/>
             </StackLayout>
-            <Grid x:Name="StackLayoutMap" HeightRequest="230" Grid.Column="7" Grid.Row="6">
+            <Grid x:Name="StackLayoutMap" HeightRequest="400" Grid.Column="7" Grid.Row="6">
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="0.14285714285*" />
                     <ColumnDefinition Width="0.14285714285*" />

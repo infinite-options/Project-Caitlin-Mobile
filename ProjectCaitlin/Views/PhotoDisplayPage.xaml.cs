@@ -22,12 +22,16 @@ namespace ProjectCaitlin
         //List<string> photoURIs = new List<string>();
 
         string date;
+        string description;
+        string id;
 
-        public PhotoDisplayPage(CachedImage webImage, string date, string description, string creationTime)
+        public PhotoDisplayPage(CachedImage webImage, string date, string description, string id, string creationTime)
         {
             InitializeComponent();
             AddTapGestures();
             this.date = date;
+            this.description = description;
+            this.id = id;
             pageModel = new PhotoViewModel(webImage, date, description, creationTime);
             BindingContext = pageModel;
 
@@ -264,10 +268,13 @@ namespace ProjectCaitlin
             dateTime = dateTime.Substring(0, dateTime.IndexOf(" "));
             return dateTime;
         }
-        void EditorCompleted(object sender, EventArgs e)
+        async void EditorCompleted(object sender, EventArgs e)
         {
             var text = ((Editor)sender).Text; // sender is cast to an Editor to enable reading the `Text` property of the view.
             Console.WriteLine(text);
+
+            if(text!=description)
+                await FirebaseFunctionsService.PostPhoto(id, text, " ");
         }
 
         private void AddTapGestures()

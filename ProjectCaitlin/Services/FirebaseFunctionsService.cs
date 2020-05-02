@@ -35,13 +35,13 @@ namespace ProjectCaitlin.Services
                 };
 
                 string dataString = JsonConvert.SerializeObject(requestData);
-                var fromContent = new StringContent(dataString, Encoding.UTF8, "application/json");
+                var formContent = new StringContent(dataString, Encoding.UTF8, "application/json");
 
                 using (var client = new HttpClient())
                 {
 
                     // without async, will get stuck, needs bug fix
-                    HttpResponseMessage response = client.PostAsync(request.RequestUri, fromContent).Result;
+                    HttpResponseMessage response = client.PostAsync(request.RequestUri, formContent).Result;
                     if (response.StatusCode == System.Net.HttpStatusCode.OK)
                     {
                         HttpContent content = response.Content;
@@ -202,31 +202,83 @@ namespace ProjectCaitlin.Services
             }
         }
 
-        /*public async Task<bool> UpdatePhoto(string photoId,string description,string note)
+        public static async Task<bool> PostPhoto(string photoId, string description, string note)
         {
             HttpRequestMessage request = new HttpRequestMessage
             {
-                RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/CompleteInstructionOrStep"),
+                RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/SavePhotoDetails"),
                 Method = HttpMethod.Post
             };
 
-            //Format Headers of Request with included Token
-            request.Headers.Add("userId", App.User.id);
-            request.Headers.Add("routineId", routineId);
-            request.Headers.Add("taskId", taskId);
-            request.Headers.Add("stepNumber", stepNumber);
-            var client = new HttpClient();
-            HttpResponseMessage response = await client.SendAsync(request);
+            var requestData = new Dictionary<string, Dictionary<string, string>>
+                {
+                    {
+                        "data",
+                        new Dictionary<string, string>
+                        {
+                            {"userId", App.User.id},
+                            {"photoId", photoId},
+                            {"desc", description},
+                            {"notes", note}
+                        }
+                    },
+                };
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            string dataString = JsonConvert.SerializeObject(requestData);
+            var formContent = new StringContent(dataString, Encoding.UTF8, "application/json");
+            
+            using (var client = new HttpClient())
             {
-                return true;
+                // without async, will get stuck, needs bug fix
+                HttpResponseMessage response = client.PostAsync(request.RequestUri, formContent).Result;
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-            else
+        }
+
+        public static async Task<bool> GetPhoto(string photoId)
+        {
+            HttpRequestMessage request = new HttpRequestMessage
             {
-                return false;
+                RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/GetPhotoDetails"),
+                Method = HttpMethod.Get
+            };
+
+            var requestData = new Dictionary<string, Dictionary<string, string>>
+                {
+                    {
+                        "data",
+                        new Dictionary<string, string>
+                        {
+                            {"userId", App.User.id},
+                            {"photoId", photoId}
+                        }
+                    },
+                };
+
+            string dataString = JsonConvert.SerializeObject(requestData);
+            var formContent = new StringContent(dataString);
+
+            using (var client = new HttpClient())
+            {
+                // without async, will get stuck, needs bug fix
+                HttpResponseMessage response = client.PostAsync(request.RequestUri, formContent).Result;
+                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                {
+                    return true;
+                }
+                else
+                {
+                    return false;
+                }
             }
-        }*/
+        }
 
         public async Task<bool> CompleteRoutine(string routineId, string routineIdx)
         {
