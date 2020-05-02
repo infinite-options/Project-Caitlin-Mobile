@@ -81,7 +81,7 @@ namespace ProjectCaitlin.Services
                 var client = new HttpClient();
 
                 // without async, will get stuck, needs bug fix
-                HttpResponseMessage response = await client.SendAsync(request).ConfigureAwait(false);
+                HttpResponseMessage response = client.SendAsync(request).Result;
                 return true;
             }
             catch

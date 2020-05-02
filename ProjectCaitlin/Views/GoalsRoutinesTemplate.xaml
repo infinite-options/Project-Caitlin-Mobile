@@ -65,10 +65,11 @@
                 </StackLayout>
 
                 <cards:CoverFlowView
-                            IsCyclical="false"
-                            VerticalOptions="FillAndExpand"
-                            SelectedIndex="{Binding CurrentIndex}"
-                            ItemsSource="{Binding Items}">
+                    PositionShiftValue="50"
+                    IsCyclical="false"
+                    VerticalOptions="FillAndExpand"
+                    SelectedIndex="{Binding CurrentIndex}"
+                    ItemsSource="{Binding Items}">
 
                     <x:Arguments>
                         <proc:BaseCoverFlowFrontViewProcessor ScaleFactor="0.75" OpacityFactor=".9" RotationFactor="-0.009" />
@@ -128,11 +129,11 @@
                                         </Grid>
 
                                         <Label
-                                    Text="{Binding Title}"
-                                    TextColor="{Binding TextColor}"
-                                    FontSize="35"
-                                    HorizontalOptions="Center"
-                                    HorizontalTextAlignment="Center">
+                                            Text="{Binding Title}"
+                                            TextColor="{Binding TextColor}"
+                                            FontSize="35"
+                                            HorizontalOptions="Center"
+                                            HorizontalTextAlignment="Center">
 
                                             <Label.FontFamily>
                                                 <OnPlatform x:TypeArguments="x:String">
@@ -159,16 +160,16 @@
                                         </Label>
 
                                         <Button
-                                    Text="{Binding Text}"
-                                    Command="{Binding Navigate}"
-                                    CommandParameter="{Binding NavigateIdx}"
-                                    CornerRadius="20"
-                                    VerticalOptions="EndAndExpand"
-                                    Margin="70,0,70,10"
-                                    BackgroundColor="LightGray"
-                                    Padding="10"
-                                    TextColor="#272E32"
-                                    BorderWidth="0" />
+                                            Text="{Binding Text}"
+                                            Command="{Binding Navigate}"
+                                            CommandParameter="{Binding NavigateIdx}"
+                                            CornerRadius="20"
+                                            VerticalOptions="EndAndExpand"
+                                            Margin="70,0,70,10"
+                                            BackgroundColor="LightGray"
+                                            Padding="0"
+                                            TextColor="#272E32"
+                                            BorderWidth="0" />
 
                                     </StackLayout>
 
