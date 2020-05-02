@@ -212,13 +212,16 @@ namespace ProjectCaitlin.Services
                                         routine.Notification.user.before.time = TimeSpan.Parse(userBeforeMap["time"]["stringValue"].ToString());
                                         //TotalMinutes
 
-                                        double total = routine.Notification.user.before.time.TotalSeconds - (routine.availableStartTime - DateTime.Now.TimeOfDay).TotalSeconds;
+                                        double total = (routine.availableStartTime - DateTime.Now.TimeOfDay).TotalSeconds - routine.Notification.user.before.time.TotalSeconds;
 
-                                        //routine.Notification.user.before.message = userBefore["message"]["stringValue"].ToString();
+                                        routine.Notification.user.before.message = userBeforeMap["message"]["stringValue"].ToString();
 
                                         if (!routine.isComplete && total > 0 && !routine.Notification.user.before.is_set)
                                         {
-                                            notificationManager.ScheduleNotification(routineIdx + "Ready for ", routine.title + "? Open the app to review your tasks." + routine.Notification.user.before.message, total);
+                                            string title = "Ready for " + routine.title + "?";
+                                            string subtitle = routineIdx + routine.id;
+                                            string message = "Open the app to review your tasks. " + routine.Notification.user.before.message;
+                                            notificationManager.ScheduleNotification(title, subtitle, message, total);
                                             firebaseFunctionsService.GRUserNotificationSetToTrue(routine.id, routine.dbIdx.ToString(), "before");
 
                                         }
@@ -243,7 +246,10 @@ namespace ProjectCaitlin.Services
 
                                         if (!routine.isComplete && total > 0 && !routine.Notification.user.during.is_set)
                                         {
-                                            notificationManager.ScheduleNotification(routineIdx + "Time for ", routine.title + ". Open the app to review your tasks." + routine.Notification.user.during.message, total);
+                                            string title = "Time for " + routine.title;
+                                            string subtitle = routineIdx + routine.id;
+                                            string message = "Open the app to review your tasks. " + routine.Notification.user.during.message;
+                                            notificationManager.ScheduleNotification(title, subtitle, message, total);
                                             firebaseFunctionsService.GRUserNotificationSetToTrue(routine.id, routine.dbIdx.ToString(), "during");
                                         }
                                         Console.WriteLine("total : " + total);
@@ -258,9 +264,9 @@ namespace ProjectCaitlin.Services
                                     routine.Notification.user.after.is_set = (bool)userAfterMap["is_set"]["booleanValue"]
                                         && (userAfterMap["date_set"] != null) ? IsDateToday(userAfterMap["date_set"]["stringValue"].ToString()) : false;
 
-                                    routine.Notification.user.during.is_enabled = (bool)userDuringMap["is_enabled"]["booleanValue"];
+                                    routine.Notification.user.after.is_enabled = (bool)userAfterMap["is_enabled"]["booleanValue"];
 
-                                    if (routine.Notification.user.during.is_enabled && !routine.Notification.user.after.is_set)
+                                    if (routine.Notification.user.after.is_enabled && !routine.Notification.user.after.is_set)
                                     {
                                         routine.Notification.user.after.time = TimeSpan.Parse(userAfterMap["time"]["stringValue"].ToString());
 
@@ -269,7 +275,10 @@ namespace ProjectCaitlin.Services
                                         routine.Notification.user.after.message = userAfterMap["message"]["stringValue"].ToString();
                                         if (!routine.isComplete && total > 0 && !routine.Notification.user.after.is_set)
                                         {
-                                            notificationManager.ScheduleNotification(routineIdx + "You Missed a Routine! ", routine.title + " is overdue. Open the app to review your tasks." + routine.Notification.user.after.message, total);
+                                            string title = "You missed " + routine.title;
+                                            string subtitle = routineIdx + routine.id;
+                                            string message = "Open the app to review your tasks. " + routine.Notification.user.after.message;
+                                            notificationManager.ScheduleNotification(title, subtitle, message, total);
                                             firebaseFunctionsService.GRUserNotificationSetToTrue(routine.id, routine.dbIdx.ToString(), "after");
                                         }
                                         Console.WriteLine("total : " + total);
@@ -284,95 +293,6 @@ namespace ProjectCaitlin.Services
                                 }
 
                                 notificationManager.PrintPendingNotifications();
-
-
-                                /*
-                                Console.WriteLine("start time : " + startTime);
-                                Console.WriteLine("end time : " + endTime);
-                                if (startTime < 0 && startTime > total)
-                                    notificationManager.ScheduleNotification("You Missed a Routine! ", routine.title + " is overdue. Open the app to review your tasks.", 1);
-                                if (!routine.isComplete && endTime > 0 && endTime < 30 )
-                                    notificationManager.ScheduleNotification("You Missed a Routine! ", routine.title + " is overdue. Open the app to review your tasks.", 1);
-                                else if (!routine.isComplete &&  currentTime > routine.availableStartTime && currentTime < routine.availableEndTime)
-                                    notificationManager.ScheduleNotification("Time for ", routine.title + ". Open the app to review your tasks.", 1);
-
-                                */
-
-
-                                /*JToken userNotification;
-                                try
-                                {
-                                    userNotification = jsonGorR["fields"]["ta_notifications"]["arrayValue"]["values"];
-                                    if (userNotification == null)
-                                        return;
-                                }
-                                catch
-                                {
-                                    return;
-                                }*/
-
-
-                                /* if (!(bool)jsonMapGorR["user_notification_set"]["booleanValue"]
-                                     && (bool)jsonMapGorR["reminds_user"]["booleanValue"]
-                                     )
-                                 {
-                                     if (firebaseFunctionsService.GRUserNotificationSetToTrue(routine.id, routine.dbIdx.ToString()).Result)
-                                     {
-                                         string title = "You Missed a Routine!";
-                                         //double duration = (routine.availableEndTime.TimeOfDay - DateTime.Now.TimeOfDay).TotalSeconds;
-                                         double duration = 10;
-                                         string message = routine.title + " is overdue. Open the app to review your tasks.";
-                                         //Console.WriteLine("duration: " + duration);
-                                         if (duration > 0)
-                                         {
-                                             Console.WriteLine("notification id: " + notificationManager.ScheduleNotification(title, message, duration));
-                                         }
-                                     }
-                                 }*/
-
-                                /*
-                                Console.WriteLine("start time : " + startTime);
-                                Console.WriteLine("end time : " + endTime);
-                                if (startTime < 0 && startTime > total)
-                                    notificationManager.ScheduleNotification("You Missed a Routine! ", routine.title + " is overdue. Open the app to review your tasks.", 1);
-                                if (!routine.isComplete && endTime > 0 && endTime < 30 )
-                                    notificationManager.ScheduleNotification("You Missed a Routine! ", routine.title + " is overdue. Open the app to review your tasks.", 1);
-                                else if (!routine.isComplete &&  currentTime > routine.availableStartTime && currentTime < routine.availableEndTime)
-                                    notificationManager.ScheduleNotification("Time for ", routine.title + ". Open the app to review your tasks.", 1);
-
-                                */
-
-
-                                /*JToken userNotification;
-                                try
-                                {
-                                    userNotification = jsonGorR["fields"]["ta_notifications"]["arrayValue"]["values"];
-                                    if (userNotification == null)
-                                        return;
-                                }
-                                catch
-                                {
-                                    return;
-                                }*/
-
-
-                                /* if (!(bool)jsonMapGorR["user_notification_set"]["booleanValue"]
-                                     && (bool)jsonMapGorR["reminds_user"]["booleanValue"]
-                                     )
-                                 {
-                                     if (firebaseFunctionsService.GRUserNotificationSetToTrue(routine.id, routine.dbIdx.ToString()).Result)
-                                     {
-                                         string title = "You Missed a Routine!";
-                                         //double duration = (routine.availableEndTime.TimeOfDay - DateTime.Now.TimeOfDay).TotalSeconds;
-                                         double duration = 10;
-                                         string message = routine.title + " is overdue. Open the app to review your tasks.";
-                                         //Console.WriteLine("duration: " + duration);
-                                         if (duration > 0)
-                                         {
-                                             Console.WriteLine("notification id: " + notificationManager.ScheduleNotification(title, message, duration));
-                                         }
-                                     }
-                                 }*/
 
                                 App.User.routines.Add(routine);
                                 routineIdx++;
