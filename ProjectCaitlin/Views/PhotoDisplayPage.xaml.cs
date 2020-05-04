@@ -270,7 +270,7 @@ namespace ProjectCaitlin
             dateTime = dateTime.Substring(0, dateTime.IndexOf(" "));
             return dateTime;
         }
-        async void EditorCompleted(object sender, EventArgs e)
+        /*async void EditorCompleted(object sender, EventArgs e)
         {
             var text = ((Editor)sender).Text; // sender is cast to an Editor to enable reading the `Text` property of the view.
             Console.WriteLine("Doing something" + carousel.CurrentItem.ToString());
@@ -297,7 +297,7 @@ namespace ProjectCaitlin
                 }
             }
             disableBackButton = true;
-        }
+        }*/
 
         async void EditorCompleted2(object sender, EventArgs e)
         {

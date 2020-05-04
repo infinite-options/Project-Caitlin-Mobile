@@ -36,15 +36,11 @@
                             </StackLayout>
                         </Frame>
                         <Label Text="{Binding CreationTime}" FontSize="20" HorizontalOptions="Center"/>
-                        
-                        <Editor  x:Name="descriptionEditor"
-                        Placeholder="Description"
-                        Text="{Binding Description}"
-                        AutoSize="TextChanges"
-                        MaxLength="100"
-                        IsSpellCheckEnabled="true"
-                        IsTextPredictionEnabled="true" 
-                        Completed="EditorCompleted"/>
+
+                        <Label FontSize="20"
+                               HorizontalOptions="CenterAndExpand"
+                               Text="{Binding Description}"
+                        />
 
                         <Editor
                         Placeholder="Note"

@@ -30,14 +30,13 @@ namespace ProjectCaitlin.ViewModel
                     pic = "aboutmeiconnotext.png";
 
                 int peopleIdx = 0;
-                
+                string phoneNumber = people.phone_number;
                 Items.Add(new PeopleItemModel(people.pic,
                     people.name,
                     new Command<int>(
                             async (int _actionIdx) =>
                             {
-                                // Replace below with phone call function.
-                                await mainPage.Navigation.PushAsync(new GreetingPage());
+                                Device.OpenUri(new Uri("tel:" + phoneNumber));
                             }
                     ),
                     peopleIdx));
