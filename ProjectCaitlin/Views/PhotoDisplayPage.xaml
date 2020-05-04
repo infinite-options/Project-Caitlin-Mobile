@@ -20,7 +20,7 @@
         </StackLayout>
 
 
-        <CarouselView ItemsSource="{Binding Items}">
+        <CarouselView x:Name="carousel" ItemsSource="{Binding Items}">
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout >
@@ -37,16 +37,23 @@
                         </Frame>
                         <Label Text="{Binding CreationTime}" FontSize="20" HorizontalOptions="Center"/>
                         
-                        <Editor  x:Name="description"
+                        <Editor  x:Name="descriptionEditor"
                         Placeholder="Description"
-                                 Text="{Binding Description}"
+                        Text="{Binding Description}"
                         AutoSize="TextChanges"
                         MaxLength="100"
                         IsSpellCheckEnabled="true"
                         IsTextPredictionEnabled="true" 
                         Completed="EditorCompleted"/>
 
-                        <Entry Placeholder="Note"  />
+                        <Editor
+                        Placeholder="Note"
+                        Text="{Binding Note}"
+                        AutoSize="TextChanges"
+                        MaxLength="100"
+                        IsSpellCheckEnabled="true"
+                        IsTextPredictionEnabled="true" 
+                        Completed="EditorCompleted2"/>
                         
                     </StackLayout>
                 </DataTemplate>

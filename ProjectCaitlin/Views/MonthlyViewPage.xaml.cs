@@ -19,7 +19,6 @@ namespace ProjectCaitlin
         public int Year { get; set; } = 0;
         public int Month { get; set; } = 1;
         Label[] labels = new Label[42];
-        //Image[] images = new Image[42];
 
         public MonthlyViewPage()
         {
@@ -78,6 +77,7 @@ namespace ProjectCaitlin
                     string description = list[2];
                     string creationTime = list[3];
                     string id = list[4];
+                    string note = list[5];
 
                     CachedImage webImage = new CachedImage
                     {
@@ -89,7 +89,7 @@ namespace ProjectCaitlin
 
                     var tapGestureRecognizer = new TapGestureRecognizer();
                     tapGestureRecognizer.Tapped += async (s, e) => {
-                        await Navigation.PushAsync(new PhotoDisplayPage(webImage, date, description,id, creationTime));
+                        await Navigation.PushAsync(new PhotoDisplayPage(webImage, date, description,id, creationTime, note));
                     };
                     webImage.GestureRecognizers.Add(tapGestureRecognizer);
                     var indicator = new ActivityIndicator { Color = Color.Gray, };
@@ -108,13 +108,8 @@ namespace ProjectCaitlin
                 {
                     Console.WriteLine("RefreshToken Done!");
                     App.User.photoURIs = await GooglePhotoService.GetPhotos();
-                    //return await GetPhotos();
                 }
 
-                //var googleService = new GoogleService();
-                // await googleService.RefreshToken();
-                // Console.WriteLine("Here");
-                //SetupUI();
             }
 
             //update calendar
@@ -322,7 +317,7 @@ namespace ProjectCaitlin
                 labels[i].TextColor = Color.FromHex("#000000");
                 labels[i].FontAttributes = FontAttributes.None;//refresh the font first.
                 labels[i].GestureRecognizers.Clear();
-
+                
 
                 // make the label bold if there are images in that day.
                 foreach (string date in App.User.allDates)

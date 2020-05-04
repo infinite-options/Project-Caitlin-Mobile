@@ -13,17 +13,17 @@ namespace ProjectCaitlin.ViewModel
     public class PhotoViewModel : BindableObject
     {
         public ObservableCollection<object> Items { get; set; }
-        //List<List<string>> photoURIs = new List<List<string>>();
 
-        public PhotoViewModel(CachedImage webImage, string date, string description, string creationTime)
+        public PhotoViewModel(CachedImage webImage, string date, string description, string creationTime, string note)
         {
             Items = new ObservableCollection<object>();
             Items.Add(new
             {
                 Source = webImage.Source,
                 Description = description,
-                CreationTime = creationTime
-            });
+                CreationTime = creationTime,
+                Note = note
+            }) ;
             string source = webImage.Source + "";
             source = source.Substring(5);
             SetupUI(date, source);
@@ -38,8 +38,6 @@ namespace ProjectCaitlin.ViewModel
 
         public async void SetupUI(string date, string source)
         {
-            //photoURIs = await GooglePhotoService.GetPhotos();
-
             try
             {
                 
@@ -49,10 +47,11 @@ namespace ProjectCaitlin.ViewModel
                     string photoDate = list[1];
                     string description = list[2];
                     string creationTime = list[3];
+                    string note = list[5];
 
                     if (date.Equals(photoDate) && !(source.Equals(photoURI)))
                     {
-                        Items.Add(new { Source = photoURI, Description = description, CreationTime = creationTime});
+                        Items.Add(new { Source = photoURI, Description = description, CreationTime = creationTime, Note = note});
                     }
 
                 }
@@ -66,8 +65,6 @@ namespace ProjectCaitlin.ViewModel
 
         public async void SetupUI(string date)
         {
-            //photoURIs = await GooglePhotoService.GetPhotos();
-
             try
             {
                 foreach (List<string> list in App.User.photoURIs)
@@ -76,10 +73,10 @@ namespace ProjectCaitlin.ViewModel
                     string photoDate = list[1];
                     string description = list[2];
                     string creationTime = list[3];
-
+                    string note = list[5];
                     if (date.Equals(photoDate))
                     {
-                        Items.Add(new { Source = photoURI, Description = description, CreationTime = creationTime});
+                        Items.Add(new { Source = photoURI, Description = description, CreationTime = creationTime, Note = note });
                     }
 
                 }
@@ -89,10 +86,6 @@ namespace ProjectCaitlin.ViewModel
                 var googleService = new GoogleService();
                 await googleService.RefreshToken();
             }
-
-
         }
-
-        
     }
 }

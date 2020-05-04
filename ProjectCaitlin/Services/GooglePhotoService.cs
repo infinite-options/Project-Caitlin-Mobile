@@ -4,6 +4,8 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ProjectCaitlin.Models;
+using ProjectCaitlin.Services;
 
 namespace ProjectCaitlin.Services
 {
@@ -39,14 +41,7 @@ namespace ProjectCaitlin.Services
             String description = "";
             String id = "";
             //String note = "";
-            //Try to add "Summary" Items to list from JSON. If null, redirect to Login prompt.
-            Console.WriteLine("request.RequestUri : " + request.RequestUri);
 
-            Console.WriteLine("NextPageToken" + result.NextPageToken);
-            /* if (!result.NextPageToken.Equals("")) {
-                 request.RequestUri += "?" + result.NextPageToken;
-             }*/
-            Console.WriteLine("GetPhoto being called.");
             try
             {
                 foreach (var product in result.MediaItems)
@@ -61,43 +56,60 @@ namespace ProjectCaitlin.Services
                     date = creationTime.Substring(0, creationTime.IndexOf(" "));// date = yyyy/mm/dd
                     creationTime = utcTime.TimeOfDay.ToString();
                     id = product.Id;
+                    string fileName = product.Filename;
                     storePicUri = product.BaseUrl.ToString();
                     description = product.Description + "";
 
+                    App.User.allDates.Add(date);
                     subList.Add(product.BaseUrl.ToString());
                     subList.Add(date);
-                    subList.Add(description);
-                    subList.Add(creationTime);
-                    subList.Add(id);
 
+                    // If there is a photo in Google but not in Firebase, post it. Otherwise, do nothing. 
+                    bool post = true;
+                    foreach (photo photo in App.User.FirebasePhotos)
+                    {
+                        if (id.Equals(photo.id))
+                            post = false;
+                    }
+
+                    if (post)
+                    {
+                        //Post photo to Firebase
+                        await FirebaseFunctionsService.PostPhoto(id, description, " ");
+                        
+                        subList.Add(description);
+                        subList.Add(creationTime);
+                        subList.Add(id);
+                        App.User.photoURIs.Add(subList);
+                    }
+                    else {
+                        //Get photo from Firebase
+                        photo photo = await FirebaseFunctionsService.GetPhoto(id);
+                        
+                        subList.Add(photo.description);
+                        subList.Add(creationTime);
+                        subList.Add(id);
+                        subList.Add(photo.note);
+                        App.User.photoURIs.Add(subList);
+                    }
                     itemList.Add(subList);
-
-                    App.User.allDates.Add(date);
-
-                    
-                    App.User.photoURIs.Add(subList);
-
-                    //await FirebaseFunctionsService.PostPhoto(id, " ", " ");
-
                 }
             }
             catch (NullReferenceException e)
             {
-                
+
                 var googleService = new GoogleService();
                 if (await googleService.RefreshToken())
                 {
                     Console.WriteLine("RefreshToken Done!");
                     App.User.photoURIs = await GooglePhotoService.GetPhotos();
                 }
-               
+
             }
             if (itemList.Count == 0)
                 return new List<List<string>>();
             else
                 return itemList;
         }
-
-        
     }
 }

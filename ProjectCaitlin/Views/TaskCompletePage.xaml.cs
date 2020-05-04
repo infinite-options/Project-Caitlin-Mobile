@@ -40,7 +40,6 @@ namespace ProjectCaitlin.Views
             BindingContext = pageModel;
             itemcount = pageModel.count;
 
-
         }
         public async void nextpage(object sender, EventArgs args)
         {

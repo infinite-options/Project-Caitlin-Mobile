@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using ProjectCaitlin.Models;
 
 namespace ProjectCaitlin.Services
 {
@@ -226,7 +227,7 @@ namespace ProjectCaitlin.Services
 
             string dataString = JsonConvert.SerializeObject(requestData);
             var formContent = new StringContent(dataString, Encoding.UTF8, "application/json");
-            
+
             using (var client = new HttpClient())
             {
                 // without async, will get stuck, needs bug fix
@@ -242,7 +243,7 @@ namespace ProjectCaitlin.Services
             }
         }
 
-        public static async Task<bool> GetPhoto(string photoId)
+        public static async Task<photo> GetPhoto(string photoId)
         {
             HttpRequestMessage request = new HttpRequestMessage
             {
@@ -263,20 +264,30 @@ namespace ProjectCaitlin.Services
                 };
 
             string dataString = JsonConvert.SerializeObject(requestData);
-            var formContent = new StringContent(dataString);
-
+            var formContent = new StringContent(dataString, Encoding.UTF8, "application/json");
+            photo photo = new photo();
             using (var client = new HttpClient())
             {
                 // without async, will get stuck, needs bug fix
                 HttpResponseMessage response = client.PostAsync(request.RequestUri, formContent).Result;
-                if (response.StatusCode == System.Net.HttpStatusCode.OK)
+                var photosResponse = await response.Content.ReadAsStringAsync();
+                JObject photosJson = JObject.Parse(photosResponse);
+
+                try
                 {
-                    return true;
+                    var photo_field = photosJson["result"];
+
+                    photo.id = photo_field["photo_id"]+"";
+                    photo.description = photo_field["description"]+"";
+                    photo.note = photo_field["notes"]+"";
+
+                    App.User.FirebasePhotos.Add(photo);
                 }
-                else
+                catch
                 {
-                    return false;
+
                 }
+                return photo;
             }
         }
 

@@ -61,10 +61,48 @@ namespace ProjectCaitlin.Services
                                 people.phone_number = person_field["phone_number"]["stringValue"].ToString();
                                 people.pic = person_field["pic"]["stringValue"].ToString();
 
-                                Console.WriteLine("People values : " + people.ToString());
                                 App.User.Me.peoples.Add(people);
                             }
 
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                }
+            }
+        }
+
+        public async Task LoadFirebasePhoto()
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri("https://firestore.googleapis.com/v1/projects/project-caitlin-c71a9/databases/(default)/documents/users/" + uid + "/photo?pageSize=100"),
+                Method = HttpMethod.Get
+            };
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                HttpContent content = response.Content;
+                var photosResponse = await content.ReadAsStringAsync();
+                JObject photosJson = JObject.Parse(photosResponse);
+
+                if (photosJson["documents"] != null)
+                {
+                    List<photo> photos = new List<photo>();
+                    foreach (JToken photoToken in photosJson["documents"])
+                    {
+                        try
+                        {
+                            var photo_field = photoToken["fields"];
+                            photo photo = new photo();
+                            photo.id = photo_field["photo_id"]["stringValue"].ToString();
+                            photo.description = photo_field["description"]["stringValue"].ToString();
+                            photo.note = photo_field["notes"]["stringValue"].ToString();
+
+                            App.User.FirebasePhotos.Add(photo);
                         }
                         catch
                         {
@@ -85,6 +123,7 @@ namespace ProjectCaitlin.Services
             App.User.allDates = new HashSet<string>();
 
             //load photos.
+            await LoadFirebasePhoto();
             await GooglePhotoService.GetPhotos();
 
             var request = new HttpRequestMessage
@@ -95,7 +134,6 @@ namespace ProjectCaitlin.Services
             var client = new HttpClient();
             HttpResponseMessage response = await client.SendAsync(request);
 
-            Console.WriteLine("People here yyy: ");
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 HttpContent content = response.Content;
@@ -121,7 +159,7 @@ namespace ProjectCaitlin.Services
                 App.User.Me.pic = userAboutMe["pic"]["stringValue"].ToString();
 
                 LoadPeople();
-                
+
                 // Goals and routines
                 JToken userJsonGoalsAndRoutines;
                 try
@@ -444,9 +482,6 @@ namespace ProjectCaitlin.Services
                     LoadTasks(goal.id, goalIdx, "goal");
                     goalIdx++;
                 }
-
-                
-
             }
         }
 
