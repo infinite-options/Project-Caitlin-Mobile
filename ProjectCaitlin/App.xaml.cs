@@ -29,7 +29,7 @@ namespace ProjectCaitlin
             // use the dependency service to get a platform-specific implementation and initialize it
             DependencyService.Get<INotificationManager>().Initialize();
 
-            if (Current.Properties.ContainsKey("accessToken")
+            if (Current.Properties.ContainsKey("access_token")
                 && Current.Properties.ContainsKey("refreshToken")
                 && Current.Properties.ContainsKey("user_id"))
                 MainPage = new NavigationPage(new LoadingPage());
@@ -46,8 +46,6 @@ namespace ProjectCaitlin
 
         public static void LoadApplicationProperties()
         {
-            User.access_token = Current.Properties["accessToken"].ToString();
-            User.refresh_token = Current.Properties["refreshToken"].ToString();
             User.id = Current.Properties["user_id"].ToString();
         }
 

@@ -48,12 +48,12 @@ namespace ProjectCaitlin.ViewModel
             });
             Items.Add(new
             {
-                Source = App.User.Me.pic,
+                Source = App.User.aboutMe.pic,
                 Title = "About Me",
                 Ind = _imageCount++,
                 BackgroundColor = Color.Default,
                 TextColor = Color.Black,
-                Length = App.User.Me.message_day,
+                Length = App.User.aboutMe.message_day,
                 Text = "Tap to Learn More",
                 IsComplete = false,
                 IsInProgress = false,

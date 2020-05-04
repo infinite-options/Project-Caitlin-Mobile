@@ -25,7 +25,7 @@ namespace ProjectCaitlin
     {
 
 		Account account;
-		public static string accessToken;
+		public static string access_token;
 		FirestoreService firestoreService;
 		FirebaseFunctionsService firebaseFunctionsService;
 		public static string refreshToken;
@@ -123,8 +123,8 @@ namespace ProjectCaitlin
 					Console.WriteLine(e.Account.Properties["refresh_token"]);
 					Console.WriteLine("----------------------------------------------------------------");
 
-					//Reset accessToken
-					accessToken = e.Account.Properties["access_token"];
+					//Reset access_token
+					access_token = e.Account.Properties["access_token"];
 					refreshToken = e.Account.Properties["refresh_token"];
 
 					App.User = new user();
@@ -145,12 +145,12 @@ namespace ProjectCaitlin
 
 					//Save to App.User AND Update Firebase with pertitnent info
 					var googleService = new GoogleService();
-					await googleService.SaveAccessTokenToFireBase(accessToken);
+					await googleService.SaveAccessTokenToFireBase(access_token);
 					Console.WriteLine(refreshToken);
 					await googleService.SaveRefreshTokenToFireBase(refreshToken);
 
                     //Save Properies inside phone for auto login
-					Application.Current.Properties["accessToken"] = accessToken;
+					Application.Current.Properties["access_token"] = access_token;
 					Application.Current.Properties["refreshToken"] = refreshToken;
 					Application.Current.Properties["user_id"] = App.User.id;
 
