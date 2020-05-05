@@ -36,12 +36,6 @@ namespace ProjectCaitlin.Services
             App.User.routines = new List<routine>();
             App.User.goals = new List<goal>();
 
-            var userDoc = await CrossCloudFirestore.Current
-                                        .Instance
-                                        .GetCollection("users")
-                                        .GetDocument(uid)
-                                        .GetDocumentAsync();
-
             CrossCloudFirestore.Current.Instance.GetCollection("users")
                            .GetDocument(uid)
                            .AddSnapshotListener((snapshot, error) =>
@@ -51,17 +45,26 @@ namespace ProjectCaitlin.Services
 
                                var docData = snapshot.Data;
 
-                               App.User.firstName = docData["first_name"].ToString();
-                               App.User.lastName = docData["last_name"].ToString();
+                               if (docData.ContainsKey("first_name") && docData.ContainsKey("last_name"))
+                               {
+                                   App.User.firstName = docData["first_name"].ToString();
+                                   App.User.lastName = docData["last_name"].ToString();
+                               }
 
-                               var grArrayData = (List<Object>) docData["goals&routines"];
-                               var aboutMeData = (Dictionary<string, object>) docData["about_me"];
+                               if (docData.ContainsKey("goals&routines"))
+                               {
+                                   var grArrayData = (List<object>)docData["goals&routines"];
+                                   LoadGoalsAndRoutines(grArrayData);
+                               }
 
-                               LoadAboutMe(aboutMeData);
-
-                               LoadGoalsAndRoutines(grArrayData);
+                               if (docData.ContainsKey("about_me"))
+                               {
+                                   var aboutMeData = (Dictionary<string, object>)docData["about_me"];
+                                   LoadAboutMe(aboutMeData);
+                               }
                            });
 
+            //load people from firebase
             CrossCloudFirestore.Current.Instance.GetCollection("users")
                            .GetDocument(uid)
                            .GetCollection("people")
@@ -78,7 +81,7 @@ namespace ProjectCaitlin.Services
 
         }
 
-        
+
 
         private void LoadAboutMe(Dictionary<string, object> aboutMeData)
         {
@@ -95,7 +98,7 @@ namespace ProjectCaitlin.Services
                 relationship = data["relationship"].ToString(),
                 phoneNumber = data["phone_number"].ToString(),
                 pic = data["pic"].ToString(),
-                speakerId = data["speaker_id"].ToString(),
+                //speakerId = data["speaker_id"].ToString(),
             };
 
             App.User.people.Add(person);
@@ -108,38 +111,38 @@ namespace ProjectCaitlin.Services
             {
                 try
                 {
-                    if (data["is_available"] == "1")
+                    if (data["is_available"].ToString() == "1")
                     {
                         bool isInProgressCheck = data.ContainsKey("is_in_progress") ? data["is_in_progress"].ToString() == "1" : false;
 
-                        if (data["is_persistent"] == "1")
+                        if (data["is_persistent"].ToString() == "1")
                         {
-                            routine routine = new routine
-                            {
-                                title = data["title"].ToString(),
 
-                                id = data["id"].ToString(),
+                            routine routine = new routine();
 
-                                photo = data["photo"].ToString(),
+                            routine.title = data["title"].ToString();
 
-                                isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
+                            routine.id = data["id"].ToString();
 
-                                isComplete = data["is_complete"].ToString() == "1"
-                                                && IsDateToday(data["datetime_completed"].ToString())
-                                                && !isInProgressCheck,
+                            routine.photo = data["photo"].ToString();
 
-                                expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
+                            routine.isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString());
 
-                                dbIdx = dbIdx_,
+                            routine.isComplete = data["is_complete"].ToString() == "1"
+                                            && IsDateToday(data["datetime_completed"].ToString())
+                                            && !isInProgressCheck;
 
-                                isSublistAvailable = data["is_sublist_available"].ToString() == "1",
+                            routine.expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString());
 
-                                dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
+                            routine.dbIdx = dbIdx_;
 
-                                availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
+                            routine.isSublistAvailable = data["is_sublist_available"].ToString() == "1";
 
-                                availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
-                            };
+                            routine.dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime();
+
+                            routine.availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString());
+
+                            routine.availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString());
 
                             App.User.routines.Add(routine);
                         }
@@ -175,30 +178,30 @@ namespace ProjectCaitlin.Services
                             App.User.goals.Add(goal);
                         }
                     }
-
-                    dbIdx_++;
-
-                    App.User.routines.Sort((x, y) => TimeSpan.Compare(x.availableStartTime, y.availableStartTime));
-                    App.User.goals.Sort((x, y) => TimeSpan.Compare(x.availableStartTime, y.availableStartTime));
-
-                    int grIdx = 0;
-                    foreach (routine routine in App.User.routines)
-                    {
-                        CreateActionsAndTasksSnapshot(routine.id, grIdx, "routine");
-                        grIdx++;
-                    }
-
-                    int goalIdx = 0;
-                    foreach (goal goal in App.User.goals)
-                    {
-                        CreateActionsAndTasksSnapshot(goal.id, goalIdx, "goal");
-                        goalIdx++;
-                    }
                 }
                 catch
                 {
                     Console.WriteLine($"Error with Routine or Goal: {data}");
                 }
+
+                dbIdx_++;
+            }
+
+            App.User.routines.Sort((x, y) => TimeSpan.Compare(x.availableStartTime, y.availableStartTime));
+            App.User.goals.Sort((x, y) => TimeSpan.Compare(x.availableStartTime, y.availableStartTime));
+
+            int grIdx = 0;
+            foreach (routine routine in App.User.routines)
+            {
+                CreateActionsAndTasksSnapshot(routine.id, grIdx, "routine");
+                grIdx++;
+            }
+
+            int goalIdx = 0;
+            foreach (goal goal in App.User.goals)
+            {
+                CreateActionsAndTasksSnapshot(goal.id, goalIdx, "goal");
+                goalIdx++;
             }
         }
 
@@ -210,108 +213,130 @@ namespace ProjectCaitlin.Services
                            .GetDocument(grId)
                            .AddSnapshotListener((snapshot, error) =>
                            {
-                               var docData = snapshot.Data;
+                               if (snapshot.Data != null)
+                               {
+                                   var docData = snapshot.Data;
+                                   if (docData.ContainsKey("actions&tasks"))
+                                   {
+                                       var atArrayData = (List<object>)docData["actions&tasks"];
 
-                               var atArrayData = (List<Object>)docData["actions&tasks"];
-
-                               LoadActionsAndTasks(atArrayData, grIdx, grType);
+                                       LoadActionsAndTasks(atArrayData, grIdx, grType);
+                                   }
+                                   else
+                                   {
+                                       if (grType == "routine")
+                                           App.User.routines[grIdx].isSublistAvailable = false;
+                                       else
+                                           App.User.goals[grIdx].isSublistAvailable = false;
+                                   }
+                               }
                            });
         }
 
-        private void LoadActionsAndTasks(List<Object> atArrayData, int grIdx, string grType)
+        private void LoadActionsAndTasks(List<object> atArrayData, int grIdx, string grType)
         {
             int dbIdx_ = 0;
             foreach (Dictionary<string, object> data in atArrayData)
             {
-                if (data["is_available"].ToString() == "1")
+                try
                 {
-                    bool isInProgressCheck = data.ContainsKey("is_in_progress") ? data["is_in_progress"].ToString() == "1" : false;
-
-                    if (grType == "routine")
+                    if (data["is_available"].ToString() == "1")
                     {
-                        task task = new task
+                        bool isInProgressCheck = data.ContainsKey("is_in_progress") ? data["is_in_progress"].ToString() == "1" : false;
+
+                        if (grType == "routine")
                         {
-                            title = data["title"].ToString(),
+                            task task = new task
+                            {
+                                title = data["title"].ToString(),
 
-                            id = data["id"].ToString(),
+                                id = data["id"].ToString(),
 
-                            photo = data["photo"].ToString(),
+                                photo = data["photo"].ToString(),
 
-                            isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
+                                isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
 
-                            isComplete = data["is_complete"].ToString() == "1"
-                                                    && IsDateToday(data["datetime_completed"].ToString())
-                                                    && !isInProgressCheck,
+                                isComplete = data["is_complete"].ToString() == "1"
+                                                        && IsDateToday(data["datetime_completed"].ToString())
+                                                        && !isInProgressCheck,
 
-                            expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
+                                expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
 
-                            dbIdx = dbIdx_,
+                                dbIdx = dbIdx_,
 
-                            isSublistAvailable = data["is_sublist_available"].ToString() == "1",
+                                isSublistAvailable = data["is_sublist_available"].ToString() == "1",
 
-                            dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
+                                dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
 
-                            availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
+                                availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
 
-                            availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
-                        };
-                    }
-                    else
-                    {
-                        action action = new action
+                                availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                            };
+
+                            App.User.routines[grIdx].tasks.Add(task);
+                        }
+                        else
                         {
-                            title = data["title"].ToString(),
+                            action action = new action
+                            {
+                                title = data["title"].ToString(),
 
-                            id = data["id"].ToString(),
+                                id = data["id"].ToString(),
 
-                            photo = data["photo"].ToString(),
+                                photo = data["photo"].ToString(),
 
-                            isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
+                                isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
 
-                            isComplete = data["is_complete"].ToString() == "1"
-                                                    && IsDateToday(data["datetime_completed"].ToString())
-                                                    && !isInProgressCheck,
+                                isComplete = data["is_complete"].ToString() == "1"
+                                                        && IsDateToday(data["datetime_completed"].ToString())
+                                                        && !isInProgressCheck,
 
-                            expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
+                                expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
 
-                            dbIdx = dbIdx_,
+                                dbIdx = dbIdx_,
 
-                            isSublistAvailable = data["is_sublist_available"].ToString() == "1",
+                                isSublistAvailable = data["is_sublist_available"].ToString() == "1",
 
-                            dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
+                                dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
 
-                            availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
+                                availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
 
-                            availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
-                        };
+                                availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                            };
+
+                            App.User.goals[grIdx].actions.Add(action);
+                        }
                     }
                 }
+                catch
+                {
 
+                }
                 dbIdx_++;
+            }
 
-                if (grType == "routine")
+            if (grType == "routine")
+            {
+                int taskIdx = 0;
+                if (App.User.routines[grIdx].tasks.Count == 0)
+                    App.User.routines[grIdx].isSublistAvailable = false;
+                foreach (task task in App.User.routines[grIdx].tasks)
                 {
-                    int taskIdx = 0;
-                    if (App.User.routines[grIdx].tasks.Count == 0)
-                        App.User.routines[grIdx].isSublistAvailable = false;
-                    foreach (task task in App.User.routines[grIdx].tasks)
-                    {
-                        var routineId = App.User.routines[grIdx].id;
-                        CreateStepsAndInstrSnapshot(routineId, task.id, grIdx, taskIdx, grType);
-                        taskIdx++;
-                    }
+                    var routineId = App.User.routines[grIdx].id;
+                    CreateStepsAndInstrSnapshot(routineId, task.id, grIdx, taskIdx, grType);
+                    taskIdx++;
                 }
-                else
+            }
+            else
+            {
+                int actionIdx = 0;
+                if (App.User.goals[grIdx].actions.Count == 0)
+                    App.User.goals[grIdx].isSublistAvailable = false;
+                foreach (action action in App.User.goals[grIdx].actions)
                 {
-                    int actionIdx = 0;
-                    if (App.User.goals[grIdx].actions.Count == 0)
-                        App.User.goals[grIdx].isSublistAvailable = false;
-                    foreach (action action in App.User.goals[grIdx].actions)
-                    {
-                        var goalId = App.User.routines[grIdx].id;
-                        CreateStepsAndInstrSnapshot(goalId, action.id, grIdx, actionIdx, grType);
-                        actionIdx++;
-                    }
+                    var goalId = App.User.routines[grIdx].id;
+                    CreateStepsAndInstrSnapshot(goalId, action.id, grIdx, actionIdx, grType);
+                    actionIdx++;
                 }
             }
         }
@@ -326,11 +351,24 @@ namespace ProjectCaitlin.Services
                            .GetDocument(atId)
                            .AddSnapshotListener((snapshot, error) =>
                            {
-                               var docData = snapshot.Data;
+                               if (snapshot.Data != null)
+                               {
+                                   var docData = snapshot.Data;
+                                   if (docData.ContainsKey("instructions&steps"))
+                                   {
+                                       var isArrayData = (List<object>)docData["instructions&steps"];
 
-                               var isArrayData = (List<Object>)docData["instructions&steps"];
+                                       LoadInstructionsAndSteps(isArrayData, grIdx, atIdx, grType);
+                                   }
+                                   else
+                                   {
+                                       if (grType == "routine")
+                                           App.User.routines[grIdx].tasks[atIdx].isSublistAvailable = false;
+                                       else
+                                           App.User.goals[grIdx].actions[atIdx].isSublistAvailable = false;
 
-                               LoadInstructionsAndSteps(isArrayData, grIdx, atIdx, grType);
+                                   }
+                               }
                            });
         }
 
@@ -339,68 +377,71 @@ namespace ProjectCaitlin.Services
             int dbIdx_ = 0;
             foreach (Dictionary<string, object> data in isArrayData)
             {
-                if (data["is_available"].ToString() == "1")
+                try
                 {
-                    bool isInProgressCheck = data.ContainsKey("is_in_progress") ? data["is_in_progress"].ToString() == "1" : false;
-
-                    if (grType == "routine")
+                    if (data["is_available"].ToString() == "1")
                     {
-                        task task = new task
+                        bool isInProgressCheck = data.ContainsKey("is_in_progress") ? data["is_in_progress"].ToString() == "1" : false;
+
+                        if (grType == "routine")
                         {
-                            title = data["title"].ToString(),
+                            step step = new step
+                            {
+                                title = data["title"].ToString(),
 
-                            id = data["id"].ToString(),
+                                photo = data["photo"].ToString(),
 
-                            photo = data["photo"].ToString(),
+                                isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
 
-                            isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
+                                isComplete = data["is_complete"].ToString() == "1"
+                                                        && IsDateToday(data["datetime_completed"].ToString())
+                                                        && !isInProgressCheck,
 
-                            isComplete = data["is_complete"].ToString() == "1"
-                                                    && IsDateToday(data["datetime_completed"].ToString())
-                                                    && !isInProgressCheck,
+                                expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
 
-                            expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
+                                dbIdx = dbIdx_,
 
-                            dbIdx = dbIdx_,
+                                dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
 
-                            isSublistAvailable = data["is_sublist_available"].ToString() == "1",
+                                availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
 
-                            dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
+                                availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                            };
 
-                            availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
-
-                            availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
-                        };
-                    }
-                    else
-                    {
-                        action action = new action
+                            App.User.routines[grIdx].tasks[atIdx].steps.Add(step);
+                        }
+                        else
                         {
-                            title = data["title"].ToString(),
+                            instruction instruction = new instruction
+                            {
+                                title = data["title"].ToString(),
 
-                            id = data["id"].ToString(),
+                                photo = data["photo"].ToString(),
 
-                            photo = data["photo"].ToString(),
+                                isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
 
-                            isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
+                                isComplete = data["is_complete"].ToString() == "1"
+                                                        && IsDateToday(data["datetime_completed"].ToString())
+                                                        && !isInProgressCheck,
 
-                            isComplete = data["is_complete"].ToString() == "1"
-                                                    && IsDateToday(data["datetime_completed"].ToString())
-                                                    && !isInProgressCheck,
+                                expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
 
-                            expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
+                                dbIdx = dbIdx_,
 
-                            dbIdx = dbIdx_,
+                                dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
 
-                            isSublistAvailable = data["is_sublist_available"].ToString() == "1",
+                                availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
 
-                            dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
+                                availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                            };
 
-                            availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
-
-                            availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
-                        };
+                            App.User.goals[grIdx].actions[atIdx].instructions.Add(instruction);
+                        }
                     }
+                }
+                catch
+                {
+
                 }
 
                 dbIdx_++;
@@ -582,4 +623,5 @@ namespace ProjectCaitlin.Services
                 }
             }
         }
+    }
 }

@@ -27,11 +27,15 @@ namespace ProjectCaitlin
 
                 firestoreService = new FirestoreService();
                 firebaseFunctionsService = new FirebaseFunctionsService();
+                var googleService = new GoogleService();
 
+                await googleService.LoadTodaysEvents();
                 await firestoreService.LoadUser();
-                await GoogleService.LoadTodaysEvents();
 
-                await Navigation.PushAsync(new GoalsRoutinesTemplate());
+                if (Application.Current.Properties.ContainsKey("refreshToken"))
+                {
+                    await Application.Current.MainPage.Navigation.PushAsync(new GoalsRoutinesTemplate());
+                }
             }
         }
     }

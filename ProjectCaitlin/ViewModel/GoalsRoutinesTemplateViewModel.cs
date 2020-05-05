@@ -346,6 +346,15 @@ namespace ProjectCaitlin.ViewModel
         public string Title
         {
             get => title;
+            set
+            {
+                if (!text.Equals(App.User.routines[0].title))
+                {
+                    text = value;
+                    OnPropertyChanged(nameof(Text));
+                }
+            }
+
         }
 
 

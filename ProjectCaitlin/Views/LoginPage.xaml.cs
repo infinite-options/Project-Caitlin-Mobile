@@ -145,6 +145,7 @@ namespace ProjectCaitlin
 
 					//Save to App.User AND Update Firebase with pertitnent info
 					var googleService = new GoogleService();
+					googleService.Navigation = Navigation;
 					await googleService.SaveAccessTokenToFireBase(access_token);
 					Console.WriteLine(refreshToken);
 					await googleService.SaveRefreshTokenToFireBase(refreshToken);
@@ -155,9 +156,6 @@ namespace ProjectCaitlin
 					Application.Current.Properties["user_id"] = App.User.id;
 
 					App.LoadApplicationProperties();
-
-					await firestoreService.LoadUser();
-					await GoogleService.LoadTodaysEvents();
 
 					//Navigate to the Daily Page after Login
 					await Navigation.PushAsync(new GoalsRoutinesTemplate());

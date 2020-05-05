@@ -92,7 +92,8 @@ namespace ProjectCaitlin
                     };
 
                     var tapGestureRecognizer = new TapGestureRecognizer();
-                    tapGestureRecognizer.Tapped += async (s, e) => {
+                    tapGestureRecognizer.Tapped += async (s, e) =>
+                    {
                         await Navigation.PushAsync(new PhotoDisplayPage(webImage, date, description, creationTime));
                     };
                     webImage.GestureRecognizers.Add(tapGestureRecognizer);
@@ -346,7 +347,8 @@ namespace ProjectCaitlin
                         labels[i].FontAttributes = FontAttributes.Bold;
                         labels[i].TextColor = Color.FromHex("#f5cb42");
                         var OnLabelClicked = new TapGestureRecognizer();
-                        OnLabelClicked.Tapped += async (s, e) => {
+                        OnLabelClicked.Tapped += async (s, e) =>
+                        {
                             await Navigation.PushAsync(new PhotoDisplayPage(date));
                         };
                         labels[i].GestureRecognizers.Add(OnLabelClicked);
@@ -389,19 +391,22 @@ namespace ProjectCaitlin
         private void AddTapGestures()
         {
             var tapGestureRecognizer1 = new TapGestureRecognizer();
-            tapGestureRecognizer1.Tapped += async (s, e) => {
+            tapGestureRecognizer1.Tapped += async (s, e) =>
+            {
                 await Navigation.PushAsync(new GreetingPage());
             };
             AboutMeButton.GestureRecognizers.Add(tapGestureRecognizer1);
 
             var tapGestureRecognizer2 = new TapGestureRecognizer();
-            tapGestureRecognizer2.Tapped += async (s, e) => {
+            tapGestureRecognizer2.Tapped += async (s, e) =>
+            {
                 await Navigation.PushAsync(new ListViewPage());
             };
             ListViewButton.GestureRecognizers.Add(tapGestureRecognizer2);
 
             var tapGestureRecognizer3 = new TapGestureRecognizer();
-            tapGestureRecognizer3.Tapped += async (s, e) => {
+            tapGestureRecognizer3.Tapped += async (s, e) =>
+            {
                 await Navigation.PushAsync(new GoalsRoutinesTemplate());
             };
             MyDayButton.GestureRecognizers.Add(tapGestureRecognizer3);

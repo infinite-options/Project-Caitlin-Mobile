@@ -16,7 +16,6 @@ namespace ProjectCaitlin.Services
 {
     public class GoogleService
     {
-
         public INavigation Navigation;
 
         public async Task<string> SaveAccessTokenToFireBase(string access_token)
@@ -93,8 +92,7 @@ namespace ProjectCaitlin.Services
             if (jsonParsed["error"] != null)
             {
                 Application.Current.Properties.Remove("refreshToken");
-                await Application.Current.MainPage.Navigation.PopToRootAsync();
-                Navigation.PushAsync(new LoginPage());
+                await Application.Current.MainPage.Navigation.PushAsync(new LoginPage());
                 return false;
             }
 
@@ -108,8 +106,7 @@ namespace ProjectCaitlin.Services
             {
                 Console.WriteLine("3: HERE");
                 Application.Current.Properties.Remove("refreshToken");
-                await Application.Current.MainPage.Navigation.PopToRootAsync();
-                Navigation.PushAsync(new LoginPage());
+                await Application.Current.MainPage.Navigation.PushAsync(new LoginPage());
             }
 
             Console.WriteLine("4: HERE");
@@ -423,7 +420,7 @@ namespace ProjectCaitlin.Services
 
         }
 
-        public static async Task<bool> LoadTodaysEvents()
+        public async Task<bool> LoadTodaysEvents()
         {
             App.User.CalendarEvents.Clear();
 
