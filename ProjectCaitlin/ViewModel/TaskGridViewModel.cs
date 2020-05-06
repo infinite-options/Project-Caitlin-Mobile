@@ -78,7 +78,7 @@ namespace ProjectCaitlin.ViewModel
                                     {
                                         App.User.routines[a].tasks[_taskIdx].isInProgress = true;
                                         Items[_taskIdx].IsInProgress = true;
-                                        firebaseFunctionsService.StartAT(routineId, taskId, taskDbIdx.ToString());
+                                        firebaseFunctionsService.StartAT(App.User.routines[a].tasks[_taskIdx]);
                                     }
                                     await mainPage.Navigation.PushAsync(new StepsPage(a, _taskIdx, isRoutine, Items[_taskIdx], GRItemModel));
                                 }
@@ -98,7 +98,7 @@ namespace ProjectCaitlin.ViewModel
                                         {
                                             App.User.routines[a].tasks[_taskIdx].isInProgress = true;
                                             Items[_taskIdx].IsInProgress = true;
-                                            firebaseFunctionsService.StartAT(routineId, taskId, taskDbIdx.ToString());
+                                            firebaseFunctionsService.StartAT(App.User.routines[a].tasks[_taskIdx]);
                                         }
                                     }
                                 }
@@ -142,7 +142,7 @@ namespace ProjectCaitlin.ViewModel
                                     {
                                         App.User.goals[a].actions[_actionIdx].isInProgress = true;
                                         Items[_actionIdx].IsInProgress = true;
-                                        firebaseFunctionsService.StartAT(goalId, actionId, actionDbIdx.ToString());
+                                        firebaseFunctionsService.StartAT(App.User.goals[a].actions[_actionIdx]);
                                     }
 
                                     await mainPage.Navigation.PushAsync(new TaskCompletePage(a, _actionIdx, isRoutine, Items[_actionIdx], GRItemModel));
@@ -163,7 +163,7 @@ namespace ProjectCaitlin.ViewModel
                                         {
                                             App.User.goals[a].actions[_actionIdx].isInProgress = true;
                                             Items[_actionIdx].IsInProgress = true;
-                                            firebaseFunctionsService.StartAT(goalId, actionId, actionDbIdx.ToString());
+                                            firebaseFunctionsService.StartAT(App.User.goals[a].actions[_actionIdx]);
                                         }
                                     }
                                 }
