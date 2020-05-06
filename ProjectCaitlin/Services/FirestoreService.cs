@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using ProjectCaitlin.Models;
 using Xamarin.Forms;
-
+using ProjectCaitlin.Services;
 namespace ProjectCaitlin.Services
 {
     public class FirestoreService
@@ -28,12 +28,103 @@ namespace ProjectCaitlin.Services
             firebaseFunctionsService = new FirebaseFunctionsService();
         }
 
+        public async Task LoadPeople()
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri("https://firestore.googleapis.com/v1/projects/project-caitlin-c71a9/databases/(default)/documents/users/" + uid + "/people"),
+                Method = HttpMethod.Get
+            };
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                HttpContent content = response.Content;
+                var peopleResponse = await content.ReadAsStringAsync();
+                JObject peopleJson = JObject.Parse(peopleResponse);
+
+                if (peopleJson["documents"] != null)
+                {
+                    Console.WriteLine("People here : ");
+                    foreach (JToken person in peopleJson["documents"])
+                    {
+                        try
+                        {
+                            var person_field = person["fields"];
+
+                            if ((bool)person_field["important"]["booleanValue"])
+                            {
+                                people people = new people();
+
+                                people.have_pic = (bool)person_field["have_pic"]["booleanValue"];
+                                people.name = person_field["name"]["stringValue"].ToString();
+                                people.phone_number = person_field["phone_number"]["stringValue"].ToString();
+                                people.pic = person_field["pic"]["stringValue"].ToString();
+
+                                App.User.Me.peoples.Add(people);
+                            }
+
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                }
+            }
+        }
+
+        public async Task LoadFirebasePhoto()
+        {
+            var request = new HttpRequestMessage
+            {
+                RequestUri = new Uri("https://firestore.googleapis.com/v1/projects/project-caitlin-c71a9/databases/(default)/documents/users/" + uid + "/photo?pageSize=100"),
+                Method = HttpMethod.Get
+            };
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+            if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            {
+                HttpContent content = response.Content;
+                var photosResponse = await content.ReadAsStringAsync();
+                JObject photosJson = JObject.Parse(photosResponse);
+
+                if (photosJson["documents"] != null)
+                {
+                    List<photo> photos = new List<photo>();
+                    foreach (JToken photoToken in photosJson["documents"])
+                    {
+                        try
+                        {
+                            var photo_field = photoToken["fields"];
+                            photo photo = new photo();
+                            photo.id = photo_field["photo_id"]["stringValue"].ToString();
+                            photo.description = photo_field["description"]["stringValue"].ToString();
+                            photo.note = photo_field["notes"]["stringValue"].ToString();
+
+                            App.User.FirebasePhotos.Add(photo);
+                        }
+                        catch
+                        {
+
+                        }
+                    }
+                }
+            }
+        }
+
         public async Task LoadUser()
         {
             Console.WriteLine("In Load User");
             // reset current user and goals values (in case of reload)
             App.User.routines = new List<routine>();
             App.User.goals = new List<goal>();
+            App.User.photoURIs = new List<List<String>>();
+            App.User.allDates = new HashSet<string>();
+
+            //load photos.
+            await LoadFirebasePhoto();
+            await GooglePhotoService.GetPhotos();
 
             var request = new HttpRequestMessage
             {
@@ -42,6 +133,7 @@ namespace ProjectCaitlin.Services
             };
             var client = new HttpClient();
             HttpResponseMessage response = await client.SendAsync(request);
+
             if (response.StatusCode == System.Net.HttpStatusCode.OK)
             {
                 HttpContent content = response.Content;
@@ -58,64 +150,16 @@ namespace ProjectCaitlin.Services
                 }
                 catch
                 {
-                    //Console.WriteLine("Error with json goal/routine token:");
-                    //Console.WriteLine(userJson);
                     return;
                 }
 
-                App.User.Me.have_pic = (bool) userAboutMe["have_pic"]["booleanValue"];
+                App.User.Me.have_pic = (bool)userAboutMe["have_pic"]["booleanValue"];
                 App.User.Me.message_day = userAboutMe["message_day"]["stringValue"].ToString();
                 App.User.Me.message_card = userAboutMe["message_card"]["stringValue"].ToString();
                 App.User.Me.pic = userAboutMe["pic"]["stringValue"].ToString();
 
-                //int peopleIdx = 0;
-                if (userAboutMe["important_people"] != null)
-                {
-                    foreach (JToken jsonPeople in userAboutMe["important_people"]["arrayValue"]["values"])
-                    {
-                        try
-                        {
-                            String people_id = jsonPeople["referenceValue"].ToString();
-                            // Console.WriteLine(jsonPeople["referenceValue"]);
-                            var request_people = new HttpRequestMessage
-                            {
-                                RequestUri = new Uri("https://firestore.googleapis.com/v1/" + people_id),
-                                Method = HttpMethod.Get
-                            };
-                            var client_people = new HttpClient();
-                            HttpResponseMessage response_people = await client.SendAsync(request_people);
+                LoadPeople();
 
-
-                            if (response_people.StatusCode == System.Net.HttpStatusCode.OK)
-                            {
-                                HttpContent content_people = response_people.Content;
-                                var peopleResponse = await content_people.ReadAsStringAsync();
-                                JObject peopleJson = JObject.Parse(peopleResponse);
-
-                                people people = new people();
-
-                                people.have_pic = (bool)peopleJson["fields"]["have_pic"]["booleanValue"];
-                                people.name = peopleJson["fields"]["name"]["stringValue"].ToString();
-                                people.phone_number = peopleJson["fields"]["phone_number"]["stringValue"].ToString();
-                                people.pic = peopleJson["fields"]["pic"]["stringValue"].ToString();
-                                people.unique_id = peopleJson["fields"]["unique_id"]["stringValue"].ToString();
-
-
-                                //Console.WriteLine("People values");
-                                App.User.Me.peoples.Add(people);
-
-                                /*Console.WriteLine("People Values");
-                                Console.WriteLine(peopleJson["fields"]["name"]["stringValue"].ToString());
-                                Console.WriteLine(peopleJson["createTime"]);*/
-
-                            }
-                        }
-                        catch
-                        {
-
-                        }
-                    }
-                }
                 // Goals and routines
                 JToken userJsonGoalsAndRoutines;
                 try
@@ -126,8 +170,6 @@ namespace ProjectCaitlin.Services
                 }
                 catch
                 {
-                    //Console.WriteLine("Error with json goal/routine token:");
-                    //Console.WriteLine(userJson);
                     return;
                 }
 
@@ -138,6 +180,7 @@ namespace ProjectCaitlin.Services
                 int dbIdx_ = 0;
                 int routineIdx = 0;
                 int goalIdx = 0;
+
                 foreach (JToken jsonGorR in userJsonGoalsAndRoutines)
                 {
                     try
@@ -271,7 +314,7 @@ namespace ProjectCaitlin.Services
                                         routine.Notification.user.after.time = TimeSpan.Parse(userAfterMap["time"]["stringValue"].ToString());
 
                                         //TotalMinutes
-                                        double total = routine.Notification.user.after.time.TotalSeconds +  (routine.availableEndTime - DateTime.Now.TimeOfDay).TotalSeconds;
+                                        double total = routine.Notification.user.after.time.TotalSeconds + (routine.availableEndTime - DateTime.Now.TimeOfDay).TotalSeconds;
                                         routine.Notification.user.after.message = userAfterMap["message"]["stringValue"].ToString();
                                         if (!routine.isComplete && total > 0 && !routine.Notification.user.after.is_set)
                                         {
@@ -359,7 +402,6 @@ namespace ProjectCaitlin.Services
                     LoadTasks(goal.id, goalIdx, "goal");
                     goalIdx++;
                 }
-
             }
         }
 

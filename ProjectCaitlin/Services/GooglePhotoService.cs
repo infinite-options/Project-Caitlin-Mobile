@@ -4,16 +4,15 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ProjectCaitlin.Models;
+using ProjectCaitlin.Services;
 
 namespace ProjectCaitlin.Services
 {
     public class GooglePhotoService
     {
-        public HashSet<string> allDates;
-        public async Task<List<List<string>>> GetPhotos()
+        public static async Task<List<List<string>>> GetPhotos()
         {
-            allDates = new HashSet<string>();
-
             //Make HTTP Request
             var request = new HttpRequestMessage();
             request.RequestUri = new Uri("https://photoslibrary.googleapis.com/v1/mediaItems?pageSize=100");
@@ -35,19 +34,13 @@ namespace ProjectCaitlin.Services
             var itemList = new List<List<string>>();
             //var itemMap = new Dictionary<string, string>();
 
-
             String creationTime = "";
             String storePicUri = "";
             String date = "";
             String thumbNailAlbumUri = "";
             String description = "";
-            //Try to add "Summary" Items to list from JSON. If null, redirect to Login prompt.
-            Console.WriteLine("request.RequestUri : " + request.RequestUri);
-
-            Console.WriteLine("NextPageToken" + result.NextPageToken);
-            /* if (!result.NextPageToken.Equals("")) {
-                 request.RequestUri += "?" + result.NextPageToken;
-             }*/
+            String id = "";
+            //String note = "";
 
             try
             {
@@ -62,34 +55,57 @@ namespace ProjectCaitlin.Services
                     creationTime = utcTime.ToString();
                     date = creationTime.Substring(0, creationTime.IndexOf(" "));// date = yyyy/mm/dd
                     creationTime = utcTime.TimeOfDay.ToString();
-                    allDates.Add(date);
-
+                    id = product.Id;
+                    string fileName = product.Filename;
                     storePicUri = product.BaseUrl.ToString();
                     description = product.Description + "";
+
+                    App.User.allDates.Add(date);
                     subList.Add(product.BaseUrl.ToString());
                     subList.Add(date);
                     subList.Add(description);
                     subList.Add(creationTime);
-                    itemList.Add(subList);
+                    subList.Add(id);
+                    
+                    bool post = true;
+                    foreach (photo photo in App.User.FirebasePhotos)
+                    {
+                        if (id.Equals(photo.id))
+                            post = false;
+                    }
 
+                    // If there is a photo in Google but not in Firebase, post it. 
+                    if (post)
+                    {
+                        //Post photo to Firebase
+                        await FirebaseFunctionsService.PostPhoto(id, description, " ");
+                        subList.Add("");
+                    }
+                    else
+                    {
+                        //Get photo from Firebase and add note
+                        photo photo = await FirebaseFunctionsService.GetPhoto(id);
+                        subList.Add(photo.note);
+                    }
+                    App.User.photoURIs.Add(subList);
+                    itemList.Add(subList);
                 }
             }
             catch (NullReferenceException e)
             {
-                //here:
-                /*var googleService = new GoogleService();
+
+                var googleService = new GoogleService();
                 if (await googleService.RefreshToken())
                 {
                     Console.WriteLine("RefreshToken Done!");
-                    return await GetPhotos();
-                }*/
-                return null;
+                    App.User.photoURIs = await GooglePhotoService.GetPhotos();
+                }
+
             }
             if (itemList.Count == 0)
                 return new List<List<string>>();
             else
                 return itemList;
         }
-
     }
 }

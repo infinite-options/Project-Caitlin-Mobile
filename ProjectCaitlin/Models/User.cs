@@ -32,6 +32,9 @@ namespace ProjectCaitlin.Models
         public List<EventsItems> CalendarEvents { get; set; } = new List<EventsItems>();
 
 		public List<List<string>> photoURIs { get; set; } = new List<List<string>>();
+		public List<photo> FirebasePhotos { get; set; } = new List<photo>();
+
+		public HashSet<string> allDates;
 
 		public event PropertyChangedEventHandler PropertyChanged;
     }

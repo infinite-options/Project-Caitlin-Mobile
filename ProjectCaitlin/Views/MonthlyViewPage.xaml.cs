@@ -12,19 +12,13 @@ using FFImageLoading.Work;
 namespace ProjectCaitlin
 {
 
-    // Learn more about making custom code visible in the Xamarin.Forms previewer
-    // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
     public partial class MonthlyViewPage : ContentPage
     {
 
-        GooglePhotoService GooglePhotoService = new GooglePhotoService();
-
-        //List<List<string>> photoURIs = new List<List<string>>();
         public int Year { get; set; } = 0;
         public int Month { get; set; } = 1;
         Label[] labels = new Label[42];
-        //Image[] images = new Image[42];
 
         public MonthlyViewPage()
         {
@@ -66,7 +60,7 @@ namespace ProjectCaitlin
 
         private async void SetupUI()
         {
-            App.User.photoURIs = await GooglePhotoService.GetPhotos();
+            
             Grid controlGrid = new Grid();
             int rowLength = 3;
             double gridItemSize = (Application.Current.MainPage.Width / rowLength) - (1.2 * rowLength);
@@ -82,6 +76,8 @@ namespace ProjectCaitlin
                     string date = list[1];
                     string description = list[2];
                     string creationTime = list[3];
+                    string id = list[4];
+                    string note = list[5];
 
                     CachedImage webImage = new CachedImage
                     {
@@ -93,7 +89,7 @@ namespace ProjectCaitlin
 
                     var tapGestureRecognizer = new TapGestureRecognizer();
                     tapGestureRecognizer.Tapped += async (s, e) => {
-                        await Navigation.PushAsync(new PhotoDisplayPage(webImage, date, description, creationTime));
+                        await Navigation.PushAsync(new PhotoDisplayPage(webImage, date, description,id, creationTime, note));
                     };
                     webImage.GestureRecognizers.Add(tapGestureRecognizer);
                     var indicator = new ActivityIndicator
@@ -117,13 +113,8 @@ namespace ProjectCaitlin
                 {
                     Console.WriteLine("RefreshToken Done!");
                     App.User.photoURIs = await GooglePhotoService.GetPhotos();
-                    //return await GetPhotos();
                 }
 
-                //var googleService = new GoogleService();
-                // await googleService.RefreshToken();
-                // Console.WriteLine("Here");
-                //SetupUI();
             }
 
             //update calendar
@@ -331,10 +322,10 @@ namespace ProjectCaitlin
                 labels[i].TextColor = Color.FromHex("#000000");
                 labels[i].FontAttributes = FontAttributes.None;//refresh the font first.
                 labels[i].GestureRecognizers.Clear();
-
+                
 
                 // make the label bold if there are images in that day.
-                foreach (string date in GooglePhotoService.allDates)
+                foreach (string date in App.User.allDates)
                 {
                     DateTime currentDate = DateTime.Parse(date);
                     int Year = currentDate.Year;
