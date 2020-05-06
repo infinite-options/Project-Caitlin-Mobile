@@ -130,7 +130,7 @@ namespace ProjectCaitlin.Views
                 
                 var firebaseFunctionsService = new FirebaseFunctionsService();
 
-                var okToCheckmark = await firebaseFunctionsService.CompleteRoutine(routineId, App.User.routines[a].dbIdx.ToString());
+                var okToCheckmark = await firebaseFunctionsService.CompleteRoutine(App.User.routines[a]);
             }
         }
     }

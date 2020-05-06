@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Newtonsoft.Json.Linq;
 using System.Collections.Generic;
 using Newtonsoft.Json;
+using Plugin.CloudFirestore;
+using ProjectCaitlin.Models;
 
 namespace ProjectCaitlin.Services
 {
@@ -90,31 +92,51 @@ namespace ProjectCaitlin.Services
             }
         }
 
-        public async Task<bool> startGR(string routineId, string routineIdx)
+        public async Task<bool> startGR(GratisObject grObject)
         {
-            var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/StartGoalOrRoutine");
-            request.Method = HttpMethod.Post;
+            var document = await CrossCloudFirestore.Current
+                                        .Instance
+                                        .GetCollection("users")
+                                        .GetDocument(App.User.id)
+                                        .GetDocumentAsync();
+            var data = document.Data;
+            var grArrayData = (List<object>) data["goals&routines"];
+            var grData = (IDictionary<string, object>) grArrayData[grObject.dbIdx];
 
-            //Format Headers of Request with included Token
-            request.Headers.Add("userId", App.User.id);
-            request.Headers.Add("routineId", routineId);
-            request.Headers.Add("routineNumber", routineIdx);
+            grData["is_in_progress"] = true;
+            grData["datetime_started"] = DateTime.Now.ToUniversalTime().ToString();
 
-            var client = new HttpClient();
-            HttpResponseMessage response = await client.SendAsync(request);
-            HttpContent content = response.Content;
-            var routineResponse = await content.ReadAsStringAsync();
 
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+
+            await CrossCloudFirestore.Current
+                         .Instance
+                         .GetCollection("TODO")
+                         .GetDocument("Ou0Yd0UXp6yHBt4Z1nVn")
+                         .UpdateDataAsync(new { Value = 1 });
+            return true;
         }
+            //var request = new HttpRequestMessage();
+            //request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/StartGoalOrRoutine");
+            //request.Method = HttpMethod.Post;
+
+            ////Format Headers of Request with included Token
+            //request.Headers.Add("userId", App.User.id);
+            //request.Headers.Add("routineId", routineId);
+            //request.Headers.Add("routineNumber", routineIdx);
+
+            //var client = new HttpClient();
+            //HttpResponseMessage response = await client.SendAsync(request);
+            //HttpContent content = response.Content;
+            //var routineResponse = await content.ReadAsStringAsync();
+
+            //if (response.StatusCode == System.Net.HttpStatusCode.OK)
+            //{
+            //    return true;
+            //}
+            //else
+            //{
+            //    return false;
+            //}
 
         public async Task<bool> StartAT(string routineId, string taskId, string taskIndex)
         {
@@ -228,30 +250,9 @@ namespace ProjectCaitlin.Services
             }
         }*/
 
-        public async Task<bool> CompleteRoutine(string routineId, string routineIdx)
+        public async Task<bool> CompleteRoutine(GratisObject grObject)
         {
-            var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/CompleteGoalOrRoutine");
-            request.Method = HttpMethod.Post;
-
-            //Format Headers of Request with included Token
-            request.Headers.Add("userId", App.User.id);
-            request.Headers.Add("routineId", routineId);
-            request.Headers.Add("routineNumber", routineIdx);
-
-            var client = new HttpClient();
-            HttpResponseMessage response = await client.SendAsync(request);
-            HttpContent content = response.Content;
-            var routineResponse = await content.ReadAsStringAsync();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return false;
         }
 
         public async Task<bool> UpdateTask(string routineId, string taskId, string taskIndex)
