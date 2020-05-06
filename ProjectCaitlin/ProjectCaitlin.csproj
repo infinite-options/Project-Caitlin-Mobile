@@ -46,6 +46,7 @@
   <ItemGroup>
     <Folder Include="Converters\" />
     <Folder Include="Extensions\" />
+    <Folder Include="Models\GRATIS\" />
   </ItemGroup>
   <ItemGroup>
     <Compile Remove="Converters\UniversalValueConverter.cs" />

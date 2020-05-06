@@ -3,8 +3,6 @@ namespace ProjectCaitlin.Models
 {
     public class GratisObject
     {
-		public string id { get; set; }
-
 		public string title { get; set; }
 
 		public string status { get; set; }

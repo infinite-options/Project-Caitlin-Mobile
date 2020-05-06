@@ -5,8 +5,8 @@ using Newtonsoft.Json;
 namespace ProjectCaitlin.Models
 {
 	[JsonObject]
-	public class step :GratisObject, INotifyPropertyChanged
+	public class instruction : isObject, INotifyPropertyChanged
 	{
 		public event PropertyChangedEventHandler PropertyChanged;
-    }
+	}
 }

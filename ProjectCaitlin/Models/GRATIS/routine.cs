@@ -6,13 +6,9 @@ using Newtonsoft.Json;
 namespace ProjectCaitlin.Models
 {
 	[JsonObject]
-	public class routine : GratisObject, INotifyPropertyChanged
+	public class routine : grObject, INotifyPropertyChanged
 	{
 		public Notification Notification { get; set; } = new Notification();
-
-		public string id { get; set; }
-
-		public bool isSublistAvailable { get; set; }
 
 		public List<task> tasks { get; set; } = new List<task>();
 

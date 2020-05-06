@@ -193,24 +193,24 @@ namespace ProjectCaitlin.Services
             int grIdx = 0;
             foreach (routine routine in App.User.routines)
             {
-                CreateActionsAndTasksSnapshot(routine.id, grIdx, "routine");
+                CreateActionsAndTasksSnapshot(grIdx, routine, "routine");
                 grIdx++;
             }
 
-            int goalIdx = 0;
+            grIdx = 0;
             foreach (goal goal in App.User.goals)
             {
-                CreateActionsAndTasksSnapshot(goal.id, goalIdx, "goal");
-                goalIdx++;
+                CreateActionsAndTasksSnapshot(grIdx, goal, "goal");
+                grIdx++;
             }
         }
 
-        private void CreateActionsAndTasksSnapshot(string grId, int grIdx, string grType)
+        private void CreateActionsAndTasksSnapshot(int grIdx, grObject grObject, string grType)
         {
             CrossCloudFirestore.Current.Instance.GetCollection("users")
                            .GetDocument(uid)
                            .GetCollection("goals&routines")
-                           .GetDocument(grId)
+                           .GetDocument(grObject.id)
                            .AddSnapshotListener((snapshot, error) =>
                            {
                                if (snapshot.Data != null)
@@ -220,7 +220,7 @@ namespace ProjectCaitlin.Services
                                    {
                                        var atArrayData = (List<object>)docData["actions&tasks"];
 
-                                       LoadActionsAndTasks(atArrayData, grIdx, grType);
+                                       LoadActionsAndTasks(atArrayData, grIdx, grObject, grType);
                                    }
                                    else
                                    {
@@ -233,7 +233,7 @@ namespace ProjectCaitlin.Services
                            });
         }
 
-        private void LoadActionsAndTasks(List<object> atArrayData, int grIdx, string grType)
+        private void LoadActionsAndTasks(List<object> atArrayData, int grIdx, grObject grObject, string grType)
         {
             int dbIdx_ = 0;
             foreach (Dictionary<string, object> data in atArrayData)
@@ -251,6 +251,8 @@ namespace ProjectCaitlin.Services
                                 title = data["title"].ToString(),
 
                                 id = data["id"].ToString(),
+
+                                grId = grObject.id,
 
                                 photo = data["photo"].ToString(),
 
@@ -282,6 +284,8 @@ namespace ProjectCaitlin.Services
                                 title = data["title"].ToString(),
 
                                 id = data["id"].ToString(),
+
+                                grId = grObject.id,
 
                                 photo = data["photo"].ToString(),
 
@@ -323,7 +327,7 @@ namespace ProjectCaitlin.Services
                 foreach (task task in App.User.routines[grIdx].tasks)
                 {
                     var routineId = App.User.routines[grIdx].id;
-                    CreateStepsAndInstrSnapshot(routineId, task.id, grIdx, taskIdx, grType);
+                    CreateStepsAndInstrSnapshot(grObject, task, grIdx, taskIdx, grType);
                     taskIdx++;
                 }
             }
@@ -335,20 +339,20 @@ namespace ProjectCaitlin.Services
                 foreach (action action in App.User.goals[grIdx].actions)
                 {
                     var goalId = App.User.routines[grIdx].id;
-                    CreateStepsAndInstrSnapshot(goalId, action.id, grIdx, actionIdx, grType);
+                    CreateStepsAndInstrSnapshot(grObject, action, grIdx, actionIdx, grType);
                     actionIdx++;
                 }
             }
         }
 
-        private void CreateStepsAndInstrSnapshot(string grId, string atId, int grIdx, int atIdx, string grType)
+        private void CreateStepsAndInstrSnapshot(grObject grObject, atObject atObject, int grIdx, int atIdx, string grType)
         {
             CrossCloudFirestore.Current.Instance.GetCollection("users")
                            .GetDocument(uid)
                            .GetCollection("goals&routines")
-                           .GetDocument(grId)
+                           .GetDocument(grObject.id)
                            .GetCollection("actions&tasks")
-                           .GetDocument(atId)
+                           .GetDocument(atObject.id)
                            .AddSnapshotListener((snapshot, error) =>
                            {
                                if (snapshot.Data != null)

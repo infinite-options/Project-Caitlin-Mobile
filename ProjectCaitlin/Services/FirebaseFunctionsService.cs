@@ -104,15 +104,14 @@ namespace ProjectCaitlin.Services
             var grData = (IDictionary<string, object>) grArrayData[grObject.dbIdx];
 
             grData["is_in_progress"] = true;
-            grData["datetime_started"] = DateTime.Now.ToUniversalTime().ToString();
-
-
+            grData["is_complete"] = false;
+            grData["datetime_started"] = DateTime.Now.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz");
 
             await CrossCloudFirestore.Current
                          .Instance
                          .GetCollection("TODO")
                          .GetDocument("Ou0Yd0UXp6yHBt4Z1nVn")
-                         .UpdateDataAsync(new { Value = 1 });
+                         .UpdateDataAsync(data);
             return true;
         }
             //var request = new HttpRequestMessage();
@@ -252,7 +251,25 @@ namespace ProjectCaitlin.Services
 
         public async Task<bool> CompleteRoutine(GratisObject grObject)
         {
-            return false;
+            var document = await CrossCloudFirestore.Current
+                                        .Instance
+                                        .GetCollection("users")
+                                        .GetDocument(App.User.id)
+                                        .GetDocumentAsync();
+            var data = document.Data;
+            var grArrayData = (List<object>)data["goals&routines"];
+            var grData = (IDictionary<string, object>)grArrayData[grObject.dbIdx];
+
+            grData["is_in_progress"] = false;
+            grData["is_complete"] = true;
+            grData["datetime_completed"] = DateTime.Now.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz");
+
+            await CrossCloudFirestore.Current
+                         .Instance
+                         .GetCollection("TODO")
+                         .GetDocument("Ou0Yd0UXp6yHBt4Z1nVn")
+                         .UpdateDataAsync(data);
+            return true;
         }
 
         public async Task<bool> UpdateTask(string routineId, string taskId, string taskIndex)
