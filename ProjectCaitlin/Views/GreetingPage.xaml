@@ -11,82 +11,76 @@
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#1A1827">
     <ContentPage.Content>
-        <StackLayout
-            Margin="0,40,10,0">
+        <ScrollView>
             <StackLayout
+            Margin="0,40,10,0">
+                <StackLayout
             HorizontalOptions="End">
-            <ImageButton
+                    <ImageButton
                 Source="logouticon.png"
                 WidthRequest="25"
                 HeightRequest="25"
                 Margin="0,0,5,0"
                 HorizontalOptions="Center"
                 Clicked="LogoutBtnClick">
-                </ImageButton>
-            <Label
+                    </ImageButton>
+                    <Label
                 Text="Log Out"
                 FontSize="10"
                 TextColor="WhiteSmoke"
                 HorizontalOptions="Center">
 
-            </Label>
-            </StackLayout>
+                    </Label>
+                </StackLayout>
 
-            <StackLayout VerticalOptions="CenterAndExpand">
-                <StackLayout>
-                    <ffimage:CachedImage
+                <StackLayout VerticalOptions="CenterAndExpand">
+                    <StackLayout>
+                        <ffimage:CachedImage
                         x:Name = "UserImage"
                         HeightRequest="140"
                         WidthRequest="140">
-                        <ffimage:CachedImage.Transformations>
-                            <fftransformations:CircleTransformation/>
-                        </ffimage:CachedImage.Transformations>
-                    </ffimage:CachedImage>
-                </StackLayout>
-                <StackLayout>
-                    <Label x:Name ="GreetingsTitleLabel" Text="" TextColor="White" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
-                    <Label x:Name ="FirstNameLabel" Text=""  TextColor="White" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
-                    <Label x:Name ="MessageLabel" Text=""  TextColor="White" Margin="20,20" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
-                    <Label x:Name ="MessageCardLabel" Text=""  TextColor="White" Margin="20,20" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
-                </StackLayout>
+                            <ffimage:CachedImage.Transformations>
+                                <fftransformations:CircleTransformation/>
+                            </ffimage:CachedImage.Transformations>
+                        </ffimage:CachedImage>
+                    </StackLayout>
+                    <StackLayout>
+                        <Label x:Name ="GreetingsTitleLabel" Text="" TextColor="White" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Label x:Name ="FirstNameLabel" Text=""  TextColor="White" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Label x:Name ="MessageLabel" Text=""  TextColor="White" Margin="20,20" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Label x:Name ="MessageCardLabel" Text=""  TextColor="White" Margin="20,20" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </StackLayout>
 
-                <StackLayout >
-                    <Button Text="View Today's List" CornerRadius="10" Margin="5" Clicked ="btn1Clicked" TextColor="White"  BackgroundColor="#59556D" />
-                    <Button Text="Manage My Day " CornerRadius="10" Margin="5" Clicked="btn2Clicked" TextColor="White" BackgroundColor="#59556D"/>
-                </StackLayout>
+                    <StackLayout >
+                        <Button Text="View Today's List" CornerRadius="10" Margin="5" Clicked ="btn1Clicked" TextColor="White"  BackgroundColor="#59556D" />
+                        <Button Text="Manage My Day " CornerRadius="10" Margin="5" Clicked="btn2Clicked" TextColor="White" BackgroundColor="#59556D"/>
+                    </StackLayout>
 
-            <StackLayout>
-                <flv:FlowListView FlowColumnCount="3"
+                    <StackLayout>
+                        <flv:FlowListView FlowColumnCount="3"
                         SeparatorVisibility="Default"
                         HasUnevenRows="False"
                         RowHeight ="280"
                         FlowItemsSource="{Binding Items}">
 
-                    <flv:FlowListView.FlowColumnTemplate>
-                        <DataTemplate>
-                            <StackLayout>
-                                <Frame
-                                    Margin="5"
-                                   Padding="10"
-                                   CornerRadius="50">
+                            <flv:FlowListView.FlowColumnTemplate>
+                                <DataTemplate>
+                                    <StackLayout>
+                                        <ImageButton Source="{Binding Source}"
+                                                Command="{Binding Navigate}"
+                                                CommandParameter="{Binding NavigateIdx}"
+                                                HeightRequest="80"
+                                                WidthRequest="80"
+                                                Aspect="AspectFill"/>
+                                        <Label HorizontalOptions="Center" TextColor="White" Text="{Binding Text}"  />
+                                    </StackLayout>
+                                </DataTemplate>
+                            </flv:FlowListView.FlowColumnTemplate>
+                        </flv:FlowListView>
+                    </StackLayout>
+                </StackLayout>
 
-                                    <ImageButton Source="{Binding Source}"
-                                                 Command="{Binding Navigate}"
-                                                 CommandParameter="{Binding NavigateIdx}"
-                                                 HeightRequest="80"
-                                                 WidthRequest="80"
-                                                 Aspect="AspectFill"/>
-
-                                </Frame>
-
-                                <Label HorizontalOptions="Center" TextColor="White" Text="{Binding Text}"  />
-                            </StackLayout>
-                        </DataTemplate>
-                    </flv:FlowListView.FlowColumnTemplate>
-                </flv:FlowListView>
             </StackLayout>
-        </StackLayout>
-
-
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

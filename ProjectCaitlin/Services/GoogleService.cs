@@ -93,7 +93,6 @@ namespace ProjectCaitlin.Services
             if (jsonParsed["error"] != null)
             {
                 Application.Current.Properties.Remove("refreshToken");
-                await Application.Current.MainPage.Navigation.PopToRootAsync();
                 Navigation.PushAsync(new LoginPage());
                 return false;
             }
@@ -108,7 +107,6 @@ namespace ProjectCaitlin.Services
             {
                 Console.WriteLine("3: HERE");
                 Application.Current.Properties.Remove("refreshToken");
-                await Application.Current.MainPage.Navigation.PopToRootAsync();
                 Navigation.PushAsync(new LoginPage());
             }
 
