@@ -92,8 +92,6 @@ namespace ProjectCaitlin
 
 			if (e.IsAuthenticated)
 			{
-				Navigation.PushAsync(new LoadingPage());
-
 				// If the user is authenticated, request their basic user data from Google
 				// UserInfoUrl = https://www.googleapis.com/oauth2/v2/userinfo
 				var request = new OAuth2Request("GET", new Uri(Constants.UserInfoUrl), null, e.Account);
@@ -158,7 +156,7 @@ namespace ProjectCaitlin
 					App.LoadApplicationProperties();
 
 					//Navigate to the Daily Page after Login
-					await Navigation.PushAsync(new GoalsRoutinesTemplate());
+					Navigation.PushAsync(new LoadingPage());
 				}
 			}
 		}
