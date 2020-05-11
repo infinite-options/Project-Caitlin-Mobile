@@ -10,6 +10,7 @@ namespace ProjectCaitlin
     {
         private FirestoreService firestoreService;
         private FirebaseFunctionsService firebaseFunctionsService;
+        private GoogleService googleService;
 
         public LoadingPage()
         {
@@ -27,11 +28,14 @@ namespace ProjectCaitlin
 
                 firestoreService = new FirestoreService();
                 firebaseFunctionsService = new FirebaseFunctionsService();
+                googleService = new GoogleService();
 
-                await firestoreService.LoadUser();
-                await GoogleService.LoadTodaysEvents();
-
-                await Navigation.PushAsync(new GoalsRoutinesTemplate());
+                if (await googleService.RefreshToken())
+                {
+                    await firestoreService.LoadUser();
+                    await GoogleService.LoadTodaysEvents();
+                    await Navigation.PushAsync(new GoalsRoutinesTemplate());
+                }
             }
         }
     }

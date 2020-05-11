@@ -36,7 +36,10 @@ namespace ProjectCaitlin.ViewModel
                     new Command<int>(
                             async (int _actionIdx) =>
                             {
-                                Device.OpenUri(new Uri("tel:" + phoneNumber));
+                                if (phoneNumber == "")
+                                    await Application.Current.MainPage.DisplayAlert("Sorry!", $"Looks a phone number hasn't been registered with {people.name}.", "OK");
+                                else
+                                    Device.OpenUri(new Uri("tel:" + phoneNumber));
                             }
                     ),
                     peopleIdx));
@@ -45,7 +48,6 @@ namespace ProjectCaitlin.ViewModel
                 Console.WriteLine("People : " + people.pic);
             }
         }
-        
     }
     public class PeopleItemModel : INotifyPropertyChanged
     {

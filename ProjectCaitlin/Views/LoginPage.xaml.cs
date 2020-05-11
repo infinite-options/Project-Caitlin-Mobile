@@ -92,8 +92,8 @@ namespace ProjectCaitlin
 
 			if (e.IsAuthenticated)
 			{
-				Navigation.PushAsync(new LoadingPage());
-
+				loginButton.Opacity = 0;
+				loginButton.Clicked -= LoginClicked;
 				// If the user is authenticated, request their basic user data from Google
 				// UserInfoUrl = https://www.googleapis.com/oauth2/v2/userinfo
 				var request = new OAuth2Request("GET", new Uri(Constants.UserInfoUrl), null, e.Account);
@@ -106,17 +106,14 @@ namespace ProjectCaitlin
 					string userJsonString = await response.GetResponseTextAsync();
 					userJson = JObject.Parse(userJsonString);
 				}
+                else
+                {
+					loginButton.Opacity = 1;
+					loginButton.Clicked += LoginClicked;
+				}
 
 				if (userJson != null)
-				{
-					//store.Delete(account, Constants.AppName);
-					//await store.SaveAsync(account = e.Account, Constants.AppName);
-					//await DisplayAlert("Login Successful", "", "OK");
-
-					//Display Successful Login Alert
-					//await DisplayAlert("Login Successful", "", "OK");
-
-					//Write the Toekn to console, in case it changes
+				{	
 					Console.WriteLine("HERE is the TOKEN------------------------------------------------");
 					Console.WriteLine(e.Account.Properties["access_token"]);
 					Console.WriteLine("HERE is the REFRESH TOKEN----------------------------------------");
@@ -137,7 +134,8 @@ namespace ProjectCaitlin
                     if (App.User.id == "")
                     {
 						await DisplayAlert("Oops!", "Looks like your trusted advisor hasn't registered your account yet. Please ask for their assistance!", "OK");
-						await Navigation.PushAsync(new LoginPage());
+						loginButton.Opacity = 1;
+						loginButton.Clicked += LoginClicked;
 						return;
                     }
 
@@ -156,11 +154,10 @@ namespace ProjectCaitlin
 
 					App.LoadApplicationProperties();
 
-					await firestoreService.LoadUser();
-					await GoogleService.LoadTodaysEvents();
+					await googleService.RefreshToken();
 
 					//Navigate to the Daily Page after Login
-					await Navigation.PushAsync(new GoalsRoutinesTemplate());
+					await Navigation.PushAsync(new LoadingPage());
 				}
 			}
 		}

@@ -56,29 +56,52 @@
                         <Button Text="Manage My Day " CornerRadius="10" Margin="5" Clicked="btn2Clicked" TextColor="White" BackgroundColor="#59556D"/>
                     </StackLayout>
 
-                    <StackLayout>
-                        <flv:FlowListView FlowColumnCount="3"
-                        SeparatorVisibility="Default"
-                        HasUnevenRows="False"
-                        RowHeight ="280"
-                        FlowItemsSource="{Binding Items}">
+                    <Label
+                        Text="Important Individuals"
+                        FontSize="20"
+                        HorizontalTextAlignment="Center"
+                        TextColor="WhiteSmoke">
+                    </Label>
+                    <Label
+                        Text="Press on their images to call their phone numbers"
+                        FontSize="12"
+                        HorizontalTextAlignment="Center"
+                        TextColor="WhiteSmoke"
+                        Margin="0,0,0,10">
+                    </Label>
+                    <flv:FlowListView FlowColumnCount="3"
+                    SeparatorVisibility="Default"
+                    HasUnevenRows="False"
+                    RowHeight="105"
+                    BackgroundColor="#1A1827"
+                    FlowItemsSource="{Binding Items}">
 
-                            <flv:FlowListView.FlowColumnTemplate>
-                                <DataTemplate>
-                                    <StackLayout>
-                                        <ImageButton Source="{Binding Source}"
+                        <flv:FlowListView.FlowColumnTemplate>
+                            <DataTemplate>
+                                <StackLayout>
+                                    <ffimage:CachedImage
+                                        Margin="22,0,22,0"
+                                        Source="{Binding Source}"
+                                        HeightRequest="80"
+                                        WidthRequest="80"
+                                        Aspect="AspectFill">
+                                        <ffimage:CachedImage.GestureRecognizers>
+                                            <TapGestureRecognizer 
                                                 Command="{Binding Navigate}"
-                                                CommandParameter="{Binding NavigateIdx}"
-                                                HeightRequest="80"
-                                                WidthRequest="80"
-                                                Aspect="AspectFill"/>
-                                        <Label HorizontalOptions="Center" TextColor="White" Text="{Binding Text}"  />
-                                    </StackLayout>
-                                </DataTemplate>
-                            </flv:FlowListView.FlowColumnTemplate>
-                        </flv:FlowListView>
+                                                CommandParameter="{Binding NavigateIdx}">
+
+                                            </TapGestureRecognizer>
+                                        </ffimage:CachedImage.GestureRecognizers>
+                                        <ffimage:CachedImage.Transformations>
+				                            <fftransformations:CircleTransformation />
+			                            </ffimage:CachedImage.Transformations>
+                                    </ffimage:CachedImage>
+                                    <Label HorizontalOptions="Center" TextColor="White" Text="{Binding Text}"  />
+                                </StackLayout>
+                            </DataTemplate>
+                        </flv:FlowListView.FlowColumnTemplate>
+                    </flv:FlowListView>
                     </StackLayout>
-                </StackLayout>
 
             </StackLayout>
         </ScrollView>

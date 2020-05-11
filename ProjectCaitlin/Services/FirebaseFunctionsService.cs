@@ -271,10 +271,9 @@ namespace ProjectCaitlin.Services
                 // without async, will get stuck, needs bug fix
                 HttpResponseMessage response = client.PostAsync(request.RequestUri, formContent).Result;
                 var photosResponse = await response.Content.ReadAsStringAsync();
-                JObject photosJson = JObject.Parse(photosResponse);
-
                 try
                 {
+                    JObject photosJson = JObject.Parse(photosResponse);
                     var photo_field = photosJson["result"];
 
                     photo.id = photo_field["photo_id"]+"";
@@ -285,7 +284,7 @@ namespace ProjectCaitlin.Services
                 }
                 catch
                 {
-
+                    Console.WriteLine($"error with photo id: {photoId}");
                 }
                 return photo;
             }
