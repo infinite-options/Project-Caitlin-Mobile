@@ -778,6 +778,8 @@ namespace ProjectCaitlin
 
             var tapGestureRecognizer3 = new TapGestureRecognizer();
             tapGestureRecognizer3.Tapped += async (s, e) => {
+                if (App.User.photoURIs.Count < 1)
+                    await GooglePhotoService.GetPhotos();
                 await Navigation.PushAsync(new MonthlyViewPage());
             };
             MyPhotosButton.GestureRecognizers.Add(tapGestureRecognizer3);
