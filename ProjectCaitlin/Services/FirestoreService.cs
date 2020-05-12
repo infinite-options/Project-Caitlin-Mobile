@@ -124,7 +124,9 @@ namespace ProjectCaitlin.Services
 
             //load photos.
             await LoadFirebasePhoto();
-            await GooglePhotoService.GetPhotos();
+
+            //move it to navbar click function. 
+            //await GooglePhotoService.GetPhotos();
 
             var request = new HttpRequestMessage
             {
