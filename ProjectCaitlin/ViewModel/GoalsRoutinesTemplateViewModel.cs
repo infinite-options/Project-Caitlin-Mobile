@@ -57,7 +57,7 @@ namespace ProjectCaitlin.ViewModel
                 new DateTime(1, 1, 1),
                 "Tap to Learn More",
                 App.User.Me.message_day,
-                true ? .6 : 1,
+                1,
                 false,
                 false,
                 new Command<MyDayIndexes>(
@@ -357,31 +357,33 @@ namespace ProjectCaitlin.ViewModel
                 else
                 {
                     EventsItems calendarEvent = (EventsItems)obj;
-                    Items.Add(new GRItemModel(
-                       "eventIcon.jpg",
-                       calendarEvent.EventName,
-                       Color.Goldenrod,
-                       Color.Black,
-                       calendarEvent.Start.DateTime.DateTime,
-                       calendarEvent.Description,
-                       "Start Time: " + calendarEvent.Start.DateTime.TimeOfDay + "\n" +
-                       "End Time: " + calendarEvent.End.DateTime.TimeOfDay + "",
-                       true ? .6 : 1,
-                       false,
-                       true,
+                    if (isInTimeRange(calendarEvent.Start.DateTime.TimeOfDay, calendarEvent.End.DateTime.TimeOfDay))
+                    {
+                        Items.Add(new GRItemModel(
+                           "eventIcon.jpg",
+                           calendarEvent.EventName,
+                           Color.Goldenrod,
+                           Color.Black,
+                           calendarEvent.Start.DateTime.DateTime,
+                           "",
+                           "Start Time: " + calendarEvent.Start.DateTime.TimeOfDay + "\n" +
+                           "End Time: " + calendarEvent.End.DateTime.TimeOfDay + "",
+                           1,
+                           false,
+                           false,
 
-                       new Command<MyDayIndexes>(
-                            async (MyDayIndexes indexes) =>
-                            {
+                           new Command<MyDayIndexes>(
+                                async (MyDayIndexes indexes) =>
+                                {
 
-                            }),
-                        new MyDayIndexes(itemCount, eventNum, 0)
-                        ));
-                    itemCount++;
-                    eventNum++;
+                                }),
+                            new MyDayIndexes(itemCount, eventNum, 0)
+                            ));
+                        itemCount++;
+                        eventNum++;
+                    }
                 }
             }
-
         }
 
         public ICommand PanPositionChangedCommand { get; }
