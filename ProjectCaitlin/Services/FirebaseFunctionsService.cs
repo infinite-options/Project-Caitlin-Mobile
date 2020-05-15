@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using Newtonsoft.Json;
 using Plugin.CloudFirestore;
 using ProjectCaitlin.Models;
+using System.Linq;
 
 namespace ProjectCaitlin.Services
 {
@@ -299,6 +300,15 @@ namespace ProjectCaitlin.Services
 
         public object ConvertDocumentGet(IDictionary<string, object> docData, string GratisType)
         {
+            var gratisBoolAttr = new List<string>() { "is_available", "is_complete", "is_in_progress", "is_timed"};
+            var grBoolAttrAdd = new List<string>() { "is_persistent", "is_sublist_available"};
+            var atBoolAttrAdd = new List<string>() { "is_sublist_available"};
+
+            var grBoolAttr = gratisBoolAttr.Concat(grBoolAttrAdd);
+            var atBoolAttr = gratisBoolAttr.Concat(atBoolAttrAdd);
+            var isBoolAttr = gratisBoolAttr;
+
+            var notifBoolAttributes = new List<string>() { "is_enabled", "is_set"};
 
             if (GratisType == "goals&routines")
             {
