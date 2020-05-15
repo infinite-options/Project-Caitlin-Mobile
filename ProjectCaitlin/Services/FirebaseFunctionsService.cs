@@ -296,5 +296,37 @@ namespace ProjectCaitlin.Services
                 return false;
             }
         }
+
+        public object ConvertDocumentGet(IDictionary<string, object> docData, string GratisType)
+        {
+
+            if (GratisType == "goals&routines")
+            {
+                if (docData.ContainsKey("about_me"))
+                {
+                    var aboutMeDict = (IDictionary<string, object>)docData["about_me"];
+                    if (aboutMeDict.ContainsKey("have_pic"))
+                        aboutMeDict["have_pic"] = BinaryToBool((string)aboutMeDict["have_pic"]);
+                }
+
+            }
+            if (docData.ContainsKey(GratisType))
+            {
+                var grArrayData = (List<object>)docData["goals&routines"];
+                foreach (IDictionary<string, object> grDict in grArrayData)
+                {
+                    if (grDict.ContainsKey("is_available"))
+                    {
+
+                    }
+                }
+            }
+            return docData;
+        }
+
+        private bool BinaryToBool(string binary)
+        {
+            return (binary == "1") ? true : false;
+        }
     }
 }
