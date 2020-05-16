@@ -29,52 +29,6 @@ namespace ProjectCaitlin.Services
             firebaseFunctionsService = new FirebaseFunctionsService();
         }
 
-        public async Task LoadPeople()
-        {
-            var request = new HttpRequestMessage
-            {
-                RequestUri = new Uri("https://firestore.googleapis.com/v1/projects/project-caitlin-c71a9/databases/(default)/documents/users/" + uid + "/people"),
-                Method = HttpMethod.Get
-            };
-            var client = new HttpClient();
-            HttpResponseMessage response = await client.SendAsync(request);
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                HttpContent content = response.Content;
-                var peopleResponse = await content.ReadAsStringAsync();
-                JObject peopleJson = JObject.Parse(peopleResponse);
-
-                if (peopleJson["documents"] != null)
-                {
-                    Console.WriteLine("People here : ");
-                    foreach (JToken person in peopleJson["documents"])
-                    {
-                        try
-                        {
-                            var person_field = person["fields"];
-
-                            if ((bool)person_field["important"]["booleanValue"])
-                            {
-                                people people = new people();
-
-                                people.have_pic = (bool)person_field["have_pic"]["booleanValue"];
-                                people.name = person_field["name"]["stringValue"].ToString();
-                                people.phone_number = person_field["phone_number"]["stringValue"].ToString();
-                                people.pic = person_field["pic"]["stringValue"].ToString();
-
-                                App.User.Me.peoples.Add(people);
-                            }
-
-                        }
-                        catch
-                        {
-
-                        }
-                    }
-                }
-            }
-        }
-
         public async Task LoadFirebasePhoto()
         {
             var request = new HttpRequestMessage

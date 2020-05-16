@@ -21,16 +21,16 @@ namespace ProjectCaitlin.ViewModel
             this.mainPage = mainPage;
             Items = new ObservableCollection<PeopleItemModel>();
 
-            foreach (people people in App.User.Me.peoples)
+            foreach (person people in App.User.people)
             {
                 String pic;
-                if (people.have_pic)
+                if (people.pic != "")
                     pic = people.pic;
                 else
                     pic = "aboutmeiconnotext.png";
 
                 int peopleIdx = 0;
-                string phoneNumber = people.phone_number;
+                string phoneNumber = people.phoneNumber;
                 Items.Add(new PeopleItemModel(people.pic,
                     people.name,
                     new Command<int>(

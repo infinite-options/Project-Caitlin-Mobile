@@ -40,10 +40,10 @@ namespace ProjectCaitlin.Views
             UserImage.Source = App.User.aboutMe.pic;
             GreetingsTitleLabel.Text = GetTitleDayMessage();
             FirstNameLabel.Text = App.User.firstName;
-            MessageCardLabel.Text = App.User.Me.message_card;
-            MessageLabel.Text = App.User.Me.message_day;
+            MessageCardLabel.Text = App.User.aboutMe.message_card;
+            MessageLabel.Text = App.User.aboutMe.message_day;
 
-            if (App.User.Me.peoples.Count == 0)
+            if (App.User.people.Count == 0)
             {
                 importantPeopleSL.IsVisible = false;
             }
