@@ -95,9 +95,9 @@ namespace ProjectCaitlin.Services
             var person = new person()
             {
                 name = data["name"].ToString(),
-                relationship = data["relationship"].ToString(),
+                relationship = data.ContainsKey("relationship") ? data["relationship"].ToString() : "",
                 phoneNumber = data["phone_number"].ToString(),
-                pic = data["pic"].ToString(),
+                pic = data.ContainsKey("pic") ? data["pic"].ToString() : "",
                 //speakerId = data["speaker_id"].ToString(),
             };
 
@@ -338,7 +338,7 @@ namespace ProjectCaitlin.Services
                     App.User.goals[grIdx].isSublistAvailable = false;
                 foreach (action action in App.User.goals[grIdx].actions)
                 {
-                    var goalId = App.User.routines[grIdx].id;
+                    var goalId = App.User.goals[grIdx].id;
                     CreateStepsAndInstrSnapshot(grObject, action, grIdx, actionIdx, grType);
                     actionIdx++;
                 }

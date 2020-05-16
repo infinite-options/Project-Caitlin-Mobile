@@ -100,7 +100,7 @@ namespace ProjectCaitlin.Services
                                         .GetCollection("users")
                                         .GetDocument(App.User.id)
                                         .GetDocumentAsync();
-            var data = document.Data;
+            var data = (IDictionary<string, object>)ConvertDocumentGet(document.Data, "goals%routines");
             var grArrayData = (List<object>)data["goals&routines"];
             var grData = (IDictionary<string, object>)grArrayData[grObject.dbIdx];
 
@@ -300,16 +300,30 @@ namespace ProjectCaitlin.Services
 
         public object ConvertDocumentGet(IDictionary<string, object> docData, string GratisType)
         {
-            var gratisBoolAttr = new List<string>() { "is_available", "is_complete", "is_in_progress", "is_timed"};
-            var grBoolAttrAdd = new List<string>() { "is_persistent", "is_sublist_available"};
-            var atBoolAttrAdd = new List<string>() { "is_sublist_available"};
+            var gratisBoolField = new List<string>() { "is_available", "is_complete", "is_in_progress", "is_timed"};
 
-            var grBoolAttr = gratisBoolAttr.Concat(grBoolAttrAdd);
-            var atBoolAttr = gratisBoolAttr.Concat(atBoolAttrAdd);
-            var isBoolAttr = gratisBoolAttr;
+            // create a list of attributes to use
+            var gratisConvertField = new List<string>();
+            switch (GratisType)
+            {
+                case "goals&routines":
+                    var grBoolFieldAdd = new List<string>() { "is_persistent", "is_sublist_available" };
+                    gratisConvertField = (List<string>)gratisBoolField.Concat(grBoolFieldAdd);
+                    break;
+                case "actions&tasks":
+                    var atBoolFieldAdd = new List<string>() { "is_sublist_available" };
+                    gratisConvertField = (List<string>)gratisBoolField.Concat(atBoolFieldAdd);
+                    break;
+                case "instructions&steps":
+                    gratisConvertField = gratisBoolField;
+                    break;
+            }
 
-            var notifBoolAttributes = new List<string>() { "is_enabled", "is_set"};
+            var notifyIndivis = new List<string>() {"user_notifications", "ta_notifications"};
+            var notifyStateFields = new List<string>() { "before", "during", "after" };
+            var notifyBoolFields = new List<string>() { "is_enabled", "is_set" };
 
+            // for about me page
             if (GratisType == "goals&routines")
             {
                 if (docData.ContainsKey("about_me"))
@@ -320,14 +334,41 @@ namespace ProjectCaitlin.Services
                 }
 
             }
+
+            // for Gratis Arrays
             if (docData.ContainsKey(GratisType))
             {
-                var grArrayData = (List<object>)docData["goals&routines"];
-                foreach (IDictionary<string, object> grDict in grArrayData)
+                var gratisArrayData = (List<object>)docData["goals&routines"];
+                foreach (IDictionary<string, object> gratisDict in gratisArrayData)
                 {
-                    if (grDict.ContainsKey("is_available"))
+                    // Convert GRATIS fields
+                    foreach (var field in gratisConvertField)
                     {
+                        if (gratisDict.ContainsKey(field))
+                            gratisDict[field] = BinaryToBool((string)gratisDict[field]);
+                    }
 
+                    // Convert notifications fields
+                    foreach (var notifyIndivi in notifyIndivis)
+                    {
+                        if (gratisDict.ContainsKey(notifyIndivi))
+                        {
+                            var notifyDict = (IDictionary<string, object>)gratisDict[notifyIndivi];
+                            foreach (var state in notifyStateFields)
+                            {
+                                if (notifyDict.ContainsKey(state))
+                                {
+                                    var notifyStateDict = (IDictionary<string, object>)notifyDict[state];
+                                    foreach (var notifyBoolField in notifyBoolFields)
+                                    {
+                                        if (notifyStateDict.ContainsKey(notifyBoolField))
+                                        {
+                                            notifyStateDict[notifyBoolField] = BinaryToBool((string)notifyStateDict[notifyBoolField]);
+                                        }
+                                    }
+                                }
+                            }
+                        }
                     }
                 }
             }
