@@ -37,7 +37,7 @@ namespace ProjectCaitlin.Views
         }
         private void SetupUI()
         {
-            UserImage.Source = App.User.Me.pic;
+            UserImage.Source = App.User.aboutMe.pic;
             GreetingsTitleLabel.Text = GetTitleDayMessage();
             FirstNameLabel.Text = App.User.firstName;
             MessageCardLabel.Text = App.User.Me.message_card;
@@ -95,7 +95,7 @@ namespace ProjectCaitlin.Views
 
         async void LogoutBtnClick(object sender, EventArgs e)
         {
-            Application.Current.Properties.Remove("accessToken");
+            Application.Current.Properties.Remove("access_token");
             Application.Current.Properties.Remove("refreshToken");
             Application.Current.Properties.Remove("user_id");
 

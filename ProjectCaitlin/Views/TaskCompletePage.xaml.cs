@@ -70,7 +70,7 @@ namespace ProjectCaitlin.Views
 
                 if (completeActionCounter == App.User.goals[a].actions.Count)
                 {
-                    firebaseFunctionsService.CompleteRoutine(goalId, App.User.goals[a].dbIdx.ToString());
+                    firebaseFunctionsService.CompleteRoutine(App.User.goals[a]);
 
                     // Set data model completion status
                     App.User.goals[a].isComplete = true;

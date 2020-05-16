@@ -131,7 +131,7 @@ namespace ProjectCaitlin.ViewModel
                         EventsItems item2 = (EventsItems)list[i];
                         start2 = item2.Start.DateTime.DateTime;
                     }
-                    
+
                     if (start.CompareTo(start2) > 0) {
                         start = start2;
                         min = list[i];
@@ -142,7 +142,7 @@ namespace ProjectCaitlin.ViewModel
                 list[j] = min;
             }
 
-            //generate items to card view. 
+            //generate items to card view.
             foreach (object obj in list)
             {
                 if (obj.GetType().Name == "routine")
@@ -217,7 +217,7 @@ namespace ProjectCaitlin.ViewModel
                                             App.User.routines[indexes.RoutineIndex].isInProgress = true;
                                             ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
                                             ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
-                                            firebaseFunctionsService.startGR(routineId, routineDbIdx);
+                                            firebaseFunctionsService.startGR(App.User.routines[indexes.RoutineIndex]);
                                         }
                                         await mainPage.Navigation.PushAsync(new TaskPage(indexes.RoutineIndex, true, (GRItemModel)Items[indexes.ItemsIndex]));
                                     }
@@ -457,6 +457,15 @@ namespace ProjectCaitlin.ViewModel
         public string Title
         {
             get => title;
+            set
+            {
+                if (!text.Equals(App.User.routines[0].title))
+                {
+                    text = value;
+                    OnPropertyChanged(nameof(Text));
+                }
+            }
+
         }
 
         public DateTime startTime;

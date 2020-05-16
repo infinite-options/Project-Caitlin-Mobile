@@ -20,7 +20,7 @@ namespace ProjectCaitlin
 
         protected override async void OnAppearing()
         {
-            if (Application.Current.Properties.ContainsKey("accessToken")
+            if (Application.Current.Properties.ContainsKey("access_token")
                 && Application.Current.Properties.ContainsKey("refreshToken")
                 && Application.Current.Properties.ContainsKey("user_id"))
             {
