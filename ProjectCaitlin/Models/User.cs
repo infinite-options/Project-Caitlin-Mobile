@@ -41,9 +41,10 @@ namespace ProjectCaitlin.Models
 
 		[Ignored]
 		public List<List<string>> photoURIs { get; set; } = new List<List<string>>();
+
 		public List<photo> FirebasePhotos { get; set; } = new List<photo>();
 
-		public HashSet<string> allDates;
+		public HashSet<string> allDates { get; set; } = new HashSet<string>();
 
 		public event PropertyChangedEventHandler PropertyChanged;
     }

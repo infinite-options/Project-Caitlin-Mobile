@@ -254,30 +254,29 @@ namespace ProjectCaitlin.Services
 
         private void CreateActionsAndTasksSnapshot(int grIdx, grObject grObject, string grType)
         {
-            CrossCloudFirestore.Current.Instance.GetCollection("users")
+            var document = CrossCloudFirestore.Current.Instance.GetCollection("users")
                            .GetDocument(uid)
                            .GetCollection("goals&routines")
                            .GetDocument(grObject.id)
-                           .AddSnapshotListener((snapshot, error) =>
-                           {
-                               if (snapshot.Data != null)
-                               {
-                                   var docData = snapshot.Data;
-                                   if (docData.ContainsKey("actions&tasks"))
-                                   {
-                                       var atArrayData = (List<object>)docData["actions&tasks"];
+                           .GetDocumentAsync()
+                           .Result;
+            if (document.Data != null)
+            {
+                var docData = document.Data;
+                if (docData.ContainsKey("actions&tasks"))
+                {
+                    var atArrayData = (List<object>)docData["actions&tasks"];
 
-                                       LoadActionsAndTasks(atArrayData, grIdx, grObject, grType);
-                                   }
-                                   else
-                                   {
-                                       if (grType == "routine")
-                                           App.User.routines[grIdx].isSublistAvailable = false;
-                                       else
-                                           App.User.goals[grIdx].isSublistAvailable = false;
-                                   }
-                               }
-                           });
+                    LoadActionsAndTasks(atArrayData, grIdx, grObject, grType);
+                }
+                else
+                {
+                    if (grType == "routine")
+                        App.User.routines[grIdx].isSublistAvailable = false;
+                    else
+                        App.User.goals[grIdx].isSublistAvailable = false;
+                }
+            }
         }
 
         private void LoadActionsAndTasks(List<object> atArrayData, int grIdx, grObject grObject, string grType)
@@ -394,33 +393,33 @@ namespace ProjectCaitlin.Services
 
         private void CreateStepsAndInstrSnapshot(grObject grObject, atObject atObject, int grIdx, int atIdx, string grType)
         {
-            CrossCloudFirestore.Current.Instance.GetCollection("users")
+            var document = CrossCloudFirestore.Current.Instance.GetCollection("users")
                            .GetDocument(uid)
                            .GetCollection("goals&routines")
                            .GetDocument(grObject.id)
                            .GetCollection("actions&tasks")
                            .GetDocument(atObject.id)
-                           .AddSnapshotListener((snapshot, error) =>
-                           {
-                               if (snapshot.Data != null)
-                               {
-                                   var docData = snapshot.Data;
-                                   if (docData.ContainsKey("instructions&steps"))
-                                   {
-                                       var isArrayData = (List<object>)docData["instructions&steps"];
+                           .GetDocumentAsync()
+                           .Result;
+            
+            if (document.Data != null)
+            {
+                var docData = document.Data;
+                if (docData.ContainsKey("instructions&steps"))
+                {
+                    var isArrayData = (List<object>)docData["instructions&steps"];
 
-                                       LoadInstructionsAndSteps(isArrayData, grIdx, atIdx, grType);
-                                   }
-                                   else
-                                   {
-                                       if (grType == "routine")
-                                           App.User.routines[grIdx].tasks[atIdx].isSublistAvailable = false;
-                                       else
-                                           App.User.goals[grIdx].actions[atIdx].isSublistAvailable = false;
+                    LoadInstructionsAndSteps(isArrayData, grIdx, atIdx, grType);
+                }
+                else
+                {
+                    if (grType == "routine")
+                        App.User.routines[grIdx].tasks[atIdx].isSublistAvailable = false;
+                    else
+                        App.User.goals[grIdx].actions[atIdx].isSublistAvailable = false;
 
-                                   }
-                               }
-                           });
+                }
+            }
         }
 
         private void LoadInstructionsAndSteps(List<object> isArrayData, int grIdx, int atIdx, string grType)

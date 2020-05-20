@@ -111,9 +111,6 @@ namespace ProjectCaitlin.Services
             }
 
             Console.WriteLine("4: HERE");
-
-            await SaveAccessTokenToFireBase(Application.Current.Properties["access_token"].ToString());
-
             Console.WriteLine(json);
 
             return true;

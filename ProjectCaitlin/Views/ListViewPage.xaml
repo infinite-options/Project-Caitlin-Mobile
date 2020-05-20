@@ -34,12 +34,12 @@
                         </Label.FontFamily>
                     </Label>
 
-                    <Image
+                    <!--<Image
                         x:Name="ReloadImage"
                         Source="Icons/redo.png"
                         WidthRequest="20"
                         HeightRequest="20"
-                        HorizontalOptions="EndAndExpand"/>
+                        HorizontalOptions="EndAndExpand"/>-->
 
                 </StackLayout>
 
