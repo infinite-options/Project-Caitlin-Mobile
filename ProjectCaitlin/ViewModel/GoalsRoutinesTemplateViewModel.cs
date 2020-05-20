@@ -178,8 +178,11 @@ namespace ProjectCaitlin.ViewModel
 
                     if (isInTimeRange(routine.availableStartTime, routine.availableEndTime))
                     {
-
-                        string buttonText = "Tap to Start";
+                        string buttonText;
+                        if (routine.tasks.Count > 0)
+                            buttonText = "Tap for Detail";
+                        else
+                            buttonText = "Tap to Start";
                         if (routine.isInProgress)
                             buttonText = "Tap to Continue";
                         else if (routine.isComplete)
@@ -283,7 +286,11 @@ namespace ProjectCaitlin.ViewModel
 
                     if (isInTimeRange(goal.availableStartTime, goal.availableEndTime))
                     {
-                        string buttonText = "Tap to Start";
+                        string buttonText;
+                        if (goal.actions.Count > 0)
+                            buttonText = "Tap for Detail";
+                        else
+                            buttonText = "Tap to Start";
                         if (goal.isInProgress)
                             buttonText = "Tap to Continue";
                         else if (goal.isComplete)

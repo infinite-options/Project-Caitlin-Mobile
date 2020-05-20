@@ -115,7 +115,6 @@ namespace ProjectCaitlin.Services
 
         public async Task LoadUser()
         {
-            Console.WriteLine("In Load User");
             // reset current user and goals values (in case of reload)
             App.User.routines = new List<routine>();
             App.User.goals = new List<goal>();
