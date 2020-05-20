@@ -43,6 +43,10 @@ namespace ProjectCaitlin.Views
             MessageCardLabel.Text = App.User.Me.message_card;
             MessageLabel.Text = App.User.Me.message_day;
 
+            if (App.User.Me.peoples.Count == 0)
+            {
+                importantPeopleSL.IsVisible = false;
+            }
 
         }
 
