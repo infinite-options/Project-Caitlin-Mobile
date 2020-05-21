@@ -74,6 +74,7 @@ namespace ProjectCaitlin.Services
             // reset current user and goals values (in case of reload)
             App.User.routines = new List<routine>();
             App.User.goals = new List<goal>();
+            App.User.people = new List<person>();
             App.User.photoURIs = new List<List<String>>();
             App.User.allDates = new HashSet<string>();
 
