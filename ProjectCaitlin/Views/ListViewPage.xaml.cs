@@ -14,6 +14,7 @@ using ProjectCaitlin.Methods;
 using System.Threading;
 using System.ComponentModel;
 using System.Globalization;
+using Acr.UserDialogs;
 
 namespace ProjectCaitlin
 {
@@ -780,7 +781,9 @@ namespace ProjectCaitlin
             tapGestureRecognizer3.Tapped += async (s, e) => {
                 if (App.User.photoURIs.Count < 1)
                     await GooglePhotoService.GetPhotos();
+                UserDialogs.Instance.ShowLoading("Loading...");
                 await Navigation.PushAsync(new MonthlyViewPage());
+                UserDialogs.Instance.HideLoading();
             };
             MyPhotosButton.GestureRecognizers.Add(tapGestureRecognizer3);
 

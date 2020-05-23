@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 
 using ProjectCaitlin.Models;
+using Acr.UserDialogs;
 
 namespace ProjectCaitlin
 {
@@ -370,7 +371,9 @@ namespace ProjectCaitlin
 
             var tapGestureRecognizer3 = new TapGestureRecognizer();
             tapGestureRecognizer3.Tapped += async (s, e) => {
+                UserDialogs.Instance.ShowLoading("Loading...");
                 await Navigation.PushAsync(new MonthlyViewPage());
+                UserDialogs.Instance.HideLoading();
             };
             MyPhotosButton.GestureRecognizers.Add(tapGestureRecognizer3);
 
