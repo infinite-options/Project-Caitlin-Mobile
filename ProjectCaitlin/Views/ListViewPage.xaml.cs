@@ -98,7 +98,7 @@ namespace ProjectCaitlin
 
         public async Task RefreshPage()
         {
-            await firestoreService.LoadUser();
+            await firestoreService.LoadDatabase();
             await googleService.LoadTodaysEvents();
 
             //recalculate goals/routines durations

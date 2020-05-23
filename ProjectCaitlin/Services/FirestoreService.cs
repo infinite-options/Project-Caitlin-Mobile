@@ -31,41 +31,49 @@ namespace ProjectCaitlin.Services
 
         public async Task LoadFirebasePhoto()
         {
-            var request = new HttpRequestMessage
-            {
-                RequestUri = new Uri("https://firestore.googleapis.com/v1/projects/project-caitlin-c71a9/databases/(default)/documents/users/" + uid + "/photo?pageSize=100"),
-                Method = HttpMethod.Get
-            };
-            var client = new HttpClient();
-            HttpResponseMessage response = await client.SendAsync(request);
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                HttpContent content = response.Content;
-                var photosResponse = await content.ReadAsStringAsync();
-                JObject photosJson = JObject.Parse(photosResponse);
+            //load people from firebase
+            var photosCollection = await CrossCloudFirestore.Current.Instance.GetCollection("users")
+                            .GetDocument(uid)
+                            .GetCollection("people")
+                            .GetDocumentsAsync();
 
-                if (photosJson["documents"] != null)
+            List<photo> photos = new List<photo>();
+            foreach (var photoDocument in photosCollection.Documents)
+            {
+                try
                 {
-                    List<photo> photos = new List<photo>();
-                    foreach (JToken photoToken in photosJson["documents"])
-                    {
-                        try
-                        {
-                            var photo_field = photoToken["fields"];
-                            photo photo = new photo();
-                            photo.id = photo_field["photo_id"]["stringValue"].ToString();
-                            photo.description = photo_field["description"]["stringValue"].ToString();
-                            photo.note = photo_field["notes"]["stringValue"].ToString();
+                    var data = photoDocument.Data;
+                    photo photo = new photo();
+                    photo.id = data["photo_id"].ToString();
+                    photo.description = data["description"].ToString();
+                    photo.note = data["notes"].ToString();
 
-                            App.User.FirebasePhotos.Add(photo);
-                        }
-                        catch
-                        {
+                    App.User.FirebasePhotos.Add(photo);
+                }
+                catch
+                {
 
-                        }
-                    }
                 }
             }
+        }
+
+
+        public async Task SetupFirestoreSnapshot()
+        {
+            CrossCloudFirestore.Current.Instance
+                .GetCollection("users")
+                .GetDocument(uid)
+                .AddSnapshotListener(async (snapshot, error) =>
+                {
+                    await LoadDatabase();
+                });
+        }
+
+        public async Task LoadDatabase()
+        {
+            LoadUser();
+            LoadFirebasePhoto();
+            LoadPeople();
         }
 
         public async Task LoadUser()
@@ -78,55 +86,33 @@ namespace ProjectCaitlin.Services
             App.User.photoURIs = new List<List<String>>();
             App.User.allDates = new HashSet<string>();
 
-            //load photos.
-            await LoadFirebasePhoto();
+            var userDocument = await CrossCloudFirestore.Current.Instance
+                .GetCollection("users")
+                .GetDocument(uid)
+                .GetDocumentAsync();
 
-            //move it to navbar click function.
-            //await GooglePhotoService.GetPhotos();
+            App.User = userDocument.ToObject<user>();
+            App.User.routines = new List<routine>();
 
-            CrossCloudFirestore.Current.Instance.GetCollection("users")
-                           .GetDocument(uid)
-                           .AddSnapshotListener((snapshot, error) =>
-                           {
-                               App.User = snapshot.ToObject<user>();
-                               App.User.routines = new List<routine>();
+            var docData = userDocument.Data;
 
-                               var docData = snapshot.Data;
+            if (docData.ContainsKey("first_name") && docData.ContainsKey("last_name"))
+            {
+                App.User.firstName = docData["first_name"].ToString();
+                App.User.lastName = docData["last_name"].ToString();
+            }
 
-                               if (docData.ContainsKey("first_name") && docData.ContainsKey("last_name"))
-                               {
-                                   App.User.firstName = docData["first_name"].ToString();
-                                   App.User.lastName = docData["last_name"].ToString();
-                               }
+            if (docData.ContainsKey("goals&routines"))
+            {
+                var grArrayData = (List<object>)docData["goals&routines"];
+                LoadGoalsAndRoutines(grArrayData);
+            }
 
-                               if (docData.ContainsKey("goals&routines"))
-                               {
-                                   var grArrayData = (List<object>)docData["goals&routines"];
-                                   LoadGoalsAndRoutines(grArrayData);
-                               }
-
-                               if (docData.ContainsKey("about_me"))
-                               {
-                                   var aboutMeData = (Dictionary<string, object>)docData["about_me"];
-                                   LoadAboutMe(aboutMeData);
-                               }
-                           });
-
-            //load people from firebase
-            CrossCloudFirestore.Current.Instance.GetCollection("users")
-                           .GetDocument(uid)
-                           .GetCollection("people")
-                           .AddSnapshotListener((snapshot, error) =>
-                           {
-                               if (snapshot != null)
-                               {
-                                   foreach (var document in snapshot.Documents)
-                                   {
-                                       LoadPeople(document.Data);
-                                   }
-                               }
-                           });
-
+            if (docData.ContainsKey("about_me"))
+            {
+                var aboutMeData = (Dictionary<string, object>)docData["about_me"];
+                LoadAboutMe(aboutMeData);
+            }
         }
 
 
@@ -138,18 +124,31 @@ namespace ProjectCaitlin.Services
             App.User.aboutMe.pic = aboutMeData["pic"].ToString();
         }
 
-        private void LoadPeople(IDictionary<string, object> data)
+        public async Task LoadPeople()
         {
-            var person = new person()
-            {
-                name = data["name"].ToString(),
-                relationship = data.ContainsKey("relationship") ? data["relationship"].ToString() : "",
-                phoneNumber = data["phone_number"].ToString(),
-                pic = data.ContainsKey("pic") ? data["pic"].ToString() : "",
-                //speakerId = data["speaker_id"].ToString(),
-            };
+            //load people from firebase
+            var peopleCollection = await CrossCloudFirestore.Current.Instance.GetCollection("users")
+                                    .GetDocument(uid)
+                                    .GetCollection("people")
+                                    .GetDocumentsAsync();
 
-            App.User.people.Add(person);
+            if (peopleCollection != null)
+            {
+                foreach (var document in peopleCollection.Documents)
+                {
+                    var data = document.Data;
+                    var person = new person()
+                    {
+                        name = data["name"].ToString(),
+                        relationship = data.ContainsKey("relationship") ? data["relationship"].ToString() : "",
+                        phoneNumber = data["phone_number"].ToString(),
+                        pic = data.ContainsKey("pic") ? data["pic"].ToString() : "",
+                        //speakerId = data["speaker_id"].ToString(),
+                    };
+
+                    App.User.people.Add(person);
+                }
+            }
         }
 
         public void LoadGoalsAndRoutines(List<Object> grArrayData)
@@ -253,14 +252,15 @@ namespace ProjectCaitlin.Services
             }
         }
 
-        private void CreateActionsAndTasksSnapshot(int grIdx, grObject grObject, string grType)
+        private async Task CreateActionsAndTasksSnapshot(int grIdx, grObject grObject, string grType)
         {
-            var document = CrossCloudFirestore.Current.Instance.GetCollection("users")
+            Console.WriteLine($"Loading Goal/Routine: {grObject.title}");
+            var document = await CrossCloudFirestore.Current.Instance.GetCollection("users")
                            .GetDocument(uid)
                            .GetCollection("goals&routines")
                            .GetDocument(grObject.id)
-                           .GetDocumentAsync()
-                           .Result;
+                           .GetDocumentAsync();
+
             if (document.Data != null)
             {
                 var docData = document.Data;
@@ -392,16 +392,16 @@ namespace ProjectCaitlin.Services
             }
         }
 
-        private void CreateStepsAndInstrSnapshot(grObject grObject, atObject atObject, int grIdx, int atIdx, string grType)
+        private async Task CreateStepsAndInstrSnapshot(grObject grObject, atObject atObject, int grIdx, int atIdx, string grType)
         {
-            var document = CrossCloudFirestore.Current.Instance.GetCollection("users")
+            Console.WriteLine($"Loading action/task: {atObject.title}");
+            var document = await CrossCloudFirestore.Current.Instance.GetCollection("users")
                            .GetDocument(uid)
                            .GetCollection("goals&routines")
                            .GetDocument(grObject.id)
                            .GetCollection("actions&tasks")
                            .GetDocument(atObject.id)
-                           .GetDocumentAsync()
-                           .Result;
+                           .GetDocumentAsync();
             
             if (document.Data != null)
             {
