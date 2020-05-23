@@ -12,6 +12,7 @@ using System.Globalization;
 using System.Text.RegularExpressions;
 
 using ProjectCaitlin.Models;
+using Acr.UserDialogs;
 
 namespace ProjectCaitlin
 {
@@ -65,14 +66,31 @@ namespace ProjectCaitlin
 
         async void ButtonOne(object sender, EventArgs args)
         {
-            date = PreviousDate();
-            //pageModel.SetupUI(date);
+            //date = PreviousDate();
+            String date = this.date;
+            for (int i = 0; i < App.User.photoURIs.Count - 1; i++)
+            {
+                if (this.date == App.User.photoURIs[i][1])
+                {
+                    if (this.date != App.User.photoURIs[i + 1][1])
+                        date = App.User.photoURIs[i + 1][1];
+                }
+            }
             await Navigation.PushAsync(new PhotoDisplayPage(date));
         }
 
         async void ButtonTwo(object sender, EventArgs args)
         {
-            date = NextDate();
+            //date = NextDate();
+            String date = this.date;
+            for (int i = 1; i < App.User.photoURIs.Count; i++)
+            {
+                if (this.date == App.User.photoURIs[i][1])
+                {
+                    if(this.date != App.User.photoURIs[i-1][1])
+                        date = App.User.photoURIs[i - 1][1];
+                }
+            }
             await Navigation.PushAsync(new PhotoDisplayPage(date));
         }
 
@@ -313,8 +331,6 @@ namespace ProjectCaitlin
             if (photo_source.Substring(0, 5) == "Uri: ")
                 photo_source = "" + photo_source.Substring(5);
 
-            Console.Write("pain" + pain);
-            Console.Write("photo_source" + photo_source);
             foreach (List<string> list in App.User.photoURIs)
             {
                 if (photo_source == list[0])
@@ -355,7 +371,9 @@ namespace ProjectCaitlin
 
             var tapGestureRecognizer3 = new TapGestureRecognizer();
             tapGestureRecognizer3.Tapped += async (s, e) => {
+                UserDialogs.Instance.ShowLoading("Loading...");
                 await Navigation.PushAsync(new MonthlyViewPage());
+                UserDialogs.Instance.HideLoading();
             };
             MyPhotosButton.GestureRecognizers.Add(tapGestureRecognizer3);
 
