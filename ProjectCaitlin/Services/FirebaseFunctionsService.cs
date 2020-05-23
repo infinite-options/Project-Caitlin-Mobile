@@ -15,16 +15,17 @@ namespace ProjectCaitlin.Services
     {
         public async Task<string> FindUserDoc(string email)
         {
-            var document = await CrossCloudFirestore.Current
+            var document = CrossCloudFirestore.Current
                                         .Instance
                                         .GetCollection("users")
                                         .WhereEqualsTo("email_id", email)
-                                        .GetDocumentsAsync();
+                                        .GetDocumentsAsync()
+                                        .ConfigureAwait(false);
 
 
 
             var userId = "";
-            foreach (var user in document.Documents)
+            foreach (var user in document.GetAwaiter().GetResult().Documents)
             {
             }
 
