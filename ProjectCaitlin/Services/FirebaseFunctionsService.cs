@@ -15,54 +15,19 @@ namespace ProjectCaitlin.Services
     {
         public async Task<string> FindUserDoc(string email)
         {
-            try
+            var document = await CrossCloudFirestore.Current
+                                        .Instance
+                                        .GetCollection("users")
+                                        .WhereEqualsTo("email_id", email)
+                                        .GetDocumentsAsync()
+                                        .ConfigureAwait(false);
+
+            var userId = "";
+            foreach (var user in document.Documents)
             {
-                HttpRequestMessage request = new HttpRequestMessage
-                {
-                    RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/FindUserDoc"),
-                    Method = HttpMethod.Post
-                };
-
-                //Format Headers of Request
-
-
-                var requestData = new Dictionary<string, Dictionary<string, string>>
-                {
-                    {
-                        "data",
-                        new Dictionary<string, string>
-                        {
-                            {"emailId", email},
-                        }
-                    },
-                };
-
-                string dataString = JsonConvert.SerializeObject(requestData);
-                var formContent = new StringContent(dataString, Encoding.UTF8, "application/json");
-
-                using (var client = new HttpClient())
-                {
-
-                    // without async, will get stuck, needs bug fix
-                    HttpResponseMessage response = client.PostAsync(request.RequestUri, formContent).Result;
-                    if (response.StatusCode == System.Net.HttpStatusCode.OK)
-                    {
-                        HttpContent content = response.Content;
-                        var responseString = await content.ReadAsStringAsync();
-                        JObject responseJson = JObject.Parse(responseString);
-                        return responseJson["result"]["id"].ToString();
-                    }
-                    else
-                    {
-                        return "";
-                    }
-                }
             }
-            catch
-            {
-                Console.WriteLine("error while calling find user id");
-                return "";
-            }
+
+            return "";
         }
 
         public async Task<bool> GRUserNotificationSetToTrue(string routineId, string routineIdx, string status)
@@ -93,19 +58,53 @@ namespace ProjectCaitlin.Services
             }
         }
 
-        public async Task<bool> startGR(grObject grObject)
+        public async Task<bool> updateGratisStatus(GratisObject gratisObject, string gratisType, string status)
         {
-            var document = await CrossCloudFirestore.Current
+            IDocumentSnapshot document = null;
+            switch (gratisType)
+            {
+                case "goals&routines":
+                    document = await CrossCloudFirestore.Current
                                         .Instance
                                         .GetCollection("users")
                                         .GetDocument(App.User.id)
                                         .GetDocumentAsync();
-            var data = (IDictionary<string, object>)ConvertDocumentGet(document.Data, "goals%routines");
-            var grArrayData = (List<object>)data["goals&routines"];
-            var grData = (IDictionary<string, object>)grArrayData[grObject.dbIdx];
+                    break;
+                case "actions&tasks":
+                    document = await CrossCloudFirestore.Current
+                                        .Instance
+                                        .GetCollection("users")
+                                        .GetDocument(App.User.id)
+                                        .GetCollection("goals&routines")
+                                        .GetDocument(((atObject)gratisObject).grId)
+                                        .GetDocumentAsync();
+                    break;
+                case "instructions&steps":
+                    document = await CrossCloudFirestore.Current
+                                        .Instance
+                                        .GetCollection("users")
+                                        .GetDocument(App.User.id)
+                                        .GetCollection("goals&routines")
+                                        .GetDocument(((atObject)gratisObject).grId)
+                                        .GetCollection("actions&tasks")
+                                        .GetDocument(((isObject)gratisObject).atId)
+                                        .GetDocumentAsync();
+                    break;
+            }
 
-            grData["is_in_progress"] = true;
-            grData["is_complete"] = false;
+            var data = (IDictionary<string, object>)ConvertDocumentGet(document.Data, gratisType);
+            var grArrayData = (List<object>)data[gratisType];
+            var grData = (IDictionary<string, object>)grArrayData[gratisObject.dbIdx];
+
+            bool completionState = false;
+
+            if (status == "complete")
+            {
+                completionState = true;
+            }
+
+            grData["is_in_progress"] = !completionState;
+            grData["is_complete"] = completionState;
             grData["datetime_started"] = DateTime.Now.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz");
 
             await CrossCloudFirestore.Current
@@ -114,107 +113,6 @@ namespace ProjectCaitlin.Services
                          .GetDocument("Ou0Yd0UXp6yHBt4Z1nVn")
                          .UpdateDataAsync(data);
             return true;
-        }
-
-        public async Task<bool> CompleteRoutine(grObject grObject)
-        {
-            var document = await CrossCloudFirestore.Current
-                                        .Instance
-                                        .GetCollection("users")
-                                        .GetDocument(App.User.id)
-                                        .GetDocumentAsync();
-            var data = document.Data;
-            var grArrayData = (List<object>)data["goals&routines"];
-            var grData = (IDictionary<string, object>)grArrayData[grObject.dbIdx];
-
-            grData["is_in_progress"] = false;
-            grData["is_complete"] = true;
-            grData["datetime_completed"] = DateTime.Now.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz");
-
-            await CrossCloudFirestore.Current
-                         .Instance
-                         .GetCollection("TODO")
-                         .GetDocument("Ou0Yd0UXp6yHBt4Z1nVn")
-                         .UpdateDataAsync(data);
-            return true;
-        }
-
-        public async Task<bool> StartAT(atObject atObject)
-        {
-            var document = await CrossCloudFirestore.Current
-                                        .Instance
-                                        .GetCollection("users")
-                                        .GetDocument(App.User.id)
-                                        .GetCollection("goals&routines")
-                                        .GetDocument(atObject.grId)
-                                        .GetDocumentAsync();
-            var data = document.Data;
-            var grArrayData = (List<object>)data["goals&routines"];
-            var grData = (IDictionary<string, object>)grArrayData[atObject.dbIdx];
-
-            grData["is_in_progress"] = false;
-            grData["is_complete"] = true;
-            grData["datetime_completed"] = DateTime.Now.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz");
-
-            await CrossCloudFirestore.Current
-                         .Instance
-                         .GetCollection("TODO")
-                         .GetDocument("Ou0Yd0UXp6yHBt4Z1nVn")
-                         .UpdateDataAsync(data);
-            return true;
-        }
-
-        public async Task<bool> StartIS(string goalId, string actionId, string instructionNumber)
-        {
-            var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/StartInstructionOrStep");
-            request.Method = HttpMethod.Post;
-
-            //Format Headers of Request with included Token
-            request.Headers.Add("userId", App.User.id);
-            request.Headers.Add("routineId", goalId);
-            request.Headers.Add("taskId", actionId);
-            request.Headers.Add("stepNumber", instructionNumber);
-            var client = new HttpClient();
-            HttpResponseMessage response = await client.SendAsync(request);
-
-            HttpContent content = response.Content;
-            var routineResponse = await content.ReadAsStringAsync();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public async Task<bool> UpdateStep(string routineId, string taskId, string stepNumber)
-        {
-            HttpRequestMessage request = new HttpRequestMessage
-            {
-                RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/CompleteInstructionOrStep"),
-                Method = HttpMethod.Post
-            };
-
-            //Format Headers of Request with included Token
-            request.Headers.Add("userId", App.User.id);
-            request.Headers.Add("routineId", routineId);
-            request.Headers.Add("taskId", taskId);
-            request.Headers.Add("stepNumber", stepNumber);
-            var client = new HttpClient();
-            HttpResponseMessage response = await client.SendAsync(request);
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
         }
 
         public static async Task<bool> PostPhoto(string photoId, string description, string note)
@@ -304,61 +202,6 @@ namespace ProjectCaitlin.Services
             }
         }
 
-        public async Task<bool> UpdateTask(string routineId, string taskId, string taskIndex)
-        {
-            var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/CompleteActionOrTask");
-            request.Method = HttpMethod.Post;
-
-            //Format Headers of Request with included Token
-            request.Headers.Add("userId", App.User.id);
-            request.Headers.Add("routineId", routineId);
-            request.Headers.Add("taskId", taskId);
-            request.Headers.Add("taskNumber", taskIndex);
-
-            var client = new HttpClient();
-            HttpResponseMessage response = await client.SendAsync(request);
-
-            HttpContent content = response.Content;
-            var routineResponse = await content.ReadAsStringAsync();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
-        public async Task<bool> UpdateInstruction(string goalId, string actionId, string instructionNumber)
-        {
-            var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/CompleteInstructionOrStep");
-            request.Method = HttpMethod.Post;
-
-            //Format Headers of Request with included Token
-            request.Headers.Add("userId", App.User.id);
-            request.Headers.Add("routineId", goalId);
-            request.Headers.Add("taskId", actionId);
-            request.Headers.Add("stepNumber", instructionNumber);
-            var client = new HttpClient();
-            HttpResponseMessage response = await client.SendAsync(request);
-
-            HttpContent content = response.Content;
-            var routineResponse = await content.ReadAsStringAsync();
-
-            if (response.StatusCode == System.Net.HttpStatusCode.OK)
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
-        }
-
         public object ConvertDocumentGet(IDictionary<string, object> docData, string GratisType)
         {
             var gratisBoolField = new List<string>() { "is_available", "is_complete", "is_in_progress", "is_timed"};
@@ -368,12 +211,12 @@ namespace ProjectCaitlin.Services
             switch (GratisType)
             {
                 case "goals&routines":
-                    var grBoolFieldAdd = new List<string>() { "is_persistent", "is_sublist_available" };
-                    gratisConvertField = (List<string>)gratisBoolField.Concat(grBoolFieldAdd);
+                    var grBoolFieldAdd = new List<string>() { "is_persistent", "is_sublist_available", "repeat" };
+                    gratisConvertField = gratisBoolField.Concat(grBoolFieldAdd).ToList();
                     break;
                 case "actions&tasks":
                     var atBoolFieldAdd = new List<string>() { "is_sublist_available" };
-                    gratisConvertField = (List<string>)gratisBoolField.Concat(atBoolFieldAdd);
+                    gratisConvertField = gratisBoolField.Concat(atBoolFieldAdd).ToList();
                     break;
                 case "instructions&steps":
                     gratisConvertField = gratisBoolField;
@@ -391,7 +234,7 @@ namespace ProjectCaitlin.Services
                 {
                     var aboutMeDict = (IDictionary<string, object>)docData["about_me"];
                     if (aboutMeDict.ContainsKey("have_pic"))
-                        aboutMeDict["have_pic"] = BinaryToBool((string)aboutMeDict["have_pic"]);
+                        aboutMeDict["have_pic"] = BinaryToBool(aboutMeDict["have_pic"].ToString());
                 }
 
             }
@@ -406,7 +249,7 @@ namespace ProjectCaitlin.Services
                     foreach (var field in gratisConvertField)
                     {
                         if (gratisDict.ContainsKey(field))
-                            gratisDict[field] = BinaryToBool((string)gratisDict[field]);
+                            gratisDict[field] = BinaryToBool(gratisDict[field].ToString());
                     }
 
                     // Convert notifications fields
@@ -424,7 +267,7 @@ namespace ProjectCaitlin.Services
                                     {
                                         if (notifyStateDict.ContainsKey(notifyBoolField))
                                         {
-                                            notifyStateDict[notifyBoolField] = BinaryToBool((string)notifyStateDict[notifyBoolField]);
+                                            notifyStateDict[notifyBoolField] = BinaryToBool(notifyStateDict[notifyBoolField].ToString());
                                         }
                                     }
                                 }

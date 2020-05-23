@@ -385,7 +385,7 @@ namespace ProjectCaitlin
                     {
                         ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
                         routine.isInProgress = true;
-                        firebaseFunctionsService.startGR(routine);
+                        firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", "in progress");
                     }
                     App.ListPageScrollPosY = mainScrollView.ScrollY;
                     await Navigation.PushAsync(new TaskPage(routineIdx, true));
@@ -401,13 +401,13 @@ namespace ProjectCaitlin
                             routine.isInProgress = false;
                             routine.isComplete = true;
 
-                            firebaseFunctionsService.CompleteRoutine(routine);
+                            firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", "complete");
                         }
                         else
                         {
                             ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
                             routine.isInProgress = true;
-                            firebaseFunctionsService.startGR(routine);
+                            firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", "in progress");
                         }
                     }
                 }
@@ -558,7 +558,7 @@ namespace ProjectCaitlin
                     {
                         updatedGrid.Children[2].IsVisible = true;
                         goal.isInProgress = true;
-                        firebaseFunctionsService.startGR(goal);
+                        firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", "in progress");
                     }
                     App.ListPageScrollPosY = mainScrollView.ScrollY;
                     await Navigation.PushAsync(new TaskPage(goalIdx, false));
@@ -575,13 +575,13 @@ namespace ProjectCaitlin
                             goal.isInProgress = false;
                             goal.isComplete = true;
 
-                            firebaseFunctionsService.CompleteRoutine(goal);
+                            firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", "complete");
                         }
                         else
                         {
                             updatedGrid.Children[2].IsVisible = true;
                             goal.isInProgress = true;
-                            firebaseFunctionsService.startGR(goal);
+                            firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", "in progress");
                         }
                     }
                 }

@@ -216,7 +216,7 @@ namespace ProjectCaitlin.ViewModel
                                             App.User.routines[indexes.RoutineIndex].isInProgress = true;
                                             ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
                                             ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
-                                            firebaseFunctionsService.startGR(App.User.routines[indexes.RoutineIndex]);
+                                            firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", "in progress");
                                         }
                                         await mainPage.Navigation.PushAsync(new TaskPage(indexes.RoutineIndex, true, (GRItemModel)Items[indexes.ItemsIndex]));
                                     }
@@ -231,14 +231,14 @@ namespace ProjectCaitlin.ViewModel
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = false;
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).IsComplete = true;
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Done";
-                                                firebaseFunctionsService.CompleteRoutine(routine);
+                                                firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", "complete");
                                             }
                                             else
                                             {
                                                 App.User.routines[indexes.RoutineIndex].isInProgress = true;
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
-                                                firebaseFunctionsService.startGR(routine);
+                                                firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", "in progress");
                                             }
                                         }
                                     }
@@ -319,7 +319,7 @@ namespace ProjectCaitlin.ViewModel
                                             App.User.goals[indexes.GoalIndex].isInProgress = true;
                                             ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
                                             ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
-                                            firebaseFunctionsService.startGR(goal);
+                                            firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", "in progress");
                                         }
                                         await mainPage.Navigation.PushAsync(new TaskPage(indexes.GoalIndex, false, (GRItemModel)Items[indexes.ItemsIndex]));
                                     }
@@ -334,14 +334,14 @@ namespace ProjectCaitlin.ViewModel
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = false;
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).IsComplete = true;
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Done";
-                                                firebaseFunctionsService.CompleteRoutine(goal);
+                                                firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", "complete");
                                             }
                                             else
                                             {
                                                 App.User.goals[indexes.GoalIndex].isInProgress = true;
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
-                                                firebaseFunctionsService.startGR(goal);
+                                                firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", "complete");
                                             }
                                         }
                                     }

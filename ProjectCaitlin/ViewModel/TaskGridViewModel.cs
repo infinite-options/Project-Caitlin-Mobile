@@ -78,7 +78,7 @@ namespace ProjectCaitlin.ViewModel
                                     {
                                         App.User.routines[a].tasks[_taskIdx].isInProgress = true;
                                         Items[_taskIdx].IsInProgress = true;
-                                        firebaseFunctionsService.StartAT(App.User.routines[a].tasks[_taskIdx]);
+                                        firebaseFunctionsService.updateGratisStatus(task, "actions&tasks", "in progress");
                                     }
                                     await mainPage.Navigation.PushAsync(new StepsPage(a, _taskIdx, isRoutine, Items[_taskIdx], GRItemModel));
                                 }
@@ -92,13 +92,13 @@ namespace ProjectCaitlin.ViewModel
                                             App.User.routines[a].tasks[_taskIdx].isComplete = true;
                                             Items[_taskIdx].IsInProgress = false;
                                             Items[_taskIdx].IsComplete = true;
-                                            firebaseFunctionsService.UpdateTask(routineId, taskId, taskDbIdx.ToString());
+                                            firebaseFunctionsService.updateGratisStatus(task, "actions&tasks", "complete");
                                         }
                                         else
                                         {
                                             App.User.routines[a].tasks[_taskIdx].isInProgress = true;
                                             Items[_taskIdx].IsInProgress = true;
-                                            firebaseFunctionsService.StartAT(App.User.routines[a].tasks[_taskIdx]);
+                                            firebaseFunctionsService.updateGratisStatus(task, "actions&tasks", "in progress");
                                         }
                                     }
                                 }
@@ -142,7 +142,7 @@ namespace ProjectCaitlin.ViewModel
                                     {
                                         App.User.goals[a].actions[_actionIdx].isInProgress = true;
                                         Items[_actionIdx].IsInProgress = true;
-                                        firebaseFunctionsService.StartAT(App.User.goals[a].actions[_actionIdx]);
+                                        firebaseFunctionsService.updateGratisStatus(action, "actions&tasks", "in progress");
                                     }
 
                                     await mainPage.Navigation.PushAsync(new TaskCompletePage(a, _actionIdx, isRoutine, Items[_actionIdx], GRItemModel));
@@ -157,13 +157,13 @@ namespace ProjectCaitlin.ViewModel
                                             App.User.goals[a].actions[_actionIdx].isComplete = true;
                                             Items[_actionIdx].IsInProgress = false;
                                             Items[_actionIdx].IsComplete = true;
-                                            firebaseFunctionsService.UpdateTask(goalId, actionId, actionDbIdx.ToString());
+                                            firebaseFunctionsService.updateGratisStatus(action, "actions&tasks", "complete");
                                         }
                                         else
                                         {
                                             App.User.goals[a].actions[_actionIdx].isInProgress = true;
                                             Items[_actionIdx].IsInProgress = true;
-                                            firebaseFunctionsService.StartAT(App.User.goals[a].actions[_actionIdx]);
+                                            firebaseFunctionsService.updateGratisStatus(action, "actions&tasks", "in progress");
                                         }
                                     }
                                 }

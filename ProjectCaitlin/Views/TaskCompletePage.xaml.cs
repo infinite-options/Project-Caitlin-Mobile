@@ -51,7 +51,7 @@ namespace ProjectCaitlin.Views
             {
                 var firestoreService = new FirestoreService();
 
-                firebaseFunctionsService.UpdateTask(goalId, actionId, App.User.goals[a].actions[b].dbIdx.ToString());
+                firebaseFunctionsService.updateGratisStatus(App.User.goals[a].actions[b], "actions&tasks", "complete");
 
                 // Set data model completion status
                 App.User.goals[a].actions[b].isComplete = true;
@@ -70,7 +70,7 @@ namespace ProjectCaitlin.Views
 
                 if (completeActionCounter == App.User.goals[a].actions.Count)
                 {
-                    firebaseFunctionsService.CompleteRoutine(App.User.goals[a]);
+                    firebaseFunctionsService.updateGratisStatus(App.User.goals[a], "goals&routines", "complete");
 
                     // Set data model completion status
                     App.User.goals[a].isComplete = true;
@@ -104,39 +104,31 @@ namespace ProjectCaitlin.Views
 
             else if (CarouselTasks.Position != App.User.goals[a].actions[b].instructions.Count - 1)
             {
+                instruction instruction = App.User.goals[a].actions[b].instructions[CarouselTasks.Position];
 
-                /*var firestoreService = new FirestoreService(App.User.id);
-                var goalId = App.user.goals[a].id;
-                var actionId = App.user.goals[a].actions[b].id;
-                var isInstructionComplete = await firestoreService.UpdateInstruction(goalId, actionId, App.user.goals[a].actions[b].instructions[CarouselTasks.Position].dbIdx.ToString());
-                if (isInstructionComplete)
-                {
-                    App.user.goals[a].actions[b].instructions[CarouselTasks.Position].isComplete = true;
-                    App.user.goals[a].actions[b].instructions[CarouselTasks.Position].dateTimeCompleted = DateTime.Now;
-                }*/
                 App.User.goals[a].actions[b].instructions[CarouselTasks.Position].isComplete = true;
                 pageModel.Items[CarouselTasks.Position].OkToCheckmark = true;
-                firebaseFunctionsService.UpdateInstruction(goalId, actionId, App.User.goals[a].actions[b].instructions[CarouselTasks.Position].dbIdx.ToString());
+                firebaseFunctionsService.updateGratisStatus(instruction, "instructions&steps", "complete");
 
                 CarouselTasks.Position = CarouselTasks.Position + 1;
             }
             else if (CarouselTasks.Position == App.User.goals[a].actions[b].instructions.Count - 1)
             {
+                instruction instruction = App.User.goals[a].actions[b].instructions[CarouselTasks.Position];
 
                 App.User.goals[a].actions[b].instructions[CarouselTasks.Position].isComplete = true;
                 pageModel.Items[CarouselTasks.Position].OkToCheckmark = true;
-                firebaseFunctionsService.UpdateInstruction(goalId, actionId, App.User.goals[a].actions[b].instructions[CarouselTasks.Position].dbIdx.ToString());
-
+                firebaseFunctionsService.updateGratisStatus(instruction, "instructions&steps", "complete");
                 next.Text = "Done";
 
             }
             else if (CarouselTasks.Position != App.User.goals[a].actions[b].instructions.Count - 1)
             {
+                instruction instruction = App.User.goals[a].actions[b].instructions[CarouselTasks.Position];
 
                 App.User.goals[a].actions[b].instructions[CarouselTasks.Position].isComplete = true;
                 pageModel.Items[CarouselTasks.Position].OkToCheckmark = true;
-                                firebaseFunctionsService.UpdateInstruction(goalId, actionId, App.User.goals[a].actions[b].instructions[CarouselTasks.Position].dbIdx.ToString());
-
+                firebaseFunctionsService.updateGratisStatus(instruction, "instructions&steps", "complete");
 
                 next.Text = "Done";
 
