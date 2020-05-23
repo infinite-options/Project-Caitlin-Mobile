@@ -19,8 +19,9 @@ namespace ProjectCaitlin.Services
                                         .Instance
                                         .GetCollection("users")
                                         .WhereEqualsTo("email_id", email)
-                                        .GetDocumentsAsync()
-                                        .ConfigureAwait(false);
+                                        .GetDocumentsAsync();
+
+
 
             var userId = "";
             foreach (var user in document.Documents)
