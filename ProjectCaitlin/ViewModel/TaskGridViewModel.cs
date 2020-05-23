@@ -55,10 +55,14 @@ namespace ProjectCaitlin.ViewModel
                 int taskIdx = 0;
                 foreach (task task in App.User.routines[a].tasks)
                 {
+                    string title;
+                    if (task.steps.Count > 0)
+                        title = "· " + App.User.routines[a].tasks[taskIdx].title;
+                    else
+                        title = App.User.routines[a].tasks[taskIdx].title;
                     Items.Add( new TaskItemModel(
-
                         App.User.routines[a].tasks[taskIdx].photo,
-                        App.User.routines[a].tasks[taskIdx].title,
+                        title,
                         Color.FromHex("#272E32"),
 
                         App.User.routines[a].tasks[taskIdx].isComplete,
