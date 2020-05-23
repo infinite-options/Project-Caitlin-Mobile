@@ -8,7 +8,7 @@ using Android.Widget;
 using Android.OS;
 using FFImageLoading.Forms.Platform;
 using PanCardView.Droid;
-
+using Acr.UserDialogs;
 namespace ProjectCaitlin.Droid
 {
     [Activity(Label = "ProjectCaitlin", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
@@ -18,6 +18,8 @@ namespace ProjectCaitlin.Droid
         {
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
+
+            UserDialogs.Init(this);
 
             base.OnCreate(savedInstanceState);
 
