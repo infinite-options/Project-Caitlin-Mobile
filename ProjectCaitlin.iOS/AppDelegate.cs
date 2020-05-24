@@ -6,6 +6,7 @@ using FFImageLoading.Transformations;
 using Foundation;
 using PanCardView.iOS;
 using UIKit;
+using UserNotifications;
 
 namespace ProjectCaitlin.iOS
 {
@@ -24,6 +25,9 @@ namespace ProjectCaitlin.iOS
         //
         public override bool FinishedLaunching(UIApplication app, NSDictionary options)
         {
+            // set a delegate to handle incoming notifications
+            UNUserNotificationCenter.Current.Delegate = new iOSNotificationReceiver();
+
             global::Xamarin.Forms.Forms.Init();
             CardsViewRenderer.Preserve();
             LoadApplication(new App());

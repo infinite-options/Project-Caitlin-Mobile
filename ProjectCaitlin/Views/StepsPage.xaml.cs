@@ -8,26 +8,32 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using ProjectCaitlin.Models;
 using Xamarin.Forms.Xaml;
-using ProjectCaitlin.Methods;
+using ProjectCaitlin.Services;
 
 namespace ProjectCaitlin.Views
 {
     public partial class StepsPage : ContentPage
     {
+        FirebaseFunctionsService firebaseFunctionsService;
+
         private int itemcount;
         int a;
         public int b;
         bool isRoutine;
         List<bool> complete;
         readonly StepsPageViewModel pageModel;
+        TaskItemModel taskItemModel;
+        GRItemModel GRItemModel;
 
-        public StepsPage(int a, int b, bool isRoutine)
+        public StepsPage(int a, int b, bool isRoutine, TaskItemModel _taskItemModel, GRItemModel _GRItemModel)
         {
             InitializeComponent();
 
 
             this.a = a;
             this.b = b;
+            taskItemModel = _taskItemModel;
+            GRItemModel = _GRItemModel;
             this.isRoutine = isRoutine;
             pageModel = new StepsPageViewModel(this, a, b, isRoutine);
             BindingContext = pageModel;
@@ -80,16 +86,17 @@ namespace ProjectCaitlin.Views
                 var routineId = App.User.routines[a].id;
                 var taskId = App.User.routines[a].tasks[b].id;
 
-                var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
+                firebaseFunctionsService = new FirebaseFunctionsService();
 
-                var okToCheckmark = await firestoreService.UpdateTask(routineId, taskId, App.User.routines[a].tasks[b].dbIdx.ToString());
-                if (okToCheckmark)
-                {
-                    App.User.routines[a].tasks[b].isComplete = true;
-                    App.User.routines[a].tasks[b].dateTimeCompleted = DateTime.Now;
-                    TaskPage.pageModel.Items[b].IsComplete = true;
-                }
+                taskItemModel.IsComplete = true;
+                taskItemModel.IsInProgress = false;
 
+                App.User.routines[a].tasks[b].isComplete = true;
+                App.User.routines[a].tasks[b].isInProgress = false;
+                App.User.routines[a].tasks[b].dateTimeCompleted = DateTime.Now;
+                //TaskPage.pageModel.Items[b].IsComplete = true;
+
+                firebaseFunctionsService.UpdateTask(routineId, taskId, App.User.routines[a].tasks[b].dbIdx.ToString());
                 await Navigation.PopAsync();
             }
             else
@@ -110,14 +117,20 @@ namespace ProjectCaitlin.Views
             {
                 var routineId = App.User.routines[a].id;
 
-                var firestoreService = new FirestoreService("7R6hAVmDrNutRkG3sVRy");
+                App.User.routines[a].isComplete = true;
+                App.User.routines[a].isInProgress = false;
+                App.User.routines[a].dateTimeCompleted = DateTime.Now;
 
-                var okToCheckmark = await firestoreService.CompleteRoutine(routineId, App.User.routines[a].dbIdx.ToString());
-                if (okToCheckmark)
+                if (App.ParentPage != "ListView")
                 {
-                    App.User.routines[a].isComplete = true;
-                    App.User.routines[a].dateTimeCompleted = DateTime.Now;
+                    GRItemModel.IsComplete = true;
+                    GRItemModel.IsInProgress = false;
+                    GRItemModel.Text = "Done";
                 }
+                
+                var firebaseFunctionsService = new FirebaseFunctionsService();
+
+                var okToCheckmark = await firebaseFunctionsService.CompleteRoutine(routineId, App.User.routines[a].dbIdx.ToString());
             }
         }
     }

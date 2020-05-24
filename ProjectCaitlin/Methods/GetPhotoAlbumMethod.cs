@@ -42,6 +42,9 @@ namespace ProjectCaitlin.Methods
     {
         [JsonProperty("mediaItems")]
         public MediaItem[] MediaItems { get; set; }
+
+        [JsonProperty("nextPageToken")]
+        public string NextPageToken { get; set; }
     }
 
     public partial class MediaItem
@@ -57,6 +60,9 @@ namespace ProjectCaitlin.Methods
 
         [JsonProperty("mimeType")]
         public string MimeType { get; set; }
+
+        [JsonProperty("description")]
+        public string Description { get; set; }
 
         [JsonProperty("mediaMetadata")]
         public MediaMetadata MediaMetadata { get; set; }

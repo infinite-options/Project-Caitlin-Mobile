@@ -24,10 +24,11 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MtouchArch>x86_64</MtouchArch>
-    <MtouchLink>None</MtouchLink>
+    <MtouchLink>SdkOnly</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
     <CodesignProvision>VS: WildCard Development</CodesignProvision>
     <CodesignKey>iPhone Developer: Jeremy Manalo (RHJL94U6CR)</CodesignKey>
+    <MtouchExtraArgs>--optimize=experimental-xforms-product-type</MtouchExtraArgs>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|iPhoneSimulator' ">
     <DebugType>none</DebugType>
@@ -63,9 +64,10 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>iPhone Developer: Jeremy Manalo (RHJL94U6CR)</CodesignKey>
+    <CodesignKey>iPhone Distribution: Infinite Options, LLC (8V66NC2T37)</CodesignKey>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
-    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <MtouchLink>SdkOnly</MtouchLink>
+    <MtouchExtraArgs>--optimize=experimental-xforms-product-type</MtouchExtraArgs>
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="Main.cs" />
@@ -77,6 +79,9 @@
     <Compile Include="AnimationNavigationRenderer.cs" />
     <Compile Include="AnimationNavigationControllerDelegate.cs" />
     <Compile Include="TransitionAnimator.cs" />
+    <Compile Include="iOSNotificationManager.cs" />
+    <Compile Include="iOSNotificationReceiver.cs" />
+    <None Include="yellowclockicon.png" />
   </ItemGroup>
   <ItemGroup>
     <InterfaceDefinition Include="Resources\LaunchScreen.storyboard" />
@@ -132,8 +137,7 @@
     <Reference Include="System.Numerics.Vectors" />
   </ItemGroup>
   <ItemGroup>
-    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991640" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.4.0" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.5.3.1" />
     <PackageReference Include="Xamarin.Auth">
       <Version>1.7.0</Version>
     </PackageReference>
@@ -144,10 +148,13 @@
       <Version>2.4.11.982</Version>
     </PackageReference>
     <PackageReference Include="CardsView">
-      <Version>2.4.5</Version>
+      <Version>2.5.1</Version>
     </PackageReference>
     <PackageReference Include="DLToolkit.Forms.Controls.FlowListView">
       <Version>2.0.11</Version>
+    </PackageReference>
+    <PackageReference Include="Xamarin.Forms">
+      <Version>4.6.0.726</Version>
     </PackageReference>
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath)\Xamarin\iOS\Xamarin.iOS.CSharp.targets" />
@@ -239,5 +246,10 @@
     <BundleResource Include="Resources\waveformicon.png" />
     <BundleResource Include="Resources\waveformiconwhite.png" />
     <BundleResource Include="Resources\redoGray.png" />
+    <BundleResource Include="Resources\xamagonBlue.png" />
+    <BundleResource Include="Resources\nextbutton.png" />
+    <BundleResource Include="Resources\previousbutton.png" />
+    <BundleResource Include="Resources\yellowclockicon.png" />
+    <BundleResource Include="Resources\btn_google_signin_light_normal_web.png" />
   </ItemGroup>
 </Project>

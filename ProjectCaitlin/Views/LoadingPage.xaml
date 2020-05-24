@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" xmlns:forms="http://xamarin.com/schemas/2014/forms"
+             mc:Ignorable="d"
+             NavigationPage.HasNavigationBar="False"
+             x:Class="ProjectCaitlin.LoadingPage">
+
+    <StackLayout
+        VerticalOptions="Center"
+        Margin="20">
+        
+        <Label
+            Text="Project Caitlin"
+            HorizontalOptions="Center"
+            TextColor="DimGray"
+            FontSize="35"
+            Margin="0, 10"
+            />
+
+        <ImageButton
+            WidthRequest="224"
+            HeightRequest="54"
+            Opacity="0"
+            HorizontalOptions="Center"
+            BackgroundColor="Transparent"
+            Source="btn_google_signin_light_normal_web"
+            >
+            </ImageButton>
+    </StackLayout>
+</ContentPage>

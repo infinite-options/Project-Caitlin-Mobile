@@ -12,14 +12,15 @@
 
             <StackLayout Margin="0, 30, 0, 10">
 
+
                 <StackLayout
                     Orientation="Horizontal"
                     HorizontalOptions="FillAndExpand"
                     Margin="20, 0, 20, 0">
 
                     <!-- BACK ARROW-->
-           
-                    <ImageButton 
+
+                    <ImageButton
                         Source="arrowiconwhite.png"
                         BackgroundColor="Transparent"
                         HeightRequest="25"
@@ -32,7 +33,7 @@
                     <Label
                             Text="{Binding TopLabel}"
                             FontSize="30"
-                            FontAttributes="Bold"     
+                            FontAttributes="Bold"
                             TextColor= "White"
                             HorizontalOptions="CenterAndExpand"
                             VerticalOptions="Center"/>
@@ -48,14 +49,14 @@
                         Clicked="close"/>
 
                 </StackLayout>
-                <Label 
+                <Label
                 Text="{Binding TopLabel2}"
                 FontSize="18"
                 TextColor= "White"
                 HorizontalOptions="Center"
                 VerticalOptions="StartAndExpand"/>
 
-               
+
             </StackLayout>
             <StackLayout Margin="15">
                 <CarouselView x:Name="CarouselTasks" HeightRequest="400" ItemsSource="{Binding Items}">
@@ -65,11 +66,16 @@
                                 Padding="10, 0, 10, 0">
 
                                 <Frame  CornerRadius="30" HeightRequest="300" WidthRequest="300" HorizontalOptions="Center" IsClippedToBounds="True">
-                                    <Image Source="{Binding Source}"
+                                    <StackLayout>
+                                        <Image x:Name="isComplete" IsVisible="{Binding OkToCheckmark}" Source="greencheckmarkicon.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+
+                                        <Image Source="{Binding Source}"
                                Aspect="AspectFill"
                                HeightRequest="300"
                                WidthRequest="300"
                                HorizontalOptions="Center" />
+
+                                    </StackLayout>
                                 </Frame>
                                 <Label Text="{Binding Text}"
                                FontAttributes="Bold"
@@ -90,7 +96,7 @@
                         </Grid.ColumnDefinitions>
                         <!--<ImageButton Grid.Column="0" Source="waveformiconwhite.png" BackgroundColor="Transparent" HeightRequest="50" HorizontalOptions="Start" VerticalOptions="Center" />-->
                         <Frame  Grid.Column="1" HasShadow="False" CornerRadius="20" Padding="0" HeightRequest="40" HorizontalOptions="Center" >
-                            <Button x:Name="NextButton" CornerRadius="20" Grid.Column="1" Text="Start" FontSize="16" WidthRequest="90" BackgroundColor="LightGray" TextColor="Black" Clicked="nextpage"/>
+                            <Button x:Name="next" CornerRadius="20" Grid.Column="1" Text="Start" FontSize="16" WidthRequest="90" BackgroundColor="LightGray" TextColor="Black"  Clicked="nextpage"/>
                         </Frame>
                     </Grid>
                 </StackLayout>

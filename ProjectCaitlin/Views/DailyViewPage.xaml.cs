@@ -314,7 +314,7 @@ namespace ProjectCaitlin
 
         async void PhotosClicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new PhotoDisplayPage());
+            await Navigation.PushAsync(new MonthlyViewPage());
         }
     }
 }

@@ -9,13 +9,14 @@ namespace ProjectCaitlin.Services
 {
     public class GooglePhotoService
     {
-
-        public async Task<List<string>> GetPhotos()
+        public HashSet<string> allDates;
+        public async Task<List<List<string>>> GetPhotos()
         {
+            allDates = new HashSet<string>();
 
             //Make HTTP Request
             var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://photoslibrary.googleapis.com/v1/mediaItems");
+            request.RequestUri = new Uri("https://photoslibrary.googleapis.com/v1/mediaItems?pageSize=100");
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
@@ -30,42 +31,65 @@ namespace ProjectCaitlin.Services
             //return json;
             //Deserialize JSON Result
             var result = JsonConvert.DeserializeObject<ProjectCaitlin.Methods.GetPhotoAlbumMethod>(json);
-
             //Create itemList
-            var itemList = new List<string>();
+            var itemList = new List<List<string>>();
+            //var itemMap = new Dictionary<string, string>();
+
+
             String creationTime = "";
             String storePicUri = "";
             String date = "";
             String thumbNailAlbumUri = "";
+            String description = "";
             //Try to add "Summary" Items to list from JSON. If null, redirect to Login prompt.
+            Console.WriteLine("request.RequestUri : " + request.RequestUri);
+
+            Console.WriteLine("NextPageToken" + result.NextPageToken);
+            /* if (!result.NextPageToken.Equals("")) {
+                 request.RequestUri += "?" + result.NextPageToken;
+             }*/
+
             try
             {
                 foreach (var product in result.MediaItems)
                 {
-                    //thumbNailAlbumUri = product.baseUrl.ToString();
-                    creationTime = product.MediaMetadata.CreationTime.ToString();
-                    date = creationTime.Substring(0, 9);
-                    //string datePicker = DateTime.Now.ToString("dd'/'MM'/'yyyy");
-                    string datePicker = "5/26/2016";
-                    //if (date == datePicker)
-                    //{
-                    itemList.Add(product.BaseUrl.ToString());
-                    storePicUri = product.BaseUrl.ToString();
-                    //System.Diagnostics.Debug.WriteLine(storePicUri);
-                    //System.Diagnostics.Debug.WriteLine(date);
+                    var subList = new List<string>();
 
-                    //};
+                    DateTimeOffset GreenwichMeanTime = product.MediaMetadata.CreationTime; //Google photo api sends time in GreenwichMeanTime. 
+                    DateTimeOffset utcTime = GreenwichMeanTime.ToLocalTime();  //convert GreenwichMeanTime to local time.
+
+                    //creationTime = utcTime.ToString();
+                    creationTime = utcTime.ToString();
+                    date = creationTime.Substring(0, creationTime.IndexOf(" "));// date = yyyy/mm/dd
+                    creationTime = utcTime.TimeOfDay.ToString();
+                    allDates.Add(date);
+
+                    storePicUri = product.BaseUrl.ToString();
+                    description = product.Description + "";
+                    subList.Add(product.BaseUrl.ToString());
+                    subList.Add(date);
+                    subList.Add(description);
+                    subList.Add(creationTime);
+                    itemList.Add(subList);
+
                 }
             }
             catch (NullReferenceException e)
             {
+                //here:
+                /*var googleService = new GoogleService();
+                if (await googleService.RefreshToken())
+                {
+                    Console.WriteLine("RefreshToken Done!");
+                    return await GetPhotos();
+                }*/
                 return null;
             }
-
             if (itemList.Count == 0)
-                return new List<string>();
+                return new List<List<string>>();
             else
                 return itemList;
         }
+
     }
 }

@@ -16,14 +16,14 @@
   </PropertyGroup>
   <ItemGroup>
     <PackageReference Include="DLToolkit.Forms.Controls.FlowListView" Version="2.0.11" />
-    <PackageReference Include="Xamarin.Forms" Version="4.4.0.991640" />
-    <PackageReference Include="Xamarin.Essentials" Version="1.4.0" />
+    <PackageReference Include="Xamarin.Essentials" Version="1.5.3.1" />
     <PackageReference Include="Xamarin.Auth" Version="1.7.0" />
     <PackageReference Include="Newtonsoft.Json" Version="12.0.3" />
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
     <PackageReference Include="DLToolkit.Forms.Controls.ImageCropView" Version="1.0.7" />
-    <PackageReference Include="CardsView" Version="2.4.5" />
+    <PackageReference Include="CardsView" Version="2.5.1" />
+    <PackageReference Include="Xamarin.Forms" Version="4.6.0.726" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="Xamarin.iOS">
@@ -38,7 +38,6 @@
     <EmbeddedResource Remove="MainPage.xaml" />
     <EmbeddedResource Remove="DailyViewPage.xaml" />
     <EmbeddedResource Remove="DailyPage.xaml" />
-    <EmbeddedResource Remove="Views\LoadingPage.xaml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Converters\" />
@@ -51,9 +50,11 @@
 
     <Compile Remove="Models\tokens.cs" />
     <Compile Remove="Views\LoadingPage.cs" />
-    <Compile Remove="Views\LoadingPage.xaml.cs" />
     <Compile Remove="Helpers\ListViewHelpers.cs" />
     <Compile Remove="Extensions\TransitionAnimator.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Remove="Icons\xamagonBlue.png" />
   </ItemGroup>
   <ItemGroup>
     <None Include="ViewModel\DailyViewModel.cs" Condition=" '$(EnableDefaultCompileItems)' == 'true' " />
@@ -68,6 +69,9 @@
     <Compile Update="Views\TaskPage.xaml.cs">
       <DependentUpon>TaskPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\LoadingPage.xaml.cs">
+      <DependentUpon>LoadingPage.xaml</DependentUpon>
+    </Compile>
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Views\GreetingPage.xaml">
@@ -79,5 +83,8 @@
     <EmbeddedResource Update="Views\TaskPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
+  </ItemGroup>
+  <ItemGroup>
+    <AndroidResource Include="Icons\xamagonBlue.png" />
   </ItemGroup>
 </Project>

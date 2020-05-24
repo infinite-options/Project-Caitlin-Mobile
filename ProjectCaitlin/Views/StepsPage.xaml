@@ -62,7 +62,7 @@
                            Padding="28, 0, 28, 0"
                            TextColor="#272E32"/>
 
-                <Label Text="X Steps | Takes me X minutes"
+                <Label Text="{Binding ExpectedCompletionTime}"
                            HorizontalOptions="Start"
                            HorizontalTextAlignment="Start"
                            FontSize="15"

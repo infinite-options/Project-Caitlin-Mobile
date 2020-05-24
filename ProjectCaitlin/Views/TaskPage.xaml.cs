@@ -9,19 +9,36 @@ using System.Collections.Generic;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using ProjectCaitlin.Services;
 
 namespace ProjectCaitlin.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TaskPage : ContentPage
     {
-        public static TaskGridViewModel pageModel;
+        public TaskGridViewModel taskGridViewModel;
+
+        FirebaseFunctionsService firebaseFunctionsService = new FirebaseFunctionsService();
+
+        GRItemModel GRItemModel;
 
         public TaskPage(int routineNum, bool isRoutine)
         {
             InitializeComponent();
-            pageModel = new TaskGridViewModel(this, routineNum, isRoutine);
-            BindingContext = pageModel;
+
+            taskGridViewModel = new TaskGridViewModel(this, routineNum, isRoutine, GRItemModel);
+            BindingContext = taskGridViewModel;
+
+        }
+
+        public TaskPage(int routineNum, bool isRoutine, GRItemModel _GRItemModel)
+        {
+            InitializeComponent();
+
+            GRItemModel = _GRItemModel;
+
+            taskGridViewModel = new TaskGridViewModel(this, routineNum, isRoutine, GRItemModel);
+            BindingContext = taskGridViewModel;
 
         }
         public async void close(object sender, EventArgs args)

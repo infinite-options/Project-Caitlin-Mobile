@@ -2,32 +2,36 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using ProjectCaitlin;
+using ProjectCaitlin.Services;
 using ProjectCaitlin.Views;
 using Xamarin.Forms;
+using FFImageLoading.Forms;
+using FFImageLoading.Transformations;
+using FFImageLoading.Work;
 
 namespace ProjectCaitlin
 {
+
     // Learn more about making custom code visible in the Xamarin.Forms previewer
     // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
     public partial class MonthlyViewPage : ContentPage
     {
+
+        GooglePhotoService GooglePhotoService = new GooglePhotoService();
+
+        //List<List<string>> photoURIs = new List<List<string>>();
         public int Year { get; set; } = 0;
         public int Month { get; set; } = 1;
         Label[] labels = new Label[42];
-        Image[] images = new Image[42];
+        //Image[] images = new Image[42];
 
         public MonthlyViewPage()
         {
             InitializeComponent();
-
+            //Add empty calendar
             int row = 1;
             int col = 0;
-            //Add 42 cells in grid.
             for (int i = 0; i < 42; i++)
             {
                 labels[i] = new Label();
@@ -43,55 +47,116 @@ namespace ProjectCaitlin
                 if (col == 7)
                 {
                     row++;
-                    row++;
                     col = 0;
                 }
-
                 StackLayoutMap.Children.Add(labels[i]);
             }
 
-            int row2 = 2;
-            for (int i = 0; i < 42; i++)
-            {
-                images[i] = new Image();
-                images[i].Source = "bear.jpg";
-                images[i].HeightRequest = 20;
-                images[i].WidthRequest = 20;
-
-                Grid.SetRow(images[i], row2);
-                Grid.SetColumn(images[i], col);
-
-                col++;
-                if (col == 7)
-                {
-                    row2++;
-                    row2++;
-                    col = 0;
-                }
-
-                StackLayoutMap.Children.Add(images[i]);
-            }
-
-
-            var button1 = this.FindByName<Button>("month2");
+            var button1 = this.FindByName<ImageButton>("month2");
             button1.Clicked += ButtonOne;
 
-            var button2 = this.FindByName<Button>("month1");
+            var button2 = this.FindByName<ImageButton>("month1");
             button2.Clicked += ButtonTwo;
 
+
+
+            SetupUI();// add photos, update calendar by date, add navigation bar
+
+        }
+
+        private async void SetupUI()
+        {
+            App.User.photoURIs = await GooglePhotoService.GetPhotos();
+            Grid controlGrid = new Grid();
+            int rowLength = 3;
+            double gridItemSize = (Application.Current.MainPage.Width / rowLength) - (1.2 * rowLength);
+            controlGrid.RowDefinitions.Add(new RowDefinition { Height = gridItemSize });
+            for (int i = 0; i < rowLength; i++)
+                controlGrid.ColumnDefinitions.Add(new ColumnDefinition { Width = gridItemSize });
+            var photoCount = 0;
+            try
+            {
+                foreach (List<string> list in App.User.photoURIs)
+                {
+                    string photoURI = list[0];
+                    string date = list[1];
+                    string description = list[2];
+                    string creationTime = list[3];
+
+                    CachedImage webImage = new CachedImage
+                    {
+                        Source = Xamarin.Forms.ImageSource.FromUri(new Uri(photoURI)),
+                        Transformations = new List<ITransformation>() {
+                        new CropTransformation(),
+                    },
+                    };
+
+                    var tapGestureRecognizer = new TapGestureRecognizer();
+                    tapGestureRecognizer.Tapped += async (s, e) => {
+                        await Navigation.PushAsync(new PhotoDisplayPage(webImage, date, description, creationTime));
+                    };
+                    webImage.GestureRecognizers.Add(tapGestureRecognizer);
+                    var indicator = new ActivityIndicator { Color = Color.Gray, };
+                    indicator.SetBinding(ActivityIndicator.IsRunningProperty, "IsLoading");
+                    indicator.BindingContext = webImage;
+
+                    controlGrid.Children.Add(indicator, photoCount % rowLength, photoCount / rowLength);
+                    controlGrid.Children.Add(webImage, photoCount % rowLength, photoCount / rowLength);
+                    photoCount++;
+                }
+            }
+            catch (NullReferenceException e)
+            {
+                var googleService = new GoogleService();
+                if (await googleService.RefreshToken())
+                {
+                    Console.WriteLine("RefreshToken Done!");
+                    App.User.photoURIs = await GooglePhotoService.GetPhotos();
+                    //return await GetPhotos();
+                }
+
+                //var googleService = new GoogleService();
+                // await googleService.RefreshToken();
+                // Console.WriteLine("Here");
+                //SetupUI();
+            }
+
+            //update calendar
             DateTime localDate = DateTime.Now;
-            // Uses the default calendar of the InvariantCulture.
             Calendar myCal = CultureInfo.InvariantCulture.Calendar;
             var currentYear = myCal.GetYear(localDate);
             var currentMonth = myCal.GetMonth(localDate);
             var currentDay = myCal.GetDayOfWeek(localDate);
 
-            Year = currentYear; // It will be shown at your label
-            Month = currentMonth; // It will be shown at your label
+            Year = currentYear;
+            Month = currentMonth;
             yearLabel.Text = Year + "";
             setMonthLabel(Month);
             SetCalendar(currentYear, currentMonth);
+
+            //add navigation bar
+            photoScrollView.HeightRequest = Application.Current.MainPage.Height - CalendarContent.Height - NavBar.Height;
+
+            if (App.User.photoURIs != null)
+            {
+                photoScrollView.Content = controlGrid;
+            }
+            else
+            {
+                Label noPhotosLabel = new Label()
+                {
+                    Text = "No photos to Show",
+                    VerticalOptions = LayoutOptions.CenterAndExpand,
+                    HorizontalOptions = LayoutOptions.CenterAndExpand,
+                    TextColor = Color.DimGray
+
+                };
+                photoScrollView.Content = noPhotosLabel;
+            }
+            AddTapGestures();
+
         }
+
         void setMonthLabel(int month)
         {
             if (month == 1)
@@ -154,7 +219,6 @@ namespace ProjectCaitlin
             Calendar myCal = CultureInfo.InvariantCulture.Calendar;
 
             var currentDay = myCal.GetDayOfWeek(firstDay);
-            Console.WriteLine(currentDay);
             int startDay = 0;
             if (currentDay.ToString().Equals("Monday"))
                 startDay = 1;
@@ -240,51 +304,105 @@ namespace ProjectCaitlin
                 lastMonth = 30;
             }
 
+            //update calendar before the start day.
             for (int i = startDay - 1; i >= 0; i--)
             {
                 labels[i].Text = lastMonth + "";
+                labels[i].FontSize = 15;
+
+                labels[i].TextColor = Color.FromHex("#c2c6cc");
+                labels[i].FontAttributes = FontAttributes.None;//refresh the font first.
+                labels[i].GestureRecognizers.Clear();
+
                 lastMonth--;
             }
+
+            //update calendar for the current month.
             for (int i = startDay; i < startDay + maxDay; i++)
             {
                 labels[i].Text = j + "";
+                labels[i].FontSize = 15;
+
+                labels[i].TextColor = Color.FromHex("#000000");
+                labels[i].FontAttributes = FontAttributes.None;//refresh the font first.
+                labels[i].GestureRecognizers.Clear();
+
+
+                // make the label bold if there are images in that day.
+                foreach (string date in GooglePhotoService.allDates)
+                {
+                    DateTime currentDate = DateTime.Parse(date);
+                    int Year = currentDate.Year;
+                    int Month = currentDate.Month;
+                    int Day = currentDate.Day;
+
+                    if (Year == year && Month == month && Day == j)
+                    {
+                        labels[i].FontAttributes = FontAttributes.Bold;
+                        labels[i].TextColor = Color.FromHex("#f5cb42");
+                        var OnLabelClicked = new TapGestureRecognizer();
+                        OnLabelClicked.Tapped += async (s, e) => {
+                            await Navigation.PushAsync(new PhotoDisplayPage(date));
+                        };
+                        labels[i].GestureRecognizers.Add(OnLabelClicked);
+
+                    }
+                }
                 j++;
             }
+
+            //update the calendar after the maxDay.
             int m = 1;
             for (int i = startDay + maxDay; i < 42; i++)
             {
                 labels[i].Text = m + "";
+                labels[i].FontSize = 15;
+
+                labels[i].TextColor = Color.FromHex("#c2c6cc");
+                labels[i].FontAttributes = FontAttributes.None;//refresh the font first.
+                labels[i].GestureRecognizers.Clear();
+
+
                 m++;
             }
+
+        }
+        private int increaseMonth(int month)
+        {
+            int newMonth = month + 1;
+            if (newMonth > 12)
+                newMonth = 1;
+            return newMonth;
+        }
+        private int decreaseMonth(int month)
+        {
+            int newMonth = month - 1;
+            if (newMonth < 1)
+                newMonth = 12;
+            return newMonth;
+        }
+        private void AddTapGestures()
+        {
+            var tapGestureRecognizer1 = new TapGestureRecognizer();
+            tapGestureRecognizer1.Tapped += async (s, e) => {
+                await Navigation.PushAsync(new GreetingPage());
+            };
+            AboutMeButton.GestureRecognizers.Add(tapGestureRecognizer1);
+
+            var tapGestureRecognizer2 = new TapGestureRecognizer();
+            tapGestureRecognizer2.Tapped += async (s, e) => {
+                await Navigation.PushAsync(new ListViewPage());
+            };
+            ListViewButton.GestureRecognizers.Add(tapGestureRecognizer2);
+
+            var tapGestureRecognizer3 = new TapGestureRecognizer();
+            tapGestureRecognizer3.Tapped += async (s, e) => {
+                await Navigation.PushAsync(new GoalsRoutinesTemplate());
+            };
+            MyDayButton.GestureRecognizers.Add(tapGestureRecognizer3);
+
         }
 
-        public async void DailyBtnClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new DailyViewPage());
-        }
-
-        public async void ListBtnClicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new ListViewPage());
-        }
-
-
-        public async void btn1(object sender, EventArgs args)
-        {
-            await Navigation.PushAsync(new GreetingPage());
-        }
-        public async void btn2(object sender, EventArgs args)
-        {
-            await Navigation.PushAsync(new ListViewPage());
-        }
-        public async void btn3(object sender, EventArgs args)
-        {
-            await Navigation.PushAsync(new MonthlyViewPage());
-        }
-        public async void btn4(object sender, EventArgs args)
-        {
-            await Navigation.PushAsync(new GoalsRoutinesTemplate());
-        }
 
     }
 }

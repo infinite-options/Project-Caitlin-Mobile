@@ -13,6 +13,8 @@ using System.Collections.Generic;
 using ProjectCaitlin.Views;
 using System.Globalization;
 using System.Collections.Generic;
+using System.Runtime.CompilerServices;
+using ProjectCaitlin.Services;
 
 namespace ProjectCaitlin.ViewModel
 {
@@ -20,24 +22,21 @@ namespace ProjectCaitlin.ViewModel
     {
         private GoalsRoutinesTemplate mainPage;
         List<bool> complete;
-        //public event PropertyChangedEventHandler PropertyChanged;
-
         private int _currentIndex;
         private int _imageCount = 1078;
+        private FirebaseFunctionsService firebaseFunctionsService;
 
-        private ObservableCollection<object> _items = new ObservableCollection<object>() { };
+        public ObservableCollection<object> Items { get; set; }
+
         public ICommand AboutMeCommand { private set; get; }
-        public ICommand RoutineCommand { private set; get; }
-
         public string DayLabel { get; set; }
         public string TimeLabel { get; set; }
         public string DayImage { get; set; }
-
-
-
+        
         public GoalsRoutinesTemplateViewModel(GoalsRoutinesTemplate mainPage)
         {
             this.mainPage = mainPage;
+            firebaseFunctionsService = new FirebaseFunctionsService();
 
             setUpTime();
             complete = new List<bool>();
@@ -49,921 +48,229 @@ namespace ProjectCaitlin.ViewModel
             });
             Items.Add(new
             {
-                Source = "caitlinheadshot.jpg",
+                Source = App.User.Me.pic,
                 Title = "About Me",
                 Ind = _imageCount++,
                 BackgroundColor = Color.Default,
                 TextColor = Color.Black,
-                Length = "You are a strong, independant person. \n This App helps you take control of your life!",
+                Length = App.User.Me.message_day,
                 Text = "Tap to Learn More",
-                ButtonText = "Click for More About Me",
+                IsComplete = false,
+                IsInProgress = false,
                 Navigate = AboutMeCommand
             });
+            int itemCount = 1;
 
-            if (App.User.routines.Count >= 1 && !App.User.routines[0].isComplete && isInTimeRange(App.User.routines[0].availableStartTime.TimeOfDay, App.User.routines[0].availableEndTime.TimeOfDay)) {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.routines[0].photo,
-                    Title = App.User.routines[0].title,
-                    Ind = _imageCount++,
-                    BackgroundColor = Color.Default,
-                    TextColor = Color.Black,
-
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                     async () =>
-                     {
-                         await mainPage.Navigation.PushAsync(new TaskPage(0, true));
-                     })
-                });
-            }
-            if (App.User.routines.Count >= 2 && !App.User.routines[1].isComplete && isInTimeRange(App.User.routines[1].availableStartTime.TimeOfDay, App.User.routines[1].availableEndTime.TimeOfDay)) {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.routines[1].photo,
-                    Title = App.User.routines[1].title,
-                    Ind = _imageCount++,
-                    BackgroundColor = Color.Default,
-                    TextColor = Color.Black,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                     async () =>
-                     {
-                         await mainPage.Navigation.PushAsync(new TaskPage(1, true));
-                     })
-                });
-            }
-            if (App.User.routines.Count >= 3 && !App.User.routines[2].isComplete && isInTimeRange(App.User.routines[2].availableStartTime.TimeOfDay, App.User.routines[2].availableEndTime.TimeOfDay))
+            int routineNum = 0;
+            foreach (routine routine in App.User.routines)
             {
-                complete.Add(false);
-                Items.Add(new
+                //calculate the sum duration for the routine from step level.
+                if (routine.isSublistAvailable == true)
                 {
-                    Source = App.User.routines[2].photo,
-                    Title = App.User.routines[2].title,
-                    Ind = _imageCount++,
-                    BackgroundColor = Color.Default,
-                    TextColor = Color.Black,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                     async () =>
-                     {
-                         await mainPage.Navigation.PushAsync(new TaskPage(2, true));
-                     })
-                });
-            }
-            if (App.User.routines.Count >= 4 && !App.User.routines[3].isComplete && isInTimeRange(App.User.routines[3].availableStartTime.TimeOfDay, App.User.routines[3].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
+                    int sum_duration = 0;
+                    foreach (task task in routine.tasks)
+                    {
+                        if (task.isSublistAvailable == true)
+                        {
+                            int step_duration = 0;
+                            foreach (step step in task.steps)
+                            {
+                                step_duration += (int)step.expectedCompletionTime.TotalMinutes;
+                            }
+                            if (step_duration == 0)
+                                sum_duration += (int)task.expectedCompletionTime.TotalMinutes;
+                            else
+                                sum_duration += step_duration;
+                        }
+                        else
+                        {
+                            sum_duration += (int)task.expectedCompletionTime.TotalMinutes;
+                        }
+                    }
+                    // update the duration for routine
+                    if (sum_duration != 0)
+                        routine.expectedCompletionTime = TimeSpan.FromMinutes(sum_duration);
+                }
+
+                if (isInTimeRange(routine.availableStartTime, routine.availableEndTime))
                 {
-                    Source = App.User.routines[3].photo,
-                    Title = App.User.routines[3].title,
-                    Ind = _imageCount++,
-                    BackgroundColor = Color.Default,
-                    TextColor = Color.Black,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                     async () =>
-                     {
-                         await mainPage.Navigation.PushAsync(new TaskPage(3, true));
-                     })
-                });
-            }
-            if (App.User.routines.Count >= 5 && !App.User.routines[4].isComplete && isInTimeRange(App.User.routines[4].availableStartTime.TimeOfDay, App.User.routines[4].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.routines[4].photo,
-                    Title = App.User.routines[4].title,
-                    Ind = _imageCount++,
-                    BackgroundColor = Color.Default,
-                    TextColor = Color.Black,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                     async () =>
-                     {
-                         await mainPage.Navigation.PushAsync(new TaskPage(4, true));
-                     })
-                });
-            }
-            if (App.User.routines.Count >= 6 && !App.User.routines[5].isComplete && isInTimeRange(App.User.routines[5].availableStartTime.TimeOfDay, App.User.routines[5].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.routines[5].photo,
-                    Title = App.User.routines[5].title,
+                   
+                    string buttonText = "Tap to Start";
+                    if (routine.isInProgress)
+                        buttonText = "Tap to Continue";
+                    else if (routine.isComplete)
+                        buttonText = "Done";
 
-                    Ind = _imageCount++,
-                    BackgroundColor = Color.Default,
-                    TextColor = Color.Black,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                     async () =>
-                     {
-                         await mainPage.Navigation.PushAsync(new TaskPage(5, true));
-                     })
-                });
-            }
-            if (App.User.routines.Count >= 7 && !App.User.routines[6].isComplete && isInTimeRange(App.User.routines[6].availableStartTime.TimeOfDay, App.User.routines[6].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.routines[6].photo,
-                    Title = App.User.routines[6].title,
+                    complete.Add(false);
+                    Items.Add(new GRItemModel(
+                       routine.photo,
+                       routine.title,
+                       Color.Default,
+                       Color.Black,
+                       buttonText,
+                       "Expected to take " + routine.expectedCompletionTime.TotalMinutes + " minutes",
+                       (routine.isComplete || routine.isInProgress) ? .6 : 1,
+                       routine.isComplete,
+                       routine.isInProgress,
 
-                    Ind = _imageCount++,
-                    BackgroundColor = Color.Default,
-                    TextColor = Color.Black,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                     async () =>
-                     {
-                         await mainPage.Navigation.PushAsync(new TaskPage(6, true));
-                     })
-                });
-            }
-            if (App.User.routines.Count >= 8 && !App.User.routines[7].isComplete && isInTimeRange(App.User.routines[7].availableStartTime.TimeOfDay, App.User.routines[7].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.routines[7].photo,
-                    Title = App.User.routines[7].title,
+                       new Command<MyDayIndexes>(
+                            async (MyDayIndexes indexes) =>
+                            {
+                                string routineId = App.User.routines[indexes.RoutineIndex].id;
+                                string routineDbIdx = App.User.routines[indexes.RoutineIndex].dbIdx.ToString();
+                                bool isRoutineInProgress = App.User.routines[indexes.RoutineIndex].isInProgress;
+                                bool isRoutineComplete = App.User.routines[indexes.RoutineIndex].isComplete;
 
-                    Ind = _imageCount++,
-                    BackgroundColor = Color.Default,
-                    TextColor = Color.Black,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                     async () =>
-                     {
-                         await mainPage.Navigation.PushAsync(new TaskPage(7, true));
-                     })
-                }); 
-            }
+                                Console.WriteLine("indexes.ItemsIndex: " + indexes.ItemsIndex);
+                                Console.WriteLine("indexes.RoutineIndex: " + indexes.RoutineIndex);
 
-            if (App.User.routines.Count >= 9 && !App.User.routines[8].isComplete && isInTimeRange(App.User.routines[8].availableStartTime.TimeOfDay, App.User.routines[8].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.routines[8].photo,
-                    Title = App.User.routines[8].title,
+                                ((GRItemModel)Items[indexes.ItemsIndex]).GrImageOpactiy = .6;
 
-                    Ind = _imageCount++,
-                    BackgroundColor = Color.Default,
-                    TextColor = Color.Black,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                     async () =>
-                     {
-                         await mainPage.Navigation.PushAsync(new TaskPage(8, true));
-                     })
-                });
-            }
-
-            if (App.User.routines.Count >= 10 && !App.User.routines[9].isComplete && isInTimeRange(App.User.routines[9].availableStartTime.TimeOfDay, App.User.routines[9].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.routines[9].photo,
-                    Title = App.User.routines[9].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = Color.Default,
-                    TextColor = Color.Black,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(9, true));
-                         })
-                });
-            }
-
-            if (App.User.routines.Count >= 11 && !App.User.routines[10].isComplete && isInTimeRange(App.User.routines[10].availableStartTime.TimeOfDay, App.User.routines[10].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-
-                Items.Add(new
-                {
-                    Source = App.User.routines[10].photo,
-                    Title = App.User.routines[10].title,
-                    Ind = _imageCount++,
-                    BackgroundColor = Color.Default,
-                    TextColor = Color.Black,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                     async () =>
-                     {
-                         await mainPage.Navigation.PushAsync(new TaskPage(10, true));
-                     })
-                });
-            }
-            if (App.User.routines.Count >= 12 && !App.User.routines[11].isComplete && isInTimeRange(App.User.routines[11].availableStartTime.TimeOfDay, App.User.routines[11].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.routines[11].photo,
-                    Title = App.User.routines[11].title,
-                    Ind = _imageCount++,
-                    BackgroundColor = Color.Default,
-                    TextColor = Color.Black,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                     async () =>
-                     {
-                         await mainPage.Navigation.PushAsync(new TaskPage(11, true));
-                     })
-                });
-            }
-            if (App.User.routines.Count >= 13 && !App.User.routines[12].isComplete && isInTimeRange(App.User.routines[12].availableStartTime.TimeOfDay, App.User.routines[12].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.routines[12].photo,
-                    Title = App.User.routines[12].title,
-                    Ind = _imageCount++,
-                    BackgroundColor = Color.Default,
-                    TextColor = Color.Black,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                     async () =>
-                     {
-                         await mainPage.Navigation.PushAsync(new TaskPage(12, true));
-                     })
-                });
-            }
-            if (App.User.routines.Count >= 14 && !App.User.routines[13].isComplete && isInTimeRange(App.User.routines[13].availableStartTime.TimeOfDay, App.User.routines[13].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.routines[13].photo,
-                    Title = App.User.routines[13].title,
-                    Ind = _imageCount++,
-                    BackgroundColor = Color.Default,
-                    TextColor = Color.Black,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                     async () =>
-                     {
-                         await mainPage.Navigation.PushAsync(new TaskPage(13, true));
-                     })
-                });
-            }
-            if (App.User.routines.Count >= 15 && !App.User.routines[14].isComplete && isInTimeRange(App.User.routines[14].availableStartTime.TimeOfDay, App.User.routines[14].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.routines[14].photo,
-                    Title = App.User.routines[14].title,
-                    Ind = _imageCount++,
-                    BackgroundColor = Color.Default,
-                    TextColor = Color.Black,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                     async () =>
-                     {
-                         await mainPage.Navigation.PushAsync(new TaskPage(14, true));
-                     })
-                });
-            }
-            if (App.User.routines.Count >= 16 && !App.User.routines[15].isComplete && isInTimeRange(App.User.routines[15].availableStartTime.TimeOfDay, App.User.routines[15].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.routines[15].photo,
-                    Title = App.User.routines[15].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = Color.Default,
-                    TextColor = Color.Black,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                     async () =>
-                     {
-                         await mainPage.Navigation.PushAsync(new TaskPage(15, true));
-                     })
-                });
-            }
-            if (App.User.routines.Count >= 17 && !App.User.routines[16].isComplete && isInTimeRange(App.User.routines[16].availableStartTime.TimeOfDay, App.User.routines[16].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.routines[16].photo,
-                    Title = App.User.routines[16].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = Color.Default,
-                    TextColor = Color.Black,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                     async () =>
-                     {
-                         await mainPage.Navigation.PushAsync(new TaskPage(16, true));
-                     })
-                });
-            }
-            if (App.User.routines.Count >= 18 && !App.User.routines[17].isComplete && isInTimeRange(App.User.routines[17].availableStartTime.TimeOfDay, App.User.routines[17].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.routines[17].photo,
-                    Title = App.User.routines[17].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = Color.Default,
-                    TextColor = Color.Black,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                     async () =>
-                     {
-                         await mainPage.Navigation.PushAsync(new TaskPage(17, true));
-                     })
-                });
-            }
-            if (App.User.routines.Count >= 19 && !App.User.routines[18].isComplete && isInTimeRange(App.User.routines[18].availableStartTime.TimeOfDay, App.User.routines[18].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.routines[18].photo,
-                    Title = App.User.routines[18].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = Color.Default,
-                    TextColor = Color.Black,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(18, true));
-                         })
-                });
-            }
-            if (App.User.routines.Count >= 20 && !App.User.routines[19].isComplete && isInTimeRange(App.User.routines[19].availableStartTime.TimeOfDay, App.User.routines[19].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.routines[19].photo,
-                    Title = App.User.routines[19].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = Color.Default,
-                    TextColor = Color.Black,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(19, true));
-                         })
-                });
-            }
-            if (App.User.goals.Count >= 1 && !App.User.goals[0].isComplete && isInTimeRange(App.User.goals[0].availableStartTime.TimeOfDay, App.User.goals[0].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.goals[0].photo,
-                    Title = App.User.goals[0].title,
-
-                    Ind = _imageCount++,
-                    TextColor = Color.White,
-                    BackgroundColor = "#272E32",
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(0, false));
-                         })
-                });
-            }
-
-            if (App.User.goals.Count >= 2 && !App.User.goals[1].isComplete && isInTimeRange(App.User.goals[1].availableStartTime.TimeOfDay, App.User.goals[1].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.goals[1].photo,
-                    Title = App.User.goals[1].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = "#272E32",
-                    TextColor = Color.White,
-
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(1, false));
-                         })
-                });
-            }
-            if (App.User.goals.Count >= 3 && !App.User.goals[2].isComplete && isInTimeRange(App.User.goals[2].availableStartTime.TimeOfDay, App.User.goals[2].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.goals[2].photo,
-                    Title = App.User.goals[2].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = "#272E32",
-                    TextColor = Color.White,
-
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(2, false));
-                         })
-                });
-            }
-            if (App.User.goals.Count >= 4 && !App.User.goals[3].isComplete && isInTimeRange(App.User.goals[3].availableStartTime.TimeOfDay, App.User.goals[3].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.goals[3].photo,
-                    Title = App.User.goals[3].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = "#272E32",
-                    TextColor = Color.White,
-
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(3, false));
-                         })
-                });
-            }
-            if (App.User.goals.Count >= 5 && !App.User.goals[4].isComplete && isInTimeRange(App.User.goals[4].availableStartTime.TimeOfDay, App.User.goals[4].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.goals[4].photo,
-                    Title = App.User.goals[4].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = "#272E32",
-                    TextColor = Color.White,
-
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(4, false));
-                         })
-                });
-            }
-            if (App.User.goals.Count >= 6 && !App.User.goals[5].isComplete && isInTimeRange(App.User.goals[5].availableStartTime.TimeOfDay, App.User.goals[5].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.goals[5].photo,
-                    Title = App.User.goals[5].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = "#272E32",
-                    TextColor = Color.White,
-
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(5, false));
-                         })
-                });
-            }
-            if (App.User.goals.Count >= 7 && !App.User.goals[6].isComplete && isInTimeRange(App.User.goals[6].availableStartTime.TimeOfDay, App.User.goals[6].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.goals[6].photo,
-                    Title = App.User.goals[6].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = "#272E32",
-                    TextColor = Color.White,
-
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(6, false));
-                         })
-                });
-            }
-            if (App.User.goals.Count >= 8 && !App.User.goals[7].isComplete && isInTimeRange(App.User.goals[7].availableStartTime.TimeOfDay, App.User.goals[7].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.goals[7].photo,
-                    Title = App.User.goals[7].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = "#272E32",
-                    TextColor = Color.White,
-
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(7, false));
-                         })
-                });
-            }
-            if (App.User.goals.Count >= 9 && !App.User.goals[8].isComplete && isInTimeRange(App.User.goals[8].availableStartTime.TimeOfDay, App.User.goals[8].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.goals[8].photo,
-                    Title = App.User.goals[8].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = "#272E32",
-                    TextColor = Color.White,
-
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(8, false));
-                         })
-                });
-            }
-            if (App.User.goals.Count >= 10 && !App.User.goals[9].isComplete && isInTimeRange(App.User.goals[9].availableStartTime.TimeOfDay, App.User.goals[9].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.goals[9].photo,
-                    Title = App.User.goals[9].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = "#272E32",
-                    TextColor = Color.White,
-
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(9, false));
-                         })
-                });
-            }
-            if (App.User.goals.Count >= 11 && !App.User.goals[10].isComplete && isInTimeRange(App.User.goals[10].availableStartTime.TimeOfDay, App.User.goals[10].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.goals[10].photo,
-                    Title = App.User.goals[10].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = "#272E32",
-                    TextColor = Color.White,
-
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(10, false));
-                         })
-                });
-            }
-            if (App.User.goals.Count >= 12 && !App.User.goals[11].isComplete && isInTimeRange(App.User.goals[11].availableStartTime.TimeOfDay, App.User.goals[11].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.goals[11].photo,
-                    Title = App.User.goals[11].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = "#272E32",
-                    TextColor = Color.White,
-
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(11, false));
-                         })
-                });
-            }
-            if (App.User.goals.Count >= 13 && !App.User.goals[12].isComplete && isInTimeRange(App.User.goals[12].availableStartTime.TimeOfDay, App.User.goals[12].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.goals[12].photo,
-                    Title = App.User.goals[12].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = "#272E32",
-                    TextColor = Color.White,
-
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(12, false));
-                         })
-                });
-            }
-            if (App.User.goals.Count >= 14 && !App.User.goals[13].isComplete && isInTimeRange(App.User.goals[13].availableStartTime.TimeOfDay, App.User.goals[13].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.goals[13].photo,
-                    Title = App.User.goals[13].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = "#272E32",
-                    TextColor = Color.White,
-
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(13, false));
-                         })
-                });
-            }
-            if (App.User.goals.Count >= 15 && !App.User.goals[14].isComplete && isInTimeRange(App.User.goals[14].availableStartTime.TimeOfDay, App.User.goals[14].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.goals[14].photo,
-                    Title = App.User.goals[14].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = "#272E32",
-                    TextColor = Color.White,
-
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(14, false));
-                         })
-                });
-            }
-            if (App.User.goals.Count >= 16 && !App.User.goals[15].isComplete && isInTimeRange(App.User.goals[15].availableStartTime.TimeOfDay, App.User.goals[15].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.goals[15].photo,
-                    Title = App.User.goals[15].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = "#272E32",
-                    TextColor = Color.White,
-
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(15, false));
-                         })
-                });
-            }
-            if (App.User.goals.Count >= 17 && !App.User.goals[16].isComplete && isInTimeRange(App.User.goals[16].availableStartTime.TimeOfDay, App.User.goals[16].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.goals[16].photo,
-                    Title = App.User.goals[16].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = "#272E32",
-                    TextColor = Color.White,
-
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(16, false));
-                         })
-                });
-            }
-            if (App.User.goals.Count >= 18 && !App.User.goals[17].isComplete && isInTimeRange(App.User.goals[17].availableStartTime.TimeOfDay, App.User.goals[17].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.goals[17].photo,
-                    Title = App.User.goals[17].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = "#272E32",
-                    TextColor = Color.White,
-
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(17, false));
-                         })
-                });
-            }
-            if (App.User.goals.Count >= 19 && !App.User.goals[18].isComplete && isInTimeRange(App.User.goals[18].availableStartTime.TimeOfDay, App.User.goals[18].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.goals[18].photo,
-                    Title = App.User.goals[18].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = "#272E32",
-                    TextColor = Color.White,
-
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(18, false));
-                         })
-                });
-            }
-            if (App.User.goals.Count >= 20 && !App.User.goals[19].isComplete && isInTimeRange(App.User.goals[19].availableStartTime.TimeOfDay, App.User.goals[19].availableEndTime.TimeOfDay))
-            {
-                complete.Add(false);
-                Items.Add(new
-                {
-                    Source = App.User.goals[19].photo,
-                    Title = App.User.goals[19].title,
-
-                    Ind = _imageCount++,
-                    BackgroundColor = "#272E32",
-                    TextColor = Color.White,
-
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                         async () =>
-                         {
-                             await mainPage.Navigation.PushAsync(new TaskPage(19, false));
-                         })
-                });
-            }
-
-            /*int routineNum = 0;
-            foreach (routine routine in App.user.routines)
-            {
-                Console.WriteLine("routine Num : " + routineNum);
-                Items.Add(new
-                {
-                    Source = routine.photo,
-                    Title = routine.title,
-                    Ind = _imageCount++,
-                    Color = Color.Default,
-                    Length = "Takes me 25 minutes",
-                    Text = "Tap to start",
-                    ButtonText = "Click for More About Me",
-                    Navigate = new Command(
-                     async () =>
-                     {
-                         await mainPage.Navigation.PushAsync(new TaskPage(routineNum));
-                     })
-                });
+                                if (App.User.routines[indexes.RoutineIndex].isSublistAvailable)
+                                {
+                                    if (!isRoutineComplete)
+                                    {
+                                        App.User.routines[indexes.RoutineIndex].isInProgress = true;
+                                        ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
+                                        ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
+                                        firebaseFunctionsService.startGR(routineId, routineDbIdx);
+                                    }
+                                    await mainPage.Navigation.PushAsync(new TaskPage(indexes.RoutineIndex, true, (GRItemModel)Items[indexes.ItemsIndex]));
+                                }
+                                else
+                                {
+                                    if (!isRoutineComplete)
+                                    {
+                                        if (isRoutineInProgress)
+                                        {
+                                            App.User.routines[indexes.RoutineIndex].isInProgress = false;
+                                            App.User.routines[indexes.RoutineIndex].isComplete = true;
+                                            ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = false;
+                                            ((GRItemModel)Items[indexes.ItemsIndex]).IsComplete = true;
+                                            ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Done";
+                                            firebaseFunctionsService.CompleteRoutine(routineId, routineDbIdx);
+                                        }
+                                        else
+                                        {
+                                            App.User.routines[indexes.RoutineIndex].isInProgress = true;
+                                            ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
+                                            ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
+                                            firebaseFunctionsService.startGR(routineId, routineDbIdx);
+                                        }
+                                    }
+                                }
+                            }),
+                        new MyDayIndexes(itemCount, routineNum, 0)
+                        ));
+                    itemCount++;
+                }
                 routineNum++;
-            }*/
+            }
 
-            PanPositionChangedCommand = new Command(v =>
+            int goalNum = 0;
+            foreach (goal goal in App.User.goals)
             {
-                if (IsAutoAnimationRunning || IsUserInteractionRunning)
+                //calculate the sum duration for the goal from instruction level.
+                if (goal.isSublistAvailable == true)
                 {
-                    return;
+                    int goal_duration = 0;
+                    foreach (action action in goal.actions)
+                    {
+                        if (action.isSublistAvailable == true)
+                        {
+                            int instruction_duration = 0;
+                            foreach (instruction instruction in action.instructions)
+                            {
+                                instruction_duration += (int)instruction.expectedCompletionTime.TotalMinutes;
+                            }
+                            if (instruction_duration == 0)
+                                goal_duration += (int)action.expectedCompletionTime.TotalMinutes;
+                            else
+                                goal_duration += instruction_duration;
+                        }
+                        else
+                        {
+                            goal_duration += (int)action.expectedCompletionTime.TotalMinutes;
+                        }
+                    }
+                    // update the duration for goal
+                    if (goal_duration != 0)
+                        goal.expectedCompletionTime = TimeSpan.FromMinutes(goal_duration);
                 }
 
-                var index = CurrentIndex + (bool.Parse(v.ToString()) ? 1 : -1);
-                if (index < 0 || index >= Items.Count)
+                if (isInTimeRange(goal.availableStartTime, goal.availableEndTime))
                 {
-                    return;
-                }
-                CurrentIndex = index;
-            });
+                    string buttonText = "Tap to Start";
+                    if (goal.isInProgress)
+                        buttonText = "Tap to Continue";
+                    else if (goal.isComplete)
+                        buttonText = "Done";
 
-            RemoveCurrentItemCommand = new Command(() =>
-            {
-                if (!Items.Any())
-                {
-                    return;
-                }
-                Items.RemoveAt(CurrentIndex.ToCyclicalIndex(Items.Count));
-            });
+                    complete.Add(false);
+                    Items.Add(new GRItemModel(
+                       goal.photo,
+                       goal.title,
+                       Color.FromHex("#272E32"),
+                       Color.White,
+                       buttonText,
+                       "Expected to take " + goal.expectedCompletionTime.TotalMinutes + " minutes",
+                       (goal.isComplete || goal.isInProgress) ? .6 : 1,
+                       goal.isComplete,
+                       goal.isInProgress,
 
-            GoToLastCommand = new Command(() =>
-            {
-                CurrentIndex = Items.Count - 1;
-            });
+                       new Command<MyDayIndexes>(
+                            async (MyDayIndexes indexes) =>
+                            {
+                                string goalId = App.User.goals[indexes.GoalIndex].id;
+                                string goalDbIdx = App.User.goals[indexes.GoalIndex].dbIdx.ToString();
+                                bool isGoalInProgress = App.User.goals[indexes.GoalIndex].isInProgress;
+                                bool isGoalComplete = App.User.goals[indexes.GoalIndex].isComplete;
+
+                                Console.WriteLine("indexes.ItemsIndex: " + indexes.ItemsIndex);
+                                Console.WriteLine("indexes.GoalIndex: " + indexes.GoalIndex);
+
+                                ((GRItemModel)Items[indexes.ItemsIndex]).GrImageOpactiy = .6;
+
+                                if (App.User.goals[indexes.GoalIndex].isSublistAvailable)
+                                {
+                                    if (!isGoalComplete)
+                                    {
+                                        App.User.goals[indexes.GoalIndex].isInProgress = true;
+                                        ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
+                                        ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
+                                        firebaseFunctionsService.startGR(goalId, goalDbIdx);
+                                    }
+                                    await mainPage.Navigation.PushAsync(new TaskPage(indexes.GoalIndex, false, (GRItemModel)Items[indexes.ItemsIndex]));
+                                }
+                                else
+                                {
+                                    if (!isGoalComplete)
+                                    {
+                                        if (isGoalInProgress)
+                                        {
+                                            App.User.goals[indexes.GoalIndex].isInProgress = false;
+                                            App.User.goals[indexes.GoalIndex].isComplete = true;
+                                            ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = false;
+                                            ((GRItemModel)Items[indexes.ItemsIndex]).IsComplete = true;
+                                            ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Done";
+                                            firebaseFunctionsService.CompleteRoutine(goalId, goalDbIdx);
+                                        }
+                                        else
+                                        {
+                                            App.User.goals[indexes.GoalIndex].isInProgress = true;
+                                            ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
+                                            ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
+                                            firebaseFunctionsService.startGR(goalId, goalDbIdx);
+                                        }
+                                    }
+                                }
+                            }),
+                       new MyDayIndexes(itemCount, 0, goalNum)
+                        ));
+                    itemCount++;
+                }
+                goalNum++;
+            }
         }
 
         public ICommand PanPositionChangedCommand { get; }
@@ -976,8 +283,8 @@ namespace ProjectCaitlin.ViewModel
         private bool isInTimeRange(TimeSpan start, TimeSpan end)
         {
             DateTime dateTimeNow = DateTime.Now;
-            //DateTime dateTimeNow = new DateTime(1999, 12, 1, 23, 59, 59);
-            if (start <= dateTimeNow.TimeOfDay.Add(TimeSpan.FromHours(4)) && dateTimeNow.TimeOfDay <= end)
+            //DateTime dateTimeNow = new DateTime(1999, 12, 1, 00, 00, 00);
+            if (start.Subtract(TimeSpan.FromHours(4)) <= dateTimeNow.TimeOfDay && dateTimeNow.TimeOfDay <= end)
                 return true;
             return false;
         }
@@ -1008,7 +315,171 @@ namespace ProjectCaitlin.ViewModel
 
         public bool IsUserInteractionRunning { get; set; }
 
-        public ObservableCollection<object> Items { get; }
 
+    }
+    public class GRItemModel : INotifyPropertyChanged
+    {
+
+        private string source;
+        public string Source
+        {
+            get => source;
+        }
+
+        private string text;
+        public string Text
+        {
+            get => text;
+            set
+            {
+                if (!text.Equals(value))
+                {
+                    text = value;
+                    OnPropertyChanged(nameof(Text));
+                }
+            }
+        }
+
+
+
+        private string title;
+        public string Title
+        {
+            get => title;
+        }
+
+
+        private Color textColor;
+        public Color TextColor
+        {
+            get => textColor;
+        }
+
+        private Color backgroundColor;
+        public Color BackgroundColor
+        {
+            get => backgroundColor;
+        }
+
+        private string length;
+        public string Length
+        {
+            get => length;
+            set
+            {
+                if (!length.Equals(value))
+                {
+                    length = value;
+                    OnPropertyChanged(nameof(Length));
+                }
+            }
+        }
+
+        private double grImageOpactiy;
+        public double GrImageOpactiy
+        {
+            get => grImageOpactiy;
+            set
+            {
+                if (grImageOpactiy != value)
+                {
+                    grImageOpactiy = value;
+                    OnPropertyChanged(nameof(GrImageOpactiy));
+                }
+            }
+        }
+
+        private bool isComplete;
+        public bool IsComplete
+        {
+            get => isComplete;
+            set
+            {
+                if (isComplete != value)
+                {
+                    isComplete = value;
+                    OnPropertyChanged(nameof(IsComplete));
+                }
+            }
+        }
+
+        private bool isInProgress;
+        public bool IsInProgress
+        {
+            get => isInProgress;
+            set
+            {
+                if (isInProgress != value)
+                {
+                    isInProgress = value;
+                    OnPropertyChanged(nameof(IsInProgress));
+                }
+            }
+        }
+
+        private Command<MyDayIndexes> navigate;
+        public Command<MyDayIndexes> Navigate
+        {
+            get => navigate;
+            set
+            {
+                if (navigate != value)
+                {
+                    navigate = value;
+                    OnPropertyChanged(nameof(Navigate));
+                }
+            }
+        }
+
+        private MyDayIndexes navigateIdx;
+        public MyDayIndexes NavigateIdx
+        {
+            get => navigateIdx;
+            set
+            { if (!NavigateIdx.Equals(navigateIdx))
+                {
+                    navigateIdx = value;
+                    OnPropertyChanged(nameof(NavigateIdx));
+                }
+            }
+        }
+
+        public GRItemModel(string _source, string _title, Color _backgroundColor, Color _textColor, string _text, string _length, double _grImageOpactiy, bool _isComplete, bool _isInProgress, Command<MyDayIndexes> _navigate, MyDayIndexes _navigateIdx)
+        {
+            source = _source;
+            title = _title;
+            backgroundColor = _backgroundColor;
+            textColor = _textColor;
+            text = _text;
+            length = _length;
+            grImageOpactiy = _grImageOpactiy;
+            isComplete = _isComplete;
+            isInProgress = _isInProgress;
+            navigate = _navigate;
+            navigateIdx = _navigateIdx;
+        }
+
+        public event PropertyChangedEventHandler PropertyChanged;
+
+        protected void OnPropertyChanged([CallerMemberName] string name = null)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(name));
+        }
+    }
+
+    public struct MyDayIndexes
+    {
+        public MyDayIndexes(int itemsIndex, int routineIndex, int goalIndex)
+        {
+            ItemsIndex = itemsIndex;
+            RoutineIndex = routineIndex;
+            GoalIndex = goalIndex;
+        }
+
+        public int ItemsIndex { get; }
+        public int RoutineIndex { get; }
+        public int GoalIndex { get; }
+
+        public override string ToString() => $"(ItemsIndex: {ItemsIndex}, GoalIndex: {GoalIndex}, RoutineIndex: {RoutineIndex})";
     }
 }

@@ -271,11 +271,6 @@
     }
 }
 
-
-
-
-
-
 //{
 // "kind": "calendar#events",
 // "etag": "\"p32sd9vc8h7kuc0g\"",
