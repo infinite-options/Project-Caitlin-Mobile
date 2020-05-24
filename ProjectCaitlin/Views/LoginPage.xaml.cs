@@ -129,7 +129,7 @@ namespace ProjectCaitlin
 
 					//Query for email in Users collection
 					App.User.email = userJson["email"].ToString();
-                    App.User.id = firebaseFunctionsService.FindUserDoc(App.User.email).Result;
+                    App.User.id = await firebaseFunctionsService.FindUserDocAsync(App.User.email);
 
                     if (App.User.id == "")
                     {

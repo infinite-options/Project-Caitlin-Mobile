@@ -13,20 +13,20 @@ namespace ProjectCaitlin.Services
 {
     public class FirebaseFunctionsService
     {
-        public async Task<string> FindUserDoc(string email)
+        public async Task<string> FindUserDocAsync(string email)
         {
-            var document = CrossCloudFirestore.Current
-                                        .Instance
-                                        .GetCollection("users")
-                                        .WhereEqualsTo("email_id", email)
-                                        .GetDocumentsAsync()
-                                        .ConfigureAwait(false);
+            email = email.ToLower();
+            String[] emailSplit = email.Split('@');
+            emailSplit[0].Replace(".", string.Empty);
+            email = emailSplit[0] + "@" + emailSplit[1];
 
-
-
+            var userDoc = await CrossCloudFirestore.Current.Instance.GetCollection("users")
+                                    .WhereEqualsTo("email_id", email)
+                                    .GetDocumentsAsync();
             var userId = "";
-            foreach (var user in document.GetAwaiter().GetResult().Documents)
+            foreach (var user in userDoc.Documents)
             {
+                return user.Reference.Id;
             }
 
             return "";

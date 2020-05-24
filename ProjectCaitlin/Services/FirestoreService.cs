@@ -136,16 +136,18 @@ namespace ProjectCaitlin.Services
                 foreach (var document in peopleCollection.Documents)
                 {
                     var data = document.Data;
-                    var person = new person()
+                    if (data["important"].ToString() == "1")
                     {
-                        name = data["name"].ToString(),
-                        relationship = data.ContainsKey("relationship") ? data["relationship"].ToString() : "",
-                        phoneNumber = data["phone_number"].ToString(),
-                        pic = data.ContainsKey("pic") ? data["pic"].ToString() : "",
-                        //speakerId = data["speaker_id"].ToString(),
-                    };
-
-                    App.User.people.Add(person);
+                        var person = new person()
+                        {
+                            name = data["name"].ToString(),
+                            relationship = data.ContainsKey("relationship") ? data["relationship"].ToString() : "",
+                            phoneNumber = data["phone_number"].ToString(),
+                            pic = data.ContainsKey("pic") ? data["pic"].ToString() : "",
+                            //speakerId = data["speaker_id"].ToString(),
+                        };
+                        App.User.people.Add(person);
+                    }
                 }
             }
         }
