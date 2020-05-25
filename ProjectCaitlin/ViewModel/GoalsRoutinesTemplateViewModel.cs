@@ -50,13 +50,13 @@ namespace ProjectCaitlin.ViewModel
 
 
             Items.Add(new GRItemModel(
-                App.User.Me.pic,
+                App.User.aboutMe.pic,
                 "About Me",
                 Color.Default,
                 Color.Black,
                 new DateTime(1, 1, 1),
                 "Tap to Learn More",
-                App.User.Me.message_day,
+                App.User.aboutMe.message_day,
                 1,
                 false,
                 false,
@@ -131,7 +131,7 @@ namespace ProjectCaitlin.ViewModel
                         EventsItems item2 = (EventsItems)list[i];
                         start2 = item2.Start.DateTime.DateTime;
                     }
-                    
+
                     if (start.CompareTo(start2) > 0) {
                         start = start2;
                         min = list[i];
@@ -142,7 +142,7 @@ namespace ProjectCaitlin.ViewModel
                 list[j] = min;
             }
 
-            //generate items to card view. 
+            //generate items to card view.
             foreach (object obj in list)
             {
                 if (obj.GetType().Name == "routine")
@@ -206,8 +206,7 @@ namespace ProjectCaitlin.ViewModel
                            new Command<MyDayIndexes>(
                                 async (MyDayIndexes indexes) =>
                                 {
-                                    string routineId = App.User.routines[indexes.RoutineIndex].id;
-                                    string routineDbIdx = App.User.routines[indexes.RoutineIndex].dbIdx.ToString();
+                                    var routine = App.User.routines[indexes.RoutineIndex];
                                     bool isRoutineInProgress = App.User.routines[indexes.RoutineIndex].isInProgress;
                                     bool isRoutineComplete = App.User.routines[indexes.RoutineIndex].isComplete;
 
@@ -220,7 +219,7 @@ namespace ProjectCaitlin.ViewModel
                                             App.User.routines[indexes.RoutineIndex].isInProgress = true;
                                             ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
                                             ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
-                                            firebaseFunctionsService.startGR(routineId, routineDbIdx);
+                                            firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", "in progress");
                                         }
                                         await mainPage.Navigation.PushAsync(new TaskPage(indexes.RoutineIndex, true, (GRItemModel)Items[indexes.ItemsIndex]));
                                     }
@@ -235,14 +234,14 @@ namespace ProjectCaitlin.ViewModel
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = false;
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).IsComplete = true;
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Done";
-                                                firebaseFunctionsService.CompleteRoutine(routineId, routineDbIdx);
+                                                firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", "complete");
                                             }
                                             else
                                             {
                                                 App.User.routines[indexes.RoutineIndex].isInProgress = true;
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
-                                                firebaseFunctionsService.startGR(routineId, routineDbIdx);
+                                                firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", "in progress");
                                             }
                                         }
                                     }
@@ -314,8 +313,7 @@ namespace ProjectCaitlin.ViewModel
                            new Command<MyDayIndexes>(
                                 async (MyDayIndexes indexes) =>
                                 {
-                                    string goalId = App.User.goals[indexes.GoalIndex].id;
-                                    string goalDbIdx = App.User.goals[indexes.GoalIndex].dbIdx.ToString();
+                                    var goal = App.User.goals[indexes.GoalIndex];
                                     bool isGoalInProgress = App.User.goals[indexes.GoalIndex].isInProgress;
                                     bool isGoalComplete = App.User.goals[indexes.GoalIndex].isComplete;
 
@@ -328,7 +326,7 @@ namespace ProjectCaitlin.ViewModel
                                             App.User.goals[indexes.GoalIndex].isInProgress = true;
                                             ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
                                             ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
-                                            firebaseFunctionsService.startGR(goalId, goalDbIdx);
+                                            firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", "in progress");
                                         }
                                         await mainPage.Navigation.PushAsync(new TaskPage(indexes.GoalIndex, false, (GRItemModel)Items[indexes.ItemsIndex]));
                                     }
@@ -343,14 +341,14 @@ namespace ProjectCaitlin.ViewModel
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = false;
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).IsComplete = true;
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Done";
-                                                firebaseFunctionsService.CompleteRoutine(goalId, goalDbIdx);
+                                                firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", "complete");
                                             }
                                             else
                                             {
                                                 App.User.goals[indexes.GoalIndex].isInProgress = true;
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
-                                                firebaseFunctionsService.startGR(goalId, goalDbIdx);
+                                                firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", "complete");
                                             }
                                         }
                                     }
@@ -464,6 +462,15 @@ namespace ProjectCaitlin.ViewModel
         public string Title
         {
             get => title;
+            set
+            {
+                if (!text.Equals(App.User.routines[0].title))
+                {
+                    text = value;
+                    OnPropertyChanged(nameof(Text));
+                }
+            }
+
         }
 
         public DateTime startTime;

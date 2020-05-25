@@ -1,16 +1,11 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using Newtonsoft.Json;
-
 namespace ProjectCaitlin.Models
 {
-	[JsonObject]
-	public class action : INotifyPropertyChanged
-	{
-		public string id { get; set; }
-
+    public class GratisObject
+    {
 		public string title { get; set; }
+
+		public string status { get; set; }
 
 		public string photo { get; set; }
 
@@ -20,8 +15,6 @@ namespace ProjectCaitlin.Models
 
 		public int dbIdx { get; set; }
 
-		public bool isSublistAvailable { get; set; }
-
 		public TimeSpan expectedCompletionTime { get; set; }
 
 		public DateTime dateTimeCompleted { get; set; }
@@ -29,9 +22,5 @@ namespace ProjectCaitlin.Models
 		public TimeSpan availableStartTime { get; set; }
 
 		public TimeSpan availableEndTime { get; set; }
-
-		public List<instruction> instructions { get; set; } = new List<instruction>();
-
-		public event PropertyChangedEventHandler PropertyChanged;
 	}
 }

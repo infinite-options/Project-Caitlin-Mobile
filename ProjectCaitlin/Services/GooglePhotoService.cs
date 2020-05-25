@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ProjectCaitlin.Models;
 using ProjectCaitlin.Services;
+using Xamarin.Forms;
 
 namespace ProjectCaitlin.Services
 {
@@ -19,7 +20,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", App.User.access_token);
+            string bearerString = string.Format("Bearer {0}", Application.Current.Properties["access_token"].ToString());
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
@@ -48,7 +49,7 @@ namespace ProjectCaitlin.Services
                 {
                     var subList = new List<string>();
 
-                    DateTimeOffset GreenwichMeanTime = product.MediaMetadata.CreationTime; //Google photo api sends time in GreenwichMeanTime. 
+                    DateTimeOffset GreenwichMeanTime = product.MediaMetadata.CreationTime; //Google photo api sends time in GreenwichMeanTime.
                     DateTimeOffset utcTime = GreenwichMeanTime.ToLocalTime();  //convert GreenwichMeanTime to local time.
 
                     //creationTime = utcTime.ToString();
@@ -66,7 +67,7 @@ namespace ProjectCaitlin.Services
                     subList.Add(description);
                     subList.Add(creationTime);
                     subList.Add(id);
-                    
+
                     bool post = true;
                     foreach (photo photo in App.User.FirebasePhotos)
                     {
@@ -74,7 +75,7 @@ namespace ProjectCaitlin.Services
                             post = false;
                     }
 
-                    // If there is a photo in Google but not in Firebase, post it. 
+                    // If there is a photo in Google but not in Firebase, post it.
                     if (post)
                     {
                         //Post photo to Firebase
