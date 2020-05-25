@@ -7,6 +7,7 @@ using ProjectCaitlin.ViewModel;
 using ProjectCaitlin.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Plugin.AudioRecorder;
 
 namespace ProjectCaitlin.Views
 {
@@ -24,6 +25,8 @@ namespace ProjectCaitlin.Views
         TimeSpan eveningEnd = new TimeSpan(23, 59, 59);
         TimeSpan nightStart = new TimeSpan(0, 0, 0);
         TimeSpan nightEnd = new TimeSpan(6, 0, 0);
+        AudioRecorderService recorder;
+
         public GreetingPage()
         {
 
@@ -34,6 +37,14 @@ namespace ProjectCaitlin.Views
             var navigationPage = Application.Current.MainPage as NavigationPage;
             navigationPage.BarBackgroundColor = Color.FromHex("#E9E8E8");
             SetupUI();
+
+            recorder = new AudioRecorderService
+            {
+                StopRecordingOnSilence = true, //will stop recording after 2 seconds (default)
+                StopRecordingAfterTimeout = true,  //stop recording after a max timeout (defined below)
+                TotalAudioTimeout = TimeSpan.FromSeconds(10) //audio will stop recording after 15 seconds
+            };
+
         }
         private void SetupUI()
         {
@@ -101,6 +112,37 @@ namespace ProjectCaitlin.Views
 
             await Navigation.PushAsync(new LoginPage());
         }
+
+        async void RecordButton_Click(object sender, EventArgs e)
+        {
+            await RecordAudio();
+        }
+
+        async Task RecordAudio()
+        {
+            // Recorder works in Android, but not in iOS. Some permissions need to be set. 
+
+            /*try
+            {
+                var recordTask = await recorder.StartRecording();
+
+                var audioFile = await recordTask;
+
+                if (audioFile != null) //non-null audioFile indicates audio was successfully recorded
+                {
+                    //do something with the file
+                }
+                else {
+                    Console.WriteLine("Audio File : " + audioFile);
+                }
+            }
+            catch (Exception ex)
+            {
+
+            }*/
+
+        }
+
 
     }
 }
