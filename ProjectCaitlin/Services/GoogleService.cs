@@ -18,42 +18,6 @@ namespace ProjectCaitlin.Services
     {
         public INavigation Navigation;
 
-        public async Task<string> SaveAccessTokenToFireBase(string access_token)
-        {
-
-            //Make HTTP POST Request
-            var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/SetUserGoogleAuthToken");
-            request.Method = HttpMethod.Post;
-
-            //Format Headers of Request with included Token
-            request.Headers.Add("userID", App.User.id);
-            request.Headers.Add("token", access_token);
-            var client = new HttpClient();
-            HttpResponseMessage response = await client.SendAsync(request);
-            HttpContent content = response.Content;
-            var json = await content.ReadAsStringAsync();
-            return json;
-        }
-
-        public async Task<string> SaveRefreshTokenToFireBase(string refreshToken)
-        {
-
-            //Make HTTP POST Request
-            var request = new HttpRequestMessage();
-            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/SetUserGoogleRefreshToken");
-            request.Method = HttpMethod.Post;
-
-            //Format Headers of Request with included Token
-            request.Headers.Add("userID", App.User.id);
-            request.Headers.Add("token", refreshToken);
-            var client = new HttpClient();
-            HttpResponseMessage response = await client.SendAsync(request);
-            HttpContent content = response.Content;
-            var json = await content.ReadAsStringAsync();
-            return json;
-        }
-
         //Use REFRESH TOKEN to receive another ACCESS TOKEN...and UPDATE App.user.access_token.
         public async Task<bool> RefreshToken()
         {
