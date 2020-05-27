@@ -8,6 +8,7 @@ using ProjectCaitlin.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Plugin.AudioRecorder;
+using VoiceRecognition.View;
 
 namespace ProjectCaitlin.Views
 {
@@ -115,34 +116,7 @@ namespace ProjectCaitlin.Views
 
         async void RecordButton_Click(object sender, EventArgs e)
         {
-            await RecordAudio();
+            await Navigation.PushAsync(new EnrollmentPage());
         }
-
-        async Task RecordAudio()
-        {
-            // Recorder works in Android, but not in iOS. Some permissions need to be set. 
-
-            /*try
-            {
-                var recordTask = await recorder.StartRecording();
-
-                var audioFile = await recordTask;
-
-                if (audioFile != null) //non-null audioFile indicates audio was successfully recorded
-                {
-                    //do something with the file
-                }
-                else {
-                    Console.WriteLine("Audio File : " + audioFile);
-                }
-            }
-            catch (Exception ex)
-            {
-
-            }*/
-
-        }
-
-
     }
 }
