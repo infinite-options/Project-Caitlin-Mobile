@@ -19,6 +19,7 @@
         <Button Text="Stop Recording" Clicked="StopRecordButton_Clicked"/>
         <Button Text="Cmd Start Recording" Command="{Binding Commands[StartRecording]}"/>
         <Button Text="Cmd Stop Recording" Command="{Binding Commands[StopRecording]}"/>
+        <Button Text="Cmd Stop Recording" Command="{Binding Commands[IdentifyAndEnroll]}"/>
     </StackLayout>
 
 </ContentPage>

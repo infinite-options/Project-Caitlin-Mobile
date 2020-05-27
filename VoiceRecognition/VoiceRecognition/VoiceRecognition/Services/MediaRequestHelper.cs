@@ -42,5 +42,28 @@ namespace VoiceRecognition.Services
                 }
             }, new MediaTypeHeaderValue(Config.MimeTypes.WavAudio));
         }
+
+        //public static float CheckAudioLength(string audioFilePath, long bitsPerFrame, int channels, long framesPerSeconds)
+        //{
+        //    long bytesPerSecond = (bitsPerFrame / 8) * channels * framesPerSeconds;
+        //    float Secondslength = 0.0f;
+        //    try
+        //    {
+        //        var fileTask =  FileSystem.Current.GetFileFromPathAsync(audioFilePath);
+        //        fileTask.Wait();
+        //        using (var audioStream = await file.OpenAsync(FileAccess.Read))
+        //        {
+        //            long ByteLength = audioStream.Length;
+        //            Secondslength = ByteLength / bytesPerSecond;
+        //        }
+        //    }
+        //    catch (Exception ex)
+        //    {
+        //        Debug.WriteLine(ex);
+        //        throw;
+        //    }
+
+        //    return Secondslength;
+        //}
     }
 }

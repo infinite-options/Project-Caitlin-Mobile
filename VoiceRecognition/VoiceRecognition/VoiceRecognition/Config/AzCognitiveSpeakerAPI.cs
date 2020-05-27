@@ -8,6 +8,7 @@ namespace VoiceRecognition.Config
     {
         public const string END_POINT = "https://westus.api.cognitive.microsoft.com/spid/v1.0";
         public const string IDENTITY_URL = "/identificationProfiles";
-        public const string KEY_1 = "";
+        public const string SPEAKER_IDENTIFICATION_URL = "/identify";
+        public const string KEY_1 = ""; 
     }
 }

@@ -19,7 +19,12 @@ namespace VoiceRecognition.Model.AzCognitiveSpeaker
 
         public DateTime LastActionDateTime { get; set; }
 
-        public VoiceRecognition.Model.AzCognitiveSpeaker.EonrollmentStatus EnrollmentStatus { get; set; }
+        public VoiceRecognition.Model.AzCognitiveSpeaker.EnrollmentStatus EnrollmentStatus { get; set; }
+
+        public override string ToString()
+        {
+            return IdentificationProfileId;
+        }
 
     }
 }

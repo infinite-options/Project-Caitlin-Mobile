@@ -34,7 +34,7 @@ namespace VoiceRecognition.Services.VoiceRecorder
 
         public async Task StartRecordingAsync()
         {
-            RecorderClient.StartRecording();
+            _ = RecorderClient.StartRecording();
         }
 
         public async Task StopRecordingAsync()

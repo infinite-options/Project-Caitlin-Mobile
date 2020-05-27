@@ -23,7 +23,7 @@ namespace VoiceRecognition.Model.AzCognitiveSpeaker
         /// </summary>
         public string IdentifiedProfileId { get; set; }
 
-        public VoiceRecognition.Model.AzCognitiveSpeaker.EonrollmentStatus EnrollmentStatus { get; set; }
+        public VoiceRecognition.Model.AzCognitiveSpeaker.EnrollmentStatus EnrollmentStatus { get; set; }
 
         /// <summary>
         /// Remaining number of speech seconds to complete minimum enrollment.

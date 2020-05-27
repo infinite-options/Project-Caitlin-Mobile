@@ -4,7 +4,7 @@ using System.Text;
 
 namespace VoiceRecognition.Model.AzCognitiveSpeaker
 {
-    public enum EonrollmentStatus
+    public enum EnrollmentStatus
     {
         Enrolling,
         Training,
