@@ -39,9 +39,9 @@ namespace ProjectCaitlin.Views
             
             var tapGestureRecognizer3 = new TapGestureRecognizer();
             tapGestureRecognizer3.Tapped += async (s, e) => {
-                if(App.User.photoURIs.Count < 1)
-                await GooglePhotoService.GetPhotos();
                 UserDialogs.Instance.ShowLoading("Loading...");
+                if (App.User.photoURIs.Count < 1)
+                    await GooglePhotoService.GetPhotos();
                 await Navigation.PushAsync(new MonthlyViewPage());
                 UserDialogs.Instance.HideLoading();
             };

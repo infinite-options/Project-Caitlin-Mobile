@@ -97,6 +97,21 @@ namespace ProjectCaitlin.ViewModel
                                             Items[_taskIdx].IsInProgress = false;
                                             Items[_taskIdx].IsComplete = true;
                                             firebaseFunctionsService.updateGratisStatus(task, "actions&tasks", true);
+
+                                            if (routineCheckCompletion(App.User.routines[a].tasks))
+                                            {
+                                                App.User.routines[a].isComplete = true;
+                                                App.User.routines[a].isInProgress = false;
+                                                if (App.ParentPage != "ListView")
+                                                {
+                                                    GRItemModel.IsComplete = true;
+                                                    GRItemModel.IsInProgress = false;
+                                                    GRItemModel.Text = "Done";
+                                                }
+                                                firebaseFunctionsService.updateGratisStatus(App.User.routines[a], "goals&routines", true);
+                                            }
+
+
                                         }
                                         else
                                         {
@@ -162,6 +177,19 @@ namespace ProjectCaitlin.ViewModel
                                             Items[_actionIdx].IsInProgress = false;
                                             Items[_actionIdx].IsComplete = true;
                                             firebaseFunctionsService.updateGratisStatus(action, "actions&tasks", true);
+
+                                            if (goalCheckCompletion(App.User.goals[a].actions))
+                                            {
+                                                App.User.goals[a].isComplete = true;
+                                                App.User.goals[a].isInProgress = false;
+                                                if (App.ParentPage != "ListView")
+                                                {
+                                                    GRItemModel.IsComplete = true;
+                                                    GRItemModel.IsInProgress = false;
+                                                    GRItemModel.Text = "Done";
+                                                }
+                                                firebaseFunctionsService.updateGratisStatus(App.User.goals[a], "goals&routines", true);
+                                            }
                                         }
                                         else
                                         {
@@ -177,6 +205,32 @@ namespace ProjectCaitlin.ViewModel
                     actionIdx++;
                 }
             }
+        }
+
+        private bool routineCheckCompletion(List<task> taskList)
+        {
+            int complCount = 0;
+            foreach (task task in taskList)
+            {
+                if (task.isComplete)
+                {
+                    complCount++;
+                }
+            }
+            return complCount == taskList.Count ? true : false;
+        }
+
+        private bool goalCheckCompletion(List<action> actionList)
+        {
+            int complCount = 0;
+            foreach (action action in actionList)
+            {
+                if (action.isComplete)
+                {
+                    complCount++;
+                }
+            }
+            return complCount == actionList.Count ? true : false;
         }
     }
 

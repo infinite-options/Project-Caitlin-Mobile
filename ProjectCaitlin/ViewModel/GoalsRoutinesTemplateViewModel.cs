@@ -214,7 +214,7 @@ namespace ProjectCaitlin.ViewModel
 
                                     if (App.User.routines[indexes.RoutineIndex].isSublistAvailable)
                                     {
-                                        if (!isRoutineComplete)
+                                        if (!isRoutineComplete && !isRoutineInProgress)
                                         {
                                             App.User.routines[indexes.RoutineIndex].isInProgress = true;
                                             ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
@@ -321,7 +321,7 @@ namespace ProjectCaitlin.ViewModel
 
                                     if (App.User.goals[indexes.GoalIndex].isSublistAvailable)
                                     {
-                                        if (!isGoalComplete)
+                                        if (!isGoalComplete && !isGoalInProgress)
                                         {
                                             App.User.goals[indexes.GoalIndex].isInProgress = true;
                                             ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";

@@ -32,8 +32,9 @@ namespace ProjectCaitlin
 
                 if (await googleService.RefreshToken())
                 {
-                    await firestoreService.SetupFirestoreSnapshot();
+                    await firestoreService.LoadDatabase();
                     await googleService.LoadTodaysEvents();
+                    firestoreService.SetupFirestoreSnapshot();
                     await Navigation.PushAsync(new GoalsRoutinesTemplate());
                 }
             }
