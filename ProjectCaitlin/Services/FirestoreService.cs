@@ -89,15 +89,17 @@ namespace ProjectCaitlin.Services
                 .GetDocument(uid)
                 .GetDocumentAsync();
 
-            App.User = userDocument.ToObject<user>();
-            App.User.routines = new List<routine>();
-
             var docData = userDocument.Data;
 
             if (docData.ContainsKey("first_name") && docData.ContainsKey("last_name"))
             {
                 App.User.firstName = docData["first_name"].ToString();
                 App.User.lastName = docData["last_name"].ToString();
+            }
+
+            if (docData.ContainsKey("email_id"))
+            {
+                App.User.email = docData["email_id"].ToString();
             }
 
             if (docData.ContainsKey("goals&routines"))
