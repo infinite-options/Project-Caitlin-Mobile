@@ -386,7 +386,7 @@ namespace ProjectCaitlin
                     {
                         ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
                         routine.isInProgress = true;
-                        firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", "in progress");
+                        firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
                     }
                     App.ListPageScrollPosY = mainScrollView.ScrollY;
                     await Navigation.PushAsync(new TaskPage(routineIdx, true));
@@ -402,13 +402,13 @@ namespace ProjectCaitlin
                             routine.isInProgress = false;
                             routine.isComplete = true;
 
-                            firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", "complete");
+                            firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", true);
                         }
                         else
                         {
                             ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
                             routine.isInProgress = true;
-                            firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", "in progress");
+                            firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
                         }
                     }
                 }
@@ -559,7 +559,7 @@ namespace ProjectCaitlin
                     {
                         updatedGrid.Children[2].IsVisible = true;
                         goal.isInProgress = true;
-                        firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", "in progress");
+                        firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
                     }
                     App.ListPageScrollPosY = mainScrollView.ScrollY;
                     await Navigation.PushAsync(new TaskPage(goalIdx, false));
@@ -576,13 +576,13 @@ namespace ProjectCaitlin
                             goal.isInProgress = false;
                             goal.isComplete = true;
 
-                            firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", "complete");
+                            firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", true);
                         }
                         else
                         {
                             updatedGrid.Children[2].IsVisible = true;
                             goal.isInProgress = true;
-                            firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", "in progress");
+                            firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
                         }
                     }
                 }

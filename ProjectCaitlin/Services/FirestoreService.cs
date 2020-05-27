@@ -31,6 +31,7 @@ namespace ProjectCaitlin.Services
 
         public async Task LoadFirebasePhoto()
         {
+            App.User.photoURIs = new List<List<String>>();
             //load people from firebase
             var photosCollection = await CrossCloudFirestore.Current.Instance.GetCollection("users")
                             .GetDocument(uid)
@@ -81,8 +82,6 @@ namespace ProjectCaitlin.Services
             // reset current user and goals values (in case of reload)
             App.User.routines = new List<routine>();
             App.User.goals = new List<goal>();
-            App.User.people = new List<person>();
-            App.User.photoURIs = new List<List<String>>();
             App.User.allDates = new HashSet<string>();
 
             var userDocument = await CrossCloudFirestore.Current.Instance
@@ -125,6 +124,8 @@ namespace ProjectCaitlin.Services
 
         public async Task LoadPeople()
         {
+            App.User.people = new List<person>();
+
             //load people from firebase
             var peopleCollection = await CrossCloudFirestore.Current.Instance.GetCollection("users")
                                     .GetDocument(uid)
@@ -227,9 +228,11 @@ namespace ProjectCaitlin.Services
                         }
                     }
                 }
-                catch
+                catch (Exception e)
                 {
-                    Console.WriteLine($"Error with Routine or Goal: {data}");
+                    Console.WriteLine($"Error with Routine or Goal: {data.Keys}");
+                    Console.WriteLine($"ERROR: {e}");
+
                 }
 
                 dbIdx_++;
@@ -411,7 +414,7 @@ namespace ProjectCaitlin.Services
                 {
                     var isArrayData = (List<object>)docData["instructions&steps"];
 
-                    LoadInstructionsAndSteps(isArrayData, grIdx, atIdx, grType);
+                    LoadInstructionsAndSteps(isArrayData, grObject, atObject, grIdx, atIdx, grType);
                 }
                 else
                 {
@@ -424,7 +427,7 @@ namespace ProjectCaitlin.Services
             }
         }
 
-        private void LoadInstructionsAndSteps(List<object> isArrayData, int grIdx, int atIdx, string grType)
+        private void LoadInstructionsAndSteps(List<object> isArrayData, grObject grObject, atObject atObject, int grIdx, int atIdx, string grType)
         {
             int dbIdx_ = 0;
             foreach (Dictionary<string, object> data in isArrayData)
@@ -439,6 +442,10 @@ namespace ProjectCaitlin.Services
                         {
                             step step = new step
                             {
+                                grId = grObject.id,
+
+                                atId = atObject.id,
+
                                 title = data["title"].ToString(),
 
                                 photo = data["photo"].ToString(),
@@ -466,6 +473,10 @@ namespace ProjectCaitlin.Services
                         {
                             instruction instruction = new instruction
                             {
+                                grId = grObject.id,
+
+                                atId = atObject.id,
+
                                 title = data["title"].ToString(),
 
                                 photo = data["photo"].ToString(),

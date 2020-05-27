@@ -51,7 +51,7 @@ namespace ProjectCaitlin.Views
             {
                 var firestoreService = new FirestoreService();
 
-                firebaseFunctionsService.updateGratisStatus(App.User.goals[a].actions[b], "actions&tasks", "complete");
+                firebaseFunctionsService.updateGratisStatus(App.User.goals[a].actions[b], "actions&tasks", true);
 
                 // Set data model completion status
                 App.User.goals[a].actions[b].isComplete = true;
@@ -70,7 +70,7 @@ namespace ProjectCaitlin.Views
 
                 if (completeActionCounter == App.User.goals[a].actions.Count)
                 {
-                    firebaseFunctionsService.updateGratisStatus(App.User.goals[a], "goals&routines", "complete");
+                    firebaseFunctionsService.updateGratisStatus(App.User.goals[a], "goals&routines", true);
 
                     // Set data model completion status
                     App.User.goals[a].isComplete = true;
@@ -108,7 +108,7 @@ namespace ProjectCaitlin.Views
 
                 App.User.goals[a].actions[b].instructions[CarouselTasks.Position].isComplete = true;
                 pageModel.Items[CarouselTasks.Position].OkToCheckmark = true;
-                firebaseFunctionsService.updateGratisStatus(instruction, "instructions&steps", "complete");
+                firebaseFunctionsService.updateGratisStatus(instruction, "instructions&steps", true);
 
                 CarouselTasks.Position = CarouselTasks.Position + 1;
             }
@@ -118,7 +118,7 @@ namespace ProjectCaitlin.Views
 
                 App.User.goals[a].actions[b].instructions[CarouselTasks.Position].isComplete = true;
                 pageModel.Items[CarouselTasks.Position].OkToCheckmark = true;
-                firebaseFunctionsService.updateGratisStatus(instruction, "instructions&steps", "complete");
+                firebaseFunctionsService.updateGratisStatus(instruction, "instructions&steps", true);
                 next.Text = "Done";
 
             }
@@ -128,7 +128,7 @@ namespace ProjectCaitlin.Views
 
                 App.User.goals[a].actions[b].instructions[CarouselTasks.Position].isComplete = true;
                 pageModel.Items[CarouselTasks.Position].OkToCheckmark = true;
-                firebaseFunctionsService.updateGratisStatus(instruction, "instructions&steps", "complete");
+                firebaseFunctionsService.updateGratisStatus(instruction, "instructions&steps", true);
 
                 next.Text = "Done";
 

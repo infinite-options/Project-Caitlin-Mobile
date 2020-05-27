@@ -60,7 +60,7 @@ namespace ProjectCaitlin.Services
             }
         }
 
-        public async Task<bool> updateGratisStatus(GratisObject gratisObject, string gratisType, string status)
+        public async Task<bool> updateGratisStatus(GratisObject gratisObject, string gratisType, bool completionState)
         {
             IDocumentSnapshot document = null;
             switch (gratisType)
@@ -87,7 +87,7 @@ namespace ProjectCaitlin.Services
                                         .GetCollection("users")
                                         .GetDocument(App.User.id)
                                         .GetCollection("goals&routines")
-                                        .GetDocument(((atObject)gratisObject).grId)
+                                        .GetDocument(((isObject)gratisObject).grId)
                                         .GetCollection("actions&tasks")
                                         .GetDocument(((isObject)gratisObject).atId)
                                         .GetDocumentAsync();
@@ -98,22 +98,42 @@ namespace ProjectCaitlin.Services
             var grArrayData = (List<object>)data[gratisType];
             var grData = (IDictionary<string, object>)grArrayData[gratisObject.dbIdx];
 
-            bool completionState = false;
-
-            if (status == "complete")
-            {
-                completionState = true;
-            }
+            string completionDateKey = completionState ? "datetime_completed" : "datetime_started";
 
             grData["is_in_progress"] = !completionState;
             grData["is_complete"] = completionState;
-            grData["datetime_started"] = DateTime.Now.ToLocalTime().ToString("yyyy-MM-dd HH:mm:ss \"GMT\"zzz");
+            grData[completionDateKey] = DateTime.Now.ToString("ddd, dd MMM yyy HH:mm:ss 'GMT'");
 
-            await CrossCloudFirestore.Current
-                         .Instance
-                         .GetCollection("TODO")
-                         .GetDocument("Ou0Yd0UXp6yHBt4Z1nVn")
-                         .UpdateDataAsync(data);
+            switch (gratisType)
+            {
+                case "goals&routines":
+                    await CrossCloudFirestore.Current
+                        .Instance
+                        .GetCollection("users")
+                        .GetDocument(App.User.id)
+                        .UpdateDataAsync(data);
+                    break;
+                case "actions&tasks":
+                    await CrossCloudFirestore.Current
+                        .Instance
+                        .GetCollection("users")
+                        .GetDocument(App.User.id)
+                        .GetCollection("goals&routines")
+                        .GetDocument(((atObject)gratisObject).grId)
+                        .UpdateDataAsync(data);
+                    break;
+                case "instructions&steps":
+                    await CrossCloudFirestore.Current
+                        .Instance
+                        .GetCollection("users")
+                        .GetDocument(App.User.id)
+                        .GetCollection("goals&routines")
+                        .GetDocument(((isObject)gratisObject).grId)
+                        .GetCollection("actions&tasks")
+                        .GetDocument(((isObject)gratisObject).atId)
+                        .UpdateDataAsync(data);
+                    break;
+            }
             return true;
         }
 
@@ -244,7 +264,7 @@ namespace ProjectCaitlin.Services
             // for Gratis Arrays
             if (docData.ContainsKey(GratisType))
             {
-                var gratisArrayData = (List<object>)docData["goals&routines"];
+                var gratisArrayData = (List<object>)docData[GratisType];
                 foreach (IDictionary<string, object> gratisDict in gratisArrayData)
                 {
                     // Convert GRATIS fields

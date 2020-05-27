@@ -155,8 +155,6 @@ namespace ProjectCaitlin
 
 					App.LoadApplicationProperties();
 
-					await googleService.RefreshToken();
-
 					//Navigate to the Daily Page after Login
 					await Navigation.PushAsync(new LoadingPage());
 				}

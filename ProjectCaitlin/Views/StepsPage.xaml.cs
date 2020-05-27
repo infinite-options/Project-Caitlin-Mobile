@@ -98,7 +98,7 @@ namespace ProjectCaitlin.Views
                 App.User.routines[a].tasks[b].dateTimeCompleted = DateTime.Now;
                 //TaskPage.pageModel.Items[b].IsComplete = true;
 
-                firebaseFunctionsService.updateGratisStatus(task, "actions&tasks", "complete");
+                firebaseFunctionsService.updateGratisStatus(task, "actions&tasks", true);
                 await Navigation.PopAsync();
             }
             else
@@ -133,7 +133,7 @@ namespace ProjectCaitlin.Views
                 
                 var firebaseFunctionsService = new FirebaseFunctionsService();
 
-                firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", "complete");
+                firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", true);
             }
         }
     }

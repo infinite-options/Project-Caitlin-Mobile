@@ -98,13 +98,13 @@ namespace ProjectCaitlin.ViewModel
                                             string prevStepDbIdx = App.User.routines[a].tasks[b].steps[_stepIdx - 1].dbIdx.ToString();
 
 
-                                            firebaseFunctionsService.updateGratisStatus(step, "instructions&stesp", "complete");
+                                            firebaseFunctionsService.updateGratisStatus(step, "instructions&steps", true);
                                         }
 
                                         Items[_stepIdx].CheckmarkIcon = "yellowclockicon.png";
                                         App.User.routines[a].tasks[b].steps[indexForCheckmark].isInProgress = true;
 
-                                        firebaseFunctionsService.updateGratisStatus(step, "instructions&stesp", "in progress");
+                                        firebaseFunctionsService.updateGratisStatus(step, "instructions&steps", false);
                                     }
                                     else
                                     {
@@ -116,7 +116,7 @@ namespace ProjectCaitlin.ViewModel
                                                 App.User.routines[a].tasks[b].steps[indexForCheckmark].isComplete = true;
                                                 Items[_stepIdx].CheckmarkIcon = "greencheckmarkicon.png";
 
-                                                firebaseFunctionsService.updateGratisStatus(step, "instructions&stesp", "complete");
+                                                firebaseFunctionsService.updateGratisStatus(step, "instructions&steps", true);
 
                                             }
                                             else
@@ -124,7 +124,7 @@ namespace ProjectCaitlin.ViewModel
                                                 Items[_stepIdx].CheckmarkIcon = "yellowclockicon.png";
                                                 App.User.routines[a].tasks[b].steps[indexForCheckmark].isInProgress = true;
 
-                                                firebaseFunctionsService.updateGratisStatus(step, "instructions&stesp", "in progress");
+                                                firebaseFunctionsService.updateGratisStatus(step, "instructions&steps", false);
 
                                             }
                                         }
