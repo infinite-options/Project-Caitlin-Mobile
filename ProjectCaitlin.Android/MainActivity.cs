@@ -9,6 +9,10 @@ using Android.OS;
 using FFImageLoading.Forms.Platform;
 using PanCardView.Droid;
 using Acr.UserDialogs;
+using Android.Support.V4.App;
+using Android.Support.V4.Content;
+using Android;
+
 namespace ProjectCaitlin.Droid
 {
     [Activity(Label = "ProjectCaitlin", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
@@ -20,6 +24,11 @@ namespace ProjectCaitlin.Droid
             ToolbarResource = Resource.Layout.Toolbar;
 
             UserDialogs.Init(this);
+
+            if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.RecordAudio) != Permission.Granted)
+            {
+                ActivityCompat.RequestPermissions(this, new String[] { Manifest.Permission.RecordAudio }, 1);
+            }
 
             base.OnCreate(savedInstanceState);
 
