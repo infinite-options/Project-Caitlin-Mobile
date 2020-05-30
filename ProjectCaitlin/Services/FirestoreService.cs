@@ -61,20 +61,25 @@ namespace ProjectCaitlin.Services
 
         public async Task SetupFirestoreSnapshot()
         {
-            CrossCloudFirestore.Current.Instance
-                .GetCollection("users")
-                .GetDocument(uid)
-                .AddSnapshotListener(async (snapshot, error) =>
-                {
-                    await LoadDatabase();
-                });
+
+                CrossCloudFirestore.Current.Instance
+                    .GetCollection("users")
+                    .GetDocument(uid)
+                    .AddSnapshotListener(async (snapshot, error) =>
+                    {
+                        if (!App.isFirstSetup)
+                        {
+                            await LoadDatabase();
+                        }
+                        App.isFirstSetup = false;
+                    });
         }
 
         public async Task LoadDatabase()
         {
-            LoadUser();
             LoadFirebasePhoto();
             LoadPeople();
+            await LoadUser();
         }
 
         public async Task LoadUser()
@@ -155,8 +160,8 @@ namespace ProjectCaitlin.Services
 
         public void LoadGoalsAndRoutines(List<Object> grArrayData)
         {
-            int dbIdx_ = 0;
-            foreach (Dictionary<string, object> data in grArrayData)
+            int dbIdx_ = 0, routineIdx = 0;
+            foreach (IDictionary<string, object> data in grArrayData)
             {
                 try
                 {
@@ -167,33 +172,38 @@ namespace ProjectCaitlin.Services
                         if (data["is_persistent"].ToString() == "1")
                         {
 
-                            routine routine = new routine();
+                            routine routine = new routine
+                            {
+                                title = data["title"].ToString(),
 
-                            routine.title = data["title"].ToString();
+                                id = data["id"].ToString(),
 
-                            routine.id = data["id"].ToString();
+                                photo = data["photo"].ToString(),
 
-                            routine.photo = data["photo"].ToString();
+                                isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
 
-                            routine.isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString());
-
-                            routine.isComplete = data["is_complete"].ToString() == "1"
+                                isComplete = data["is_complete"].ToString() == "1"
                                             && IsDateToday(data["datetime_completed"].ToString())
-                                            && !isInProgressCheck;
+                                            && !isInProgressCheck,
 
-                            routine.expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString());
+                                expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
 
-                            routine.dbIdx = dbIdx_;
+                                dbIdx = dbIdx_,
 
-                            routine.isSublistAvailable = data["is_sublist_available"].ToString() == "1";
+                                isSublistAvailable = data["is_sublist_available"].ToString() == "1",
 
-                            routine.dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime();
+                                dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
 
-                            routine.availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString());
+                                availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
 
-                            routine.availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString());
+                                availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                            };
+
+                            setNotifications(routine, routineIdx, (IDictionary<string, object>) data["user_notifications"]);
 
                             App.User.routines.Add(routine);
+
+                            routineIdx++;
                         }
                         else
                         {
