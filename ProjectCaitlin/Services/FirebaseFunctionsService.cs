@@ -32,30 +32,38 @@ namespace ProjectCaitlin.Services
             return "";
         }
 
-        public async Task<bool> GRUserNotificationSetToTrue(string routineId, string routineIdx, string status)
+        public async Task<bool> GRUserNotificationSetToTrue(GratisObject gratisObject, string routineIdx, string state)
         {
             try
             {
-                HttpRequestMessage request = new HttpRequestMessage
-                {
-                    RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/GRUserNotificationSetToTrue"),
-                    Method = HttpMethod.Post
-                };
+                var gratisType = "goals&routines";
 
-                //Format Headers of Request
-                request.Headers.Add("userId", App.User.id);
-                request.Headers.Add("routineId", routineId);
-                request.Headers.Add("routineNumber", routineIdx);
-                request.Headers.Add("status", status);
+                var document = await CrossCloudFirestore.Current
+                                    .Instance
+                                    .GetCollection("users")
+                                    .GetDocument(App.User.id)
+                                    .GetDocumentAsync();
 
-                var client = new HttpClient();
+                var data = (IDictionary<string, object>)ConvertDocumentGet(document.Data, "goals&routines");
+                var grArrayData = (List<object>)data[gratisType];
+                var grData = (IDictionary<string, object>)grArrayData[gratisObject.dbIdx];
+                var userNotifData = (IDictionary<string, object>)grData["user_notifications"];
+                var userNotifStateData = (IDictionary<string, object>)userNotifData[state];
 
-                // without async, will get stuck, needs bug fix
-                HttpResponseMessage response = client.SendAsync(request).Result;
+                userNotifStateData["is_set"] = true;
+                userNotifStateData["date_set"] = DateTime.Now.ToString("ddd, dd MMM yyy HH:mm:ss 'GMT'");
+
+                await CrossCloudFirestore.Current
+                    .Instance
+                    .GetCollection("TODO")
+                    .GetDocument(App.User.id)
+                    .UpdateDataAsync(data);
+
                 return true;
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 return false;
             }
         }

@@ -608,7 +608,7 @@ namespace ProjectCaitlin.Services
                             string subtitle = grIdx + routine.id;
                             string message = "Open the app to review your tasks. " + notiAttriObjList[i].message;
                             notificationManager.ScheduleNotification(title, subtitle, message, total);
-                            firebaseFunctionsService.GRUserNotificationSetToTrue(routine, "before");
+                            firebaseFunctionsService.GRUserNotificationSetToTrue(routine, grIdx.ToString(), "before");
 
                         }
                         Console.WriteLine("total : " + total);
