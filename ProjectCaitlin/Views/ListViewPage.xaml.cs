@@ -732,6 +732,7 @@ namespace ProjectCaitlin
                     {
                         ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
                         routine.isInProgress = true;
+                        routine.isComplete = false;
                         firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
                     }
                 }
@@ -770,6 +771,7 @@ namespace ProjectCaitlin
                     {
                         updatedGrid.Children[2].IsVisible = true;
                         goal.isInProgress = true;
+                        goal.isComplete = false;
                         firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
                     }
                 }

@@ -44,7 +44,7 @@ namespace ProjectCaitlin.iOS
             {
                 if (App.IsInForeground)
                 {
-                    if (await App.Current.MainPage.DisplayAlert(notification.Request.Content.Title, "Would you like to start it now?", "Yes", "No"))
+                    if (!await App.Current.MainPage.DisplayAlert(notification.Request.Content.Title, "Would you like to start it now?", "No", "Yes"))
                     {
                         App.ParentPage = "ListView";
                         App.User.routines[routineIdx].isInProgress = true;
