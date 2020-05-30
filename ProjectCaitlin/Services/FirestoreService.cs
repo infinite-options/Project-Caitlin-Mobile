@@ -591,15 +591,26 @@ namespace ProjectCaitlin.Services
                     notiAttriObjList[i].is_set = userTimeDict["is_set"].ToString() == "1"
                                                     && ((userTimeDict["date_set"] != null) ? IsDateToday(userTimeDict["date_set"].ToString()) : false);
 
-                    notiAttriObjList[i].is_enabled = (bool)userTimeDict["is_enabled"];
+                    notiAttriObjList[i].is_enabled = userTimeDict["is_enabled"].ToString() == "1";
 
                     if (notiAttriObjList[i].is_enabled && !notiAttriObjList[i].is_set)
                     {
-
                         notiAttriObjList[i].time = TimeSpan.Parse(userTimeDict["time"].ToString());
-                        //TotalMinutes
 
-                        double total = (routine.availableStartTime - DateTime.Now.TimeOfDay).TotalSeconds - notiAttriObjList[i].time.TotalSeconds;
+                        //TotalMinutes
+                        double total = 0;
+                        switch (i)
+                        {
+                            case 0:
+                                total = (routine.availableStartTime - DateTime.Now.TimeOfDay).TotalSeconds - notiAttriObjList[i].time.TotalSeconds;
+                                break;
+                            case 1:
+                                total = (routine.availableStartTime - DateTime.Now.TimeOfDay).TotalSeconds + notiAttriObjList[i].time.TotalSeconds;
+                                break;
+                            case 2:
+                                total = (routine.availableEndTime - DateTime.Now.TimeOfDay).TotalSeconds + notiAttriObjList[i].time.TotalSeconds;
+                                break;
+                        }
 
                         notiAttriObjList[i].message = userTimeDict["message"].ToString();
 
@@ -610,7 +621,7 @@ namespace ProjectCaitlin.Services
                             string subtitle = grIdx + routine.id;
                             string message = "Open the app to review your tasks. " + notiAttriObjList[i].message;
                             notificationManager.ScheduleNotification(title, subtitle, message, total);
-                            firebaseFunctionsService.GRUserNotificationSetToTrue(routine, grIdx.ToString(), "before");
+                            firebaseFunctionsService.GRUserNotificationSetToTrue(routine, grIdx.ToString(), notiTimeKeysList[i]);
 
                         }
                         Console.WriteLine("total : " + total);
