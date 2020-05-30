@@ -380,38 +380,9 @@ namespace ProjectCaitlin
                 updatedStackLayout.Children[0].HeightRequest = 30;
                 ((CachedImage)updatedStackLayout.Children[0]).IsVisible = true;
 
-                if (routine.isSublistAvailable)
-                {
-                    if (!routine.isInProgress)
-                    {
-                        ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
-                        routine.isInProgress = true;
-                        firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
-                    }
-                    App.ListPageScrollPosY = mainScrollView.ScrollY;
-                    await Navigation.PushAsync(new TaskPage(routineIdx, true));
-                }
-                else
-                {
-                    if (!routine.isComplete)
-                    {
+                routineOnClick(routine, routineIdx, updatedStackLayout);
 
-                        if (routine.isInProgress)
-                        {
-                            ((CachedImage)updatedStackLayout.Children[0]).Source = "greencheckmarkicon.png";
-                            routine.isInProgress = false;
-                            routine.isComplete = true;
 
-                            firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", true);
-                        }
-                        else
-                        {
-                            ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
-                            routine.isInProgress = true;
-                            firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
-                        }
-                    }
-                }
             };
             stackLayout.Children[stackLayoutIdx].GestureRecognizers.Add(tapGestureRecognizer);
         }
@@ -552,40 +523,7 @@ namespace ProjectCaitlin
                 Grid updatedGrid = (Grid)updatedStackLayout.Children[0];
                 ((CachedImage)updatedGrid.Children[0]).Opacity = .6;
 
-                if (goal.isSublistAvailable)
-                {
-
-                    if (!goal.isInProgress)
-                    {
-                        updatedGrid.Children[2].IsVisible = true;
-                        goal.isInProgress = true;
-                        firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
-                    }
-                    App.ListPageScrollPosY = mainScrollView.ScrollY;
-                    await Navigation.PushAsync(new TaskPage(goalIdx, false));
-                }
-                else
-                {
-                    if (!goal.isComplete)
-                    {
-
-                        if (goal.isInProgress)
-                        {
-                            updatedGrid.Children[1].IsVisible = true;
-                            updatedGrid.Children[2].IsVisible = false;
-                            goal.isInProgress = false;
-                            goal.isComplete = true;
-
-                            firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", true);
-                        }
-                        else
-                        {
-                            updatedGrid.Children[2].IsVisible = true;
-                            goal.isInProgress = true;
-                            firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
-                        }
-                    }
-                }
+                goalOnClick(goal, goalIdx, updatedGrid);
             };
             goalStackLayout.GestureRecognizers.Add(tapGestureRecognizer);
 
@@ -764,6 +702,80 @@ namespace ProjectCaitlin
             await RefreshPage();
         }
 
+        public async void routineOnClick(routine routine, int routineIdx, StackLayout updatedStackLayout)
+        {
+            if (routine.isSublistAvailable)
+            {
+                if (!routine.isInProgress && !routine.isComplete)
+                {
+                    ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
+                    routine.isInProgress = true;
+                    firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
+                }
+                App.ListPageScrollPosY = mainScrollView.ScrollY;
+                await Navigation.PushAsync(new TaskPage(routineIdx, true));
+            }
+            else
+            {
+                if (!routine.isComplete)
+                {
+
+                    if (routine.isInProgress)
+                    {
+                        ((CachedImage)updatedStackLayout.Children[0]).Source = "greencheckmarkicon.png";
+                        routine.isInProgress = false;
+                        routine.isComplete = true;
+
+                        firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", true);
+                    }
+                    else
+                    {
+                        ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
+                        routine.isInProgress = true;
+                        firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
+                    }
+                }
+            }
+        }
+
+        public async void goalOnClick(goal goal, int goalIdx, Grid updatedGrid)
+        {
+            if (goal.isSublistAvailable)
+            {
+
+                if (!goal.isInProgress && !goal.isComplete)
+                {
+                    updatedGrid.Children[2].IsVisible = true;
+                    goal.isInProgress = true;
+                    firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
+                }
+                App.ListPageScrollPosY = mainScrollView.ScrollY;
+                await Navigation.PushAsync(new TaskPage(goalIdx, false));
+            }
+            else
+            {
+                if (!goal.isComplete)
+                {
+
+                    if (goal.isInProgress)
+                    {
+                        updatedGrid.Children[1].IsVisible = true;
+                        updatedGrid.Children[2].IsVisible = false;
+                        goal.isInProgress = false;
+                        goal.isComplete = true;
+
+                        firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", true);
+                    }
+                    else
+                    {
+                        updatedGrid.Children[2].IsVisible = true;
+                        goal.isInProgress = true;
+                        firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
+                    }
+                }
+            }
+        }
+
         private void AddTapGestures()
         {
             //var tapGestureRecognizer1 = new TapGestureRecognizer();
@@ -786,9 +798,9 @@ namespace ProjectCaitlin
 
             var tapGestureRecognizer3 = new TapGestureRecognizer();
             tapGestureRecognizer3.Tapped += async (s, e) => {
+                UserDialogs.Instance.ShowLoading("Loading...");
                 if (App.User.photoURIs.Count < 1)
                     await GooglePhotoService.GetPhotos();
-                UserDialogs.Instance.ShowLoading("Loading...");
                 await Navigation.PushAsync(new MonthlyViewPage());
                 UserDialogs.Instance.HideLoading();
             };

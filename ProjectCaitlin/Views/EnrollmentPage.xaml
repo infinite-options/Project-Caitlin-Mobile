@@ -1,0 +1,32 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:VoiceRecognition.ViewModel"
+             mc:Ignorable="d"
+             x:Class="VoiceRecognition.View.EnrollmentPage">
+    <ContentPage.Content>
+        <StackLayout>
+            <!--<StackLayout.BindingContext>
+                <local:EnrollVoice/>
+            </StackLayout.BindingContext>-->
+            <Image Source="{Binding PictureSource}" IsVisible="{Binding DisplayProfile}"/>
+            <Label x:Name="RecordingStatus" Text="{Binding Message}"
+                VerticalOptions="CenterAndExpand" 
+                HorizontalOptions="CenterAndExpand" />
+            <Entry x:Name="Name" Placeholder="Name" PlaceholderColor="HotPink" IsVisible="{Binding DisplayForm}"/>
+            <Entry x:Name="PhoneNumber" Placeholder="PhoneNumber" PlaceholderColor="HotPink" IsVisible="{Binding DisplayForm}"/>
+            <!--<Button Text="startRecording" Command="{Binding Commands[StartRecording]}"/>-->
+            <Button Text="stopRecording" Command="{Binding Commands[StopRecording]}"/>
+            <Button Text="IdentifyAndEnroll" Command="{Binding Commands[IdentifyAndEnroll]}" IsVisible="{Binding '!$P', Source=DisplayForm}"/>
+            <!--<Button Text="Enroll" Command="{Binding Commands[StopRecording]}"/>
+            <Button Text="Identify" Command="{Binding Commands[StopRecording]}"/>-->
+            <Button Text="Add User to Firebase" Clicked="AddFireBasePeople" IsVisible="{Binding DisplayForm}"/>
+            <Button Text="Create New User" Clicked="CreateNewUser" IsVisible="{Binding DisplayForm}"/>
+            <Button Text="Lets change" Command="{Binding Commands[AddPeopleToFireBase]}"/>
+            <Button Text="Tic" Clicked="Tic"/>
+            <Button Text="Toc" Clicked="Toc"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>
