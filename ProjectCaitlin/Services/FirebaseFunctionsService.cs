@@ -55,7 +55,7 @@ namespace ProjectCaitlin.Services
 
                 await CrossCloudFirestore.Current
                     .Instance
-                    .GetCollection("TODO")
+                    .GetCollection("users")
                     .GetDocument(App.User.id)
                     .UpdateDataAsync(data);
 
