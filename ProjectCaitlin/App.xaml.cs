@@ -21,6 +21,8 @@ namespace ProjectCaitlin
 
         public static bool isAuthenticating { get; set; } = false;
 
+        public static bool isFirstSetup { get; set; } = true;
+
         [assembly: XamlCompilation(XamlCompilationsOptions.Compile)]
         public App()
         {

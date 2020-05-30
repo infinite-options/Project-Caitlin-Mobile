@@ -144,9 +144,7 @@ namespace ProjectCaitlin
 					//Save to App.User AND Update Firebase with pertitnent info
 					var googleService = new GoogleService();
 					googleService.Navigation = Navigation;
-					await googleService.SaveAccessTokenToFireBase(access_token);
 					Console.WriteLine(refreshToken);
-					await googleService.SaveRefreshTokenToFireBase(refreshToken);
 
                     //Save Properies inside phone for auto login
 					Application.Current.Properties["access_token"] = access_token;
