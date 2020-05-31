@@ -21,6 +21,10 @@ namespace ProjectCaitlin
 
         public static bool isAuthenticating { get; set; } = false;
 
+        public static bool isFirstSetup { get; set; } = true;
+
+        public static bool IsInForeground { get; set; } = false;
+
         [assembly: XamlCompilation(XamlCompilationsOptions.Compile)]
         public App()
         {
@@ -51,14 +55,19 @@ namespace ProjectCaitlin
 
         protected override void OnStart()
         {
+            IsInForeground = true;
         }
 
         protected override void OnSleep()
         {
+            IsInForeground = false;
+
         }
 
         protected override void OnResume()
         {
+            IsInForeground = true;
+
         }
     }
 }

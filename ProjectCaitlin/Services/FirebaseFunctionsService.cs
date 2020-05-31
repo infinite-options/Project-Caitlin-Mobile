@@ -32,39 +32,38 @@ namespace ProjectCaitlin.Services
             return "";
         }
 
-        public async Task<bool> GRUserNotificationSetToTrue(GratisObject gratisObject, string status)
+        public async Task<bool> GRUserNotificationSetToTrue(GratisObject gratisObject, string routineIdx, string state)
         {
             try
             {
-                var document = await CrossCloudFirestore.Current
-                                        .Instance
-                                        .GetCollection("users")
-                                        .GetDocument(App.User.id)
-                                        .GetDocumentAsync();
-
                 var gratisType = "goals&routines";
 
-                var data = (IDictionary<string, object>)ConvertDocumentGet(document.Data, gratisType);
+                var document = await CrossCloudFirestore.Current
+                                    .Instance
+                                    .GetCollection("users")
+                                    .GetDocument(App.User.id)
+                                    .GetDocumentAsync();
+
+                var data = (IDictionary<string, object>)ConvertDocumentGet(document.Data, "goals&routines");
                 var grArrayData = (List<object>)data[gratisType];
                 var grData = (IDictionary<string, object>)grArrayData[gratisObject.dbIdx];
+                var userNotifData = (IDictionary<string, object>)grData["user_notifications"];
+                var userNotifStateData = (IDictionary<string, object>)userNotifData[state];
 
-                var notificationData = (IDictionary<string, object>)grData["user_notifications"];
-                var notiStatusData = (IDictionary<string, object>)notificationData[status];
+                userNotifStateData["is_set"] = true;
+                userNotifStateData["date_set"] = DateTime.Now.ToString("ddd, dd MMM yyy HH:mm:ss 'GMT'");
 
-                notiStatusData["date_set"] = DateTime.Now.ToString("ddd, dd MMM yyy HH:mm:ss 'GMT'");
-                notiStatusData["is_set"] = true;
-
-
-                //await CrossCloudFirestore.Current
-                //    .Instance
-                //    .GetCollection("users")
-                //    .GetDocument(App.User.id)
-                //    .UpdateDataAsync(data);
+                await CrossCloudFirestore.Current
+                    .Instance
+                    .GetCollection("users")
+                    .GetDocument(App.User.id)
+                    .UpdateDataAsync(data);
 
                 return true;
             }
-            catch
+            catch (Exception e)
             {
+                Console.WriteLine(e);
                 return false;
             }
         }

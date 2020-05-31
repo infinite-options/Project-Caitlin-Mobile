@@ -61,13 +61,18 @@ namespace ProjectCaitlin.Services
 
         public async Task SetupFirestoreSnapshot()
         {
-            CrossCloudFirestore.Current.Instance
-                .GetCollection("users")
-                .GetDocument(uid)
-                .AddSnapshotListener(async (snapshot, error) =>
-                {
-                    await LoadDatabase();
-                });
+
+                CrossCloudFirestore.Current.Instance
+                    .GetCollection("users")
+                    .GetDocument(uid)
+                    .AddSnapshotListener(async (snapshot, error) =>
+                    {
+                        if (!App.isFirstSetup)
+                        {
+                            await LoadDatabase();
+                        }
+                        App.isFirstSetup = false;
+                    });
         }
 
         public async Task LoadDatabase()
@@ -157,8 +162,8 @@ namespace ProjectCaitlin.Services
 
         public void LoadGoalsAndRoutines(List<Object> grArrayData)
         {
-            int dbIdx_ = 0;
-            foreach (Dictionary<string, object> data in grArrayData)
+            int dbIdx_ = 0, routineIdx = 0;
+            foreach (IDictionary<string, object> data in grArrayData)
             {
                 try
                 {
@@ -169,33 +174,38 @@ namespace ProjectCaitlin.Services
                         if (data["is_persistent"].ToString() == "1")
                         {
 
-                            routine routine = new routine();
+                            routine routine = new routine
+                            {
+                                title = data["title"].ToString(),
 
-                            routine.title = data["title"].ToString();
+                                id = data["id"].ToString(),
 
-                            routine.id = data["id"].ToString();
+                                photo = data["photo"].ToString(),
 
-                            routine.photo = data["photo"].ToString();
+                                isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
 
-                            routine.isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString());
-
-                            routine.isComplete = data["is_complete"].ToString() == "1"
+                                isComplete = data["is_complete"].ToString() == "1"
                                             && IsDateToday(data["datetime_completed"].ToString())
-                                            && !isInProgressCheck;
+                                            && !isInProgressCheck,
 
-                            routine.expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString());
+                                expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
 
-                            routine.dbIdx = dbIdx_;
+                                dbIdx = dbIdx_,
 
-                            routine.isSublistAvailable = data["is_sublist_available"].ToString() == "1";
+                                isSublistAvailable = data["is_sublist_available"].ToString() == "1",
 
-                            routine.dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime();
+                                dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
 
-                            routine.availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString());
+                                availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
 
-                            routine.availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString());
+                                availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                            };
+
+                            setNotifications(routine, routineIdx, (IDictionary<string, object>) data["user_notifications"]);
 
                             App.User.routines.Add(routine);
+
+                            routineIdx++;
                         }
                         else
                         {
@@ -538,7 +548,7 @@ namespace ProjectCaitlin.Services
         }
 
 
-        public void setNotifications(routine routine, int grIdx, IDictionary<string, object> notificationDict)
+        public async Task setNotifications(routine routine, int grIdx, IDictionary<string, object> notificationDict)
         {
             TimeSpan currentTime = DateTime.Now.TimeOfDay;
             //time precised in minutes, can be positive or negative.
@@ -581,15 +591,26 @@ namespace ProjectCaitlin.Services
                     notiAttriObjList[i].is_set = userTimeDict["is_set"].ToString() == "1"
                                                     && ((userTimeDict["date_set"] != null) ? IsDateToday(userTimeDict["date_set"].ToString()) : false);
 
-                    notiAttriObjList[i].is_enabled = (bool)userTimeDict["is_enabled"];
+                    notiAttriObjList[i].is_enabled = userTimeDict["is_enabled"].ToString() == "1";
 
                     if (notiAttriObjList[i].is_enabled && !notiAttriObjList[i].is_set)
                     {
-
                         notiAttriObjList[i].time = TimeSpan.Parse(userTimeDict["time"].ToString());
-                        //TotalMinutes
 
-                        double total = (routine.availableStartTime - DateTime.Now.TimeOfDay).TotalSeconds - notiAttriObjList[i].time.TotalSeconds;
+                        //TotalMinutes
+                        double total = 0;
+                        switch (i)
+                        {
+                            case 0:
+                                total = (routine.availableStartTime - DateTime.Now.TimeOfDay).TotalSeconds - notiAttriObjList[i].time.TotalSeconds;
+                                break;
+                            case 1:
+                                total = (routine.availableStartTime - DateTime.Now.TimeOfDay).TotalSeconds + notiAttriObjList[i].time.TotalSeconds;
+                                break;
+                            case 2:
+                                total = (routine.availableEndTime - DateTime.Now.TimeOfDay).TotalSeconds + notiAttriObjList[i].time.TotalSeconds;
+                                break;
+                        }
 
                         notiAttriObjList[i].message = userTimeDict["message"].ToString();
 
@@ -600,7 +621,7 @@ namespace ProjectCaitlin.Services
                             string subtitle = grIdx + routine.id;
                             string message = "Open the app to review your tasks. " + notiAttriObjList[i].message;
                             notificationManager.ScheduleNotification(title, subtitle, message, total);
-                            firebaseFunctionsService.GRUserNotificationSetToTrue(routine, "before");
+                            firebaseFunctionsService.GRUserNotificationSetToTrue(routine, grIdx.ToString(), notiTimeKeysList[i]);
 
                         }
                         Console.WriteLine("total : " + total);
