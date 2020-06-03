@@ -72,6 +72,9 @@
     <Compile Update="Views\GreetingPage.xaml.cs">
       <DependentUpon>GreetingPage.xaml</DependentUpon>
     </Compile>
+    <Compile Update="Views\VoiceIdentificationPage.xaml.cs">
+      <DependentUpon>VoiceIdentificationPage.xaml</DependentUpon>
+    </Compile>
     <Compile Update="Views\TaskCompletePage.xaml.cs">
       <DependentUpon>TaskCompletePage.xaml</DependentUpon>
     </Compile>
@@ -84,6 +87,9 @@
   </ItemGroup>
   <ItemGroup>
     <EmbeddedResource Update="Views\GreetingPage.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
+    <EmbeddedResource Update="Views\VoiceIdentificationPage.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Views\TaskCompletePage.xaml">

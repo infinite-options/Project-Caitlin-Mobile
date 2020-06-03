@@ -52,10 +52,14 @@
                     </StackLayout>
 
                     <StackLayout >
-                        <Button x:Name="recordButton" Text="Tap to start recording... " CornerRadius="10" Margin="5" Clicked ="RecordButton_Click" TextColor="White"  BackgroundColor="#59556D" />
-
-                        <Button Text="View Today's List" CornerRadius="10" Margin="5" Clicked ="btn1Clicked" TextColor="White"  BackgroundColor="#59556D" />
-                        <Button Text="Manage My Day " CornerRadius="10" Margin="5" Clicked="btn2Clicked" TextColor="White" BackgroundColor="#59556D"/>
+                        <StackLayout Orientation="Horizontal">
+                            <ImageButton Source="waveformicon.png" HeightRequest="50" WidthRequest="50" CornerRadius="10" Margin="15" Clicked ="ImageButton_Click"  BackgroundColor="Transparent" />
+                            <Button Text="Check identified voice list" CornerRadius="10" Margin="5" Clicked ="RecordButton_Click" TextColor="White"  BackgroundColor="#59556D" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Button Text="View Today's List" CornerRadius="10" Margin="5" Clicked ="btn1Clicked" TextColor="White"  BackgroundColor="#59556D" />
+                            <Button Text="Manage My Day " CornerRadius="10" Margin="5" Clicked="btn2Clicked" TextColor="White" BackgroundColor="#59556D"/>
+                        </StackLayout>
                     </StackLayout>
 
                     <StackLayout

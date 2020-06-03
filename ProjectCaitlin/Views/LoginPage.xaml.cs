@@ -38,6 +38,10 @@ namespace ProjectCaitlin
 
 		async void LoginClicked(object sender, EventArgs e)
         {
+			//await Navigation.PushAsync(new GreetingPage());
+			//testing for voicepage
+			//await Navigation.PushAsync(new VoiceIdentificationPage());
+
 			clientId = null;
 			string redirectUri = null;
 

@@ -116,7 +116,13 @@ namespace ProjectCaitlin.Views
 
         async void RecordButton_Click(object sender, EventArgs e)
         {
+            await Navigation.PushAsync(new VoiceIdentificationPage());
+        }
+
+        async void ImageButton_Click(object sender, EventArgs e)
+        {
             await Navigation.PushAsync(new EnrollmentPage());
+            
         }
     }
 }

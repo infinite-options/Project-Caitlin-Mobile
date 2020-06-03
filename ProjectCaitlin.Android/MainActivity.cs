@@ -12,6 +12,7 @@ using Acr.UserDialogs;
 using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using Android;
+using Firebase;
 
 namespace ProjectCaitlin.Droid
 {
@@ -20,6 +21,16 @@ namespace ProjectCaitlin.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            /*var options = new FirebaseOptions.Builder()
+              .SetApplicationId("<AppID>")
+              .SetApiKey("<ApiKey>")
+              .SetDatabaseUrl("<DBURl>")
+              .SetStorageBucket("<StorageBucket>")
+              .SetGcmSenderId("<SenderID>").Build();
+            var fapp = FirebaseApp.InitializeApp(this, options);*/
+
+            //FirebaseApp.InitializeApp(this);
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
@@ -31,6 +42,7 @@ namespace ProjectCaitlin.Droid
             }
 
             base.OnCreate(savedInstanceState);
+
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
