@@ -17,7 +17,7 @@ namespace ProjectCaitlin.Services
         {
             email = email.ToLower();
             String[] emailSplit = email.Split('@');
-            emailSplit[0].Replace(".", string.Empty);
+            emailSplit[0] = emailSplit[0].Replace(".", "");
             email = emailSplit[0] + "@" + emailSplit[1];
 
             var userDoc = await CrossCloudFirestore.Current.Instance.GetCollection("users")
