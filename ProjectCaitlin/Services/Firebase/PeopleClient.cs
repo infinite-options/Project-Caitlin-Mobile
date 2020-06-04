@@ -18,7 +18,7 @@ namespace VoiceRecognition.Services.Firebase
         private readonly string UserId;
         private readonly HttpClient client;
 
-        private PeopleClient()
+        public PeopleClient()
         {
             string project_base_url = FirebaseFirestore.BASE_URL + FirebaseFirestore.PROJECT_URL;
             client = new HttpClient
@@ -30,6 +30,11 @@ namespace VoiceRecognition.Services.Firebase
         public PeopleClient(string UserId) : this()
         {
             this.UserId = UserId;
+            string project_base_url = FirebaseFirestore.BASE_URL + FirebaseFirestore.PROJECT_URL;
+            client = new HttpClient
+            {
+                BaseAddress = new Uri(project_base_url)
+            };
         }
 
         public PeopleClient(user user) : this(user.id) { }

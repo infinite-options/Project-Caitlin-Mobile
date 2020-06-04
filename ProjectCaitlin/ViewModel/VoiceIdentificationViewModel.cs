@@ -4,6 +4,9 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Text;
 using Xamarin.Forms;
+using ProjectCaitlin.Services;
+using VoiceRecognition.Model;
+using VoiceRecognition.Services.Firebase;
 
 namespace ProjectCaitlin.ViewModel
 {
@@ -11,52 +14,35 @@ namespace ProjectCaitlin.ViewModel
     class VoiceIdentificationViewModel : BindableObject
     {
         public ObservableCollection<object> Items { get; set; }
-
+        List<People> list;
         public VoiceIdentificationViewModel()
         {
             Items = new ObservableCollection<object>();
+            List<People> list = new List<People>();
+            loadPeople();
+        }
 
-            App.User.people.Clear();
-            person a = new person();
-            a.name = "Bob";
-            a.pic = "";
-            a.relationship = "Father";
-            a.phoneNumber = "123456";
-            App.User.people.Add(a);
+        public async void loadPeople() {
+            PeopleClient peopleClient = new PeopleClient("Ph2u3nRSZeYsWHitLSnv");
+            list = await peopleClient.GetAllPeopleAsync();
+            Console.WriteLine("list count : " + list.Count);
 
-            person b = new person();
-            b.name = "John";
-            b.pic = "";
-            b.relationship = "Brother";
-            b.phoneNumber = "123456";
-            App.User.people.Add(b);
-
-            person c = new person();
-            c.name = "Jenny";
-            c.pic = "";
-            c.relationship = "Mother";
-            c.phoneNumber = "123456";
-            App.User.people.Add(c);
-
-            foreach (person people in App.User.people)
+            foreach (People people in list)
             {
                 String pic;
-                if (people.pic != "")
-                    pic = people.pic;
+                if (people.HavePic)
+                    pic = people.picUrl;
                 else
                     pic = "aboutmeiconnotext.png";
 
-                string phoneNumber = people.phoneNumber;
+                string phoneNumber = people.PhoneNumber;
                 Items.Add(new
                 {
                     Source = pic,
-                    Name = people.name,
-                    Relationship = people.relationship,
-                    PhoneNumber = people.phoneNumber
+                    Name = people.FirstName + " " + people.LastName,
+                    Relationship = people.Relation,
+                    PhoneNumber = people.PhoneNumber
                 });
-
-
-
             }
         }
 

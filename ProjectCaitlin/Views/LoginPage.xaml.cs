@@ -38,7 +38,7 @@ namespace ProjectCaitlin
 
 		async void LoginClicked(object sender, EventArgs e)
         {
-			//await Navigation.PushAsync(new GreetingPage());
+			await Navigation.PushAsync(new GreetingPage());
 			//testing for voicepage
 			//await Navigation.PushAsync(new VoiceIdentificationPage());
 

@@ -27,7 +27,9 @@ namespace VoiceRecognition.ViewModel
         private static readonly Profile UNKNOWN_PROFILE = new Profile { IdentificationProfileId = "00000000-0000-0000-0000-000000000000" };
         private readonly AudioRecorderService RecorderClient;
         //TODO: HardCoded Value, Need to have a Session Object
-        private PeopleClient PeopleService = new PeopleClient(App.User.id);
+        //private PeopleClient PeopleService = new PeopleClient("7R6hAVmDrNutRkG3sVRy");
+        private PeopleClient PeopleService = new PeopleClient("Ph2u3nRSZeYsWHitLSnv");
+        //private PeopleClient PeopleService = new PeopleClient(App.user.id);
         Stopwatch sw;
 
         private readonly IdentityProfileClient IdClient;
