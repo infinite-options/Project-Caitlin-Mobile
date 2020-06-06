@@ -18,11 +18,12 @@ namespace ProjectCaitlin.Droid
 	[global::System.CodeDom.Compiler.GeneratedCodeAttribute("Xamarin.Android.Build.Tasks", "1.0.0.0")]
 	public partial class Resource
 	{
+
 		static Resource()
 		{
 			global::Android.Runtime.ResourceIdManager.UpdateIdValues();
 		}
-		
+
 		public static void UpdateIdValues()
 		{
 			global::BottomBar.Droid.Resource.Animation.abc_fade_in = global::ProjectCaitlin.Droid.Resource.Animation.abc_fade_in;
@@ -11431,22 +11432,22 @@ namespace ProjectCaitlin.Droid
 			global::Xamarin.Forms.Platform.Resource.Styleable.View_paddingStart = global::ProjectCaitlin.Droid.Resource.Styleable.View_paddingStart;
 			global::Xamarin.Forms.Platform.Resource.Styleable.View_theme = global::ProjectCaitlin.Droid.Resource.Styleable.View_theme;
 		}
-		
+
 		public partial class Animation
 		{
-			
+
 			// aapt resource value: 0x7F010000
 			public const int abc_fade_in = 2130771968;
-			
+
 			// aapt resource value: 0x7F010001
 			public const int abc_fade_out = 2130771969;
-			
+
 			// aapt resource value: 0x7F010002
 			public const int abc_grow_fade_in_from_bottom = 2130771970;
-			
+
 			// aapt resource value: 0x7F010003
 			public const int abc_popup_enter = 2130771971;
-			
+
 			// aapt resource value: 0x7F010004
 			public const int abc_popup_exit = 2130771972;
 
