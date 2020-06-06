@@ -97,7 +97,7 @@ namespace AzureServicesUnitTest
             //Profile profile = profileTask.Result;
             Profile profile = new Profile()
             {
-                IdentificationProfileId = "d99d31a5-f789-4356-bd9b-87cc5d969ad3"
+                IdentificationProfileId = "eda6c2b5-e82b-4eb3-86af-2f31d8a6b2e1"
             };
             Task<Boolean> status =  Idp.DeleteProfile(profile);
             status.Wait();

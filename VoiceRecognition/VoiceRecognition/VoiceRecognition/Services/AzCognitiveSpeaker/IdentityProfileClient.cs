@@ -34,6 +34,7 @@ namespace VoiceRecognition.Services.AzCognitiveSpeaker
 
         public async Task<Profile> CreateProfileAsync()
         {
+            Trace.WriteLine("Async : CreateProfileAsync Started");
             string uri = client.BaseAddress + AzCognitiveSpeakerAPI.IDENTITY_URL;
 
             HttpResponseMessage response;
@@ -47,7 +48,7 @@ namespace VoiceRecognition.Services.AzCognitiveSpeaker
                 Task<HttpResponseMessage> resTask = client.PostAsync(uri, content);
                 resTask.Wait();
                 response = resTask.Result;
-                Console.WriteLine(response);
+                Trace.WriteLine(response);
             }
 
             string resString = await response.Content.ReadAsStringAsync();
@@ -57,6 +58,7 @@ namespace VoiceRecognition.Services.AzCognitiveSpeaker
                 {
                     Profile profile = serializer.Deserialize<Profile>(
                         jReader);
+                    Trace.WriteLine("Async : CreateProfileAsync Completed");
                     return profile;
                 }
             }
@@ -141,13 +143,13 @@ namespace VoiceRecognition.Services.AzCognitiveSpeaker
 
         public OperationStatus Enroll(Profile profile, string audioFilePath)
         {
+            Trace.WriteLine("IdentityProfileClient.Enroll : started");
             try
             {
                 var queryString = HttpUtility.ParseQueryString(string.Empty);
                 queryString["shortAudio"] = $"{true}";
                 var requestUri = client.BaseAddress + AzCognitiveSpeakerAPI.IDENTITY_URL + "/" + profile.IdentificationProfileId + "/enroll?" + queryString;
                 var request = PrepareMediaRequest(audioFilePath, requestUri);
-
                 var responseTask = client.SendAsync(request);
                 responseTask.Wait();
                 var response = responseTask.Result;
@@ -172,11 +174,12 @@ namespace VoiceRecognition.Services.AzCognitiveSpeaker
                         break;
                     }
                 }
+                Trace.WriteLine("IdentityProfileClient.Enroll : Completed");
                 return res;
             }
             catch (Exception e)
             {
-                Debug.WriteLine("EXCEPTION: " + e.Message);
+                Debug.WriteLine("IdentiityProfileClient.OperationStatus : EXCEPTION: " + e.Message);
                 throw;
             }
         }
@@ -283,12 +286,14 @@ namespace VoiceRecognition.Services.AzCognitiveSpeaker
 
         protected HttpRequestMessage PrepareMediaRequest(string audioFilePath, string requestUri)
         {
+            Trace.WriteLine("IdentityProfileClient.PrepareMediaRequest : Started");
             var request = new HttpRequestMessage(HttpMethod.Post, requestUri);
             request.Headers.TransferEncodingChunked = true;
             request.Headers.ExpectContinue = true;
             request.Headers.Accept.ParseAdd(MimeTypes.Json);
             request.Headers.Accept.ParseAdd(MimeTypes.Xml);
             request.Content = MediaRequestHelper.PopulateRequestContent(audioFilePath);
+            Trace.WriteLine("IdentityProfileClient.PrepareMediaRequest : Completed");
             return request;
         }
 

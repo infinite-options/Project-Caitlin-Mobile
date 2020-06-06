@@ -12,7 +12,7 @@ namespace AzureServicesUnitTest
     [TestClass]
     public class UserServiceTests
     {
-        private UserClient UserService = new UserClient();
+        private readonly UserClient UserService = new UserClient();
 
         [TestMethod]
         public void GetUserFromIdTest()

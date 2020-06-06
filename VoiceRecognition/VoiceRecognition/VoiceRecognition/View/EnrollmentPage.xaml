@@ -15,18 +15,36 @@
             <Label x:Name="RecordingStatus" Text="{Binding Message}"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />
-            <Entry x:Name="Name" Placeholder="Name" PlaceholderColor="HotPink" IsVisible="{Binding DisplayForm}"/>
-            <Entry x:Name="PhoneNumber" Placeholder="PhoneNumber" PlaceholderColor="HotPink" IsVisible="{Binding DisplayForm}"/>
+            
+            
+            <Label x:Name="NameLabel" Text="{Binding peopleDto.FullName, StringFormat='Name : {0}'}" TextColor="Green"
+                   VerticalOptions="Center" HorizontalOptions="StartAndExpand" 
+                   IsVisible="{Binding DisplayProfile}"/>
+            <Label x:Name="ImportantLabel" Text="{Binding peopleDto.People.Important, StringFormat='Important : {0}'}" TextColor="Green"
+                   VerticalOptions="Center" HorizontalOptions="StartAndExpand" 
+                   IsVisible="{Binding DisplayProfile}"/>
+            <Label x:Name="PhoneLabel" Text="{Binding peopleDto.PhoneNumber, StringFormat='Phone Number : {0}'}" TextColor="Green"   
+                   VerticalOptions="Center" HorizontalOptions="StartAndExpand" 
+                   IsVisible="{Binding DisplayProfile}"/>
+            <Label x:Name="AzSpeakerIdLabel" Text="{Binding peopleDto.People.SpeakerId, StringFormat='Speaker Id : {0}'}" TextColor="Green"   
+                   VerticalOptions="Center" HorizontalOptions="StartAndExpand" 
+                   IsVisible="{Binding DisplayProfile}"/>
+            
+            <Entry x:Name="Name" Placeholder="Name" PlaceholderColor="Blue" IsVisible="{Binding DisplayForm}"/>
+            <Entry x:Name="PhoneNumber" Placeholder="PhoneNumber" PlaceholderColor="Blue" IsVisible="{Binding DisplayForm}"/>
+            <Label Text="Is Important" IsVisible="{Binding DisplayForm}"/>
+            <Switch x:Name="IsImportant" IsToggled="False"  OnColor="Blue" ThumbColor="AliceBlue" HorizontalOptions="Start" IsVisible="{Binding DisplayForm}"/>
+            
             <!--<Button Text="startRecording" Command="{Binding Commands[StartRecording]}"/>-->
-            <Button Text="stopRecording" Command="{Binding Commands[StopRecording]}"/>
-            <Button Text="IdentifyAndEnroll" Command="{Binding Commands[IdentifyAndEnroll]}" IsVisible="{Binding '!$P', Source=DisplayForm}"/>
+            <Button Text="Stop Recording" Command="{Binding Commands[StopRecording]}"/>
+            <Button Text="Identify And Enroll" Command="{Binding Commands[IdentifyAndEnroll]}" IsVisible="{Binding '!$DisplayForm'}"/>
             <!--<Button Text="Enroll" Command="{Binding Commands[StopRecording]}"/>
             <Button Text="Identify" Command="{Binding Commands[StopRecording]}"/>-->
             <Button Text="Add User to Firebase" Clicked="AddFireBasePeople" IsVisible="{Binding DisplayForm}"/>
             <Button Text="Create New User" Clicked="CreateNewUser" IsVisible="{Binding DisplayForm}"/>
-            <Button Text="Lets change" Command="{Binding Commands[AddPeopleToFireBase]}"/>
-            <Button Text="Tic" Clicked="Tic"/>
-            <Button Text="Toc" Clicked="Toc"/>
+            <!--<Button Text="Lets change" Command="{Binding Commands[AddPeopleToFireBase]}"/>-->
+            <!--<Button Text="Tic" Clicked="Tic"/>-->
+            <!--<Button Text="Toc" Clicked="Toc"/>-->
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>

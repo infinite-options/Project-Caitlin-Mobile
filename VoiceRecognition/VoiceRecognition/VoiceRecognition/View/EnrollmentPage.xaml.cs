@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 using VoiceRecognition.Model;
@@ -13,7 +14,7 @@ namespace VoiceRecognition.View
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class EnrollmentPage : ContentPage
     {
-        EnrollVoice en;
+        readonly EnrollVoice en;
         public EnrollmentPage()
         {
             InitializeComponent();
@@ -34,7 +35,21 @@ namespace VoiceRecognition.View
                 PhoneNumber = phoneNumber
             };
             en.DisplayForm = false;
-            People result = await en.AddFireBasePeople(people);
+            en.DisplayProfile = false;
+            Name.Text = "";
+            PhoneNumber.Text = "";
+            try
+            {
+                _ = await en.AddFireBasePeople(people);
+            }
+            catch(FireBaseFailureException fbe)
+            {
+                en.Message = "Call to Firebase failed:\nCode"+fbe.Code+"\nMessage: "+fbe.Message;
+            }
+            catch (Exception exp)
+            {
+                en.Message = "Something went wrong: Message: "+exp.Message;
+            }
         }
 
         private void CreateNewUser(object sender, EventArgs e)
@@ -44,9 +59,14 @@ namespace VoiceRecognition.View
             People people = new Model.People()
             {
                 FirstName = name,
-                PhoneNumber = phoneNumber
+                PhoneNumber = phoneNumber,
+                Important = IsImportant.IsEnabled
             };
             en.DisplayForm = false;
+            en.DisplayProfile = false;
+            Name.Text = "";
+            PhoneNumber.Text = "";
+            en.Message = "Creating New User";
             en.AzIdNotFound_createNewProfileBackground(people);
         }
 

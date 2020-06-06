@@ -18,16 +18,20 @@ namespace VoiceRecognition.Services.Firebase
 
         private PeopleClient()
         {
+            Trace.WriteLine("Model.Firebase.PeopleClient : Initializing Started");
             string project_base_url = FirebaseFirestore.BASE_URL + FirebaseFirestore.PROJECT_URL;
             client = new HttpClient
             {
                 BaseAddress = new Uri(project_base_url)
             };
+            Trace.WriteLine("Model.Firebase.PeopleClient : Initializing Completed");
         }
 
         public PeopleClient(string UserId) : this()
         {
+            Trace.WriteLine("Model.Firebase.PeopleClient(UserId) : Initializing Started");
             this.UserId = UserId;
+            Trace.WriteLine("Model.Firebase.PeopleClient(UserId) : Initializing Completed");
         }
 
         public PeopleClient(User user) : this(user.id) { }
@@ -38,6 +42,7 @@ namespace VoiceRecognition.Services.Firebase
          --------------------------------------*/
         public async Task<List<People>> GetAllPeopleAsync()
         {
+            Trace.WriteLine("Model.Firebase.PeopleClient.GetAllPeopleAsync : started");
             try
             {
                 List<People> AllPeople = new List<People>();
@@ -59,12 +64,13 @@ namespace VoiceRecognition.Services.Firebase
                         }
                     }
                 }
+                Trace.WriteLine("Model.Firebase.PeopleClient.GetAllPeopleAsync : completed");
                 return AllPeople;
             }
             catch (Exception e)
             {
-                Debug.WriteLine(e.StackTrace);
-                throw e;
+                Debug.WriteLine("Exception caught: \n"+e.Message+"\nRethrowing Exception");
+                throw;
             }
         }
         /*-----------------------------------
@@ -73,6 +79,7 @@ namespace VoiceRecognition.Services.Firebase
          -----------------------------------*/
         public async Task<People> GetPeopleFromIdAsync(string id)
         {
+            Trace.WriteLine("Model.Firebase.PeopleClient.GetPeopleFromIdAsync(id) : started");
             try
             {
                 string uri = client.BaseAddress + FirebaseFirestore.USER_URL + "/" + UserId + FirebaseFirestore.PEOPLE_URL+"/"+id;
@@ -84,6 +91,7 @@ namespace VoiceRecognition.Services.Firebase
                     JObject peopleJson = JObject.Parse(content);
                     PeopleParser peopleParser = new PeopleParser();
                     People peep = peopleParser.JsonToObject(peopleJson);
+                    Trace.WriteLine("Model.Firebase.PeopleClient.GetPeopleFromIdAsync(id) : completed");
                     return peep;
                 }
                 return null;
@@ -122,6 +130,7 @@ namespace VoiceRecognition.Services.Firebase
         }
 
         public async Task<People> PostPeopleAsync(People people){
+            Trace.WriteLine("Model.Firebase.PeopleClient.PostPeopleASync(people) : started");
             try
             {
                 string uri = client.BaseAddress + FirebaseFirestore.USER_URL + "/" + UserId + FirebaseFirestore.PEOPLE_URL;
@@ -136,24 +145,25 @@ namespace VoiceRecognition.Services.Firebase
                     string responseContent = await responseTask.Result.Content.ReadAsStringAsync();
                     JObject peopleJson = JObject.Parse(responseContent);
                     People peep = peopleParser.JsonToObject(peopleJson);
+                    Trace.WriteLine("Model.Firebase.PeopleClient.PostPeopleASync(people) : complated");
                     return peep;
                 }
-                if (AppConfig.IsDebug())
-                {
-                    Trace.WriteLine(responseTask.Result.StatusCode + " : " + responseTask.Result.RequestMessage);
-                }
-                return null;
+                Debug.WriteLine("Request Failed:\n\t"+responseTask.Result.StatusCode + " : " + responseTask.Result.RequestMessage);
+                throw new FireBaseFailureException() { 
+                    Code = responseTask.Result.StatusCode.ToString(),
+                    Message = responseTask.Result.RequestMessage.ToString()
+                };
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.StackTrace);
-                throw e;
+                throw;
             }
         }
 
-        public async Task<People> PatchPeopleAsync()
-        {
-            throw new NotImplementedException();
-        }
+        //public async Task<People> PatchPeopleAsync()
+        //{
+        //    throw new NotImplementedException();
+        //}
     }
 }

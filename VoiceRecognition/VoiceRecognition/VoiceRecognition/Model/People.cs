@@ -9,7 +9,7 @@ namespace VoiceRecognition.Model
         public string Url { get; set; }
         public DateTime CreateTime { get; set; }
         public DateTime UpdateTime { get; set; }
-        public string picUrl { get; set; }
+        public string PicUrl { get; set; }
         public Boolean HavePic { get; set; }
         public string SpeakerId { get; set; }
         public string Id { get; set; }

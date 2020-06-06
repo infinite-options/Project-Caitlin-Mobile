@@ -26,14 +26,14 @@ namespace VoiceRecognition.Services.Firebase
             {
                 return person;
             }
-            person.FirstName = fields["name"] == null ? null : fields["name"]["stringValue"].ToString();
-            person.Id = fields["unique_id"] == null ? null : fields["unique_id"]["stringValue"].ToString();
-            person.HavePic = fields["have_pic"] == null ? false : (Boolean) fields["have_pic"]["booleanValue"];
-            person.SpeakerId = fields["speaker_id"] == null ? null : fields["speaker_id"]["stringValue"].ToString();
-            person.picUrl = fields["pic"] == null ? null : fields["pic"]["stringValue"].ToString();
-            person.Important = fields["important"] == null ? false : (Boolean) fields["important"]["booleanValue"];
-            person.PhoneNumber = fields["phone_number"] == null ? null : fields["phone_number"]["stringValue"].ToString();
-            person.Relation = fields["relationship"] == null ? null : fields["relationship"]["stringValue"].ToString();
+            person.FirstName = fields["name"]?["stringValue"].ToString();
+            person.Id = fields["unique_id"]?["stringValue"].ToString();
+            person.HavePic = fields["have_pic"] == null ? false : (bool) fields["have_pic"]["booleanValue"];
+            person.SpeakerId = fields["speaker_id"]?["stringValue"].ToString();
+            person.PicUrl = fields["pic"]?["stringValue"].ToString();
+            person.Important = fields["important"] == null ? false : (bool) fields["important"]["booleanValue"];
+            person.PhoneNumber = fields["phone_number"]?["stringValue"].ToString();
+            person.Relation = fields["relationship"]?["stringValue"].ToString();
             return person;
         }
 
