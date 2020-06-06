@@ -163,6 +163,11 @@
       <Project>{A11D0612-A51D-412B-9564-23C7D605AF16}</Project>
       <Name>ProjectCaitlin</Name>
     </ProjectReference>
+    <ProjectReference Include="..\ProjectCaitlinWatchApp\ProjectCaitlinWatchApp.WatchOSApp\ProjectCaitlinWatchApp.WatchOSApp.csproj">
+      <IsWatchApp>true</IsWatchApp>
+      <Project>{DFE40547-C665-427F-9DB0-D7D8E48510C1}</Project>
+      <Name>ProjectCaitlinWatchApp.WatchOSApp</Name>
+    </ProjectReference>
   </ItemGroup>
   <ItemGroup>
     <BundleResource Include="Resources\bear.jpg" />
