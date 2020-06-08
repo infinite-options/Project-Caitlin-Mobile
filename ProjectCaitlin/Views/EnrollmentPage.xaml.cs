@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectCaitlin.ViewModel;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -22,7 +23,7 @@ namespace VoiceRecognition.View
         }
 
         string tempAzSpeakerId { get; set; }
-
+        // Simply add the user to firebase
         private async void AddFireBasePeople(object sender, EventArgs e)
         {
             //await Navigation.PushAsync(new PeoplePage());
@@ -37,6 +38,7 @@ namespace VoiceRecognition.View
             People result = await en.AddFireBasePeople(people);
         }
 
+        // Enroll User to Azure then add it to firebase
         private void CreateNewUser(object sender, EventArgs e)
         {
             string name = Name.Text;

@@ -60,14 +60,12 @@ namespace ProjectCaitlin.Services
                     string fileName = product.Filename;
                     storePicUri = product.BaseUrl.ToString();
                     description = product.Description + "";
-
                     App.User.allDates.Add(date);
                     subList.Add(product.BaseUrl.ToString());
                     subList.Add(date);
                     subList.Add(description);
                     subList.Add(creationTime);
                     subList.Add(id);
-
                     bool post = true;
                     foreach (photo photo in App.User.FirebasePhotos)
                     {
@@ -75,18 +73,17 @@ namespace ProjectCaitlin.Services
                             post = false;
                     }
 
-                    // If there is a photo in Google but not in Firebase, post it.
                     if (post)
-                    {
-                        //Post photo to Firebase
-                        await FirebaseFunctionsService.PostPhoto(id, description, " ");
-                        subList.Add("");
-                    }
-                    else
                     {
                         //Get photo from Firebase and add note
                         photo photo = await FirebaseFunctionsService.GetPhoto(id);
                         subList.Add(photo.note);
+                    }
+                    else
+                    {
+                        //Post photo to Firebase
+                        await FirebaseFunctionsService.PostPhoto(id, description, " ");
+                        subList.Add("");
                     }
                     App.User.photoURIs.Add(subList);
                     itemList.Add(subList);

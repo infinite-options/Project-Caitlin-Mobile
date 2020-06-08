@@ -11,7 +11,7 @@
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#1A1827">
     <ContentPage.Content>
-        <ScrollView>
+        <ScrollView >
             <StackLayout
             Margin="0,40,10,0">
                 <StackLayout
@@ -53,8 +53,8 @@
 
                     <StackLayout >
                         <StackLayout Orientation="Horizontal">
-                            <ImageButton Source="waveformicon.png" HeightRequest="50" WidthRequest="50" CornerRadius="10" Margin="15" Clicked ="ImageButton_Click"  BackgroundColor="Transparent" />
-                            <Button Text="Check identified voice list" CornerRadius="10" Margin="5" Clicked ="RecordButton_Click" TextColor="White"  BackgroundColor="#59556D" />
+                            <ImageButton Source="waveformicon.png"  WidthRequest="50" CornerRadius="10" Margin="25" Clicked ="ImageButton_Click"  BackgroundColor="Transparent" />
+                            <Button x:Name="tapButton" Text="Identify Speaker" CornerRadius="10" Margin="5" Clicked ="RecordButton_Click" TextColor="White"  BackgroundColor="#59556D" />
                         </StackLayout>
                         <StackLayout>
                             <Button Text="View Today's List" CornerRadius="10" Margin="5" Clicked ="btn1Clicked" TextColor="White"  BackgroundColor="#59556D" />

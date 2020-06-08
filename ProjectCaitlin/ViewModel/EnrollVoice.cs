@@ -18,19 +18,18 @@ using VoiceRecognition.Services.Firebase;
 using VoiceRecognition.Model;
 using System.Linq.Expressions;
 using System.Security.Cryptography;
-using ProjectCaitlin;
+using VoiceRecognition.ViewModel;
 
-namespace VoiceRecognition.ViewModel
+namespace ProjectCaitlin.ViewModel
 {
     public class EnrollVoice: ViewModelBase
     {
         private static readonly Profile UNKNOWN_PROFILE = new Profile { IdentificationProfileId = "00000000-0000-0000-0000-000000000000" };
         private readonly AudioRecorderService RecorderClient;
         //TODO: HardCoded Value, Need to have a Session Object
+        private PeopleClient PeopleService = new PeopleClient("oJ0ZrTo0R3dIbxiNpC1O");
         //private PeopleClient PeopleService = new PeopleClient("7R6hAVmDrNutRkG3sVRy");
-        private PeopleClient PeopleService = new PeopleClient("Ph2u3nRSZeYsWHitLSnv");
-        //private PeopleClient PeopleService = new PeopleClient(App.user.id);
-        Stopwatch sw;
+        readonly Stopwatch sw;
 
         private readonly IdentityProfileClient IdClient;
         private static List<Profile> _AzProfiles = new List<Profile>();
@@ -43,11 +42,15 @@ namespace VoiceRecognition.ViewModel
         private string _Message = "Hello!";
         public string Message { get { return _Message; } set { _Message = value; NotifyPropertyChanged("Message"); } }
         private Boolean _DisplayForm = false;
-        public Boolean DisplayForm { get { return _DisplayForm; } set { _DisplayForm = value; NotifyPropertyChanged("DisplayForm"); } }
+        public Boolean DisplayForm { get { return _DisplayForm; } set { if (_DisplayForm != value) { _DisplayForm = value; NotifyPropertyChanged("DisplayForm"); } } }
         private Boolean _DisplayProfile = false;
-        public Boolean DisplayProfile { get { return _DisplayProfile; } set { _DisplayProfile = value; NotifyPropertyChanged("DisplayProfile"); } }
+        public Boolean DisplayProfile { get { return _DisplayProfile; } set { if (_DisplayProfile != value) { _DisplayProfile = value; NotifyPropertyChanged("DisplayProfile"); } } }
 
-        // TODO: Please Check if needed in this class
+        private PeopleDto _peopleDto= null;
+        public PeopleDto peopleDto { get { return _peopleDto; } set { _peopleDto = value; NotifyPropertyChanged("peopleDto"); } }
+
+        public delegate void Failed(Exception x);
+
         INavigation Navigation;
 
         private List<Profile> AzProfiles
@@ -67,6 +70,7 @@ namespace VoiceRecognition.ViewModel
 
         public EnrollVoice()
         {
+            Trace.WriteLine("Intializing EnrollVoice() started");
             Commands.Add("StartRecording", new Command(CMDStartRecording));
             Commands.Add("StopRecording", new Command(CMDStopRecording));
             Commands.Add("IdentifyAndEnroll", new Command(CMDIdentifyAndEnroll));
@@ -83,12 +87,15 @@ namespace VoiceRecognition.ViewModel
             };
             sw = new Stopwatch();
             //RecorderClient.AudioInputReceived += EnrollIdentifyWrapper;
-            RefreshAzProfiles();
+            _ = RefreshAzProfiles(SpeakerIdListInitializationFailFlow);
+            Trace.WriteLine("Intializing EnrollVoice() Completed");
         }
 
         public EnrollVoice(INavigation navigation) : this()
         {
+            Trace.WriteLine("Intializing EnrollVoice(navigation) started");
             Navigation = navigation;
+            Trace.WriteLine("Intializing EnrollVoice(navigation) ended");
         }
 
         /* --------- 
@@ -114,6 +121,8 @@ namespace VoiceRecognition.ViewModel
 
         public void CMDIdentifyAndEnroll()
         {
+            DisplayProfile = false;
+            DisplayForm = false;
             RecorderClient.AudioInputReceived += EnrollIdentifyWrapper;
             _ = RecorderClient.StartRecording();
             Message = "Identify and Enroll";
@@ -133,36 +142,54 @@ namespace VoiceRecognition.ViewModel
 
         public async Task StartRecordingAsync()
         {
+            Trace.WriteLine("Initiating Start Audio Recording");
             _ = RecorderClient.StartRecording();
         }
 
         public async Task StopRecordingAsync()
         {
+            Trace.WriteLine("Intiating Stop recording intrupt");
             _ = RecorderClient.StopRecording();
         }
 
         public async Task<People> AddFireBasePeople(People people)
         {
-            printTraceMsg("Check if people present: " + (people != null));
-            DisplayForm = false;
-            printTraceMsg("TempProfile if people present: " + (TempProfile != null));
-            people.SpeakerId = TempProfile.IdentificationProfileId;
-            printTraceMsg("Adding entry to Firebase Name: "+people.FirstName+"\nSpeaker Id: "+people.SpeakerId);
-            sw.Start();
-            People peep = await PeopleService.PostPeopleAsync(people);
-            sw.Stop();
-            if (peep == null)
+            try
             {
-                printTraceMsg("Unable to add a person to firebase " + "Time Elapsed: " + sw.ElapsedMilliseconds);
-                sw.Reset();
-            }
-            else
+                Trace.WriteLine("Async : AddFireBasePeople started");
+                //PrintTraceMsg("Check if people present: " + (people != null));
+                Trace.WriteLine("Check if people present: " + (people != null));
+                DisplayForm = false;
+                Trace.WriteLine("TempProfile if people present: " + (TempProfile != null));
+                people.SpeakerId = TempProfile.IdentificationProfileId;
+                Trace.WriteLine("Adding entry to Firebase \n\tName: " + people.FirstName + "\n\tSpeaker Id: " + people.SpeakerId);
+                sw.Start();
+                People peep = await PeopleService.PostPeopleAsync(people);
+                sw.Stop();
+                if (peep == null)
+                {
+                    Trace.WriteLine("Unable to add a person to firebase " + "Time Elapsed: " + sw.ElapsedMilliseconds);
+                    //PrintTraceMsg("Unable to add a person to firebase " + "Time Elapsed: " + sw.ElapsedMilliseconds);
+                    sw.Reset();
+                }
+                else
+                {
+                    Trace.WriteLine("Adding entry Firebase Complete: " + people.Url + "Time Elapsed: " + sw.ElapsedMilliseconds);
+                    //PrintTraceMsg("Adding entry Firebase Complete: " + people.Url + "Time Elapsed: " + sw.ElapsedMilliseconds);
+                    sw.Reset();
+                }
+                AzIdFound_FirebaseFound(peep);
+                Trace.WriteLine("Async : AddFireBasePeople ended");
+                return peep;
+            }catch(Exception e)
             {
-                printTraceMsg("Adding entry Firebase Complete: " + people.Url + "Time Elapsed: " + sw.ElapsedMilliseconds);
+                sw.Stop();
                 sw.Reset();
+                Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.StackTrace);
+                Message = "Something went wrong";
+                throw;
             }
-            AzIdFound_FirebaseFound(peep);
-            return peep;
         }
 
         /* ----------------------
@@ -175,19 +202,27 @@ namespace VoiceRecognition.ViewModel
             Profile profile;
             try
             {
+                Trace.WriteLine("Async : CreateAzProfile started");
+                sw.Start();
                 var profileTask = IdClient.CreateProfileAsync();
                 profileTask.Wait();
+                sw.Stop();
+                sw.Reset();
                 profile = profileTask.Result;
+                Trace.WriteLine("Async : CreateAzProfile completed");
                 return profile;
             }
             catch(Exception e)
             {
+                sw.Stop();
+                sw.Reset();
                 Console.WriteLine(e);
-                throw e;
+                throw;
             }
         }
 
-        private async Task<Profile> EnrollNew(object sender, string audioFilePath)
+        // rename sender to _1 to suppressing warning
+        private async Task<Profile> EnrollNew(object _1, string audioFilePath)
         {
             if (string.IsNullOrEmpty(audioFilePath))
             {
@@ -209,31 +244,48 @@ namespace VoiceRecognition.ViewModel
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw e;
+                throw;
             }
             return profile;
         }
 
-        private async Task<Profile> EnrollExisting(object sender, Profile profile, string audioFilePath)
+        // rename sender to _1 to suppress warning
+        private async Task<Profile> EnrollExisting(object _1, Profile profile, string audioFilePath)
         {
+            Trace.WriteLine("Async: EnrollExisting Started");
             if (string.IsNullOrEmpty(audioFilePath) || profile==null)
             {
+                if (profile == null)
+                {
+                    Trace.WriteLine("EnrollExisting: Profile is null");
+                }
+                if (string.IsNullOrEmpty(audioFilePath))
+                {
+                    Trace.WriteLine("EnrollExisting: audio file path is empty or null");
+                }
+                Trace.WriteLine("Async: EnrollExisting Ended");
                 return null;
             }
             try
             {
+                Trace.WriteLine("Initiating Enrollment process");
+                sw.Start();
                 var result = IdClient.Enroll(profile, audioFilePath);
+                sw.Stop();
+                Trace.WriteLine("Enrollment Process completed: "+sw.ElapsedMilliseconds+" millisecs");
+                sw.Reset();
                 //resultTask.Wait();
                 //var result = resultTask.Result;
                 if (result.Status== Status.notstarted || result.Status == Status.running)
                 {
-                    Message = "Request timed out please try again!";
+                    Message = "Request timed out or Maximum trails reached, please try again!";
                 }else if(result == null || result.Status== Status.failed)
                 {
                     Message = "Something went wrong Please try again!";
                 }
                 else if(result.Status== Status.succeeded)
                 {
+                    await RefreshAzProfiles((Exception e) => { throw e; });
                     Message = result.ProcessingResult.EnrollmentStatus.ToString();
                     profile.RemainingEnrollmentSpeechTime = result.ProcessingResult.RemainingEnrollmentSpeechTime;
                     profile.EnrollmentStatus = result.ProcessingResult.EnrollmentStatus;
@@ -244,22 +296,26 @@ namespace VoiceRecognition.ViewModel
             catch (Exception e)
             {
                 Console.WriteLine(e);
-                throw e;
+                throw;
             }
+            Trace.WriteLine("Async: EnrollExisting Completed");
             return profile;
         }
 
-        private async Task<Profile> IdentifyProfile(object sender, string audioFilePath)
+        // rename sender to _1 to suppressing warning
+        private async Task<Profile> IdentifyProfile(object _1, string audioFilePath)
         {
+            Trace.WriteLine("Async EnrollVoice.IdentifyProfile : Started");
             if (string.IsNullOrEmpty(audioFilePath))
             {
                 //Message = "Try speaking Louder";
-                await StartRecordingAsync();
+                //await StartRecordingAsync();
+                PrintTraceMsg("audio File Path empty or null");
                 return null;
             }
 
             IEnumerable<Profile> filteredProfiles = GetAzProfileWthEnrollmentStatus(EnrollmentStatus.Enrolled);
-
+            PrintTraceMsg("Filter Profile Complete");
             Profile prof = null;
             foreach (var batch in filteredProfiles.Batch(10))
             {
@@ -290,7 +346,7 @@ namespace VoiceRecognition.ViewModel
                 catch (Exception e)
                 {
                     Trace.WriteLine(e.StackTrace);
-                    throw e;
+                    throw;
                 }
             }
             if (prof != null)
@@ -298,48 +354,71 @@ namespace VoiceRecognition.ViewModel
                 //Message = "We found you in out database";
                 return prof;
             }
+            Trace.WriteLine("Async EnrollVoice.IdentifyProfile : Completed");
             return UNKNOWN_PROFILE;
 
         }
 
         public async Task<string> IdentifyAndEnroll(object sender, string audioFilePath)
         {
-            printTraceMsg("Starting to Identify");
-            sw.Start();
-            Profile p = await IdentifyProfile(sender, audioFilePath);
-            sw.Stop();
-            printTraceMsg("Identification of voice Complete: " + sw.ElapsedMilliseconds);
-            sw.Reset();
-            //Profile p = new Profile()
-            //{
-            //    IdentificationProfileId = "00bb96ec-8089-4f95-999e-8a4af16c4680"
-            //};
-            //Profile p = UNKNOWN_PROFILE;
-            if (p == null) 
+            try
             {
-                Message = "Audio length not enough please try again!";
-                return null; 
-            }
-            if (p != UNKNOWN_PROFILE)
-            {
-                People peep = await PeopleService.GetPeopleFromSpeakerIdAsync(p.IdentificationProfileId);
-                if (peep != null)
+
+                PrintTraceMsg("Starting to Identify");
+                sw.Start();
+                Profile p = await IdentifyProfile(sender, audioFilePath);
+                sw.Stop();
+                PrintTraceMsg("Identification of voice Complete: " + sw.ElapsedMilliseconds);
+                sw.Reset();
+                //Profile p = new Profile()
+                //{
+                //    IdentificationProfileId = "00bb96ec-8089-4f95-999e-8a4af16c4680"
+                //};
+                //Profile p = UNKNOWN_PROFILE;
+                if (p == null)
                 {
-                    AzIdFound_FirebaseFound(peep);
+                    PrintTraceMsg("NULL Profile branch");
+                    Message = "Audio length not enough please try again!";
+                    return null;
+                }
+                if (p != UNKNOWN_PROFILE)
+                {
+                    PrintTraceMsg("KNOWN Profile branch");
+                    People peep = await PeopleService.GetPeopleFromSpeakerIdAsync(p.IdentificationProfileId);
+                    PrintTraceMsg("Firebase look up complete");
+                    if (peep != null)
+                    {
+                        AzIdFound_FirebaseFound(peep);
+                    }
+                    else
+                    {
+                        if (AppConfig.IsDebug()) { Trace.WriteLine("Identification profile Id: " + p.IdentificationProfileId); }
+                        TempProfile = p;
+                        TempAudioAddress = audioFilePath;
+                        AzIdFound_FirebaseNotFound(p);
+                    }
+                    return "User Found";
+                }
+                PrintTraceMsg("UNKNOWN PROFILE branch");
+                // TODO: Check what to do when unable to find in Azure
+                //AzIdFound_NotCreatedNew(audioFilePath);
+                TempAudioAddress = audioFilePath;
+                if (CheckAudioLength(audioFilePath, 16, 1, 16000) >= 29)
+                {
+                    PrintTraceMsg("UNKNOWN PROFILE long audio branch");
+                    AzIdNotFound();
                 }
                 else
                 {
-                    if (AppConfig.IsDebug()) { Trace.WriteLine("Identification profile Id: "+p.IdentificationProfileId); }
-                    TempProfile = p;
-                    TempAudioAddress = audioFilePath;
-                    AzIdFound_FirebaseNotFound(p);
+                    PrintTraceMsg("UNKNOWN PROFILE small audio branch");
+                    Message = "Unable to recognize the voice.\nLength of audio not long enough to enroll";
                 }
-                return "User Found";
+                
+            } catch(Exception e)
+            {
+                Debug.WriteLine(e.StackTrace);
+                Message = "Something went wrong!\nPlease try recording the audio again";
             }
-            // TODO: Check what to do when unable to find in Azure
-            //AzIdFound_NotCreatedNew(audioFilePath);
-            TempAudioAddress = audioFilePath;
-            AzIdNotFound();
             return "User Creation Initiated";
         }
 
@@ -350,8 +429,7 @@ namespace VoiceRecognition.ViewModel
         {
             try
             {
-                _ = IdentifyAndEnroll(sender, audioFilePath);
-                
+                _ = await IdentifyAndEnroll(sender, audioFilePath);
 
             }
             catch(Exception e)
@@ -399,7 +477,7 @@ namespace VoiceRecognition.ViewModel
         /*
          * Helper Functions
          */
-        private async void RefreshAzProfiles()
+        private async Task<Boolean> RefreshAzProfiles(Failed err)
         {
             try
             {
@@ -408,8 +486,10 @@ namespace VoiceRecognition.ViewModel
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
-                throw e;
+                err(e);
+                return false;
             }
+            return true;
         }
 
         private IEnumerable<Profile> GetAzProfileWthEnrollmentStatus(EnrollmentStatus status)
@@ -426,8 +506,10 @@ namespace VoiceRecognition.ViewModel
         {
             DisplayForm = false;
             PictureSource = people.picUrl;
-            Message = "Name: " + people.FirstName + "\nImportant: " + people.Important + "\nPhone Number: " + people.PhoneNumber + "\nSpeaker Id: " + people.SpeakerId;
+            //Message = "Name: " + people.FirstName + "\nImportant: " + people.Important + "\nPhone Number: " + people.PhoneNumber + "\nSpeaker Id: " + people.SpeakerId;
+            Message = "Success found the person!";
             DisplayProfile = true;
+            peopleDto = new PeopleDto(people) { AzureId = people.SpeakerId };
             //Page profilePage = new ProfielPage()
             //{
             //    FirstName = people.FirstName,
@@ -466,23 +548,24 @@ namespace VoiceRecognition.ViewModel
             {
                 //Task<float> secsTask = CheckAudioLength(TempAudioAddress, 16, 1, 16000);
                 secs = CheckAudioLength(TempAudioAddress, 16, 1, 16000);
+                PrintTraceMsg("File length:" + secs + "sec");
                 //secsTask.Wait();
                 //float secs = secsTask.Result;
-                if (secs > min_enroll_sec_recording)
+                if (secs >= min_enroll_sec_recording)
                 {
-                    printTraceMsg("Starting Create Azure Profile");
+                    PrintTraceMsg("Starting Create Azure Profile");
                     sw.Start();
                     Task<Profile> createProfileTask = CreateAzProfile();
                     createProfileTask.Wait();
                     sw.Stop();
-                    printTraceMsg("Create Azure Profile Complete.\n New Id:"+createProfileTask.Result.IdentificationProfileId+"Time Elapsed: "+sw.ElapsedMilliseconds);
+                    PrintTraceMsg("Create Azure Profile Complete.\n New Id:"+createProfileTask.Result.IdentificationProfileId+"Time Elapsed: "+sw.ElapsedMilliseconds);
                     sw.Reset();
-                    printTraceMsg("Starting Enrolling Azure Profile Id:" + createProfileTask.Result.IdentificationProfileId);
+                    PrintTraceMsg("Starting Enrolling Azure Profile Id:" + createProfileTask.Result.IdentificationProfileId);
                     sw.Start();
                     Task<Profile> enrollTask = EnrollExisting(null,createProfileTask.Result,TempAudioAddress);
                     enrollTask.Wait();
                     sw.Stop();
-                    printTraceMsg("Enroll Azure Profile Complete.\n Id:" + createProfileTask.Result.IdentificationProfileId +
+                    PrintTraceMsg("Enroll Azure Profile Complete.\n Id:" + createProfileTask.Result.IdentificationProfileId +
                         "\n Enrollment Status: "+createProfileTask.Result.EnrollmentStatus +
                         "\n Remaining Enrollment Speech Time: "+ createProfileTask.Result.RemainingEnrollmentSpeechTime+
                         "\n Enrollment Speech Time: " + createProfileTask.Result.EnrollmentSpeechTime +
@@ -522,7 +605,15 @@ namespace VoiceRecognition.ViewModel
 
         public void AzIdNotFound_createNewProfileBackground(People people)
         {
-            Task.Run(()=> { AzIdNotFound_createNewProfile(people); });
+            try
+            {
+                Task.Run(() => { AzIdNotFound_createNewProfile(people); });
+            }catch(Exception e)
+            {
+                Debug.WriteLine(e.StackTrace);
+                Message = "Something went wrong, Pelease try recording your voice again and then add the person";
+            }
+            
         }
 
         public async Task<List<Profile>> AzIdRemove(List<Profile> profiles)
@@ -542,7 +633,7 @@ namespace VoiceRecognition.ViewModel
                 catch(Exception e)
                 {
                     Debug.WriteLine(e.Message);
-                    throw e;
+                    throw;
                 }
             }
             return deleted;
@@ -570,16 +661,25 @@ namespace VoiceRecognition.ViewModel
                 Trace.WriteLine(ex.StackTrace);
                 throw;
             }
-
+            
             return Secondslength;
         }
 
-        private void printTraceMsg(string msg)
+        private void PrintTraceMsg(string msg)
         {
             if (AppConfig.IsDebug())
             {
                 Trace.WriteLine("################################################\n"+msg+"\n################################################");
             }
+        }
+
+        public void SpeakerIdListInitializationFailFlow(Exception e)
+        {
+            if (AppConfig.IsDebug())
+            {
+                Trace.WriteLine(e.StackTrace);
+            }
+            Message = "Unable to load the list:";
         }
     }
 }

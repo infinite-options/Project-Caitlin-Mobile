@@ -15,15 +15,34 @@ namespace ProjectCaitlin.ViewModel
     {
         public ObservableCollection<object> Items { get; set; }
         List<People> list;
-        public VoiceIdentificationViewModel()
+        public VoiceIdentificationViewModel(People people)
         {
+            Items = new ObservableCollection<object>();
+            List<People> list = new List<People>();
+
+            String pic;
+            if (people.HavePic)
+                pic = people.picUrl;
+            else
+                pic = "aboutmeiconnotext.png";
+
+            Items.Add(new {
+                Source = pic,
+                Name = people.FirstName + " " + people.LastName,
+                Relationship = people.Relation,
+                PhoneNumber = people.PhoneNumber
+            });
+        }
+        public VoiceIdentificationViewModel() {
             Items = new ObservableCollection<object>();
             List<People> list = new List<People>();
             loadPeople();
         }
 
+
         public async void loadPeople() {
             PeopleClient peopleClient = new PeopleClient("Ph2u3nRSZeYsWHitLSnv");
+            //PeopleClient peopleClient = new PeopleClient(App.User.id);
             list = await peopleClient.GetAllPeopleAsync();
             Console.WriteLine("list count : " + list.Count);
 

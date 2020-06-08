@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-namespace VoiceRecognition.ViewModel
+namespace ProjectCaitlin.ViewModel
 {
     public static class ExtensionMethods
     {

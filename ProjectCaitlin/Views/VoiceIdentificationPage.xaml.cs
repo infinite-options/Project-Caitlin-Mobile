@@ -4,7 +4,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using VoiceRecognition.Model;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -24,12 +24,16 @@ namespace ProjectCaitlin.Views
             BindingContext = pageModel;
         }
 
-        //single person identified page
-        /*public VoiceIdentificationPage(string n)
+        public VoiceIdentificationPage(People people)
         {
             InitializeComponent();
-            pageModel = new VoiceIdentificationViewModel(n);
+            pageModel = new VoiceIdentificationViewModel(people);
             BindingContext = pageModel;
-        }*/
+        }
+
+        private async void okButton(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new GreetingPage());
+        }
     }
 }

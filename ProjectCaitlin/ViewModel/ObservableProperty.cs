@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Text;
 
-namespace VoiceRecognition.ViewModel
+namespace ProjectCaitlin.ViewModel
 {
     public class ObservableProperty : INotifyPropertyChanged
     {

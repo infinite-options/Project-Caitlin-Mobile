@@ -36,9 +36,10 @@ namespace ProjectCaitlin
 			InitializeComponent();
         }
 
-		async void LoginClicked(object sender, EventArgs e)
+		void LoginClicked(object sender, EventArgs e)
         {
-			await Navigation.PushAsync(new GreetingPage());
+			//await Navigation.PushAsync(new GreetingPage());
+
 			//testing for voicepage
 			//await Navigation.PushAsync(new VoiceIdentificationPage());
 
@@ -134,6 +135,7 @@ namespace ProjectCaitlin
 					//Query for email in Users collection
 					App.User.email = userJson["email"].ToString();
                     App.User.id = await firebaseFunctionsService.FindUserDocAsync(App.User.email);
+					Console.WriteLine("First user id : " + App.User.id);
 
                     if (App.User.id == "")
                     {

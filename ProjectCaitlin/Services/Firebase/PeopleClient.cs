@@ -30,6 +30,7 @@ namespace VoiceRecognition.Services.Firebase
         public PeopleClient(string UserId) : this()
         {
             this.UserId = UserId;
+            Console.WriteLine("USER ID : " + UserId);
             string project_base_url = FirebaseFirestore.BASE_URL + FirebaseFirestore.PROJECT_URL;
             client = new HttpClient
             {
@@ -48,7 +49,10 @@ namespace VoiceRecognition.Services.Firebase
             try
             {
                 List<People> AllPeople = new List<People>();
+
+                //string uri = client.BaseAddress + FirebaseFirestore.USER_URL + "/" + "Ph2u3nRSZeYsWHitLSnv" + FirebaseFirestore.PEOPLE_URL;
                 string uri = client.BaseAddress + FirebaseFirestore.USER_URL + "/" + UserId + FirebaseFirestore.PEOPLE_URL;
+
                 Task<HttpResponseMessage> responseTask = client.GetAsync(uri);
                 responseTask.Wait();
                 if (responseTask.Result.StatusCode == System.Net.HttpStatusCode.OK)

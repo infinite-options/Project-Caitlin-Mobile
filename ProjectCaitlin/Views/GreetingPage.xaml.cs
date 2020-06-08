@@ -9,6 +9,7 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Plugin.AudioRecorder;
 using VoiceRecognition.View;
+using VoiceRecognition.ViewModel;
 
 namespace ProjectCaitlin.Views
 {
@@ -17,6 +18,7 @@ namespace ProjectCaitlin.Views
     {
 
         public GreetingViewModel greetingViewModel;
+
 
         TimeSpan morningStart = new TimeSpan(6, 0, 0);
         TimeSpan morningEnd = new TimeSpan(11, 0, 0);
@@ -32,6 +34,7 @@ namespace ProjectCaitlin.Views
         {
 
             InitializeComponent();
+
             greetingViewModel = new GreetingViewModel(this);
             BindingContext = greetingViewModel;
 
@@ -116,7 +119,23 @@ namespace ProjectCaitlin.Views
 
         async void RecordButton_Click(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new VoiceIdentificationPage());
+            if (tapButton.Text == "Identify Speaker")
+            {
+                //start recording
+                greetingViewModel.CMDIdentifyAndEnroll();
+
+                tapButton.Text = "Listening... Tap to Stop";
+            }
+            else if(tapButton.Text == "Listening... Tap to Stop")
+            {
+                greetingViewModel.CMDStopRecording();
+                tapButton.Text = "Identify Speaker";
+            }
+
+
+
+            //show enrolled voice list
+            //await Navigation.PushAsync(new VoiceIdentificationPage());
         }
 
         async void ImageButton_Click(object sender, EventArgs e)

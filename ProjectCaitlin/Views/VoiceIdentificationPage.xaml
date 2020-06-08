@@ -28,7 +28,7 @@
     <ContentPage.Content>
         <StackLayout VerticalOptions="FillAndExpand">
             <StackLayout  Padding="0, 50, 0, 50">
-                <Label Text="Identified Person List" FontSize="30" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" TextColor="Black"/>
+                <Label Text="Identified Person" FontSize="30" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" TextColor="Black"/>
             </StackLayout>
             <cards:CoverFlowView
                     PositionShiftValue="50"
@@ -54,7 +54,7 @@
                                 IsClippedToBounds="False"
                                 HasShadow="False"
                                 CornerRadius="10"
-                                BackgroundColor="{Binding BackgroundColor}">
+                                BackgroundColor="White">
 
                                 <StackLayout
                                 Padding="10">
@@ -63,7 +63,7 @@
                                         Source="{Binding Source}"
                                         HeightRequest="200"
                                         WidthRequest="200"
-                                            Opacity="{Binding GrImageOpactiy}">
+                                        >
                                             <ffimage:CachedImage.Transformations>
                                                 <fftransformations:CircleTransformation/>
                                             </ffimage:CachedImage.Transformations>
@@ -106,7 +106,8 @@
                 </cards:CoverFlowView.ItemTemplate>
                 <controls:IndicatorsControl SelectedIndicatorStyle="{StaticResource ActiveIndicator}" UnselectedIndicatorStyle="{StaticResource InactiveIndicator}"/>
             </cards:CoverFlowView>
-            <StackLayout VerticalOptions="Fill" Padding="0, 100, 0, 0">
+            <StackLayout VerticalOptions="Fill" Padding="0, 0, 0, 50">
+                <Button Text="Ok" HorizontalOptions="Center" VerticalOptions="Center" Clicked="okButton"/>
             </StackLayout>
         </StackLayout>
         

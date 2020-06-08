@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Text;
 using System.Windows.Input;
 
-namespace VoiceRecognition.ViewModel
+namespace ProjectCaitlin.ViewModel
 {
     public abstract class ViewModelBase : ObservableProperty
     {

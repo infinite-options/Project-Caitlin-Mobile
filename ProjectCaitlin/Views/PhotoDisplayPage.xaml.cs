@@ -337,7 +337,7 @@ namespace ProjectCaitlin
                 {
                     list[5] = text;
                     await FirebaseFunctionsService.PostPhoto(list[4], list[2], text);
-                    Console.WriteLine(list[4] + "Description : " + text);
+                    Console.WriteLine(list[4] + "note : " + text);
                 }
             }
             disableBackButton = true;

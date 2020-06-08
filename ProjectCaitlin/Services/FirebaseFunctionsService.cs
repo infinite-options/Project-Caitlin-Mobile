@@ -221,7 +221,7 @@ namespace ProjectCaitlin.Services
                     photo.id = photo_field["photo_id"]+"";
                     photo.description = photo_field["description"]+"";
                     photo.note = photo_field["notes"]+"";
-
+                    
                     App.User.FirebasePhotos.Add(photo);
                 }
                 catch
