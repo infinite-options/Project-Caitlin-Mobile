@@ -3,15 +3,23 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using ProjectCaitlin.ViewModel;
+using ProjectCaitlin.Models;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
+using Plugin.AudioRecorder;
+using VoiceRecognition.View;
+using VoiceRecognition.ViewModel;
 
 namespace ProjectCaitlin.Views
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class GreetingPage : ContentPage
     {
+
+        public GreetingViewModel greetingViewModel;
+
+
         TimeSpan morningStart = new TimeSpan(6, 0, 0);
         TimeSpan morningEnd = new TimeSpan(11, 0, 0);
         TimeSpan afternoonStart = new TimeSpan(11, 0, 0);
@@ -20,20 +28,41 @@ namespace ProjectCaitlin.Views
         TimeSpan eveningEnd = new TimeSpan(23, 59, 59);
         TimeSpan nightStart = new TimeSpan(0, 0, 0);
         TimeSpan nightEnd = new TimeSpan(6, 0, 0);
+        AudioRecorderService recorder;
+
         public GreetingPage()
         {
 
             InitializeComponent();
+
+            greetingViewModel = new GreetingViewModel(this);
+            BindingContext = greetingViewModel;
+
             var navigationPage = Application.Current.MainPage as NavigationPage;
             navigationPage.BarBackgroundColor = Color.FromHex("#E9E8E8");
             SetupUI();
+
+            recorder = new AudioRecorderService
+            {
+                StopRecordingOnSilence = true, //will stop recording after 2 seconds (default)
+                StopRecordingAfterTimeout = true,  //stop recording after a max timeout (defined below)
+                TotalAudioTimeout = TimeSpan.FromSeconds(10) //audio will stop recording after 15 seconds
+            };
+
         }
         private void SetupUI()
         {
-            UserImage.Source = App.User.Me.pic;
+            UserImage.Source = App.User.aboutMe.pic;
             GreetingsTitleLabel.Text = GetTitleDayMessage();
-            MessageCardLabel.Text = App.User.Me.message_card;
-            MessageLabel.Text = App.User.Me.message_day;
+            FirstNameLabel.Text = App.User.firstName;
+            MessageCardLabel.Text = App.User.aboutMe.message_card;
+            MessageLabel.Text = App.User.aboutMe.message_day;
+
+            if (App.User.people.Count == 0)
+            {
+                importantPeopleSL.IsVisible = false;
+            }
+
         }
 
         public String GetTitleDayMessage()
@@ -81,11 +110,38 @@ namespace ProjectCaitlin.Views
 
         async void LogoutBtnClick(object sender, EventArgs e)
         {
-            Application.Current.Properties.Remove("accessToken");
+            Application.Current.Properties.Remove("access_token");
             Application.Current.Properties.Remove("refreshToken");
             Application.Current.Properties.Remove("user_id");
 
             await Navigation.PushAsync(new LoginPage());
+        }
+
+        async void RecordButton_Click(object sender, EventArgs e)
+        {
+            if (tapButton.Text == "Identify Speaker")
+            {
+                //start recording
+                greetingViewModel.CMDIdentifyAndEnroll();
+
+                tapButton.Text = "Listening... Tap to Stop";
+            }
+            else if(tapButton.Text == "Listening... Tap to Stop")
+            {
+                greetingViewModel.CMDStopRecording();
+                tapButton.Text = "Identify Speaker";
+            }
+
+
+
+            //show enrolled voice list
+            //await Navigation.PushAsync(new VoiceIdentificationPage());
+        }
+
+        async void ImageButton_Click(object sender, EventArgs e)
+        {
+            await Navigation.PushAsync(new EnrollmentPage());
+            
         }
     }
 }

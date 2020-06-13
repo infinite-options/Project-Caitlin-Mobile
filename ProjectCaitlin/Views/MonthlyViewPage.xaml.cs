@@ -12,19 +12,13 @@ using FFImageLoading.Work;
 namespace ProjectCaitlin
 {
 
-    // Learn more about making custom code visible in the Xamarin.Forms previewer
-    // by visiting https://aka.ms/xamarinforms-previewer
     [DesignTimeVisible(false)]
     public partial class MonthlyViewPage : ContentPage
     {
 
-        GooglePhotoService GooglePhotoService = new GooglePhotoService();
-
-        //List<List<string>> photoURIs = new List<List<string>>();
         public int Year { get; set; } = 0;
         public int Month { get; set; } = 1;
         Label[] labels = new Label[42];
-        //Image[] images = new Image[42];
 
         public MonthlyViewPage()
         {
@@ -66,7 +60,7 @@ namespace ProjectCaitlin
 
         private async void SetupUI()
         {
-            App.User.photoURIs = await GooglePhotoService.GetPhotos();
+
             Grid controlGrid = new Grid();
             int rowLength = 3;
             double gridItemSize = (Application.Current.MainPage.Width / rowLength) - (1.2 * rowLength);
@@ -82,6 +76,8 @@ namespace ProjectCaitlin
                     string date = list[1];
                     string description = list[2];
                     string creationTime = list[3];
+                    string id = list[4];
+                    string note = list[5];
 
                     CachedImage webImage = new CachedImage
                     {
@@ -93,10 +89,15 @@ namespace ProjectCaitlin
 
                     var tapGestureRecognizer = new TapGestureRecognizer();
                     tapGestureRecognizer.Tapped += async (s, e) => {
-                        await Navigation.PushAsync(new PhotoDisplayPage(webImage, date, description, creationTime));
+                        await Navigation.PushAsync(new PhotoDisplayPage(webImage, date, description,id, creationTime, note));
                     };
                     webImage.GestureRecognizers.Add(tapGestureRecognizer);
-                    var indicator = new ActivityIndicator { Color = Color.Gray, };
+                    var indicator = new ActivityIndicator
+                    {
+                        Color = Color.Gray,
+                        WidthRequest = gridItemSize,
+                        HeightRequest = gridItemSize,
+                    };
                     indicator.SetBinding(ActivityIndicator.IsRunningProperty, "IsLoading");
                     indicator.BindingContext = webImage;
 
@@ -112,13 +113,8 @@ namespace ProjectCaitlin
                 {
                     Console.WriteLine("RefreshToken Done!");
                     App.User.photoURIs = await GooglePhotoService.GetPhotos();
-                    //return await GetPhotos();
                 }
 
-                //var googleService = new GoogleService();
-                // await googleService.RefreshToken();
-                // Console.WriteLine("Here");
-                //SetupUI();
             }
 
             //update calendar
@@ -329,7 +325,7 @@ namespace ProjectCaitlin
 
 
                 // make the label bold if there are images in that day.
-                foreach (string date in GooglePhotoService.allDates)
+                foreach (string date in App.User.allDates)
                 {
                     DateTime currentDate = DateTime.Parse(date);
                     int Year = currentDate.Year;
@@ -341,7 +337,8 @@ namespace ProjectCaitlin
                         labels[i].FontAttributes = FontAttributes.Bold;
                         labels[i].TextColor = Color.FromHex("#f5cb42");
                         var OnLabelClicked = new TapGestureRecognizer();
-                        OnLabelClicked.Tapped += async (s, e) => {
+                        OnLabelClicked.Tapped += async (s, e) =>
+                        {
                             await Navigation.PushAsync(new PhotoDisplayPage(date));
                         };
                         labels[i].GestureRecognizers.Add(OnLabelClicked);
@@ -384,19 +381,22 @@ namespace ProjectCaitlin
         private void AddTapGestures()
         {
             var tapGestureRecognizer1 = new TapGestureRecognizer();
-            tapGestureRecognizer1.Tapped += async (s, e) => {
+            tapGestureRecognizer1.Tapped += async (s, e) =>
+            {
                 await Navigation.PushAsync(new GreetingPage());
             };
             AboutMeButton.GestureRecognizers.Add(tapGestureRecognizer1);
 
             var tapGestureRecognizer2 = new TapGestureRecognizer();
-            tapGestureRecognizer2.Tapped += async (s, e) => {
+            tapGestureRecognizer2.Tapped += async (s, e) =>
+            {
                 await Navigation.PushAsync(new ListViewPage());
             };
             ListViewButton.GestureRecognizers.Add(tapGestureRecognizer2);
 
             var tapGestureRecognizer3 = new TapGestureRecognizer();
-            tapGestureRecognizer3.Tapped += async (s, e) => {
+            tapGestureRecognizer3.Tapped += async (s, e) =>
+            {
                 await Navigation.PushAsync(new GoalsRoutinesTemplate());
             };
             MyDayButton.GestureRecognizers.Add(tapGestureRecognizer3);

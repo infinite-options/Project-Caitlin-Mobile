@@ -5,52 +5,114 @@
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
              xmlns:fftransformations="clr-namespace:FFImageLoading.Transformations;assembly=FFImageLoading.Transformations"
+             xmlns:flv="clr-namespace:DLToolkit.Forms.Controls;assembly=DLToolkit.Forms.Controls.FlowListView"
              mc:Ignorable="d"
              x:Class="ProjectCaitlin.Views.GreetingPage"
              NavigationPage.HasNavigationBar="False"
              BackgroundColor="#1A1827">
     <ContentPage.Content>
-        <StackLayout>
-            <Button
-                Text="Log out"
-                TextColor="WhiteSmoke"
-                BackgroundColor="#59556D"
-                WidthRequest="70"
+        <ScrollView >
+            <StackLayout
+            Margin="0,40,10,0">
+                <StackLayout
+            HorizontalOptions="End">
+                    <ImageButton
+                Source="logouticon.png"
+                WidthRequest="25"
                 HeightRequest="25"
-                HorizontalOptions="End"
-                Margin="0,20,10,0"
+                Margin="0,0,5,0"
+                HorizontalOptions="Center"
                 Clicked="LogoutBtnClick">
+                    </ImageButton>
+                    <Label
+                Text="Log Out"
+                FontSize="10"
+                TextColor="WhiteSmoke"
+                HorizontalOptions="Center">
 
-            </Button>
-            <StackLayout VerticalOptions="CenterAndExpand">
-                <StackLayout>
-
-
-                    <ffimage:CachedImage
-                    x:Name = "UserImage"
-                    HeightRequest="140"
-                    WidthRequest="140">
-                        <ffimage:CachedImage.Transformations>
-                            <fftransformations:CircleTransformation/>
-                        </ffimage:CachedImage.Transformations>
-                    </ffimage:CachedImage>
-                </StackLayout>
-                <StackLayout>
-                    <Label x:Name ="GreetingsTitleLabel" Text="Good Morning," TextColor="White" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
-                    <Label x:Name ="FirstNameLabel" Text="Caitlin"  TextColor="White" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
-                    <Label x:Name ="MessageLabel" Text=""  TextColor="White" Margin="20,20" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
-                    <Label x:Name ="MessageCardLabel" Text=""  TextColor="White" Margin="20,20" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </Label>
                 </StackLayout>
 
-                <StackLayout>
-                    <Button Text="View Today's List" CornerRadius="10" Margin="20" Clicked ="btn1Clicked" TextColor="White"  BackgroundColor="#59556D" />
-                    <Button Text="Manage My Day " CornerRadius="10" Margin="20" Clicked="btn2Clicked" TextColor="White" BackgroundColor="#59556D"/>
-                </StackLayout>
-                <StackLayout>
+                <StackLayout VerticalOptions="CenterAndExpand">
+                    <StackLayout>
+                        <ffimage:CachedImage
+                        x:Name = "UserImage"
+                        HeightRequest="140"
+                        WidthRequest="140">
+                            <ffimage:CachedImage.Transformations>
+                                <fftransformations:CircleTransformation/>
+                            </ffimage:CachedImage.Transformations>
+                        </ffimage:CachedImage>
+                    </StackLayout>
+                    <StackLayout>
+                        <Label x:Name ="GreetingsTitleLabel" Text="" TextColor="White" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Label x:Name ="FirstNameLabel" Text=""  TextColor="White" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Label x:Name ="MessageLabel" Text=""  TextColor="White" Margin="20,20" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                        <Label x:Name ="MessageCardLabel" Text=""  TextColor="White" Margin="20,20" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                    </StackLayout>
 
-                </StackLayout>
+                    <StackLayout >
+                        <StackLayout Orientation="Horizontal">
+                            <ImageButton Source="waveformicon.png"  WidthRequest="50" CornerRadius="10" Margin="25" Clicked ="ImageButton_Click"  BackgroundColor="Transparent" />
+                            <Button x:Name="tapButton" Text="Identify Speaker" CornerRadius="10" Margin="5" Clicked ="RecordButton_Click" TextColor="White"  BackgroundColor="#59556D" />
+                        </StackLayout>
+                        <StackLayout>
+                            <Button Text="View Today's List" CornerRadius="10" Margin="5" Clicked ="btn1Clicked" TextColor="White"  BackgroundColor="#59556D" />
+                            <Button Text="Manage My Day " CornerRadius="10" Margin="5" Clicked="btn2Clicked" TextColor="White" BackgroundColor="#59556D"/>
+                        </StackLayout>
+                    </StackLayout>
 
+                    <StackLayout
+                        x:Name="importantPeopleSL">
+                        <!--<Label
+                        Text="Important Individuals"
+                        FontSize="20"
+                        HorizontalTextAlignment="Center"
+                        TextColor="WhiteSmoke">
+                        </Label>
+                        <Label
+                        Text="Press on their images to call their phone numbers"
+                        FontSize="12"
+                        HorizontalTextAlignment="Center"
+                        TextColor="WhiteSmoke"
+                        Margin="0,0,0,10">
+                        </Label>-->
+                        <flv:FlowListView
+                        FlowColumnCount="3"
+                    SeparatorVisibility="Default"
+                    HasUnevenRows="False"
+                    RowHeight="105"
+                    BackgroundColor="#1A1827"
+                    FlowItemsSource="{Binding Items}">
+
+                            <flv:FlowListView.FlowColumnTemplate>
+                                <DataTemplate>
+                                    <StackLayout>
+                                        <ffimage:CachedImage
+                                        Margin="22,0,22,0"
+                                        Source="{Binding Source}"
+                                        HeightRequest="80"
+                                        WidthRequest="80"
+                                        Aspect="AspectFill">
+                                            <ffimage:CachedImage.GestureRecognizers>
+                                                <TapGestureRecognizer 
+                                                Command="{Binding Navigate}"
+                                                CommandParameter="{Binding NavigateIdx}">
+
+                                                </TapGestureRecognizer>
+                                            </ffimage:CachedImage.GestureRecognizers>
+                                            <ffimage:CachedImage.Transformations>
+                                                <fftransformations:CircleTransformation />
+                                            </ffimage:CachedImage.Transformations>
+                                        </ffimage:CachedImage>
+                                        <Label HorizontalOptions="Center" TextColor="White" Text="{Binding Text}"  />
+                                    </StackLayout>
+                                </DataTemplate>
+                            </flv:FlowListView.FlowColumnTemplate>
+                        </flv:FlowListView>
+                    </StackLayout>
+                </StackLayout>
             </StackLayout>
-        </StackLayout>
+        </ScrollView>
     </ContentPage.Content>
 </ContentPage>

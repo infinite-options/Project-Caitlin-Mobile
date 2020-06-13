@@ -8,6 +8,11 @@ using Android.Widget;
 using Android.OS;
 using FFImageLoading.Forms.Platform;
 using PanCardView.Droid;
+using Acr.UserDialogs;
+using Android.Support.V4.App;
+using Android.Support.V4.Content;
+using Android;
+using Firebase;
 
 namespace ProjectCaitlin.Droid
 {
@@ -16,10 +21,28 @@ namespace ProjectCaitlin.Droid
     {
         protected override void OnCreate(Bundle savedInstanceState)
         {
+            /*var options = new FirebaseOptions.Builder()
+              .SetApplicationId("<AppID>")
+              .SetApiKey("<ApiKey>")
+              .SetDatabaseUrl("<DBURl>")
+              .SetStorageBucket("<StorageBucket>")
+              .SetGcmSenderId("<SenderID>").Build();
+            var fapp = FirebaseApp.InitializeApp(this, options);*/
+
+            //FirebaseApp.InitializeApp(this);
+
             TabLayoutResource = Resource.Layout.Tabbar;
             ToolbarResource = Resource.Layout.Toolbar;
 
+            UserDialogs.Init(this);
+
+            if (ContextCompat.CheckSelfPermission(this, Manifest.Permission.RecordAudio) != Permission.Granted)
+            {
+                ActivityCompat.RequestPermissions(this, new String[] { Manifest.Permission.RecordAudio }, 1);
+            }
+
             base.OnCreate(savedInstanceState);
+
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);

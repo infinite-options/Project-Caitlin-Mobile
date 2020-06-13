@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             xmlns:local="clr-namespace:VoiceRecognition.Model"
+             mc:Ignorable="d"
+             x:Class="VoiceRecognition.View.PeoplePage">
+    <!--<Grid x:Name="MyGridView" >
+        --><!--<Grid.ColumnDefinitions>
+            <ColumnDefinition Width="0.5*"/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="0.5*"/>
+        </Grid.ColumnDefinitions>--><!--
+        <Grid.RowDefinitions>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="4*"/>
+            <RowDefinition Height="*"/>
+            --><!--<RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>--><!--
+        </Grid.RowDefinitions>
+
+        --><!--<ListView Grid.Row = "0" x:Name="MyListView"
+                  ItemsSource="{Binding Items}"
+            ItemTapped="Handle_ItemTapped"
+            CachingStrategy="RecycleElement">
+            <d:ListView.ItemsSource>
+
+            </d:ListView.ItemsSource>
+        </ListView>--><!--
+        <Label Grid.Row="0" HorizontalTextAlignment="Center" FontSize="24" Text="People" />
+
+        <RelativeLayout x:Name="PeopleBlocks"
+            Grid.Row = "1" >
+            <Frame BackgroundColor="Accent" CornerRadius="10"
+                   RelativeLayout.XConstraint=
+                "{ConstraintExpression 
+                    Type=RelativeToParent,
+                    Property=Width, 
+                    Factor=0,
+                    Constant=15
+                    }">
+                <StackLayout Orientation="Vertical">
+                    <BoxView x:Name="boxView" 
+        WidthRequest="50" 
+        HeightRequest="50" 
+        Color="Green" 
+        IsVisible="True"
+        />
+                    <Label Text="Papa"/>
+                </StackLayout>
+                
+            </Frame>
+            --><!-- Center top --><!--
+            <Frame BackgroundColor="Accent" CornerRadius="10"
+                   RelativeLayout.XConstraint=
+                "{ConstraintExpression 
+                    Type=RelativeToParent,
+                    Property=Width, 
+                    Factor=0.5,
+                    Constant=-45
+                    }">
+                <StackLayout Orientation="Vertical">
+                    <BoxView 
+        WidthRequest="50" 
+        HeightRequest="50" 
+        Color="Red" 
+        IsVisible="True"
+        />
+                    <Label Text="Mama"/>
+                </StackLayout>
+
+            </Frame>
+            --><!-- Right edge --><!--
+            <Frame BackgroundColor="Accent" CornerRadius="10"
+                   RelativeLayout.XConstraint=
+                "{ConstraintExpression 
+                    Type=RelativeToParent,
+                    Property=Width, 
+                    Factor=1,
+                    Constant=-105
+                    }">
+                <StackLayout Orientation="Vertical">
+                    <BoxView 
+        WidthRequest="50" 
+        HeightRequest="50" 
+        Color="Purple" 
+        IsVisible="True"
+        />
+                    <Label Text="Brother"/>
+                </StackLayout>
+            </Frame>
+        </RelativeLayout>
+    </Grid>-->
+    <ListView x:Name="Contacts_ListView" SeparatorVisibility="Default" ItemsSource="{Binding Contacts}">
+        <ListView.RowHeight>
+            <OnPlatform x:TypeArguments="x:Int32">
+                <On Platform="iOS, Android" Value="150" />
+                <On Platform="UWP" Value="90" />
+            </OnPlatform>
+        </ListView.RowHeight>
+        <ListView.ItemTemplate>
+            <DataTemplate>
+                <ViewCell>
+                    <ContentView Padding="5">
+                        <Frame OutlineColor="Azure"
+                               Padding="10">
+                            <StackLayout Orientation="Horizontal">
+                                <StackLayout>
+                                    <BoxView Color="Purple"
+                                         WidthRequest="50"
+                                         HeightRequest="50" />
+                                    <Label Text="{Binding FullName}"
+                                           FontSize="16"
+                                           VerticalOptions="StartAndExpand" />
+                                </StackLayout>
+                                <StackLayout>
+                                    <Label Text="{Binding People.Relation, StringFormat='Relation : {0}'}"
+                                           FontSize="16"
+                                           VerticalOptions="CenterAndExpand" />
+                                    <Label Text="{Binding PhoneNumber, StringFormat='Phone : {0}'}"
+                                           FontSize="16"
+                                           VerticalOptions="CenterAndExpand" />
+                                    <Label Text="{Binding AzureId, StringFormat='Azure Id : {0}'}"
+                                           FontSize="16"
+                                           VerticalOptions="CenterAndExpand" 
+                                           TextColor="{Binding EnrollmentStatusColor}"/>
+                                    <Label Text="{Binding EnrollmentStatusMessage, StringFormat='Azure Id : {0}'}"
+                                           FontSize="16"
+                                           VerticalOptions="CenterAndExpand" 
+                                           TextColor="{Binding EnrollmentStatusColor}"/>
+                                </StackLayout>
+                            </StackLayout>
+                        </Frame>
+                    </ContentView>
+                </ViewCell>
+            </DataTemplate>
+        </ListView.ItemTemplate>    
+    </ListView>
+
+</ContentPage>
