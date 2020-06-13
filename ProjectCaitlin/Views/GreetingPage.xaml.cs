@@ -95,18 +95,6 @@ namespace ProjectCaitlin.Views
 
             return "";
         }
-        async void btn1Clicked(object sender, EventArgs e)
-        {
-
-            await Navigation.PushAsync(new ListViewPage());
-
-        }
-
-        async void btn2Clicked(object sender, EventArgs e)
-        {
-            await Navigation.PushAsync(new GoalsRoutinesTemplate());
-
-        }
 
         async void LogoutBtnClick(object sender, EventArgs e)
         {
@@ -117,31 +105,184 @@ namespace ProjectCaitlin.Views
             await Navigation.PushAsync(new LoginPage());
         }
 
-        async void RecordButton_Click(object sender, EventArgs e)
+        async void btn1Clicked(object sender, EventArgs e)
         {
-            if (tapButton.Text == "Identify Speaker")
-            {
-                //start recording
-                greetingViewModel.CMDIdentifyAndEnroll();
-
-                tapButton.Text = "Listening... Tap to Stop";
-            }
-            else if(tapButton.Text == "Listening... Tap to Stop")
-            {
-                greetingViewModel.CMDStopRecording();
-                tapButton.Text = "Identify Speaker";
-            }
-
-
-
-            //show enrolled voice list
-            //await Navigation.PushAsync(new VoiceIdentificationPage());
+            await Navigation.PushAsync(new ListViewPage());
         }
 
-        async void ImageButton_Click(object sender, EventArgs e)
+        async void btn2Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new EnrollmentPage());
-            
+            await Navigation.PushAsync(new GoalsRoutinesTemplate());
+        }
+
+
+        void Handle_SlideCompleted(object sender, System.EventArgs e)
+        {
+            if (trackBar.Text == "Manual")
+            {
+                identifyButton.IsVisible = true;
+                trackBar.Text = "Always On";
+
+            }
+            else if (trackBar.Text == "Always On")
+            {
+                identifyButton.IsVisible = false;
+                trackBar.Text = "Manual";
+            }
+        }
+
+        void enrollClicked(object sender, EventArgs e)
+        {
+            // multi-thread timer for speaker
+            /*Task.Run(() =>
+            {
+                int i = 30;
+                Device.StartTimer(new TimeSpan(0, 0, 60), () =>
+                {
+                    timer.IsVisible = true;
+
+                    // do something every 60 seconds
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        timer.Text = i + "";
+                        i--;
+                    });
+                    if (i <= 0)
+                        return false;
+                    else
+                        return true; // return true to repeat counting, false to stop timer
+                });
+                greetingViewModel.CMDIdentifyAndEnroll();
+
+            });
+
+            timer.IsVisible = false;*/
+
+            greetingViewModel.CMDIdentifyAndEnroll();
+
+        }
+        void identifyClicked(object sender, EventArgs e)
+        {
+            greetingViewModel.CMDIdentifyAndEnroll();
+        }
+    }
+
+    //Slide button for the speaker.
+    public class SlideToActView : AbsoluteLayout
+    {
+        public static readonly BindableProperty ThumbProperty =
+            BindableProperty.Create(
+                "Thumb", typeof(View), typeof(SlideToActView),
+                defaultValue: default(View), propertyChanged: OnThumbChanged);
+
+        public View Thumb
+        {
+            get { return (View)GetValue(ThumbProperty); }
+            set { SetValue(ThumbProperty, value); }
+        }
+
+        private static void OnThumbChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            ((SlideToActView)bindable).OnThumbChangedImpl((View)oldValue, (View)newValue);
+        }
+
+        protected virtual void OnThumbChangedImpl(View oldValue, View newValue)
+        {
+            OnSizeChanged(this, EventArgs.Empty);
+        }
+
+        public static readonly BindableProperty TrackBarProperty =
+            BindableProperty.Create(
+                "TrackBar", typeof(View), typeof(SlideToActView),
+                defaultValue: default(View), propertyChanged: OnTrackBarChanged);
+
+        public View TrackBar
+        {
+            get { return (View)GetValue(TrackBarProperty); }
+            set { SetValue(TrackBarProperty, value); }
+        }
+
+        private static void OnTrackBarChanged(BindableObject bindable, object oldValue, object newValue)
+        {
+            ((SlideToActView)bindable).OnTrackBarChangedImpl((View)oldValue, (View)newValue);
+        }
+
+        protected virtual void OnTrackBarChangedImpl(View oldValue, View newValue)
+        {
+            OnSizeChanged(this, EventArgs.Empty);
+        }
+
+        private PanGestureRecognizer _panGesture = new PanGestureRecognizer();
+        private View _gestureListener;
+        public SlideToActView()
+        {
+            _panGesture.PanUpdated += OnPanGestureUpdated;
+            SizeChanged += OnSizeChanged;
+
+            _gestureListener = new ContentView { BackgroundColor = Color.White, Opacity = 0.05 };
+            _gestureListener.GestureRecognizers.Add(_panGesture);
+        }
+
+        public event EventHandler SlideCompleted;
+
+        private const double _fadeEffect = 0.5;
+        private const uint _animLength = 50;
+        async void OnPanGestureUpdated(object sender, PanUpdatedEventArgs e)
+        {
+            if (Thumb == null | TrackBar == null)
+                return;
+
+            switch (e.StatusType)
+            {
+                case GestureStatus.Started:
+                    await TrackBar.FadeTo(_fadeEffect, _animLength);
+                    break;
+
+                case GestureStatus.Running:
+                    // Translate and ensure we don't pan beyond the wrapped user interface element bounds.
+                    var x = Math.Max(0, e.TotalX);
+                    if (x > (Width - Thumb.Width))
+                        x = (Width - Thumb.Width);
+
+                    if (e.TotalX < Thumb.TranslationX)
+                        return;
+                    Thumb.TranslationX = x;
+                    break;
+
+                case GestureStatus.Completed:
+                    var posX = Thumb.TranslationX;
+
+                    // Reset translation applied during the pan (snap effect)
+                    await TrackBar.FadeTo(1, _animLength);
+                    await Thumb.TranslateTo(0, 0, _animLength * 2, Easing.CubicIn);
+
+                    if (posX >= (Width - Thumb.Width - 10/* keep some margin for error*/))
+                        SlideCompleted?.Invoke(this, EventArgs.Empty);
+                    break;
+            }
+        }
+
+        void OnSizeChanged(object sender, EventArgs e)
+        {
+            if (Width == 0 || Height == 0)
+                return;
+            if (Thumb == null || TrackBar == null)
+                return;
+
+
+            Children.Clear();
+
+            SetLayoutFlags(TrackBar, AbsoluteLayoutFlags.SizeProportional);
+            SetLayoutBounds(TrackBar, new Rectangle(0, 0, 1, 1));
+            Children.Add(TrackBar);
+
+            SetLayoutFlags(Thumb, AbsoluteLayoutFlags.None);
+            SetLayoutBounds(Thumb, new Rectangle(0, 0, this.Width / 5, this.Height));
+            Children.Add(Thumb);
+
+            SetLayoutFlags(_gestureListener, AbsoluteLayoutFlags.SizeProportional);
+            SetLayoutBounds(_gestureListener, new Rectangle(0, 0, 1, 1));
+            Children.Add(_gestureListener);
         }
     }
 }

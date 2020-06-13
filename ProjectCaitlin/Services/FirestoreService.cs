@@ -167,7 +167,7 @@ namespace ProjectCaitlin.Services
             {
                 try
                 {
-                    if (data["is_available"].ToString() == "1")
+                    if (data["is_available"].ToString() == "1" && data["is_displayed_today"].ToString() == "1")
                     {
                         bool isInProgressCheck = data.ContainsKey("is_in_progress") ? data["is_in_progress"].ToString() == "1" : false;
 
@@ -196,9 +196,12 @@ namespace ProjectCaitlin.Services
 
                                 dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
 
-                                availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
+                                //availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
 
-                                availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                                availableStartTime = TimeSpan.Parse(DateTime.Parse(data["available_start_time"].ToString()).ToString()),
+
+                                //availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                                availableEndTime = TimeSpan.Parse(DateTime.Parse(data["available_end_time"].ToString()).ToString())
                             };
 
                             setNotifications(routine, routineIdx, (IDictionary<string, object>) data["user_notifications"]);
@@ -231,9 +234,13 @@ namespace ProjectCaitlin.Services
 
                                 dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
 
-                                availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
+                                //availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
 
-                                availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                                availableStartTime = TimeSpan.Parse(DateTime.Parse(data["available_start_time"].ToString()).ToString()),
+
+                                //availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                                availableEndTime = TimeSpan.Parse(DateTime.Parse(data["available_end_time"].ToString()).ToString())
+
                             };
 
                             App.User.goals.Add(goal);
@@ -333,9 +340,12 @@ namespace ProjectCaitlin.Services
 
                                 dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
 
-                                availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
+                                //availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
 
-                                availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                                availableStartTime = TimeSpan.Parse(DateTime.Parse(data["available_start_time"].ToString()).ToString()),
+
+                                //availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                                availableEndTime = TimeSpan.Parse(DateTime.Parse(data["available_end_time"].ToString()).ToString())
                             };
 
                             App.User.routines[grIdx].tasks.Add(task);
@@ -366,9 +376,12 @@ namespace ProjectCaitlin.Services
 
                                 dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
 
-                                availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
+                                //availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
 
-                                availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                                availableStartTime = TimeSpan.Parse(DateTime.Parse(data["available_start_time"].ToString()).ToString()),
+
+                                //availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                                availableEndTime = TimeSpan.Parse(DateTime.Parse(data["available_end_time"].ToString()).ToString())
                             };
 
                             App.User.goals[grIdx].actions.Add(action);
@@ -474,9 +487,12 @@ namespace ProjectCaitlin.Services
 
                                 dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
 
-                                availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
+                                //availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
 
-                                availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                                availableStartTime = TimeSpan.Parse(DateTime.Parse(data["available_start_time"].ToString()).ToString()),
+
+                                //availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                                availableEndTime = TimeSpan.Parse(DateTime.Parse(data["available_end_time"].ToString()).ToString())
                             };
 
                             App.User.routines[grIdx].tasks[atIdx].steps.Add(step);
@@ -505,9 +521,12 @@ namespace ProjectCaitlin.Services
 
                                 dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
 
-                                availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
+                                //availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
 
-                                availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                                availableStartTime = TimeSpan.Parse(DateTime.Parse(data["available_start_time"].ToString()).ToString()),
+
+                                //availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                                availableEndTime = TimeSpan.Parse(DateTime.Parse(data["available_end_time"].ToString()).ToString())
                             };
 
                             App.User.goals[grIdx].actions[atIdx].instructions.Add(instruction);
