@@ -153,6 +153,7 @@ namespace ProjectCaitlin
 					Application.Current.Properties["accessToken"] = accessToken;
 					Application.Current.Properties["refreshToken"] = refreshToken;
 					Application.Current.Properties["user_id"] = App.User.id;
+					await App.Current.SavePropertiesAsync();
 
 					App.LoadApplicationProperties();
 
