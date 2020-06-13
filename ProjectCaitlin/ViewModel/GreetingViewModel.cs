@@ -94,7 +94,8 @@ namespace ProjectCaitlin.ViewModel
                 StopRecordingOnSilence = true, // will stop recording after 2 seconds (default)
                 StopRecordingAfterTimeout = false,  // stop recording after a max timeout (defined below)
                 PreferredSampleRate = 16000, // sample rate of recording
-                SilenceThreshold = 0.1f
+                SilenceThreshold = 0.1f,
+                TotalAudioTimeout = TimeSpan.FromSeconds(35) // will stop recording after 35 second
             };
             sw = new Stopwatch();
             //RecorderClient.AudioInputReceived += EnrollIdentifyWrapper;
@@ -157,10 +158,21 @@ namespace ProjectCaitlin.ViewModel
         public async void CMDStopRecording()
 #pragma warning restore CS1998
         {
-            _ = RecorderClient.StopRecording();
-            Message = "Stopped";
+            if (IsRecording())
+            {
+                _ = RecorderClient.StopRecording();
+                Message = "Stopped";
+            }
+            else
+            {
+                Message = "Recorder already stopped";
+            }
         }
 
+        public Boolean IsRecording()
+        {
+            return RecorderClient.IsRecording;
+        }
 
         private async void EnrollIdentifyWrapper(object sender, string audioFilePath)
         {
@@ -199,7 +211,7 @@ namespace ProjectCaitlin.ViewModel
                 {
                     PrintTraceMsg("NULL Profile branch");
                     Message = "Audio length not enough please try again!";
-                    AzIdNotFound();
+                    AudioFileEmpty();
                     return null;
                 }
                 if (p != UNKNOWN_PROFILE)
@@ -234,6 +246,7 @@ namespace ProjectCaitlin.ViewModel
                 {
                     PrintTraceMsg("UNKNOWN PROFILE small audio branch");
                     Message = "Unable to recognize the voice.\nLength of audio not long enough to enroll";
+                    AzIdNotFound_AudioSmall();
                 }
 
             }
@@ -363,6 +376,20 @@ namespace ProjectCaitlin.ViewModel
             Device.BeginInvokeOnMainThread(() =>
             {
                 mainPage.Navigation.PushAsync(new VoiceEnrollmentPage());
+            });
+        }
+
+        public async void AzIdNotFound_AudioSmall()
+        {
+            Device.BeginInvokeOnMainThread(()=> {
+                Application.Current.MainPage.DisplayAlert("Message","Unable to indetify voice, voice short for enrolling","OK");
+            });
+        }
+
+        public async void AudioFileEmpty()
+        {
+            Device.BeginInvokeOnMainThread(() => {
+                Application.Current.MainPage.DisplayAlert("Message", "Recorded Audio File Empty", "OK");
             });
         }
 

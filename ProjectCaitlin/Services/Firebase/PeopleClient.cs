@@ -60,7 +60,7 @@ namespace VoiceRecognition.Services.Firebase
                     string content = await responseTask.Result.Content.ReadAsStringAsync();
                     JObject peopleJson = JObject.Parse(content);
                     PeopleParser peopleParser = new PeopleParser();
-
+                    if (!peopleJson.ContainsKey("documents")) { return AllPeople; }
                     foreach(JToken pJt in peopleJson["documents"])
                     {
                         People peep = peopleParser.JsonToObject(pJt);
