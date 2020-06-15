@@ -167,83 +167,90 @@ namespace ProjectCaitlin.Services
             {
                 try
                 {
-                    if (data["is_available"].ToString() == "1" && data["is_displayed_today"].ToString() == "1")
+                    bool isDisplayedToday = true;
+                    if (data.ContainsKey("is_displayed_today"))
+                        isDisplayedToday = data["is_displayed_today"].ToString() == "1";
+
+                    if (isDisplayedToday)
                     {
-                        bool isInProgressCheck = data.ContainsKey("is_in_progress") ? data["is_in_progress"].ToString() == "1" : false;
-
-                        if (data["is_persistent"].ToString() == "1")
+                        if (data["is_available"].ToString() == "1")
                         {
+                            bool isInProgressCheck = data.ContainsKey("is_in_progress") ? data["is_in_progress"].ToString() == "1" : false;
 
-                            routine routine = new routine
+                            if (data["is_persistent"].ToString() == "1")
                             {
-                                title = data["title"].ToString(),
 
-                                id = data["id"].ToString(),
+                                routine routine = new routine
+                                {
+                                    title = data["title"].ToString(),
 
-                                photo = data["photo"].ToString(),
+                                    id = data["id"].ToString(),
 
-                                isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
+                                    photo = data["photo"].ToString(),
 
-                                isComplete = data["is_complete"].ToString() == "1"
-                                            && IsDateToday(data["datetime_completed"].ToString())
-                                            && !isInProgressCheck,
+                                    isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
 
-                                expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
-
-                                dbIdx = dbIdx_,
-
-                                isSublistAvailable = data["is_sublist_available"].ToString() == "1",
-
-                                dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
-
-                                //availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
-
-                                availableStartTime = TimeSpan.Parse(DateTime.Parse(data["available_start_time"].ToString()).ToString()),
-
-                                //availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
-                                availableEndTime = TimeSpan.Parse(DateTime.Parse(data["available_end_time"].ToString()).ToString())
-                            };
-
-                            setNotifications(routine, routineIdx, (IDictionary<string, object>) data["user_notifications"]);
-
-                            App.User.routines.Add(routine);
-
-                            routineIdx++;
-                        }
-                        else
-                        {
-                            goal goal = new goal
-                            {
-                                title = data["title"].ToString(),
-
-                                id = data["id"].ToString(),
-
-                                photo = data["photo"].ToString(),
-
-                                isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
-
-                                isComplete = data["is_complete"].ToString() == "1"
+                                    isComplete = data["is_complete"].ToString() == "1"
                                                 && IsDateToday(data["datetime_completed"].ToString())
                                                 && !isInProgressCheck,
 
-                                expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
+                                    expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
 
-                                dbIdx = dbIdx_,
+                                    dbIdx = dbIdx_,
 
-                                isSublistAvailable = data["is_sublist_available"].ToString() == "1",
+                                    isSublistAvailable = data["is_sublist_available"].ToString() == "1",
 
-                                dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
+                                    dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
 
-                                //availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
+                                    //availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
 
-                                availableStartTime = TimeSpan.Parse(DateTime.Parse(data["available_start_time"].ToString()).ToString()),
+                                    availableStartTime = TimeSpan.Parse(DateTime.Parse(data["available_start_time"].ToString()).ToString()),
 
-                                //availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
-                                availableEndTime = TimeSpan.Parse(DateTime.Parse(data["available_end_time"].ToString()).ToString())
+                                    //availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                                    availableEndTime = TimeSpan.Parse(DateTime.Parse(data["available_end_time"].ToString()).ToString())
+                                };
 
-                            };
+                                setNotifications(routine, routineIdx, (IDictionary<string, object>)data["user_notifications"]);
 
-                            App.User.goals.Add(goal);
+                                App.User.routines.Add(routine);
+
+                                routineIdx++;
+                            }
+                            else
+                            {
+                                goal goal = new goal
+                                {
+                                    title = data["title"].ToString(),
+
+                                    id = data["id"].ToString(),
+
+                                    photo = data["photo"].ToString(),
+
+                                    isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
+
+                                    isComplete = data["is_complete"].ToString() == "1"
+                                                    && IsDateToday(data["datetime_completed"].ToString())
+                                                    && !isInProgressCheck,
+
+                                    expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
+
+                                    dbIdx = dbIdx_,
+
+                                    isSublistAvailable = data["is_sublist_available"].ToString() == "1",
+
+                                    dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
+
+                                    //availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
+
+                                    availableStartTime = TimeSpan.Parse(DateTime.Parse(data["available_start_time"].ToString()).ToString()),
+
+                                    //availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                                    availableEndTime = TimeSpan.Parse(DateTime.Parse(data["available_end_time"].ToString()).ToString())
+
+                                };
+
+                                App.User.goals.Add(goal);
+                            }
                         }
                     }
                 }

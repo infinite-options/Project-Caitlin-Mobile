@@ -157,6 +157,8 @@ namespace ProjectCaitlin
 					Application.Current.Properties["refreshToken"] = refreshToken;
 					Application.Current.Properties["user_id"] = App.User.id;
 
+					await Application.Current.SavePropertiesAsync();
+
 					App.LoadApplicationProperties();
 
 					//Navigate to the Daily Page after Login
