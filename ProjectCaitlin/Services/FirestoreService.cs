@@ -9,6 +9,8 @@ using Plugin.CloudFirestore;
 using ProjectCaitlin.Models;
 using Xamarin.Forms;
 using ProjectCaitlin.Services;
+using Newtonsoft.Json;
+
 namespace ProjectCaitlin.Services
 {
     public class FirestoreService
@@ -85,8 +87,6 @@ namespace ProjectCaitlin.Services
         public async Task LoadUser()
         {
             // reset current user and goals values (in case of reload)
-            App.User.routines = new List<routine>();
-            App.User.goals = new List<goal>();
             App.User.allDates = new HashSet<string>();
 
             var userDocument = await CrossCloudFirestore.Current.Instance
@@ -131,8 +131,6 @@ namespace ProjectCaitlin.Services
 
         public async Task LoadPeople()
         {
-            App.User.people = new List<person>();
-
             //load people from firebase
             var peopleCollection = await CrossCloudFirestore.Current.Instance.GetCollection("users")
                                     .GetDocument(uid)
@@ -141,6 +139,7 @@ namespace ProjectCaitlin.Services
 
             if (peopleCollection != null)
             {
+                App.User.people = new List<person>();
                 foreach (var document in peopleCollection.Documents)
                 {
                     var data = document.Data;
@@ -162,6 +161,9 @@ namespace ProjectCaitlin.Services
 
         public void LoadGoalsAndRoutines(List<Object> grArrayData)
         {
+            App.User.routines = new List<routine>();
+            App.User.goals = new List<goal>();
+
             int dbIdx_ = 0, routineIdx = 0;
             foreach (IDictionary<string, object> data in grArrayData)
             {
@@ -177,77 +179,53 @@ namespace ProjectCaitlin.Services
                         {
                             bool isInProgressCheck = data.ContainsKey("is_in_progress") ? data["is_in_progress"].ToString() == "1" : false;
 
+                            grObject grObject = new grObject
+                            {
+                                title = data["title"].ToString(),
+
+                                id = data["id"].ToString(),
+
+                                photo = data["photo"].ToString(),
+
+                                isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
+
+                                isComplete = data["is_complete"].ToString() == "1"
+                                                    && IsDateToday(data["datetime_completed"].ToString())
+                                                    && !isInProgressCheck,
+
+                                expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
+
+                                dbIdx = dbIdx_,
+
+                                isSublistAvailable = data["is_sublist_available"].ToString() == "1",
+
+                                dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
+
+                                //availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
+
+                                availableStartTime = DateTime.Parse(data["end_day_and_time"].ToString()).TimeOfDay,
+
+                                //availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                                availableEndTime = DateTime.Parse(data["end_day_and_time"].ToString()).TimeOfDay
+
+                            };
+
+                            var serializedParent = JsonConvert.SerializeObject(grObject);
+
+
                             if (data["is_persistent"].ToString() == "1")
                             {
-
-                                routine routine = new routine
-                                {
-                                    title = data["title"].ToString(),
-
-                                    id = data["id"].ToString(),
-
-                                    photo = data["photo"].ToString(),
-
-                                    isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
-
-                                    isComplete = data["is_complete"].ToString() == "1"
-                                                && IsDateToday(data["datetime_completed"].ToString())
-                                                && !isInProgressCheck,
-
-                                    expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
-
-                                    dbIdx = dbIdx_,
-
-                                    isSublistAvailable = data["is_sublist_available"].ToString() == "1",
-
-                                    dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
-
-                                    //availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
-
-                                    availableStartTime = TimeSpan.Parse(DateTime.Parse(data["available_start_time"].ToString()).ToString()),
-
-                                    //availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
-                                    availableEndTime = TimeSpan.Parse(DateTime.Parse(data["available_end_time"].ToString()).ToString())
-                                };
-
-                                setNotifications(routine, routineIdx, (IDictionary<string, object>)data["user_notifications"]);
+                                routine routine = JsonConvert.DeserializeObject<routine>(serializedParent);
 
                                 App.User.routines.Add(routine);
+
+                                setNotifications(routine, routineIdx, (IDictionary<string, object>)data["user_notifications"]);
 
                                 routineIdx++;
                             }
                             else
                             {
-                                goal goal = new goal
-                                {
-                                    title = data["title"].ToString(),
-
-                                    id = data["id"].ToString(),
-
-                                    photo = data["photo"].ToString(),
-
-                                    isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
-
-                                    isComplete = data["is_complete"].ToString() == "1"
-                                                    && IsDateToday(data["datetime_completed"].ToString())
-                                                    && !isInProgressCheck,
-
-                                    expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
-
-                                    dbIdx = dbIdx_,
-
-                                    isSublistAvailable = data["is_sublist_available"].ToString() == "1",
-
-                                    dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
-
-                                    //availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
-
-                                    availableStartTime = TimeSpan.Parse(DateTime.Parse(data["available_start_time"].ToString()).ToString()),
-
-                                    //availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
-                                    availableEndTime = TimeSpan.Parse(DateTime.Parse(data["available_end_time"].ToString()).ToString())
-
-                                };
+                                goal goal = JsonConvert.DeserializeObject<goal>(serializedParent);
 
                                 App.User.goals.Add(goal);
                             }
@@ -347,12 +325,12 @@ namespace ProjectCaitlin.Services
 
                                 dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
 
-                                //availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
+                                availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
 
-                                availableStartTime = TimeSpan.Parse(DateTime.Parse(data["available_start_time"].ToString()).ToString()),
+                                //availableStartTime = TimeSpan.Parse(DateTime.Parse(data["start_day_and_time"].ToString()).ToString()),
 
-                                //availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
-                                availableEndTime = TimeSpan.Parse(DateTime.Parse(data["available_end_time"].ToString()).ToString())
+                                availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
+                                //availableEndTime = TimeSpan.Parse(DateTime.Parse(data["end_day_and_time"].ToString()).ToString())
                             };
 
                             App.User.routines[grIdx].tasks.Add(task);
@@ -564,7 +542,7 @@ namespace ProjectCaitlin.Services
         {
             ////Console.WriteLine("checkDatestring: " + dateTimeString);
 
-            DateTime today = DateTime.Now;
+            DateTime today = DateTime.Now.AddHours(-5);
             DateTime checkDate = DateTime.Parse(dateTimeString);
 
             ////Console.WriteLine("checkDate: " + checkDate.ToString());

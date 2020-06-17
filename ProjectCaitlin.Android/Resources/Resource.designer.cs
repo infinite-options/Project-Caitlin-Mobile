@@ -7315,6 +7315,7 @@ namespace ProjectCaitlin.Droid
 			global::PanCardView.Droid.Resource.Style.Animation_AppCompat_DropDownUp = global::ProjectCaitlin.Droid.Resource.Style.Animation_AppCompat_DropDownUp;
 			global::PanCardView.Droid.Resource.Style.Animation_AppCompat_Tooltip = global::ProjectCaitlin.Droid.Resource.Style.Animation_AppCompat_Tooltip;
 			global::PanCardView.Droid.Resource.Style.Animation_Design_BottomSheetDialog = global::ProjectCaitlin.Droid.Resource.Style.Animation_Design_BottomSheetDialog;
+			global::PanCardView.Droid.Resource.Style.AppCompatDialogStyle = global::ProjectCaitlin.Droid.Resource.Style.AppCompatDialogStyle;
 			global::PanCardView.Droid.Resource.Style.Base_AlertDialog_AppCompat = global::ProjectCaitlin.Droid.Resource.Style.Base_AlertDialog_AppCompat;
 			global::PanCardView.Droid.Resource.Style.Base_AlertDialog_AppCompat_Light = global::ProjectCaitlin.Droid.Resource.Style.Base_AlertDialog_AppCompat_Light;
 			global::PanCardView.Droid.Resource.Style.Base_Animation_AppCompat_Dialog = global::ProjectCaitlin.Droid.Resource.Style.Base_Animation_AppCompat_Dialog;
@@ -7507,6 +7508,8 @@ namespace ProjectCaitlin.Droid
 			global::PanCardView.Droid.Resource.Style.CardView_Dark = global::ProjectCaitlin.Droid.Resource.Style.CardView_Dark;
 			global::PanCardView.Droid.Resource.Style.CardView_Light = global::ProjectCaitlin.Droid.Resource.Style.CardView_Light;
 			global::PanCardView.Droid.Resource.Style.collectionViewStyle = global::ProjectCaitlin.Droid.Resource.Style.collectionViewStyle;
+			global::PanCardView.Droid.Resource.Style.MainTheme = global::ProjectCaitlin.Droid.Resource.Style.MainTheme;
+			global::PanCardView.Droid.Resource.Style.MainTheme_Base = global::ProjectCaitlin.Droid.Resource.Style.MainTheme_Base;
 			global::PanCardView.Droid.Resource.Style.Platform_AppCompat = global::ProjectCaitlin.Droid.Resource.Style.Platform_AppCompat;
 			global::PanCardView.Droid.Resource.Style.Platform_AppCompat_Light = global::ProjectCaitlin.Droid.Resource.Style.Platform_AppCompat_Light;
 			global::PanCardView.Droid.Resource.Style.Platform_MaterialComponents = global::ProjectCaitlin.Droid.Resource.Style.Platform_MaterialComponents;

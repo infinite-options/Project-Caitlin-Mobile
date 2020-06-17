@@ -15,11 +15,6 @@ namespace ProjectCaitlin.Services
     {
         public async Task<string> FindUserDocAsync(string email)
         {
-            email = email.ToLower();
-            String[] emailSplit = email.Split('@');
-            emailSplit[0] = emailSplit[0].Replace(".", "");
-            email = emailSplit[0] + "@" + emailSplit[1];
-
             var userDoc = await CrossCloudFirestore.Current.Instance.GetCollection("users")
                                     .WhereEqualsTo("email_id", email)
                                     .GetDocumentsAsync();
