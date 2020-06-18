@@ -15,11 +15,6 @@ namespace ProjectCaitlin.Services
     {
         public async Task<string> FindUserDocAsync(string email)
         {
-            email = email.ToLower();
-            String[] emailSplit = email.Split('@');
-            emailSplit[0] = emailSplit[0].Replace(".", "");
-            email = emailSplit[0] + "@" + emailSplit[1];
-
             var userDoc = await CrossCloudFirestore.Current.Instance.GetCollection("users")
                                     .WhereEqualsTo("email_id", email)
                                     .GetDocumentsAsync();
@@ -241,7 +236,7 @@ namespace ProjectCaitlin.Services
             switch (GratisType)
             {
                 case "goals&routines":
-                    var grBoolFieldAdd = new List<string>() { "is_persistent", "is_sublist_available", "repeat" };
+                    var grBoolFieldAdd = new List<string>() { "is_persistent", "is_sublist_available", "repeat", "is_displayed_today" };
                     gratisConvertField = gratisBoolField.Concat(grBoolFieldAdd).ToList();
                     break;
                 case "actions&tasks":
