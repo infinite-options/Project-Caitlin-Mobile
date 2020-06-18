@@ -54,14 +54,25 @@
                         </StackLayout>
                     </StackLayout>
 
-                    <StackLayout Margin="40">
+                    <StackLayout Margin="50">
                         <StackLayout Orientation="Horizontal">
-                            <Button Text="Enroll" CornerRadius="10" Margin="5" Clicked ="enrollClicked" TextColor="White"  BackgroundColor="#59556D" />
-                            <Button x:Name="identifyButton" Text="Identify" CornerRadius="10" Margin="5" Clicked ="identifyClicked" IsVisible="False" TextColor="White"  BackgroundColor="#59556D" />
-                            <Label x:Name="timer" Margin="5" Text="30" IsVisible="False" TextColor="White"  BackgroundColor="#59556D" />
+                            <Button Text="Enroll" CornerRadius="10" Margin="0,5" Padding="0" WidthRequest="60" Clicked ="enrollClicked" TextColor="White"  BackgroundColor="#59556D" />
+                            <Button x:Name="identifyButton" Text="Identify" WidthRequest="70" CornerRadius="10" Padding="0" Margin="0,5" Clicked ="identifyClicked" IsVisible="True" TextColor="White"  BackgroundColor="#59556D" />
+                            <!--<Label x:Name="timer" Margin="5" Text="30" IsVisible="False" TextColor="White"  BackgroundColor="#59556D" />-->
+                            <local:SlideToActView SlideCompleted="Handle_SlideCompleted" HorizontalOptions="FillAndExpand" Margin="0,5">
+                                <local:SlideToActView.Thumb>
+                                    <Frame CornerRadius="10" HasShadow="false" BackgroundColor="Silver" Padding="0" HeightRequest="45" WidthRequest="45">
+                                    </Frame>
+                                </local:SlideToActView.Thumb>
 
+                                <local:SlideToActView.TrackBar>
+                                    <Frame x:Name="trackBarFrame" CornerRadius="10" HasShadow="false" BackgroundColor="Gray" Padding="0" >
+                                        <Label x:Name="trackBar"  HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand" />
+                                    </Frame>
+                                </local:SlideToActView.TrackBar>
+                            </local:SlideToActView>
                         </StackLayout >
-                        <StackLayout >
+                        <!--<StackLayout >
                             <local:SlideToActView SlideCompleted="Handle_SlideCompleted">
                                 <local:SlideToActView.Thumb>
                                     <Frame CornerRadius="10" HasShadow="false" BackgroundColor="Silver" Padding="0" HeightRequest="45" WidthRequest="45">
@@ -74,7 +85,7 @@
                                     </Frame>
                                 </local:SlideToActView.TrackBar>
                             </local:SlideToActView>
-                        </StackLayout>
+                        </StackLayout>-->
                         <Button Text="View Today's List" CornerRadius="10" Margin="5" Clicked ="btn1Clicked" TextColor="White"  BackgroundColor="#59556D" />
                         <Button Text="Manage My Day " CornerRadius="10" Margin="5" Clicked="btn2Clicked" TextColor="White" BackgroundColor="#59556D"/>
                     </StackLayout>

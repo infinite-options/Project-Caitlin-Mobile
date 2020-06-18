@@ -10,6 +10,8 @@ using Xamarin.Forms.Xaml;
 using Plugin.AudioRecorder;
 using VoiceRecognition.View;
 using VoiceRecognition.ViewModel;
+using System.Runtime.CompilerServices;
+using Xamarin.Forms.Markup;
 
 namespace ProjectCaitlin.Views
 {
@@ -49,6 +51,19 @@ namespace ProjectCaitlin.Views
                 TotalAudioTimeout = TimeSpan.FromSeconds(10) //audio will stop recording after 15 seconds
             };
 
+            Task.Factory.StartNew(() =>
+            {
+                while (true)
+                {
+                    System.Threading.Thread.Sleep(35000);
+                    if (identifyButton! != null && !identifyButton.IsVisible)
+                    {
+                        greetingViewModel.CMDIdentifyAndEnroll();
+                    }
+                }
+            });
+            trackBar.Text = SlideToActView.States.Manual;
+            trackBarFrame.BackgroundColor = Color.Gray;
         }
         private void SetupUI()
         {
@@ -115,19 +130,32 @@ namespace ProjectCaitlin.Views
             await Navigation.PushAsync(new GoalsRoutinesTemplate());
         }
 
+        public void UpdateSlider(Color color, String label) {
+            if (color != null)
+            {
+                trackBarFrame.BackgroundColor = color;
+            }
+            trackBar.Text = label; 
+        }
+
+        public void ResetSlider()
+        {
+            trackBarFrame.BackgroundColor = Color.Gray;
+            trackBar.Text = identifyButton.IsVisible ? SlideToActView.States.Manual : SlideToActView.States.AlwaysOn;
+        }
 
         void Handle_SlideCompleted(object sender, System.EventArgs e)
         {
-            if (trackBar.Text == "Manual")
-            {
-                identifyButton.IsVisible = true;
-                trackBar.Text = "Always On";
-
-            }
-            else if (trackBar.Text == "Always On")
+            if (trackBar.Text == SlideToActView.States.Manual)
             {
                 identifyButton.IsVisible = false;
-                trackBar.Text = "Manual";
+                trackBar.Text = SlideToActView.States.AlwaysOn;
+
+            }
+            else if (trackBar.Text == SlideToActView.States.AlwaysOn)
+            {
+                identifyButton.IsVisible = true;
+                trackBar.Text = SlideToActView.States.Manual;
             }
         }
 
@@ -158,18 +186,74 @@ namespace ProjectCaitlin.Views
 
             timer.IsVisible = false;*/
 
-            greetingViewModel.CMDIdentifyAndEnroll();
+            //if (identifyButton.IsVisible)
+            //{
+            Task.Run(() => { greetingViewModel.CMDIdentifyAndEnroll_Manual(); });
 
+            Task.Factory.StartNew(() => {
+                    //Device.BeginInvokeOnMainThread(() =>
+                    //{
+                    //    this.timer.IsVisible = true;
+                    //});
+
+                    for (int i = 30; i > 0; i--)
+                    {
+                        System.Threading.Thread.Sleep(1000);
+
+                        Device.BeginInvokeOnMainThread(() =>
+                        {
+                            //this.timer.Text = string.Format("{0}", i);
+                            this.trackBar.Text = string.Format("{0}\nTime Left {1}",SlideToActView.States.Recording,i);
+                        });
+                    }
+                    //Device.BeginInvokeOnMainThread(() =>
+                    //{
+                    //    this.trackBar.Text = "Sending to Azure";
+                    //    //this.timer.IsVisible = false;
+                    //});
+                });
+            //}
+            //else
+            //{
+            //    //Task.Run(() => { greetingViewModel.CMDIdentifyAndEnroll(); });
+            //}
         }
+
         void identifyClicked(object sender, EventArgs e)
         {
             greetingViewModel.CMDIdentifyAndEnroll();
+            Task.Factory.StartNew(() => {
+                System.Threading.Thread.Sleep(500);
+                int i = 0;
+                while (greetingViewModel.IsRecording())
+                {
+                    Device.BeginInvokeOnMainThread(() =>
+                    {
+                        this.trackBar.Text = string.Format("{0}\n{1}",SlideToActView.States.Recording,i);
+                    });
+                    i += 1;
+                    System.Threading.Thread.Sleep(1000);
+                }
+                Device.BeginInvokeOnMainThread(() =>
+                {
+                    this.trackBar.Text = SlideToActView.States.SendingToAzure;
+                    //this.timer.IsVisible = false;
+                });
+            });
         }
     }
 
     //Slide button for the speaker.
     public class SlideToActView : AbsoluteLayout
     {
+        public static class States { 
+            public static String Manual { get { return "Manual"; } }
+            public static String AlwaysOn { get { return "Always On"; } }
+            public static String Recording { get { return "Recording"; } }
+            public static String SendingToAzure { get { return "Sending to Azure"; } }
+            public static String SendingToFirebase { get { return "Sending to Firebase"; } }
+        }
+
         public static readonly BindableProperty ThumbProperty =
             BindableProperty.Create(
                 "Thumb", typeof(View), typeof(SlideToActView),

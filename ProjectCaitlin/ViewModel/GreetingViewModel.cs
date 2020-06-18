@@ -42,7 +42,8 @@ namespace ProjectCaitlin.ViewModel
             RecorderClient = new AudioRecorderService()
             {
                 StopRecordingOnSilence = true, // will stop recording after 2 seconds (default)
-                StopRecordingAfterTimeout = false,  // stop recording after a max timeout (defined below)
+                StopRecordingAfterTimeout = true,  // stop recording after a max timeout (defined below)
+                TotalAudioTimeout = TimeSpan.FromSeconds(31), // will stop recording after 31 second
                 PreferredSampleRate = 16000, // sample rate of recording
                 SilenceThreshold = 0.1f
             };
@@ -92,10 +93,10 @@ namespace ProjectCaitlin.ViewModel
             RecorderClient = new AudioRecorderService()
             {
                 StopRecordingOnSilence = true, // will stop recording after 2 seconds (default)
-                StopRecordingAfterTimeout = false,  // stop recording after a max timeout (defined below)
+                StopRecordingAfterTimeout = true,  // stop recording after a max timeout (defined below)
+                TotalAudioTimeout = TimeSpan.FromSeconds(31), // will stop recording after 31 second
                 PreferredSampleRate = 16000, // sample rate of recording
                 SilenceThreshold = 0.1f,
-                TotalAudioTimeout = TimeSpan.FromSeconds(35) // will stop recording after 35 second
             };
             sw = new Stopwatch();
             //RecorderClient.AudioInputReceived += EnrollIdentifyWrapper;
@@ -128,17 +129,28 @@ namespace ProjectCaitlin.ViewModel
 
         private PeopleDto _peopleDto = null;
         public PeopleDto peopleDto { get { return _peopleDto; } set { _peopleDto = value;  } }
-
+        
         public delegate void Failed(Exception x);
+
 
         INavigation Navigation;
 
         public void CMDIdentifyAndEnroll()
         {
+            RecorderClient.StopRecordingOnSilence = true; // will stop recording after 2 seconds (default)
+
             RecorderClient.AudioInputReceived += EnrollIdentifyWrapper;
             _ = RecorderClient.StartRecording();
             Message = "Identify and Enroll";
+        }
 
+        public void CMDIdentifyAndEnroll_Manual()
+        {
+            RecorderClient.StopRecordingOnSilence = false; // will stop recording after 2 seconds (default)
+            
+            RecorderClient.AudioInputReceived += EnrollIdentifyWrapper;
+            _ = RecorderClient.StartRecording();
+            Message = "Identify and Enroll";
         }
 
         /* --------- 
@@ -195,27 +207,25 @@ namespace ProjectCaitlin.ViewModel
         {
             try
             {
-
+                Task.Factory.StartNew(() => { Device.BeginInvokeOnMainThread(()=> { mainPage.UpdateSlider(Color.LightBlue ,SlideToActView.States.SendingToAzure); }); });
                 PrintTraceMsg("Starting to Identify");
                 sw.Start();
                 Profile p = await IdentifyProfile(sender, audioFilePath);
                 sw.Stop();
                 PrintTraceMsg("Identification of voice Complete: " + sw.ElapsedMilliseconds);
                 sw.Reset();
-                //Profile p = new Profile()
-                //{
-                //    IdentificationProfileId = "00bb96ec-8089-4f95-999e-8a4af16c4680"
-                //};
-                //Profile p = UNKNOWN_PROFILE;
+
                 if (p == null)
                 {
                     PrintTraceMsg("NULL Profile branch");
                     Message = "Audio length not enough please try again!";
                     AudioFileEmpty();
+                    Task.Factory.StartNew(() => { Device.BeginInvokeOnMainThread(() => { mainPage.ResetSlider(); }); });
                     return null;
                 }
                 if (p != UNKNOWN_PROFILE)
                 {
+                    Task.Factory.StartNew(() => { Device.BeginInvokeOnMainThread(() => { mainPage.UpdateSlider(Color.Yellow , SlideToActView.States.SendingToFirebase); }); });
                     PrintTraceMsg("KNOWN Profile branch");
                     Console.WriteLine("Check::: "+p.IdentificationProfileId);
                     People peep = await PeopleService.GetPeopleFromSpeakerIdAsync(p.IdentificationProfileId);
@@ -231,31 +241,33 @@ namespace ProjectCaitlin.ViewModel
                         TempAudioAddress = audioFilePath;
                         AzIdFound_FirebaseNotFound(p);
                     }
+                    Task.Factory.StartNew(() => { Device.BeginInvokeOnMainThread(() => { mainPage.ResetSlider(); }); });
                     return "User Found";
                 }
                 PrintTraceMsg("UNKNOWN PROFILE branch");
-                // TODO: Check what to do when unable to find in Azure
-                //AzIdFound_NotCreatedNew(audioFilePath);
                 TempAudioAddress = audioFilePath;
                 if (CheckAudioLength(audioFilePath, 16, 1, 16000) >= 29)
                 {
                     PrintTraceMsg("UNKNOWN PROFILE long audio branch");
                     AzIdNotFound();
+                    Task.Factory.StartNew(() => { Device.BeginInvokeOnMainThread(() => { mainPage.ResetSlider(); }); });
+                    return "User creation initiated";
                 }
                 else
                 {
                     PrintTraceMsg("UNKNOWN PROFILE small audio branch");
                     Message = "Unable to recognize the voice.\nLength of audio not long enough to enroll";
+                    Task.Factory.StartNew(() => { Device.BeginInvokeOnMainThread(() => { mainPage.ResetSlider(); }); });
                     AzIdNotFound_AudioSmall();
+                    return "unable to identify, small audio";
                 }
-
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.StackTrace);
                 Message = "Something went wrong!\nPlease try recording the audio again";
             }
-            return "User Creation Initiated";
+            return "Something went wrong";
         }
         private async Task<Profile> IdentifyProfile(object _1, string audioFilePath)
         {
@@ -289,6 +301,7 @@ namespace ProjectCaitlin.ViewModel
                     {
                         //TODO : Throw an exception, May need to change the implementation
                         //Message = "something went wrong";
+                        _ = RefreshAzProfiles(SpeakerIdListInitializationFailFlow);
                         throw new SpeakerRecognitionException()
                         {
                             Code = "404",

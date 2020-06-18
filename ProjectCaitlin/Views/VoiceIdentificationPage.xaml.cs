@@ -33,7 +33,7 @@ namespace ProjectCaitlin.Views
 
         private async void okButton(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new GreetingPage());
+            await Navigation.PopAsync();
         }
     }
 }
