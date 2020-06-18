@@ -153,9 +153,23 @@ namespace ProjectCaitlin
 					Console.WriteLine(refreshToken);
 
                     //Save Properies inside phone for auto login
-					Application.Current.Properties["access_token"] = access_token;
-					Application.Current.Properties["refreshToken"] = refreshToken;
-					Application.Current.Properties["user_id"] = App.User.id;
+					if (Application.Current.Properties.ContainsKey("access_token")) {
+						Application.Current.Properties["access_token"] = access_token;
+					} else {
+						Application.Current.Properties.Add("access_token", access_token);
+					}
+
+					if (Application.Current.Properties.ContainsKey("refreshToken")) {
+						Application.Current.Properties["refreshToken"] = refreshToken;
+					} else {
+						Application.Current.Properties.Add("refreshToken", refreshToken);
+					}
+
+					if (Application.Current.Properties.ContainsKey("user_id")){
+						Application.Current.Properties["user_id"] = App.User.id;
+					} else {
+						Application.Current.Properties.Add("user_id", App.User.id);
+					}
 
 					await Application.Current.SavePropertiesAsync();
 

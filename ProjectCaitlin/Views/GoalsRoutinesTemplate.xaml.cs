@@ -46,6 +46,14 @@ namespace ProjectCaitlin.Views
                 UserDialogs.Instance.HideLoading();
             };
             MyPhotosButton.GestureRecognizers.Add(tapGestureRecognizer3);
+
+
+            var tapGestureRecognizer4 = new TapGestureRecognizer();
+            tapGestureRecognizer4.Tapped += async (s, e) => {
+                Navigation.PopAsync();
+                Navigation.PushAsync(new GoalsRoutinesTemplate());
+            };
+            MyDayButton.GestureRecognizers.Add(tapGestureRecognizer4);
             // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
         }
 

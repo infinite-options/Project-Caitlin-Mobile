@@ -236,7 +236,7 @@ namespace ProjectCaitlin.Services
             switch (GratisType)
             {
                 case "goals&routines":
-                    var grBoolFieldAdd = new List<string>() { "is_persistent", "is_sublist_available", "repeat" };
+                    var grBoolFieldAdd = new List<string>() { "is_persistent", "is_sublist_available", "repeat", "is_displayed_today" };
                     gratisConvertField = gratisBoolField.Concat(grBoolFieldAdd).ToList();
                     break;
                 case "actions&tasks":

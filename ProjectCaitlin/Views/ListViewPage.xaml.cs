@@ -780,16 +780,14 @@ namespace ProjectCaitlin
 
         private void AddTapGestures()
         {
-            //var tapGestureRecognizer1 = new TapGestureRecognizer();
-            //tapGestureRecognizer1.Tapped += async (s, e) =>
-            //{
-            //    ReloadImage.GestureRecognizers.RemoveAt(0);
-            //    ReloadImage.Source = "redoGray.png";
-            //    await RefreshPage();
-            //    ReloadImage.Source = "redo.png";
-            //    ReloadImage.GestureRecognizers.Add(tapGestureRecognizer1);
-            //};
-            //ReloadImage.GestureRecognizers.Add(tapGestureRecognizer1);
+            var tapGestureRecognizer1 = new TapGestureRecognizer();
+            tapGestureRecognizer1.Tapped += async (s, e) =>
+            {
+                UserDialogs.Instance.ShowLoading("Refreshing Page...");
+                await RefreshPage();
+                UserDialogs.Instance.HideLoading();
+            };
+            ListViewButton.GestureRecognizers.Add(tapGestureRecognizer1);
 
             var tapGestureRecognizer2 = new TapGestureRecognizer();
             tapGestureRecognizer2.Tapped += async (s, e) =>
