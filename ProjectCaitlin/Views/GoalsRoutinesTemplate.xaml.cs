@@ -50,8 +50,9 @@ namespace ProjectCaitlin.Views
 
             var tapGestureRecognizer4 = new TapGestureRecognizer();
             tapGestureRecognizer4.Tapped += async (s, e) => {
-                Navigation.PopAsync();
+                UserDialogs.Instance.ShowLoading("Refreshing Page...");
                 Navigation.PushAsync(new GoalsRoutinesTemplate());
+                UserDialogs.Instance.HideLoading();
             };
             MyDayButton.GestureRecognizers.Add(tapGestureRecognizer4);
             // %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
