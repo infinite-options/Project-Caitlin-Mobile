@@ -34,6 +34,7 @@ namespace VoiceRecognition.Services.AzCognitiveSpeaker
 
         public async Task<Profile> CreateProfileAsync()
         {
+            Trace.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.CreateProfileAsync: Starting");
             string uri = client.BaseAddress + AzCognitiveSpeakerAPI.IDENTITY_URL;
 
             HttpResponseMessage response;
@@ -44,9 +45,11 @@ namespace VoiceRecognition.Services.AzCognitiveSpeaker
             using (var content = new ByteArrayContent(byteData))
             {
                 content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+                Trace.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.CreateProfileAsync: Initiating Create Profile Request");
                 Task<HttpResponseMessage> resTask = client.PostAsync(uri, content);
                 resTask.Wait();
                 response = resTask.Result;
+                Trace.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.CreateProfileAsync: Create Profile Request Complete");
                 Console.WriteLine(response);
             }
 
@@ -57,6 +60,7 @@ namespace VoiceRecognition.Services.AzCognitiveSpeaker
                 {
                     Profile profile = serializer.Deserialize<Profile>(
                         jReader);
+                    Trace.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.CreateProfileAsync: Complete");
                     return profile;
                 }
             }
@@ -64,6 +68,7 @@ namespace VoiceRecognition.Services.AzCognitiveSpeaker
 
         public async Task<List<Profile>> GetProfilesAsync()
         {
+            Trace.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.GetProfilesAsync: Start");
             try
             {
                 string uri = client.BaseAddress + AzCognitiveSpeakerAPI.IDENTITY_URL;
@@ -71,11 +76,13 @@ namespace VoiceRecognition.Services.AzCognitiveSpeaker
                 responseTask.Wait();
                 Task<string> contentTask = responseTask.Result.Content.ReadAsStringAsync();
                 List<Profile> profiles = JsonConvert.DeserializeObject<List<Profile>>(contentTask.Result);
+                Trace.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.GetProfilesAsync: Completed");
                 return profiles;
             }
             catch(Exception e)
             {
                 Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.StackTrace);
                 throw e;
             }
         }
@@ -100,6 +107,7 @@ namespace VoiceRecognition.Services.AzCognitiveSpeaker
 
         public async Task<OperationStatus> EnrollAsync(Profile profile, string audioFilePath)
         {
+            Trace.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.EnrollAsync: Starting");
             try
             {
                 var queryString = HttpUtility.ParseQueryString(string.Empty);
@@ -130,11 +138,12 @@ namespace VoiceRecognition.Services.AzCognitiveSpeaker
                         break;
                     }
                 }
+                Trace.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.EnrollAsync: Completed");
                 return res;
             }
             catch(Exception e)
             {
-                Debug.WriteLine("EXCEPTION: " + e.Message);
+                Debug.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.EnrollAsync: EXCEPTION: " + e.Message);
                 throw;
             }
         }
@@ -160,12 +169,12 @@ namespace VoiceRecognition.Services.AzCognitiveSpeaker
 
                 System.Collections.Generic.IEnumerable<string> operationTrackingHeaders = response.Headers.GetValues("Operation-Location");
                 var trackingUrl = operationTrackingHeaders.FirstOrDefault();
-                Task.Delay(1000);
+                System.Threading.Thread.Sleep(1000);
                 OperationStatus res = GetOperationStatus(trackingUrl);
                 int request_trails = 1;
                 while (res.Status == Status.running || res.Status == Status.notstarted)
                 {
-                    Task.Delay(2000);
+                    System.Threading.Thread.Sleep(2000);
                     res = GetOperationStatus(trackingUrl);
                     if (request_trails > 5)
                     {
@@ -183,6 +192,7 @@ namespace VoiceRecognition.Services.AzCognitiveSpeaker
 
         public async Task<OperationStatus> GetOperationStatusAsync(string uri)
         {
+            Trace.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.GetOperationStatusAsync(uri): Started");
             try
             {
                 Task<HttpResponseMessage> responseTask = client.GetAsync(uri);
@@ -190,35 +200,40 @@ namespace VoiceRecognition.Services.AzCognitiveSpeaker
                 Task<string> contentTask = responseTask.Result.Content.ReadAsStringAsync();
                 //string content = contentTask.Result;
                 OperationStatus opStatus = JsonConvert.DeserializeObject<OperationStatus>(contentTask.Result);
+                Trace.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.GetOperationStatusAsync(uri): Completed");
                 return opStatus;
             }
             catch(Exception e)
             {
                 Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.StackTrace);
                 throw e;
             }
         }
 
         public OperationStatus GetOperationStatus(string uri)
         {
+            Trace.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.GetOperationStatus(uri): Started");
             try
             {
                 Task<HttpResponseMessage> responseTask = client.GetAsync(uri);
                 responseTask.Wait();
                 Task<string> contentTask = responseTask.Result.Content.ReadAsStringAsync();
                 OperationStatus opStatus = JsonConvert.DeserializeObject<OperationStatus>(contentTask.Result);
+                Trace.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.GetOperationStatus(uri): Completed");
                 return opStatus;
             }
             catch (Exception e)
             {
                 Debug.WriteLine(e.Message);
+                Debug.WriteLine(e.StackTrace);
                 throw e;
             }
         }
 
         public async Task<OperationStatus> IdentifyProfile(List<Profile> profiles, string audioFilePath)
         {
-
+            Trace.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.IdentifyProfile(profiles, audioFilePath): Started");
             try
             {
                 string commaDelimitedProfileIds = String.Join(",", profiles);
@@ -251,17 +266,20 @@ namespace VoiceRecognition.Services.AzCognitiveSpeaker
                     }
                     trials += 1;
                 }
+                Trace.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.IdentifyProfile(profiles, audioFilePath): Completed");
                 return res;
             }
             catch (Exception e)
             {
                 Debug.WriteLine("EXCEPTION: " + e.Message);
+                Debug.WriteLine(e.StackTrace);
                 throw;
             }
         }
 
         public async Task<Boolean> DeleteProfile(Profile profile)
         {
+            Trace.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.DeleteProfile(profile): Started");
             try
             {
                 var requestUri = client.BaseAddress + AzCognitiveSpeakerAPI.IDENTITY_URL + "/" + profile.IdentificationProfileId;
@@ -270,25 +288,30 @@ namespace VoiceRecognition.Services.AzCognitiveSpeaker
                 responseTask.Wait();
                 if (responseTask.Result.IsSuccessStatusCode)
                 {
+                    Trace.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.DeleteProfile(profile): Completed");
                     return true;
                 }
+                Trace.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.DeleteProfile(profile): Completed");
                 return false;
             }
             catch( Exception e)
             {
-                Debug.WriteLine("EXCEPTION: " + e.Message);
+                Debug.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.DeleteProfile(profile): EXCEPTION:\n" + e.Message);
+                Debug.WriteLine(e.StackTrace);
                 throw;
             }
         }
 
         protected HttpRequestMessage PrepareMediaRequest(string audioFilePath, string requestUri)
         {
+            Trace.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.PrepareMediaRequest(audioFilePath, requestUri): Started");
             var request = new HttpRequestMessage(HttpMethod.Post, requestUri);
             request.Headers.TransferEncodingChunked = true;
             request.Headers.ExpectContinue = true;
             request.Headers.Accept.ParseAdd(MimeTypes.Json);
             request.Headers.Accept.ParseAdd(MimeTypes.Xml);
             request.Content = MediaRequestHelper.PopulateRequestContent(audioFilePath);
+            Trace.WriteLine("VoiceRecognition.Services.AzCognitiveSpeaker.PrepareMediaRequest(audioFilePath, requestUri): Completed");
             return request;
         }
 

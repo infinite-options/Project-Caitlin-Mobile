@@ -138,7 +138,7 @@ namespace ProjectCaitlin.ViewModel
         public void CMDIdentifyAndEnroll()
         {
             RecorderClient.StopRecordingOnSilence = true; // will stop recording after 2 seconds (default)
-
+            CMDStopRecording();
             RecorderClient.AudioInputReceived += EnrollIdentifyWrapper;
             _ = RecorderClient.StartRecording();
             Message = "Identify and Enroll";
@@ -190,18 +190,17 @@ namespace ProjectCaitlin.ViewModel
         {
             try
             {
+                RecorderClient.AudioInputReceived -= EnrollIdentifyWrapper;
                 _ = IdentifyAndEnroll(sender, audioFilePath);
-
-
             }
             catch (Exception e)
             {
                 Trace.WriteLine(e.StackTrace);
             }
-            finally
-            {
-                RecorderClient.AudioInputReceived -= EnrollIdentifyWrapper;
-            }
+            //finally
+            //{
+                
+            //}
         }
         public async Task<string> IdentifyAndEnroll(object sender, string audioFilePath)
         {
@@ -267,6 +266,7 @@ namespace ProjectCaitlin.ViewModel
                 Debug.WriteLine(e.StackTrace);
                 Message = "Something went wrong!\nPlease try recording the audio again";
             }
+            Task.Factory.StartNew(() => { Device.BeginInvokeOnMainThread(() => { mainPage.ResetSlider(); }); });
             return "Something went wrong";
         }
         private async Task<Profile> IdentifyProfile(object _1, string audioFilePath)
@@ -641,14 +641,13 @@ namespace ProjectCaitlin.ViewModel
             float Secondslength = 0.0f;
             try
             {
-                var fileTask = FileSystem.Current.GetFileFromPathAsync(audioFilePath);
+                using var fileTask = FileSystem.Current.GetFileFromPathAsync(audioFilePath);
                 fileTask.Wait();
-                using (var audioStream = fileTask.Result.OpenAsync(FileAccess.Read))
-                {
-                    audioStream.Wait();
-                    long ByteLength = audioStream.Result.Length;
-                    Secondslength = ByteLength / bytesPerSecond;
-                }
+                using var audioStream = fileTask.Result.OpenAsync(FileAccess.Read);
+                audioStream.Wait();
+                long ByteLength = audioStream.Result.Length;
+                Secondslength = ByteLength / bytesPerSecond;
+                audioStream.Result.Dispose();
             }
             catch (Exception ex)
             {

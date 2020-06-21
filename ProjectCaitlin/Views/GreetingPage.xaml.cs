@@ -59,6 +59,20 @@ namespace ProjectCaitlin.Views
                     if (identifyButton! != null && !identifyButton.IsVisible)
                     {
                         greetingViewModel.CMDIdentifyAndEnroll();
+                        Task.Factory.StartNew(() => {
+                            System.Threading.Thread.Sleep(500);
+                            int i = 0;
+                            while (greetingViewModel.IsRecording())
+                            {
+                                Device.BeginInvokeOnMainThread(() =>
+                                {
+                                    this.trackBarFrame.BackgroundColor = Color.Yellow;
+                                    this.trackBar.Text = string.Format("{0}\n{1}", SlideToActView.States.Recording, i);
+                                });
+                                i += 1;
+                                System.Threading.Thread.Sleep(1000);
+                            }
+                        });
                     }
                 }
             });
@@ -146,13 +160,12 @@ namespace ProjectCaitlin.Views
 
         void Handle_SlideCompleted(object sender, System.EventArgs e)
         {
-            if (trackBar.Text == SlideToActView.States.Manual)
+            if (identifyButton.IsVisible)
             {
                 identifyButton.IsVisible = false;
                 trackBar.Text = SlideToActView.States.AlwaysOn;
-
             }
-            else if (trackBar.Text == SlideToActView.States.AlwaysOn)
+            else
             {
                 identifyButton.IsVisible = true;
                 trackBar.Text = SlideToActView.States.Manual;
@@ -234,11 +247,11 @@ namespace ProjectCaitlin.Views
                     i += 1;
                     System.Threading.Thread.Sleep(1000);
                 }
-                Device.BeginInvokeOnMainThread(() =>
-                {
-                    this.trackBar.Text = SlideToActView.States.SendingToAzure;
-                    //this.timer.IsVisible = false;
-                });
+                //Device.BeginInvokeOnMainThread(() =>
+                //{
+                //    this.trackBar.Text = SlideToActView.States.SendingToAzure;
+                //    //this.timer.IsVisible = false;
+                //});
             });
         }
     }
