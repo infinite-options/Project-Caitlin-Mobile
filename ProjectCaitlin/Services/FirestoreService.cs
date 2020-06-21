@@ -171,13 +171,13 @@ namespace ProjectCaitlin.Services
                 {
                     bool isDisplayedToday = true;
                     if (data.ContainsKey("is_displayed_today"))
-                        isDisplayedToday = data["is_displayed_today"].ToString() == "1";
+                        isDisplayedToday = (bool) data["is_displayed_today"];
 
                     if (isDisplayedToday)
                     {
-                        if (data["is_available"].ToString() == "1")
+                        if ((bool) data["is_available"])
                         {
-                            bool isInProgressCheck = data.ContainsKey("is_in_progress") ? data["is_in_progress"].ToString() == "1" : false;
+                            bool isInProgressCheck = data.ContainsKey("is_in_progress") ? (bool) data["is_in_progress"] == true : false;
 
                             grObject grObject = new grObject
                             {
@@ -189,7 +189,7 @@ namespace ProjectCaitlin.Services
 
                                 isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
 
-                                isComplete = data["is_complete"].ToString() == "1"
+                                isComplete = (bool) data["is_complete"]
                                                     && IsDateToday(data["datetime_completed"].ToString())
                                                     && !isInProgressCheck,
 
@@ -197,7 +197,7 @@ namespace ProjectCaitlin.Services
 
                                 dbIdx = dbIdx_,
 
-                                isSublistAvailable = data["is_sublist_available"].ToString() == "1",
+                                isSublistAvailable = (bool) data["is_sublist_available"],
 
                                 dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
 
@@ -213,7 +213,7 @@ namespace ProjectCaitlin.Services
                             var serializedParent = JsonConvert.SerializeObject(grObject);
 
 
-                            if (data["is_persistent"].ToString() == "1")
+                            if ((bool) data["is_persistent"])
                             {
                                 routine routine = JsonConvert.DeserializeObject<routine>(serializedParent);
 
