@@ -189,7 +189,7 @@ namespace ProjectCaitlin.Services
                         isDisplayedToday = convertBinToBool(data["is_displayed_today"].ToString()); 
                     if (isDisplayedToday)
                     {
-                        if ((bool) data["is_available"])
+                        if (convertBinToBool(data["is_available"].ToString()))
                         {
                             bool isInProgressCheck = data.ContainsKey("is_in_progress") ? convertBinToBool(data["is_in_progress"].ToString()) == true : false;
 
