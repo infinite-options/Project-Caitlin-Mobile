@@ -10,6 +10,8 @@ using ProjectCaitlin.Models;
 using Xamarin.Forms;
 using ProjectCaitlin.Services;
 using Newtonsoft.Json;
+using System.Collections;
+using System.Security.Cryptography.X509Certificates;
 
 namespace ProjectCaitlin.Services
 {
@@ -92,16 +94,27 @@ namespace ProjectCaitlin.Services
             App.User.goals = new List<goal>();
             App.User.allDates = new HashSet<string>();
 
+            Console.WriteLine("uid is: " + uid);
+
             var userDocument = await CrossCloudFirestore.Current.Instance
                 .GetCollection("users")
                 .GetDocument(uid)
                 .GetDocumentAsync();
 
+
+            Console.WriteLine("Printing Data");
+            Console.WriteLine(userDocument);
+            
+
             var docData = userDocument.Data;
+
+            //Console.WriteLine(userDocument.Data["is_displayed_today"]);
+
 
             if (docData.ContainsKey("first_name") && docData.ContainsKey("last_name"))
             {
                 App.User.firstName = docData["first_name"].ToString();
+                Console.WriteLine(docData["first_name"].ToString());
                 App.User.lastName = docData["last_name"].ToString();
             }
 
@@ -171,13 +184,14 @@ namespace ProjectCaitlin.Services
                 {
                     bool isDisplayedToday = true;
                     if (data.ContainsKey("is_displayed_today"))
-                        isDisplayedToday = (bool) data["is_displayed_today"];
-
+                        Console.WriteLine(data["is_displayed_today"]);
+                        //isDisplayedToday = (bool) data["is_displayed_today"];
+                        isDisplayedToday = convertBinToBool(data["is_displayed_today"].ToString()); 
                     if (isDisplayedToday)
                     {
                         if ((bool) data["is_available"])
                         {
-                            bool isInProgressCheck = data.ContainsKey("is_in_progress") ? (bool) data["is_in_progress"] == true : false;
+                            bool isInProgressCheck = data.ContainsKey("is_in_progress") ? convertBinToBool(data["is_in_progress"].ToString()) == true : false;
 
                             grObject grObject = new grObject
                             {
@@ -189,7 +203,7 @@ namespace ProjectCaitlin.Services
 
                                 isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
 
-                                isComplete = (bool) data["is_complete"]
+                                isComplete = convertBinToBool(data["is_complete"].ToString())
                                                     && IsDateToday(data["datetime_completed"].ToString())
                                                     && !isInProgressCheck,
 
@@ -197,7 +211,7 @@ namespace ProjectCaitlin.Services
 
                                 dbIdx = dbIdx_,
 
-                                isSublistAvailable = (bool) data["is_sublist_available"],
+                                isSublistAvailable = convertBinToBool(data["is_sublist_available"].ToString()),
 
                                 dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
 
@@ -213,7 +227,7 @@ namespace ProjectCaitlin.Services
                             var serializedParent = JsonConvert.SerializeObject(grObject);
 
 
-                            if ((bool) data["is_persistent"])
+                            if (convertBinToBool(data["is_persistent"].ToString()))
                             {
                                 routine routine = JsonConvert.DeserializeObject<routine>(serializedParent);
 
@@ -623,6 +637,23 @@ namespace ProjectCaitlin.Services
                     }
                 }
             }
+
+
+        }
+
+        public bool convertBinToBool(string obj)
+        {
+            bool ret = false;
+            if (obj == "1" || obj == "True")
+                ret = true;
+
+            else if (obj == "0" || obj == "False")
+                ret = false;
+
+            return ret;
+
+
+
         }
     }
 }
