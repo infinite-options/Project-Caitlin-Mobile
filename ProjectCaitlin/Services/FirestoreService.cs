@@ -184,8 +184,6 @@ namespace ProjectCaitlin.Services
                 {
                     bool isDisplayedToday = true;
                     if (data.ContainsKey("is_displayed_today"))
-                        //Console.WriteLine(data["is_displayed_today"]);
-                        //isDisplayedToday = (bool) data["is_displayed_today"];
                         isDisplayedToday = convertBinToBool(data["is_displayed_today"].ToString()); 
 
                     if (isDisplayedToday)
@@ -641,6 +639,14 @@ namespace ProjectCaitlin.Services
 
 
         }
+        /*
+        convertBinToBool
+        Input: string 
+        Returns: a string
+
+        This is implemented to handle the difference in boolean values in Android and in iOS
+        Converts 1 to true, and 0 to false
+         */
 
         public bool convertBinToBool(string obj)
         {
