@@ -184,9 +184,10 @@ namespace ProjectCaitlin.Services
                 {
                     bool isDisplayedToday = true;
                     if (data.ContainsKey("is_displayed_today"))
-                        Console.WriteLine(data["is_displayed_today"]);
+                        //Console.WriteLine(data["is_displayed_today"]);
                         //isDisplayedToday = (bool) data["is_displayed_today"];
                         isDisplayedToday = convertBinToBool(data["is_displayed_today"].ToString()); 
+
                     if (isDisplayedToday)
                     {
                         if (convertBinToBool(data["is_available"].ToString()))
@@ -217,7 +218,7 @@ namespace ProjectCaitlin.Services
 
                                 //availableStartTime = TimeSpan.Parse(data["available_start_time"].ToString()),
 
-                                availableStartTime = DateTime.Parse(data["end_day_and_time"].ToString()).TimeOfDay,
+                                availableStartTime = DateTime.Parse(data["start_day_and_time"].ToString()).TimeOfDay,
 
                                 //availableEndTime = TimeSpan.Parse(data["available_end_time"].ToString())
                                 availableEndTime = DateTime.Parse(data["end_day_and_time"].ToString()).TimeOfDay
