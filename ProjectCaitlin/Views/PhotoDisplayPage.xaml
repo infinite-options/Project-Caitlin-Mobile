@@ -13,14 +13,14 @@
         <StackLayout Orientation="Horizontal"
                      HorizontalOptions="FillAndExpand"
                      Padding="60, 0, 60, 0"
-                     Margin="0,20,0,0">
+                     Margin="0,40,0,0">
             <ImageButton HorizontalOptions="StartAndExpand" x:Name= "button1" Source="previousbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
             <Label x:Name="dateLabel" Text="" FontSize="20" HorizontalOptions="Center"/>
             <ImageButton HorizontalOptions="EndAndExpand" x:Name= "button2" Source="nextbutton.png" BackgroundColor="Transparent" HeightRequest="23" WidthRequest="23" />
         </StackLayout>
 
 
-        <CarouselView ItemsSource="{Binding Items}">
+        <CarouselView x:Name="carousel" ItemsSource="{Binding Items}">
             <CarouselView.ItemTemplate>
                 <DataTemplate>
                     <StackLayout >
@@ -36,24 +36,27 @@
                             </StackLayout>
                         </Frame>
                         <Label Text="{Binding CreationTime}" FontSize="20" HorizontalOptions="Center"/>
-                        
-                        <Editor  x:Name="description"
-                        Placeholder="Description"
-                                 Text="{Binding Description}"
+
+                        <Label FontSize="20"
+                               HorizontalOptions="CenterAndExpand"
+                               Text="{Binding Description}"
+                        />
+
+                        <Editor
+                        Placeholder="Note"
+                        Text="{Binding Note}"
                         AutoSize="TextChanges"
                         MaxLength="100"
                         IsSpellCheckEnabled="true"
                         IsTextPredictionEnabled="true" 
-                        Completed="EditorCompleted"/>
-
-                        <Entry Placeholder="Note"  />
+                        Completed="EditorCompleted2"/>
                         
                     </StackLayout>
                 </DataTemplate>
             </CarouselView.ItemTemplate>
         </CarouselView>
 
-        <RelativeLayout
+        <StackLayout
                 VerticalOptions="End">
             <Frame x:Name="NavBar" HasShadow="True" CornerRadius="0" Padding="0,-5,0,10" HeightRequest="65" VerticalOptions="End" RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}">
                 <Grid Grid.Row="1" Grid.Column="4">
@@ -141,6 +144,6 @@
                     </StackLayout>
                 </Grid>
             </Frame>
-        </RelativeLayout>
+        </StackLayout>
     </StackLayout>
 </ContentPage>

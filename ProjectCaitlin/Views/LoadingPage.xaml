@@ -9,7 +9,7 @@
 
     <StackLayout
         VerticalOptions="Center"
-        Margin="20">
+        Margin="0,40,0,0">
         
         <Label
             Text="Project Caitlin"

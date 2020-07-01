@@ -4,23 +4,23 @@ using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Threading.Tasks;
+using ProjectCaitlin.Models;
+using ProjectCaitlin.Services;
+using Xamarin.Forms;
 
 namespace ProjectCaitlin.Services
 {
     public class GooglePhotoService
     {
-        public HashSet<string> allDates;
-        public async Task<List<List<string>>> GetPhotos()
+        public static async Task<List<List<string>>> GetPhotos()
         {
-            allDates = new HashSet<string>();
-
             //Make HTTP Request
             var request = new HttpRequestMessage();
             request.RequestUri = new Uri("https://photoslibrary.googleapis.com/v1/mediaItems?pageSize=100");
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", App.User.access_token);
+            string bearerString = string.Format("Bearer {0}", Application.Current.Properties["access_token"].ToString());
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
@@ -35,19 +35,13 @@ namespace ProjectCaitlin.Services
             var itemList = new List<List<string>>();
             //var itemMap = new Dictionary<string, string>();
 
-
             String creationTime = "";
             String storePicUri = "";
             String date = "";
             String thumbNailAlbumUri = "";
             String description = "";
-            //Try to add "Summary" Items to list from JSON. If null, redirect to Login prompt.
-            Console.WriteLine("request.RequestUri : " + request.RequestUri);
-
-            Console.WriteLine("NextPageToken" + result.NextPageToken);
-            /* if (!result.NextPageToken.Equals("")) {
-                 request.RequestUri += "?" + result.NextPageToken;
-             }*/
+            String id = "";
+            //String note = "";
 
             try
             {
@@ -55,41 +49,61 @@ namespace ProjectCaitlin.Services
                 {
                     var subList = new List<string>();
 
-                    DateTimeOffset GreenwichMeanTime = product.MediaMetadata.CreationTime; //Google photo api sends time in GreenwichMeanTime. 
+                    DateTimeOffset GreenwichMeanTime = product.MediaMetadata.CreationTime; //Google photo api sends time in GreenwichMeanTime.
                     DateTimeOffset utcTime = GreenwichMeanTime.ToLocalTime();  //convert GreenwichMeanTime to local time.
 
                     //creationTime = utcTime.ToString();
                     creationTime = utcTime.ToString();
                     date = creationTime.Substring(0, creationTime.IndexOf(" "));// date = yyyy/mm/dd
                     creationTime = utcTime.TimeOfDay.ToString();
-                    allDates.Add(date);
-
+                    id = product.Id;
+                    string fileName = product.Filename;
                     storePicUri = product.BaseUrl.ToString();
                     description = product.Description + "";
+                    App.User.allDates.Add(date);
                     subList.Add(product.BaseUrl.ToString());
                     subList.Add(date);
                     subList.Add(description);
                     subList.Add(creationTime);
-                    itemList.Add(subList);
+                    subList.Add(id);
+                    bool post = true;
+                    foreach (photo photo in App.User.FirebasePhotos)
+                    {
+                        if (id.Equals(photo.id))
+                            post = false;
+                    }
 
+                    if (post)
+                    {
+                        //Get photo from Firebase and add note
+                        photo photo = await FirebaseFunctionsService.GetPhoto(id);
+                        subList.Add(photo.note);
+                    }
+                    else
+                    {
+                        //Post photo to Firebase
+                        await FirebaseFunctionsService.PostPhoto(id, description, " ");
+                        subList.Add("");
+                    }
+                    App.User.photoURIs.Add(subList);
+                    itemList.Add(subList);
                 }
             }
             catch (NullReferenceException e)
             {
-                //here:
-                /*var googleService = new GoogleService();
+
+                var googleService = new GoogleService();
                 if (await googleService.RefreshToken())
                 {
                     Console.WriteLine("RefreshToken Done!");
-                    return await GetPhotos();
-                }*/
-                return null;
+                    App.User.photoURIs = await GooglePhotoService.GetPhotos();
+                }
+
             }
             if (itemList.Count == 0)
                 return new List<List<string>>();
             else
                 return itemList;
         }
-
     }
 }

@@ -11,24 +11,30 @@ using ProjectCaitlin.ViewModel;
 using System.Globalization;
 using System.Text.RegularExpressions;
 
+using ProjectCaitlin.Models;
+using Acr.UserDialogs;
+
 namespace ProjectCaitlin
 {
     public partial class PhotoDisplayPage : ContentPage
     {
         readonly PhotoViewModel pageModel;
 
-        GooglePhotoService GooglePhotoService = new GooglePhotoService();
-
-        //List<string> photoURIs = new List<string>();
-
         string date;
+        string description;
+        string id;
 
-        public PhotoDisplayPage(CachedImage webImage, string date, string description, string creationTime)
+        bool disableBackButton;
+
+        public PhotoDisplayPage(CachedImage webImage, string date, string description, string id, string creationTime, string note)
         {
             InitializeComponent();
             AddTapGestures();
             this.date = date;
-            pageModel = new PhotoViewModel(webImage, date, description, creationTime);
+            this.description = description;
+            this.id = id;
+            disableBackButton = false;
+            pageModel = new PhotoViewModel(webImage, date, description, creationTime,note);
             BindingContext = pageModel;
 
             dateLabel.Text = date;
@@ -50,6 +56,7 @@ namespace ProjectCaitlin
             BindingContext = pageModel;
 
             dateLabel.Text = date;
+            disableBackButton = false;
             var button1 = this.FindByName<ImageButton>("button1");
             button1.Clicked += ButtonOne;
 
@@ -59,14 +66,31 @@ namespace ProjectCaitlin
 
         async void ButtonOne(object sender, EventArgs args)
         {
-            date = PreviousDate();
-            //pageModel.SetupUI(date);
+            //date = PreviousDate();
+            String date = this.date;
+            for (int i = 0; i < App.User.photoURIs.Count - 1; i++)
+            {
+                if (this.date == App.User.photoURIs[i][1])
+                {
+                    if (this.date != App.User.photoURIs[i + 1][1])
+                        date = App.User.photoURIs[i + 1][1];
+                }
+            }
             await Navigation.PushAsync(new PhotoDisplayPage(date));
         }
 
         async void ButtonTwo(object sender, EventArgs args)
         {
-            date = NextDate();
+            //date = NextDate();
+            String date = this.date;
+            for (int i = 1; i < App.User.photoURIs.Count; i++)
+            {
+                if (this.date == App.User.photoURIs[i][1])
+                {
+                    if(this.date != App.User.photoURIs[i-1][1])
+                        date = App.User.photoURIs[i - 1][1];
+                }
+            }
             await Navigation.PushAsync(new PhotoDisplayPage(date));
         }
 
@@ -264,10 +288,71 @@ namespace ProjectCaitlin
             dateTime = dateTime.Substring(0, dateTime.IndexOf(" "));
             return dateTime;
         }
-        void EditorCompleted(object sender, EventArgs e)
+        /*async void EditorCompleted(object sender, EventArgs e)
         {
             var text = ((Editor)sender).Text; // sender is cast to an Editor to enable reading the `Text` property of the view.
-            Console.WriteLine(text);
+            Console.WriteLine("Doing something" + carousel.CurrentItem.ToString());
+
+            //Painful process to get the source of the photo on the carousel view.
+            string pain = carousel.CurrentItem.ToString();
+            int startIndex = pain.IndexOf("=") + 2;
+            int endIndex = pain.IndexOf(", ");
+            string photo_source = pain.Substring(startIndex, endIndex-startIndex);
+
+            //evil code, don't change anything in this if statement.
+            if(photo_source.Substring(0,5)=="Uri: ")
+                photo_source = "" + photo_source.Substring(5);
+
+            Console.Write("pain" + pain);
+            Console.Write("photo_source" + photo_source);
+            foreach (List<string> list in App.User.photoURIs)
+            {
+                if (photo_source == list[0])
+                {
+                    list[2] = text;
+                    await FirebaseFunctionsService.PostPhoto(list[4], text, list[5]);
+                    Console.WriteLine(list[4] + "Description : " + text);
+                }
+            }
+            disableBackButton = true;
+        }*/
+
+        async void EditorCompleted2(object sender, EventArgs e)
+        {
+            var text = ((Editor)sender).Text; // sender is cast to an Editor to enable reading the `Text` property of the view.
+
+            //Painful process to get the source of the photo on the carousel view.
+            string pain = carousel.CurrentItem.ToString();
+            int startIndex = pain.IndexOf("=") + 2;
+            int endIndex = pain.IndexOf(", ");
+            string photo_source = pain.Substring(startIndex, endIndex - startIndex);
+
+            //evil code, don't change anything in this if statement.
+            if (photo_source.Substring(0, 5) == "Uri: ")
+                photo_source = "" + photo_source.Substring(5);
+
+            foreach (List<string> list in App.User.photoURIs)
+            {
+                if (photo_source == list[0])
+                {
+                    list[5] = text;
+                    await FirebaseFunctionsService.PostPhoto(list[4], list[2], text);
+                    Console.WriteLine(list[4] + "note : " + text);
+                }
+            }
+            disableBackButton = true;
+        }
+
+
+        protected override bool OnBackButtonPressed()
+        {
+            if (disableBackButton)
+            {
+                Navigation.PushAsync(new MonthlyViewPage());
+                return true;
+            }
+            else
+                return base.OnBackButtonPressed();
         }
 
         private void AddTapGestures()
@@ -286,7 +371,9 @@ namespace ProjectCaitlin
 
             var tapGestureRecognizer3 = new TapGestureRecognizer();
             tapGestureRecognizer3.Tapped += async (s, e) => {
+                UserDialogs.Instance.ShowLoading("Loading...");
                 await Navigation.PushAsync(new MonthlyViewPage());
+                UserDialogs.Instance.HideLoading();
             };
             MyPhotosButton.GestureRecognizers.Add(tapGestureRecognizer3);
 

@@ -86,6 +86,8 @@ namespace ProjectCaitlin.Views
                 var routineId = App.User.routines[a].id;
                 var taskId = App.User.routines[a].tasks[b].id;
 
+                var task = App.User.routines[a].tasks[b];
+
                 firebaseFunctionsService = new FirebaseFunctionsService();
 
                 taskItemModel.IsComplete = true;
@@ -96,7 +98,7 @@ namespace ProjectCaitlin.Views
                 App.User.routines[a].tasks[b].dateTimeCompleted = DateTime.Now;
                 //TaskPage.pageModel.Items[b].IsComplete = true;
 
-                firebaseFunctionsService.UpdateTask(routineId, taskId, App.User.routines[a].tasks[b].dbIdx.ToString());
+                firebaseFunctionsService.updateGratisStatus(task, "actions&tasks", true);
                 await Navigation.PopAsync();
             }
             else
@@ -116,6 +118,7 @@ namespace ProjectCaitlin.Views
             if (completeTasksCounter == App.User.routines[a].tasks.Count)
             {
                 var routineId = App.User.routines[a].id;
+                var routine = App.User.routines[a];
 
                 App.User.routines[a].isComplete = true;
                 App.User.routines[a].isInProgress = false;
@@ -130,7 +133,7 @@ namespace ProjectCaitlin.Views
                 
                 var firebaseFunctionsService = new FirebaseFunctionsService();
 
-                var okToCheckmark = await firebaseFunctionsService.CompleteRoutine(routineId, App.User.routines[a].dbIdx.ToString());
+                firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", true);
             }
         }
     }
