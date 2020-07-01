@@ -1,12 +1,16 @@
 ﻿using System;
+using System.Globalization;
 using Android.App;
 using Android.Bluetooth;
 using Android.Content;
 using Android.Graphics;
+using Android.Icu.Util;
 using Android.OS;
 using Android.Support.V4.App;
+using Google.Type;
 using Xamarin.Forms;
 using AndroidApp = Android.App.Application;
+//using Android.
 
 
 [assembly: Dependency(typeof(ProjectCaitlin.Droid.AndroidNotificationManager))]
@@ -17,7 +21,7 @@ namespace ProjectCaitlin.Droid
         const string channelId = "default";
         const string channelName = "Default";
         const string channelDescription = "The default channel for notifications.";
-        const int pendingIntentId = 0;
+        public int pendingIntentId = 0;
 
         public const string TitleKey = "title";
         public const string MessageKey = "message";
@@ -51,31 +55,22 @@ namespace ProjectCaitlin.Droid
             intent.PutExtra(channelId, channelId);
 
 
-            //PendingIntent pendingIntent = PendingIntent.GetActivity(AndroidApp.Context, pendingIntentId, intent, PendingIntentFlags.OneShot);
-            PendingIntent pendingIntent = PendingIntent.GetBroadcast(AndroidApp.Context, pendingIntentId, intent, PendingIntentFlags.UpdateCurrent);
+            PendingIntent pendingIntent = PendingIntent.GetBroadcast(AndroidApp.Context, pendingIntentId++, intent, PendingIntentFlags.UpdateCurrent);
 
-            /*
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(AndroidApp.Context, channelId)
-                .SetContentIntent(pendingIntent)
-                .SetContentTitle(title)
-                .SetContentText(message)
-                .SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, Resource.Drawable.xamagonBlue))
-                .SetSmallIcon(Resource.Drawable.xamagonBlue)
-                .SetDefaults((int)NotificationDefaults.Sound | (int)NotificationDefaults.Vibrate);
-
-            Notification notification = builder.Build();
-            */
-
-            //AlarmManager alarmMgr = (AlarmManager)AndroidApp.Context.GetSystemService(Context.AlarmService);
-            var alarmManager = (AlarmManager)AndroidApp.Context.GetSystemService(Context.AlarmService);
-            //AlarmManager mgr = (AlarmManager)AndroidApp.Context.GetSystemService(new Java.Lang.Class(AndroidApp.Context.));
             var interval = AlarmManager.IntervalDay;
+            //var interval = 60 * 1000;
             //manager.Notify(notification_tag, messageId, notification);
+            var alarmManager = (AlarmManager)AndroidApp.Context.GetSystemService(Context.AlarmService);
             Console.WriteLine("INSIDE SCHEDULE NOTIFICATION");
             Console.WriteLine("MESSAGE:" + message + ", DURATION: ");
             Console.WriteLine(duration);
             Console.WriteLine("NOT_ID:" + notification_tag + notification_id.ToString());
-            alarmManager.SetRepeating(AlarmType.RtcWakeup, (long)duration, interval, pendingIntent);
+            long dur = (long)(duration * 1000);
+            Console.WriteLine("Duration in seconds for " + message + ": " + duration);
+            
+            
+
+            alarmManager.SetRepeating(AlarmType.RtcWakeup, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + dur, (long)interval, pendingIntent);
             return messageId;
         }
 
@@ -115,7 +110,7 @@ namespace ProjectCaitlin.Droid
         }
     }
     
-    [BroadcastReceiver (Enabled =true)]
+    /*[BroadcastReceiver (Enabled =true)]
     public class AlarmReceiver : BroadcastReceiver
     {
         
@@ -156,5 +151,5 @@ namespace ProjectCaitlin.Droid
         }
 
 
-    }
+    }*/
 }

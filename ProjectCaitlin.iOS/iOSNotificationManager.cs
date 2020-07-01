@@ -49,7 +49,7 @@ namespace ProjectCaitlin.iOS
             {
                 var args = new NotificationEventArgs()
                 {
-                    Title = title.Substring(21),
+                    Title = title,
                     Message = message
                 };
                 NotificationReceived?.Invoke(null, args);
@@ -91,7 +91,7 @@ namespace ProjectCaitlin.iOS
 
             // Local notifications can be time or location based
             // Create a time-based trigger, interval is in seconds and must be greater than 0
-            UNTimeIntervalNotificationTrigger trigger = UNTimeIntervalNotificationTrigger.CreateTrigger(duration, true);
+            UNTimeIntervalNotificationTrigger trigger = UNTimeIntervalNotificationTrigger.CreateTrigger(duration, false);
             //UNCalendarNotificationTrigger trigger1 = UNCalendarNotificationTrigger.CreateTrigger(NSD)
 
             UNNotificationRequest request = UNNotificationRequest.FromIdentifier(messageId, content, trigger);

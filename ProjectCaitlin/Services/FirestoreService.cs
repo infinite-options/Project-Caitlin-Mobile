@@ -177,7 +177,7 @@ namespace ProjectCaitlin.Services
         public void LoadGoalsAndRoutines(List<Object> grArrayData)
         {
 
-            int dbIdx_ = 0, routineIdx = 0;
+            int dbIdx_ = 0, routineIdx = 0, goalIdx = 0;
             foreach (IDictionary<string, object> data in grArrayData)
             {
                 try
@@ -241,6 +241,8 @@ namespace ProjectCaitlin.Services
                                 goal goal = JsonConvert.DeserializeObject<goal>(serializedParent);
 
                                 App.User.goals.Add(goal);
+
+                                //setNotifications(goal, goalIdx, (IDictionary<string, object>)data["user_notifications"]);
                             }
                         }
                     }
