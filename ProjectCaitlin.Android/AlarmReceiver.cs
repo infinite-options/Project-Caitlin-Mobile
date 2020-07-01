@@ -39,7 +39,7 @@ namespace ProjectCaitlin.Droid
                 .SetContentIntent(pendingIntent)
                 .SetContentTitle(title)
                 .SetContentText(message)
-                .SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, Resource.Drawable.xamagonBlue))
+                .SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, Resource.Drawable.ic_launcher))
                 .SetSmallIcon(Resource.Drawable.xamagonBlue)
                 .SetDefaults((int)NotificationDefaults.Sound | (int)NotificationDefaults.Vibrate)
                 .SetAutoCancel(true);
