@@ -10,7 +10,6 @@ namespace ProjectCaitlin
     {
         private FirestoreService firestoreService;
         private FirebaseFunctionsService firebaseFunctionsService;
-        private GoogleService googleService;
 
         public LoadingPage()
         {
@@ -20,7 +19,7 @@ namespace ProjectCaitlin
 
         protected override async void OnAppearing()
         {
-            if (Application.Current.Properties.ContainsKey("access_token")
+            if (Application.Current.Properties.ContainsKey("accessToken")
                 && Application.Current.Properties.ContainsKey("refreshToken")
                 && Application.Current.Properties.ContainsKey("user_id"))
             {
@@ -28,15 +27,11 @@ namespace ProjectCaitlin
 
                 firestoreService = new FirestoreService();
                 firebaseFunctionsService = new FirebaseFunctionsService();
-                googleService = new GoogleService();
 
-                if (await googleService.RefreshToken())
-                {
-                    await firestoreService.LoadDatabase();
-                    await googleService.LoadTodaysEvents();
-                    firestoreService.SetupFirestoreSnapshot();
-                    await Navigation.PushAsync(new GoalsRoutinesTemplate());
-                }
+                await firestoreService.LoadUser();
+                await GoogleService.LoadTodaysEvents();
+
+                await Navigation.PushAsync(new GoalsRoutinesTemplate());
             }
         }
     }

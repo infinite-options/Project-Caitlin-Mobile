@@ -274,9 +274,9 @@ namespace ProjectCaitlin
             }
             catch (ArgumentNullException e)
             {
-                //LoginPage.access_token = LoginPage.refreshToken;
+                //LoginPage.accessToken = LoginPage.refreshToken;
                 //await Navigation.PopAsync();
-                //Console.WriteLine(LoginPage.access_token);
+                //Console.WriteLine(LoginPage.accessToken);
                 return null;
             }
         }

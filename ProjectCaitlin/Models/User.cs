@@ -1,7 +1,6 @@
 ﻿using System.Collections.Generic;
 using System.ComponentModel;
 using Newtonsoft.Json;
-using Plugin.CloudFirestore.Attributes;
 using ProjectCaitlin.Methods;
 
 namespace ProjectCaitlin.Models
@@ -9,42 +8,30 @@ namespace ProjectCaitlin.Models
 	[JsonObject]
 	public class user : INotifyPropertyChanged
 	{
-		[Id]
 		public string id { get; set; }
 
-		[MapTo("email_id")]
 		public string email { get; set; }
 
-		[MapTo("first_name")]
 		public string firstName { get; set; }
 
-		[MapTo("last_name")]
 		public string lastName { get; set; }
 
-		[Ignored]
-		public aboutMe aboutMe { get; set; } = new aboutMe();
+        public string access_token { get; set; }
 
-		[Ignored]
-		public List<person> people { get; set; } = new List<person>();
+        public string refresh_token { get; set; }
 
-		[Ignored]
+        public string old_refresh_token { get; set; }
+
+		public aboutMe Me { get; set; } = new aboutMe();
+
 		public List<photo> photos { get; set; } = new List<photo>();
-
-		[Ignored]
 		public List<routine> routines { get; set; } = new List<routine>();
 
-		[Ignored]
 		public List<goal> goals { get; set; } = new List<goal>();
 
-		[Ignored]
-		public List<EventsItems> CalendarEvents { get; set; } = new List<EventsItems>();
+        public List<EventsItems> CalendarEvents { get; set; } = new List<EventsItems>();
 
-		[Ignored]
 		public List<List<string>> photoURIs { get; set; } = new List<List<string>>();
-
-		public List<photo> FirebasePhotos { get; set; } = new List<photo>();
-
-		public HashSet<string> allDates { get; set; } = new HashSet<string>();
 
 		public event PropertyChangedEventHandler PropertyChanged;
     }

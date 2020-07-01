@@ -8,12 +8,15 @@
              x:Class="ProjectCaitlin.Views.TaskCompletePage"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="DarkSlateGray"
-                     VerticalOptions="FillAndExpand">
+        <StackLayout BackgroundColor="DarkSlateGray">
+
+            <StackLayout Margin="0, 30, 0, 10">
+
+
                 <StackLayout
                     Orientation="Horizontal"
                     HorizontalOptions="FillAndExpand"
-                    Margin="20, 40, 20, 0">
+                    Margin="20, 0, 20, 0">
 
                     <!-- BACK ARROW-->
 
@@ -51,11 +54,11 @@
                 FontSize="18"
                 TextColor= "White"
                 HorizontalOptions="Center"
-                HeightRequest="100"
-                VerticalOptions="Start"/>
+                VerticalOptions="StartAndExpand"/>
 
-            <StackLayout Margin="15"
-                         VerticalOptions="Start">
+
+            </StackLayout>
+            <StackLayout Margin="15">
                 <CarouselView x:Name="CarouselTasks" HeightRequest="400" ItemsSource="{Binding Items}">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
