@@ -16,6 +16,8 @@ namespace ProjectCaitlin.Models
 
         public string pic { get; set; }
 
+        public List<people> peoples { get; set; } = new List<people>();
+
         public event PropertyChangedEventHandler PropertyChanged;
     }
 }

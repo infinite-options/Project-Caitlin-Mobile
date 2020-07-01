@@ -81,48 +81,46 @@ namespace ProjectCaitlin.ViewModel
             }
         }
 
-
-
-    }
-
-    public class InstructionModel : INotifyPropertyChanged
-    {
-
-        public string Text { get; set; }
-        public string Source { get; set; }
-
-        private bool okToCheckmark;
-
-        public bool OkToCheckmark
+        public class InstructionModel : INotifyPropertyChanged
         {
-            get { return okToCheckmark; }
-            set
+
+            public string Text { get; set; }
+            public string Source { get; set; }
+
+            private bool okToCheckmark;
+
+            public bool OkToCheckmark
             {
-                if (okToCheckmark != value)
+                get { return okToCheckmark; }
+                set
                 {
-                    okToCheckmark = value;
-                    OnPropertyChanged(nameof(OkToCheckmark));
+                    if (okToCheckmark != value)
+                    {
+                        okToCheckmark = value;
+                        OnPropertyChanged(nameof(OkToCheckmark));
+                    }
                 }
+            }
+
+
+            public Command CompleteInstuction { get; set; }
+
+            public InstructionModel(string source, string text, bool _okToCheckmark)
+            {
+
+                Source = source;
+                Text = text;
+                okToCheckmark = _okToCheckmark;
+
+            }
+
+            public event PropertyChangedEventHandler PropertyChanged;
+
+            protected virtual void OnPropertyChanged(string propertyName)
+            {
+                PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
             }
         }
 
-
-        public Command CompleteInstuction { get; set; }
-
-        public InstructionModel(string source, string text, bool _okToCheckmark)
-        {
-
-            Source = source;
-            Text = text;
-            okToCheckmark = _okToCheckmark;
-
-        }
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
-        protected virtual void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
     }
 }

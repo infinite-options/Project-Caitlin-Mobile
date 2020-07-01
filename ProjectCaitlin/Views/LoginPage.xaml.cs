@@ -25,7 +25,7 @@ namespace ProjectCaitlin
     {
 
 		Account account;
-		public static string access_token;
+		public static string accessToken;
 		FirestoreService firestoreService;
 		FirebaseFunctionsService firebaseFunctionsService;
 		public static string refreshToken;
@@ -36,13 +36,8 @@ namespace ProjectCaitlin
 			InitializeComponent();
         }
 
-		void LoginClicked(object sender, EventArgs e)
+		async void LoginClicked(object sender, EventArgs e)
         {
-			//await Navigation.PushAsync(new GreetingPage());
-
-			//testing for voicepage
-			//await Navigation.PushAsync(new VoiceIdentificationPage());
-
 			clientId = null;
 			string redirectUri = null;
 
@@ -97,8 +92,8 @@ namespace ProjectCaitlin
 
 			if (e.IsAuthenticated)
 			{
-				loginButton.Opacity = 0;
-				loginButton.Clicked -= LoginClicked;
+				Navigation.PushAsync(new LoadingPage());
+
 				// If the user is authenticated, request their basic user data from Google
 				// UserInfoUrl = https://www.googleapis.com/oauth2/v2/userinfo
 				var request = new OAuth2Request("GET", new Uri(Constants.UserInfoUrl), null, e.Account);
@@ -111,22 +106,25 @@ namespace ProjectCaitlin
 					string userJsonString = await response.GetResponseTextAsync();
 					userJson = JObject.Parse(userJsonString);
 				}
-                else
-                {
-					loginButton.Opacity = 1;
-					loginButton.Clicked += LoginClicked;
-				}
 
 				if (userJson != null)
 				{
+					//store.Delete(account, Constants.AppName);
+					//await store.SaveAsync(account = e.Account, Constants.AppName);
+					//await DisplayAlert("Login Successful", "", "OK");
+
+					//Display Successful Login Alert
+					//await DisplayAlert("Login Successful", "", "OK");
+
+					//Write the Toekn to console, in case it changes
 					Console.WriteLine("HERE is the TOKEN------------------------------------------------");
 					Console.WriteLine(e.Account.Properties["access_token"]);
 					Console.WriteLine("HERE is the REFRESH TOKEN----------------------------------------");
 					Console.WriteLine(e.Account.Properties["refresh_token"]);
 					Console.WriteLine("----------------------------------------------------------------");
 
-					//Reset access_token
-					access_token = e.Account.Properties["access_token"];
+					//Reset accessToken
+					accessToken = e.Account.Properties["access_token"];
 					refreshToken = e.Account.Properties["refresh_token"];
 
 					App.User = new user();
@@ -134,14 +132,12 @@ namespace ProjectCaitlin
 
 					//Query for email in Users collection
 					App.User.email = userJson["email"].ToString();
-                    App.User.id = await firebaseFunctionsService.FindUserDocAsync(App.User.email);
-					Console.WriteLine("First user id : " + App.User.id);
+                    App.User.id = firebaseFunctionsService.FindUserDoc(App.User.email).Result;
 
                     if (App.User.id == "")
                     {
 						await DisplayAlert("Oops!", "Looks like your trusted advisor hasn't registered your account yet. Please ask for their assistance!", "OK");
-						loginButton.Opacity = 1;
-						loginButton.Clicked += LoginClicked;
+						await Navigation.PushAsync(new LoginPage());
 						return;
                     }
 
@@ -149,34 +145,22 @@ namespace ProjectCaitlin
 
 					//Save to App.User AND Update Firebase with pertitnent info
 					var googleService = new GoogleService();
-					googleService.Navigation = Navigation;
+					await googleService.SaveAccessTokenToFireBase(accessToken);
 					Console.WriteLine(refreshToken);
+					await googleService.SaveRefreshTokenToFireBase(refreshToken);
 
                     //Save Properies inside phone for auto login
-					if (Application.Current.Properties.ContainsKey("access_token")) {
-						Application.Current.Properties["access_token"] = access_token;
-					} else {
-						Application.Current.Properties.Add("access_token", access_token);
-					}
-
-					if (Application.Current.Properties.ContainsKey("refreshToken")) {
-						Application.Current.Properties["refreshToken"] = refreshToken;
-					} else {
-						Application.Current.Properties.Add("refreshToken", refreshToken);
-					}
-
-					if (Application.Current.Properties.ContainsKey("user_id")){
-						Application.Current.Properties["user_id"] = App.User.id;
-					} else {
-						Application.Current.Properties.Add("user_id", App.User.id);
-					}
-
-					await Application.Current.SavePropertiesAsync();
+					Application.Current.Properties["accessToken"] = accessToken;
+					Application.Current.Properties["refreshToken"] = refreshToken;
+					Application.Current.Properties["user_id"] = App.User.id;
 
 					App.LoadApplicationProperties();
 
+					await firestoreService.LoadUser();
+					await GoogleService.LoadTodaysEvents();
+
 					//Navigate to the Daily Page after Login
-					await Navigation.PushAsync(new LoadingPage());
+					await Navigation.PushAsync(new GoalsRoutinesTemplate());
 				}
 			}
 		}

@@ -65,11 +65,10 @@
                 </StackLayout>
 
                 <cards:CoverFlowView
-                    PositionShiftValue="50"
-                    IsCyclical="false"
-                    VerticalOptions="FillAndExpand"
-                    SelectedIndex="{Binding CurrentIndex}"
-                    ItemsSource="{Binding Items}">
+                            IsCyclical="false"
+                            VerticalOptions="FillAndExpand"
+                            SelectedIndex="{Binding CurrentIndex}"
+                            ItemsSource="{Binding Items}">
 
                     <x:Arguments>
                         <proc:BaseCoverFlowFrontViewProcessor ScaleFactor="0.75" OpacityFactor=".9" RotationFactor="-0.009" />
@@ -129,11 +128,11 @@
                                         </Grid>
 
                                         <Label
-                                            Text="{Binding Title}"
-                                            TextColor="{Binding TextColor}"
-                                            FontSize="35"
-                                            HorizontalOptions="Center"
-                                            HorizontalTextAlignment="Center">
+                                    Text="{Binding Title}"
+                                    TextColor="{Binding TextColor}"
+                                    FontSize="35"
+                                    HorizontalOptions="Center"
+                                    HorizontalTextAlignment="Center">
 
                                             <Label.FontFamily>
                                                 <OnPlatform x:TypeArguments="x:String">
@@ -160,16 +159,16 @@
                                         </Label>
 
                                         <Button
-                                            Text="{Binding Text}"
-                                            Command="{Binding Navigate}"
-                                            CommandParameter="{Binding NavigateIdx}"
-                                            CornerRadius="20"
-                                            VerticalOptions="EndAndExpand"
-                                            Margin="70,0,70,10"
-                                            BackgroundColor="LightGray"
-                                            Padding="0"
-                                            TextColor="#272E32"
-                                            BorderWidth="0" />
+                                    Text="{Binding Text}"
+                                    Command="{Binding Navigate}"
+                                    CommandParameter="{Binding NavigateIdx}"
+                                    CornerRadius="20"
+                                    VerticalOptions="EndAndExpand"
+                                    Margin="70,0,70,10"
+                                    BackgroundColor="LightGray"
+                                    Padding="10"
+                                    TextColor="#272E32"
+                                    BorderWidth="0" />
 
                                     </StackLayout>
 
@@ -193,7 +192,7 @@
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*" />
                         </Grid.RowDefinitions>
-                        <StackLayout x:Name="MyDayButton" VerticalOptions="End" Grid.Column="0">
+                        <StackLayout VerticalOptions="End" Grid.Column="0">
                             <ffimage:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="mydayiconselectednotext.png" >
                                 <ffimage:CachedImage.HeightRequest>
                                     <OnPlatform x:TypeArguments="x:Double">
@@ -211,8 +210,8 @@
                                 </Label.FontFamily>
                             </Label>
                         </StackLayout>
-                        <StackLayout x:Name="ListViewButton" VerticalOptions="End" Grid.Column="1">
-                            <ffimage:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="listviewiconnotext.png" >
+                        <StackLayout VerticalOptions="End" Grid.Column="1">
+                            <ffimage:CachedImage x:Name="ListViewButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="listviewiconnotext.png" >
                                 <ffimage:CachedImage.HeightRequest>
                                     <OnPlatform x:TypeArguments="x:Double">
                                         <On Platform="Android">20</On>
@@ -229,8 +228,8 @@
                                 </Label.FontFamily>
                             </Label>
                         </StackLayout>
-                        <StackLayout x:Name="MyPhotosButton" VerticalOptions="End" Grid.Column="2">
-                            <ffimage:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="myphotosiconnotext.png" >
+                        <StackLayout VerticalOptions="End" Grid.Column="2">
+                            <ffimage:CachedImage x:Name="MyPhotosButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="myphotosiconnotext.png" >
                                 <ffimage:CachedImage.HeightRequest>
                                     <OnPlatform x:TypeArguments="x:Double">
                                         <On Platform="Android">20</On>
@@ -248,8 +247,8 @@
                             </Label>
                         </StackLayout>
 
-                        <StackLayout x:Name="AboutMeButton" VerticalOptions="End" Grid.Column="3">
-                            <ffimage:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="aboutmeiconnotext.png" >
+                        <StackLayout VerticalOptions="End" Grid.Column="3">
+                            <ffimage:CachedImage x:Name="AboutMeButton" DownsampleWidth="25" BackgroundColor="Transparent" Source="aboutmeiconnotext.png" >
                                 <ffimage:CachedImage.HeightRequest>
                                     <OnPlatform x:TypeArguments="x:Double">
                                         <On Platform="Android">20</On>

@@ -34,12 +34,12 @@
                         </Label.FontFamily>
                     </Label>
 
-                    <!--<Image
+                    <Image
                         x:Name="ReloadImage"
                         Source="Icons/redo.png"
                         WidthRequest="20"
                         HeightRequest="20"
-                        HorizontalOptions="EndAndExpand"/>-->
+                        HorizontalOptions="EndAndExpand"/>
 
                 </StackLayout>
 
@@ -338,8 +338,8 @@
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
-                    <StackLayout x:Name="MyDayButton" VerticalOptions="End" Grid.Column="0">
-                        <forms:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="mydayiconnotext.png" >
+                    <StackLayout VerticalOptions="End" Grid.Column="0">
+                        <forms:CachedImage DownsampleWidth="25" x:Name="MyDayButton" BackgroundColor="Transparent" Source="mydayiconnotext.png" >
                             <forms:CachedImage.HeightRequest>
                                 <OnPlatform x:TypeArguments="x:Double">
                                     <On Platform="Android">20</On>
@@ -356,7 +356,7 @@
                             </Label.FontFamily>
                         </Label>
                     </StackLayout>
-                    <StackLayout x:Name="ListViewButton" VerticalOptions="End" Grid.Column="1" >
+                    <StackLayout VerticalOptions="End" Grid.Column="1">
                         <forms:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="listviewiconselectednotext.png" >
                             <forms:CachedImage.HeightRequest>
                                 <OnPlatform x:TypeArguments="x:Double">
@@ -374,8 +374,8 @@
                             </Label.FontFamily>
                         </Label>
                     </StackLayout>
-                    <StackLayout x:Name="MyPhotosButton" VerticalOptions="End" Grid.Column="2">
-                        <forms:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="myphotosiconnotext.png" >
+                    <StackLayout VerticalOptions="End" Grid.Column="2">
+                        <forms:CachedImage DownsampleWidth="25" x:Name="MyPhotosButton" BackgroundColor="Transparent" Source="myphotosiconnotext.png" >
                             <forms:CachedImage.HeightRequest>
                                 <OnPlatform x:TypeArguments="x:Double">
                                     <On Platform="Android">20</On>
@@ -392,8 +392,8 @@
                             </Label.FontFamily>
                         </Label>
                     </StackLayout>
-                    <StackLayout x:Name="AboutMeButton" VerticalOptions="End" Grid.Column="3">
-                        <forms:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="aboutmeiconnotext.png" >
+                    <StackLayout VerticalOptions="End" Grid.Column="3">
+                        <forms:CachedImage DownsampleWidth="25" x:Name="AboutMeButton" BackgroundColor="Transparent" Source="aboutmeiconnotext.png" >
                             <forms:CachedImage.HeightRequest>
                                 <OnPlatform x:TypeArguments="x:Double">
                                     <On Platform="Android">20</On>

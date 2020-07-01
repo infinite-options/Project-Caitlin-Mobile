@@ -16,7 +16,44 @@ namespace ProjectCaitlin.Services
 {
     public class GoogleService
     {
+
         public INavigation Navigation;
+
+        public async Task<string> SaveAccessTokenToFireBase(string accessToken)
+        {
+
+            //Make HTTP POST Request
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/SetUserGoogleAuthToken");
+            request.Method = HttpMethod.Post;
+
+            //Format Headers of Request with included Token
+            request.Headers.Add("userID", App.User.id);
+            request.Headers.Add("token", accessToken);
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+            HttpContent content = response.Content;
+            var json = await content.ReadAsStringAsync();
+            return json;
+        }
+
+        public async Task<string> SaveRefreshTokenToFireBase(string refreshToken)
+        {
+
+            //Make HTTP POST Request
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/SetUserGoogleRefreshToken");
+            request.Method = HttpMethod.Post;
+
+            //Format Headers of Request with included Token
+            request.Headers.Add("userID", App.User.id);
+            request.Headers.Add("token", refreshToken);
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+            HttpContent content = response.Content;
+            var json = await content.ReadAsStringAsync();
+            return json;
+        }
 
         //Use REFRESH TOKEN to receive another ACCESS TOKEN...and UPDATE App.user.access_token.
         public async Task<bool> RefreshToken()
@@ -38,7 +75,7 @@ namespace ProjectCaitlin.Services
             }
 
             var values = new Dictionary<string, string> {
-            { "refresh_token", Application.Current.Properties["access_token"].ToString()},
+            { "refresh_token", App.User.refresh_token },
             { "client_id", clientId },
             { "grant_type", "refresh_token"}
             };
@@ -56,7 +93,8 @@ namespace ProjectCaitlin.Services
             if (jsonParsed["error"] != null)
             {
                 Application.Current.Properties.Remove("refreshToken");
-                await Application.Current.MainPage.Navigation.PushAsync(new LoginPage());
+                await Application.Current.MainPage.Navigation.PopToRootAsync();
+                Navigation.PushAsync(new LoginPage());
                 return false;
             }
 
@@ -64,17 +102,20 @@ namespace ProjectCaitlin.Services
             {
                 Console.WriteLine("2: HERE");
 
-                Application.Current.Properties["access_token"] = jsonParsed["access_token"].ToString();
+                App.User.access_token = jsonParsed["access_token"].ToString();
             }
             catch (NullReferenceException e)
             {
                 Console.WriteLine("3: HERE");
                 Application.Current.Properties.Remove("refreshToken");
-                await Application.Current.MainPage.Navigation.PushAsync(new LoginPage());
-                return false;
+                await Application.Current.MainPage.Navigation.PopToRootAsync();
+                Navigation.PushAsync(new LoginPage());
             }
 
             Console.WriteLine("4: HERE");
+
+            await SaveAccessTokenToFireBase(App.User.access_token);
+
             Console.WriteLine(json);
 
             return true;
@@ -94,7 +135,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", Application.Current.Properties["access_token"].ToString());
+            string bearerString = string.Format("Bearer {0}", App.User.access_token);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
@@ -113,7 +154,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", Application.Current.Properties["access_token"].ToString());
+            string bearerString = string.Format("Bearer {0}", App.User.access_token);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
@@ -203,7 +244,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", Application.Current.Properties["access_token"].ToString());
+            string bearerString = string.Format("Bearer {0}", App.User.access_token);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
@@ -268,7 +309,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", Application.Current.Properties["access_token"].ToString());
+            string bearerString = string.Format("Bearer {0}", App.User.access_token);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
@@ -285,7 +326,7 @@ namespace ProjectCaitlin.Services
                 if (await RefreshToken())
                 {
                     return await googleService.GetAllTodaysEventsList(publicYear, publicMonth, publicDay, timeZoneNum);
-                }
+                }          
             }
 
             return (json);
@@ -371,7 +412,7 @@ namespace ProjectCaitlin.Services
             request.Method = HttpMethod.Get;
 
             //Format Headers of Request with included Token
-            string bearerString = string.Format("Bearer {0}", Application.Current.Properties["access_token"].ToString());
+            string bearerString = string.Format("Bearer {0}", App.User.access_token);
             request.Headers.Add("Authorization", bearerString);
             request.Headers.Add("Accept", "application/json");
             var client = new HttpClient();
@@ -382,7 +423,7 @@ namespace ProjectCaitlin.Services
 
         }
 
-        public async Task<bool> LoadTodaysEvents()
+        public static async Task<bool> LoadTodaysEvents()
         {
             App.User.CalendarEvents.Clear();
 
@@ -429,9 +470,9 @@ namespace ProjectCaitlin.Services
             }
             catch (NullReferenceException e)
             {
-                //LoginPage.access_token = LoginPage.refreshToken;
+                //LoginPage.accessToken = LoginPage.refreshToken;
                 //await Navigation.PopAsync();
-                //Console.WriteLine(LoginPage.access_token);
+                //Console.WriteLine(LoginPage.accessToken);
                 return false;
             }
 

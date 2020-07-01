@@ -76,7 +76,7 @@
         public string EventName { get; set; }
 
         [JsonProperty("description", NullValueHandling = NullValueHandling.Ignore)]
-        public string Description { get; set; }
+        public string Desciption { get; set; }
 
         [JsonProperty("location", NullValueHandling = NullValueHandling.Ignore)]
         public string Location { get; set; }

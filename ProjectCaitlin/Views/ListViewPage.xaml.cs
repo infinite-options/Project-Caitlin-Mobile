@@ -14,7 +14,6 @@ using ProjectCaitlin.Methods;
 using System.Threading;
 using System.ComponentModel;
 using System.Globalization;
-using Acr.UserDialogs;
 
 namespace ProjectCaitlin
 {
@@ -40,15 +39,12 @@ namespace ProjectCaitlin
 
         FirebaseFunctionsService firebaseFunctionsService = new FirebaseFunctionsService();
 
-        GoogleService googleService = new GoogleService();
-
         user user;
         //public DailyViewModel dailyViewModel;
 
         public ListViewPage()
         {
             InitializeComponent();
-            googleService.Navigation = this.Navigation;
             App.ParentPage = "ListView";
             putLayoutsIntoLists();
             user = App.User;
@@ -62,10 +58,10 @@ namespace ProjectCaitlin
             SetupUI();
 
             AddTapGestures();
-            /*
-                        SetupUI();
+/*
+            SetupUI();
 
-                        AddTapGestures();*/
+            AddTapGestures();*/
 
             firestoreService = new FirestoreService();
 
@@ -99,9 +95,9 @@ namespace ProjectCaitlin
 
         public async Task RefreshPage()
         {
-            await firestoreService.LoadDatabase();
-            await googleService.LoadTodaysEvents();
-
+            await firestoreService.LoadUser();
+            await GoogleService.LoadTodaysEvents();
+            
             //recalculate goals/routines durations
             calculateDuration();
 
@@ -372,17 +368,45 @@ namespace ProjectCaitlin
             stackLayout.Children.Add(itemStackLayout);
 
             var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += async (s, e) =>
-            {
+            tapGestureRecognizer.Tapped += async (s, e) => {
 
                 StackLayout updatedStackLayout = (StackLayout)s;
                 updatedStackLayout.Children[0].WidthRequest = 30;
                 updatedStackLayout.Children[0].HeightRequest = 30;
                 ((CachedImage)updatedStackLayout.Children[0]).IsVisible = true;
 
-                routineOnClick(routine, routineIdx, updatedStackLayout);
+                if (routine.isSublistAvailable)
+                {
+                    if (!routine.isInProgress)
+                    {
+                        ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
+                        routine.isInProgress = true;
+                        firebaseFunctionsService.startGR(routine.id.ToString(), routine.dbIdx.ToString());
+                        App.ListPageScrollPosY = mainScrollView.ScrollY;
+                    }
+                    await Navigation.PushAsync(new TaskPage(routineIdx, true));
+                }
+                else
+                {
+                    if (!routine.isComplete)
+                    {
 
+                        if (routine.isInProgress)
+                        {
+                            ((CachedImage)updatedStackLayout.Children[0]).Source = "greencheckmarkicon.png";
+                            routine.isInProgress = false;
+                            routine.isComplete = true;
 
+                            firebaseFunctionsService.CompleteRoutine(routine.id.ToString(), routine.dbIdx.ToString());
+                        }
+                        else
+                        {
+                            ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
+                            routine.isInProgress = true;
+                            firebaseFunctionsService.startGR(routine.id.ToString(), routine.dbIdx.ToString());
+                        }
+                    }
+                }
             };
             stackLayout.Children[stackLayoutIdx].GestureRecognizers.Add(tapGestureRecognizer);
         }
@@ -515,15 +539,47 @@ namespace ProjectCaitlin
             };
 
             var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += async (s, e) =>
-            {
+            tapGestureRecognizer.Tapped += async (s, e) => {
                 App.ListPageScrollPosY = mainScrollView.ScrollY;
 
                 StackLayout updatedStackLayout = (StackLayout)s;
                 Grid updatedGrid = (Grid)updatedStackLayout.Children[0];
                 ((CachedImage)updatedGrid.Children[0]).Opacity = .6;
 
-                goalOnClick(goal, goalIdx, updatedGrid);
+                if (goal.isSublistAvailable)
+                {
+
+                    if (!goal.isInProgress)
+                    {
+                        updatedGrid.Children[2].IsVisible = true;
+                        goal.isInProgress = true;
+                        firebaseFunctionsService.startGR(goal.id.ToString(), goal.dbIdx.ToString());
+                        App.ListPageScrollPosY = mainScrollView.ScrollY;
+                    }
+                    await Navigation.PushAsync(new TaskPage(goalIdx, false));
+                }
+                else
+                {
+                    if (!goal.isComplete)
+                    {
+
+                        if (goal.isInProgress)
+                        {
+                            updatedGrid.Children[1].IsVisible = true;
+                            updatedGrid.Children[2].IsVisible = false;
+                            goal.isInProgress = false;
+                            goal.isComplete = true;
+
+                            firebaseFunctionsService.CompleteRoutine(goal.id.ToString(), goal.dbIdx.ToString());
+                        }
+                        else
+                        {
+                            updatedGrid.Children[2].IsVisible = true;
+                            goal.isInProgress = true;
+                            firebaseFunctionsService.startGR(goal.id.ToString(), goal.dbIdx.ToString());
+                        }
+                    }
+                }
             };
             goalStackLayout.GestureRecognizers.Add(tapGestureRecognizer);
 
@@ -702,113 +758,32 @@ namespace ProjectCaitlin
             await RefreshPage();
         }
 
-        public async void routineOnClick(routine routine, int routineIdx, StackLayout updatedStackLayout)
-        {
-            if (routine.isSublistAvailable)
-            {
-                if (!routine.isInProgress && !routine.isComplete)
-                {
-                    ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
-                    routine.isInProgress = true;
-                    firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
-                }
-                App.ListPageScrollPosY = mainScrollView.ScrollY;
-                await Navigation.PushAsync(new TaskPage(routineIdx, true));
-            }
-            else
-            {
-                if (!routine.isComplete)
-                {
-
-                    if (routine.isInProgress)
-                    {
-                        ((CachedImage)updatedStackLayout.Children[0]).Source = "greencheckmarkicon.png";
-                        routine.isInProgress = false;
-                        routine.isComplete = true;
-
-                        firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", true);
-                    }
-                    else
-                    {
-                        ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
-                        routine.isInProgress = true;
-                        routine.isComplete = false;
-                        firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
-                    }
-                }
-            }
-        }
-
-        public async void goalOnClick(goal goal, int goalIdx, Grid updatedGrid)
-        {
-            if (goal.isSublistAvailable)
-            {
-
-                if (!goal.isInProgress && !goal.isComplete)
-                {
-                    updatedGrid.Children[2].IsVisible = true;
-                    goal.isInProgress = true;
-                    firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
-                }
-                App.ListPageScrollPosY = mainScrollView.ScrollY;
-                await Navigation.PushAsync(new TaskPage(goalIdx, false));
-            }
-            else
-            {
-                if (!goal.isComplete)
-                {
-
-                    if (goal.isInProgress)
-                    {
-                        updatedGrid.Children[1].IsVisible = true;
-                        updatedGrid.Children[2].IsVisible = false;
-                        goal.isInProgress = false;
-                        goal.isComplete = true;
-
-                        firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", true);
-                    }
-                    else
-                    {
-                        updatedGrid.Children[2].IsVisible = true;
-                        goal.isInProgress = true;
-                        goal.isComplete = false;
-                        firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
-                    }
-                }
-            }
-        }
-
         private void AddTapGestures()
         {
             var tapGestureRecognizer1 = new TapGestureRecognizer();
-            tapGestureRecognizer1.Tapped += async (s, e) =>
-            {
-                UserDialogs.Instance.ShowLoading("Refreshing Page...");
+            tapGestureRecognizer1.Tapped += async (s, e) => {
+                ReloadImage.GestureRecognizers.RemoveAt(0);
+                ReloadImage.Source = "redoGray.png";
                 await RefreshPage();
-                UserDialogs.Instance.HideLoading();
+                ReloadImage.Source = "redo.png";
+                ReloadImage.GestureRecognizers.Add(tapGestureRecognizer1);
             };
-            ListViewButton.GestureRecognizers.Add(tapGestureRecognizer1);
+            ReloadImage.GestureRecognizers.Add(tapGestureRecognizer1);
 
             var tapGestureRecognizer2 = new TapGestureRecognizer();
-            tapGestureRecognizer2.Tapped += async (s, e) =>
-            {
+            tapGestureRecognizer2.Tapped += async (s, e) => {
                 await Navigation.PushAsync(new GreetingPage());
             };
             AboutMeButton.GestureRecognizers.Add(tapGestureRecognizer2);
 
             var tapGestureRecognizer3 = new TapGestureRecognizer();
             tapGestureRecognizer3.Tapped += async (s, e) => {
-                UserDialogs.Instance.ShowLoading("Loading...");
-                if (App.User.photoURIs.Count < 1)
-                    await GooglePhotoService.GetPhotos();
                 await Navigation.PushAsync(new MonthlyViewPage());
-                UserDialogs.Instance.HideLoading();
             };
             MyPhotosButton.GestureRecognizers.Add(tapGestureRecognizer3);
 
             var tapGestureRecognizer4 = new TapGestureRecognizer();
-            tapGestureRecognizer4.Tapped += async (s, e) =>
-            {
+            tapGestureRecognizer4.Tapped += async (s, e) => {
                 await Navigation.PushAsync(new GoalsRoutinesTemplate());
             };
             MyDayButton.GestureRecognizers.Add(tapGestureRecognizer4);
