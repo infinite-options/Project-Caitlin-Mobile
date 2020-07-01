@@ -306,7 +306,7 @@ namespace ProjectCaitlin.Services
 
         private bool BinaryToBool(string binary)
         {
-            return (binary == "1") ? true : false;
+            return (binary == "1" || binary == "True") ? true : false;
         }
     }
 }

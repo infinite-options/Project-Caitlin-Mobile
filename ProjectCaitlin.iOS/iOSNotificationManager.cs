@@ -8,7 +8,7 @@ namespace ProjectCaitlin.iOS
 {
     public class IOSNotificationManager : INotificationManager
     {
-        int messageId = -1;
+        String messageId;
 
         bool hasNotificationsPermission;
 
@@ -49,14 +49,14 @@ namespace ProjectCaitlin.iOS
             {
                 var args = new NotificationEventArgs()
                 {
-                    Title = title.Substring(21),
+                    Title = title,
                     Message = message
                 };
                 NotificationReceived?.Invoke(null, args);
             }
         }
 
-        public int ScheduleNotification(string title, string subtitle, string message, double duration)
+        public int ScheduleNotification(string title, string subtitle, string message, double duration, string notification_tag, int notification_id)
         {
             // EARLY OUT: app doesn't have permissions
             if (!hasNotificationsPermission)
@@ -64,7 +64,7 @@ namespace ProjectCaitlin.iOS
                 return -1;
             }
 
-            messageId++;
+            messageId = notification_tag + notification_id.ToString();
 
             //
             // Using C# objects, strings and ints, produces
@@ -92,8 +92,9 @@ namespace ProjectCaitlin.iOS
             // Local notifications can be time or location based
             // Create a time-based trigger, interval is in seconds and must be greater than 0
             UNTimeIntervalNotificationTrigger trigger = UNTimeIntervalNotificationTrigger.CreateTrigger(duration, false);
+            //UNCalendarNotificationTrigger trigger1 = UNCalendarNotificationTrigger.CreateTrigger(NSD)
 
-            UNNotificationRequest request = UNNotificationRequest.FromIdentifier(messageId.ToString(), content, trigger);
+            UNNotificationRequest request = UNNotificationRequest.FromIdentifier(messageId, content, trigger);
             UNUserNotificationCenter.Current.AddNotificationRequest(request, (err) =>
             {
                 if (err != null)
@@ -106,7 +107,7 @@ namespace ProjectCaitlin.iOS
                 }
             });
 
-            return messageId;
+            return notification_id;
         }
     }
 }
