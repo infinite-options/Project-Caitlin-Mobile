@@ -13,6 +13,7 @@
              BackgroundColor="#1A1827">
     <ContentPage.Content>
         <ScrollView >
+            <!--<AbsoluteLayout>-->
             <StackLayout
             Margin="0,40,10,0">
                 <StackLayout
@@ -141,6 +142,16 @@
                     </StackLayout>
                 </StackLayout>
             </StackLayout>
+                <!--<ContentView x:Name="popupMessageView" BackgroundColor="#C0808080" Padding="10, 0" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                        <StackLayout Orientation="Vertical" HeightRequest="150" WidthRequest="200" BackgroundColor="White">
+
+                            --><!--<ActivityIndicator x:Name="activityIndicator" Margin="0,50,0,0" VerticalOptions="Center" HorizontalOptions="Center" Color="Black" WidthRequest="30" HeightRequest="30" ></ActivityIndicator>--><!--
+                            <Label x:Name="popUpMessageStatus" TextColor="Black" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" VerticalTextAlignment="Center" Text="Loading..."></Label>
+                        </StackLayout>
+                    </StackLayout>
+                </ContentView>-->
+            <!--</AbsoluteLayout>-->
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

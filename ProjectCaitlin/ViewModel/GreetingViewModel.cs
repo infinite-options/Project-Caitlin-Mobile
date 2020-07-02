@@ -24,6 +24,7 @@ using System.Security.Cryptography;
 using ProjectCaitlin;
 
 using ProjectCaitlin.Models;
+using Acr.UserDialogs;
 
 namespace ProjectCaitlin.ViewModel
 {
@@ -354,11 +355,12 @@ namespace ProjectCaitlin.ViewModel
             Console.WriteLine(Message);*/
             //result = 0;
 
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                mainPage.Navigation.PushAsync(new VoiceIdentificationPage(people));
-            });
-
+            //Device.BeginInvokeOnMainThread(() =>
+            //{
+            //    mainPage.Navigation.PushAsync(new VoiceIdentificationPage(people));
+            //});
+            //UserDialogs.Instance.Toast(new ToastConfig(people.FirstName).SetDuration(TimeSpan.FromSeconds(5)).SetPosition(ToastPosition.Top));
+            mainPage.AddRecognizedPersonDetailOnPage(people);
         }
         public async void AzIdFound_FirebaseNotFound(Profile azProfile)
         {
@@ -394,16 +396,18 @@ namespace ProjectCaitlin.ViewModel
 
         public async void AzIdNotFound_AudioSmall()
         {
-            Device.BeginInvokeOnMainThread(()=> {
-                Application.Current.MainPage.DisplayAlert("Message","Unable to indetify voice, voice short for enrolling","OK");
-            });
+            //Device.BeginInvokeOnMainThread(()=> {
+            //    Application.Current.MainPage.DisplayAlert("Message","Unable to indetify voice, voice short for enrolling","OK");
+            //});
+            UserDialogs.Instance.Toast(new ToastConfig("We haven't heard this voice before,and the voice is short for enrolling.").SetDuration(TimeSpan.FromSeconds(3)).SetPosition(ToastPosition.Top));
         }
 
         public async void AudioFileEmpty()
         {
-            Device.BeginInvokeOnMainThread(() => {
-                Application.Current.MainPage.DisplayAlert("Message", "Recorded Audio File Empty", "OK");
-            });
+            //Device.BeginInvokeOnMainThread(() => {
+            //    Application.Current.MainPage.DisplayAlert("Message", "Recorded Audio File Empty", "OK");
+            //});
+            UserDialogs.Instance.Toast(new ToastConfig("Nothing was recorded").SetDuration(TimeSpan.FromSeconds(3)).SetPosition(ToastPosition.Top));
         }
 
         public async void AzIdNotFound_CreatedNew(Profile profile)
