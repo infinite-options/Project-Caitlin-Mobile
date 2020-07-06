@@ -56,7 +56,7 @@ namespace ProjectCaitlin.iOS
             }
         }
 
-        public int ScheduleNotification(string title, string subtitle, string message, double duration, string notification_tag, int notification_id)
+        public int ScheduleNotification(string title, string subtitle, string message, double duration, string notification_tag, int notification_id, String gOrR)
         {
             // EARLY OUT: app doesn't have permissions
             if (!hasNotificationsPermission)
@@ -71,12 +71,14 @@ namespace ProjectCaitlin.iOS
             // a dictionary with 2 NSString keys, "key1" and "key2"
             // and two NSNumbers with the values 1 and 2
             //
-            var key1 = new NSString("routineNum");
+            var key1 = new NSString("grNum");
             var value1 = new NSNumber(Int32.Parse(subtitle.Substring(0, 1)));
-            var key2 = new NSString("routineId");
+            var key2 = new NSString("grId");
             var value2 = new NSString(subtitle.Substring(1, 20));
+            var key3 = new NSString("goalOrRoutine");
+            var value3 = new NSString(gOrR);
 
-            var userInfo = new NSDictionary(key1, value1, key2, value2);
+            var userInfo = new NSDictionary(key1, value1, key2, value2, key3, value3);
 
             var content = new UNMutableNotificationContent()
             {

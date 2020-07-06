@@ -591,9 +591,99 @@ namespace ProjectCaitlin.Services
                             //subtitle is not used, this is only for setting user info for now
                             string subtitle = grIdx + routine.id;
                             string message = "Open the app to review your tasks. " + notiAttriObjList[i].message;
-                            notificationManager.ScheduleNotification(title, subtitle, message, total, routine.id, i);
+                            notificationManager.ScheduleNotification(title, subtitle, message, total, routine.id, i, "routine");
                             
                             firebaseFunctionsService.GRUserNotificationSetToTrue(routine, grIdx.ToString(), notiTimeKeysList[i]);
+
+                        }
+                        Console.WriteLine("total : " + total);
+                        Console.WriteLine("before message: " + notiAttriObjList[i].message);
+                    }
+                }
+                catch
+                {
+
+                }
+            }
+        }
+
+        public async Task setNotifications(goal goal, int grIdx, IDictionary<string, object> notificationDict)
+        {
+            TimeSpan currentTime = DateTime.Now.TimeOfDay;
+            //time precised in minutes, can be positive or negative.
+            int startTime = (int)(currentTime - goal.availableStartTime).TotalMinutes;
+            int endTime = (int)(currentTime - goal.availableEndTime).TotalMinutes;
+
+            List<string> titles
+                = new List<string>()
+                {
+                    "Ready for " + goal.title + "?",
+                    "Time for " + goal.title,
+                    "You missed " + goal.title
+                };
+
+            List<string> notiTimeKeysList
+                = new List<string>()
+                {
+                    "before",
+                    "during",
+                    "after"
+                };
+
+            List<NotificationAttributes> notiAttriObjList
+                = new List<NotificationAttributes>()
+                {
+                    goal.Notification.user.before,
+                    goal.Notification.user.during,
+                    goal.Notification.user.after
+                };
+
+            for (int i = 0; i < 3; i++)
+            {
+                try
+                {
+                    if (notificationDict == null)
+                        return;
+
+                    IDictionary<string, object> userTimeDict = (IDictionary<string, object>)notificationDict[notiTimeKeysList[i]];
+
+                    notiAttriObjList[i].is_set = convertBinToBool(userTimeDict["is_set"].ToString())
+                                                    && ((userTimeDict["date_set"] != null) ? IsDateToday(userTimeDict["date_set"].ToString()) : false);
+
+                    Console.WriteLine(notiAttriObjList[i]);
+
+                    notiAttriObjList[i].is_enabled = convertBinToBool(userTimeDict["is_enabled"].ToString());
+
+                    if (notiAttriObjList[i].is_enabled && !notiAttriObjList[i].is_set)
+                    {
+                        notiAttriObjList[i].time = TimeSpan.Parse(userTimeDict["time"].ToString());
+
+                        //TotalMinutes
+                        double total = 0;
+                        switch (i)
+                        {
+                            case 0:
+                                total = (goal.availableStartTime - DateTime.Now.TimeOfDay).TotalSeconds - notiAttriObjList[i].time.TotalSeconds;
+                                break;
+                            case 1:
+                                total = (goal.availableStartTime - DateTime.Now.TimeOfDay).TotalSeconds + notiAttriObjList[i].time.TotalSeconds;
+                                break;
+                            case 2:
+                                total = (goal.availableEndTime - DateTime.Now.TimeOfDay).TotalSeconds + notiAttriObjList[i].time.TotalSeconds;
+                                break;
+                        }
+
+                        notiAttriObjList[i].message = userTimeDict["message"].ToString();
+
+                        if (!goal.isComplete && total > 0 && !goal.Notification.user.before.is_set)
+                        {
+                            string title = titles[i];
+                            //subtitle is not used, this is only for setting user info for now
+                            string subtitle = grIdx + goal.id;
+                            string message = "Open the app to review your tasks. " + notiAttriObjList[i].message;
+                            notificationManager.ScheduleNotification(title, subtitle, message, total, goal.id, i, "goal");
+
+                            firebaseFunctionsService.GRUserNotificationSetToTrue(goal, grIdx.ToString(), notiTimeKeysList[i]);
 
                         }
                         Console.WriteLine("total : " + total);

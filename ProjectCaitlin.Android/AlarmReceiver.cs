@@ -18,6 +18,18 @@ namespace ProjectCaitlin.Droid
     [BroadcastReceiver(Enabled = true)]
     public class AlarmReceiver : BroadcastReceiver
     {
+        const string channelId = "default";
+        public static string title = "";
+        public static string message = "";
+        const string channelName = "Default";
+        const string channelDescription = "The default channel for notifications.";
+        const int pendingIntentId = 0;
+
+        public const string TitleKey = "title";
+        public const string MessageKey = "message";
+
+        int messageId = -1;
+        NotificationManager manager;
         public override void OnReceive(Context context, Intent intent)
         {
             //Toast.MakeText(context, "Received intent!", ToastLength.Short).Show();
@@ -32,8 +44,15 @@ namespace ProjectCaitlin.Droid
             //Console.WriteLine("DURATION: ");
             Console.WriteLine("NOT_ID:" + notification_tag + messageId.ToString());
 
+            Intent mainIntent = new Intent(AndroidApp.Context, typeof(ListViewPage));
+            mainIntent.PutExtra(TitleKey, title);
+            mainIntent.PutExtra(MessageKey, message);
+            //mainIntent.PutExtra("NotificationTag", notification_tag);
+            //mainIntent.PutExtra("MessageId", notification_id);
+            //mainIntent.PutExtra(channelId, channelId);
+            mainIntent.AddFlags(ActivityFlags.ClearTop);
 
-            PendingIntent pendingIntent = PendingIntent.GetActivity(AndroidApp.Context, 100, intent, PendingIntentFlags.OneShot);
+            PendingIntent pendingIntent = PendingIntent.GetActivity(AndroidApp.Context, pendingIntentId, intent, PendingIntentFlags.OneShot);
 
             NotificationCompat.Builder builder = new NotificationCompat.Builder(AndroidApp.Context, channelId)
                 .SetContentIntent(pendingIntent)
@@ -47,9 +66,10 @@ namespace ProjectCaitlin.Droid
             Notification notification = builder.Build();
 
             //NotificationManager mgr = (NotificationManager)context.GetSystemService(Context.NotificationService);
-            var mgr = NotificationManagerCompat.From(AndroidApp.Context);
+            //var mgr = NotificationManagerCompat.From(AndroidApp.Context);
+            manager = (NotificationManager)context.GetSystemService(AndroidApp.NotificationService);
 
-            mgr.Notify(notification_tag, messageId, notification);
+            manager.Notify(notification_tag, messageId, notification);
 
         }
     }

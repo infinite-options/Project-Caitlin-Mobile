@@ -14,7 +14,7 @@ namespace VoiceRecognition.Config
          */
 
         public const string BASE_URL = "https://firestore.googleapis.com/v1";
-        private const string project_name = "project-caitlin-c71a9";
+        private const string project_name = "myspace-db";
         public const string PROJECT_URL = "/projects/" + project_name;
         public const string USER_URL = "/databases/(default)/documents/users";
         public const string PEOPLE_URL = "/people";
