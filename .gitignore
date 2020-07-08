@@ -18,6 +18,10 @@ ProjectCaitlin/Constants.cs
 Constants.cs
 google-services.json
 GoogleService-Info.plist
+ProjectCaitlin/Config/AzCognitiveSpeakerAPI.cs
+AzCognitiveSpeakerAPI.cs
+ProjectCaitlin/Config/FirebaseFirestore.cs
+FirebaseFirestore.cs
 
 # Mac bundle stuff
 *.dmg
