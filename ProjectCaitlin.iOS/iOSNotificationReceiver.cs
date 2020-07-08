@@ -100,7 +100,7 @@ namespace ProjectCaitlin.iOS
                                 firebaseFunctionsService.updateGratisStatus(App.User.routines[grIdx], "goals&routines", false);
                                 if (App.User.routines[grIdx].isSublistAvailable)
                                 {
-                                    await App.Current.MainPage.Navigation.PushAsync(new TaskPage(grIdx, false, null));
+                                    await App.Current.MainPage.Navigation.PushAsync(new TaskPage(grIdx, true, null));
                                 }
                                 else
                                 {

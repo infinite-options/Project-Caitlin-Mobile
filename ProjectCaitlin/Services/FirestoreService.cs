@@ -242,7 +242,8 @@ namespace ProjectCaitlin.Services
 
                                 App.User.goals.Add(goal);
 
-                                //setNotifications(goal, goalIdx, (IDictionary<string, object>)data["user_notifications"]);
+                                setNotifications(goal, goalIdx, (IDictionary<string, object>)data["user_notifications"]);
+                                goalIdx++;
                             }
                         }
                     }
