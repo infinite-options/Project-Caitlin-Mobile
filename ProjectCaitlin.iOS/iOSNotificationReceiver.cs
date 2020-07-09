@@ -17,30 +17,58 @@ namespace ProjectCaitlin.iOS
         {
             try
             {
-                int routineIdx = int.Parse(notification.Request.Content.UserInfo["routineNum"].ToString());
-                string routineId = notification.Request.Content.UserInfo["routineId"].ToString();
+                //int routineIdx = int.Parse(notification.Request.Content.UserInfo["routineNum"].ToString());
+                //string routineId = notification.Request.Content.UserInfo["routineId"].ToString();
+                int grIdx = int.Parse(notification.Request.Content.UserInfo["grNum"].ToString());
+                string grId = notification.Request.Content.UserInfo["grId"].ToString();
+                string goalOrRoutine = notification.Request.Content.UserInfo["goalOrRoutine"].ToString();
 
-                bool isRoutineComplete = false;
-                if (routineIdx < App.User.routines.Count && App.User.routines[routineIdx].id == routineId)
+                //bool isRoutineComplete = false;
+                bool isGRComplete = false;
+
+                if(goalOrRoutine.Equals("routine"))
                 {
-                    isRoutineComplete = App.User.routines[routineIdx].isComplete;
-                }
-                else
-                {
-                    foreach (routine routine in App.User.routines)
+                    if (grIdx < App.User.routines.Count && App.User.routines[grIdx].id == grId)
                     {
-                        if (routine.id == routineId)
+                        isGRComplete = App.User.routines[grIdx].isComplete;
+                    }
+                    else
+                    {
+                        foreach (routine routine in App.User.routines)
                         {
-                            isRoutineComplete = App.User.routines[routineIdx].isComplete;
+                            if (routine.id == grId)
+                            {
+                                isGRComplete = App.User.routines[grIdx].isComplete;
+                            }
                         }
                     }
                 }
 
-                DependencyService.Get<INotificationManager>().ReceiveNotification(notification.Request.Content.Title, notification.Request.Content.Body, !isRoutineComplete);
+                else
+                {
+                    if (grIdx < App.User.goals.Count && App.User.goals[grIdx].id == grId)
+                    {
+                        isGRComplete = App.User.goals[grIdx].isComplete;
+                    }
+                    else
+                    {
+                        foreach (goal goal in App.User.goals)
+                        {
+                            if (goal.id == grId)
+                            {
+                                isGRComplete = App.User.goals[grIdx].isComplete;
+                            }
+                        }
+                    }
+                }
+
+
+                DependencyService.Get<INotificationManager>().ReceiveNotification(notification.Request.Content.Title, notification.Request.Content.Body, !isGRComplete);
 
                 // alerts are always shown for demonstration but this can be set to "None"
                 // to avoid showing alerts if the app is in the foreground
-                if (isRoutineComplete)
+
+                if (isGRComplete)
                     completionHandler(UNNotificationPresentationOptions.None);
                 else
                 {
@@ -49,17 +77,36 @@ namespace ProjectCaitlin.iOS
                         if (!await App.Current.MainPage.DisplayAlert(notification.Request.Content.Title, "Would you like to start it now?", "No", "Yes"))
                         {
                             App.ParentPage = "ListView";
-                            App.User.routines[routineIdx].isInProgress = true;
-                            App.User.routines[routineIdx].isComplete = false;
-                            firebaseFunctionsService.updateGratisStatus(App.User.routines[routineIdx], "goals&routines", false);
-                            if (App.User.routines[routineIdx].isSublistAvailable)
+                            if(goalOrRoutine.Equals("routine"))
                             {
-                                await App.Current.MainPage.Navigation.PushAsync(new TaskPage(routineIdx, false, null));
+                                App.User.routines[grIdx].isInProgress = true;
+                                App.User.routines[grIdx].isComplete = false;
+                                firebaseFunctionsService.updateGratisStatus(App.User.routines[grIdx], "goals&routines", false);
+                                if (App.User.routines[grIdx].isSublistAvailable)
+                                {
+                                    await App.Current.MainPage.Navigation.PushAsync(new TaskPage(grIdx, true, null));
+                                }
+                                else
+                                {
+                                    await App.Current.MainPage.Navigation.PushAsync(new ListViewPage());
+                                }
+
                             }
                             else
                             {
-                                await App.Current.MainPage.Navigation.PushAsync(new ListViewPage());
+                                App.User.goals[grIdx].isInProgress = true;
+                                App.User.goals[grIdx].isComplete = false;
+                                firebaseFunctionsService.updateGratisStatus(App.User.goals[grIdx], "goals&routines", false);
+                                if (App.User.goals[grIdx].isSublistAvailable)
+                                {
+                                    await App.Current.MainPage.Navigation.PushAsync(new TaskPage(grIdx, false, null));
+                                }
+                                else
+                                {
+                                    await App.Current.MainPage.Navigation.PushAsync(new ListViewPage());
+                                }
                             }
+                            
                         }
                     }
                     else
@@ -67,6 +114,8 @@ namespace ProjectCaitlin.iOS
                         completionHandler(UNNotificationPresentationOptions.Alert);
                     }
                 }
+
+
             }
             catch (Exception e)
             {

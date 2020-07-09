@@ -38,7 +38,7 @@ namespace ProjectCaitlin.Droid
             CreateNotificationChannel();
         }
 
-        public int ScheduleNotification(string title, string subtitle, string message, double duration,string notification_tag, int notification_id)
+        public int ScheduleNotification(string title, string subtitle, string message, double duration, string notification_tag, int notification_id, String gOrR)
         {
             if (!channelInitialized)
             {
@@ -53,6 +53,9 @@ namespace ProjectCaitlin.Droid
             intent.PutExtra("NotificationTag", notification_tag);
             intent.PutExtra("MessageId", notification_id);
             intent.PutExtra(channelId, channelId);
+            intent.PutExtra("grNum", Int32.Parse(subtitle.Substring(0, 1)));
+            intent.PutExtra("grId", subtitle.Substring(1, 20));
+            intent.PutExtra("goalOrRoutine", gOrR);
 
 
             PendingIntent pendingIntent = PendingIntent.GetBroadcast(AndroidApp.Context, pendingIntentId++, intent, PendingIntentFlags.UpdateCurrent);
@@ -67,8 +70,8 @@ namespace ProjectCaitlin.Droid
             Console.WriteLine("NOT_ID:" + notification_tag + notification_id.ToString());
             long dur = (long)(duration * 1000);
             Console.WriteLine("Duration in seconds for " + message + ": " + duration);
-            
-            
+
+
 
             alarmManager.SetRepeating(AlarmType.RtcWakeup, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + dur, (long)interval, pendingIntent);
             return messageId;
@@ -110,46 +113,5 @@ namespace ProjectCaitlin.Droid
         }
     }
     
-    /*[BroadcastReceiver (Enabled =true)]
-    public class AlarmReceiver : BroadcastReceiver
-    {
-        
-        public override void OnReceive(Context context, Intent intent)
-        {
-            //Console.WriteLine("ScheduledAlarmHandler", "Starting service @" + SystemClock.ElapsedRealtime());
-
-            // Your App code here - start an Intentservice if needed;
-
-            Console.WriteLine("***************INSIDE RECEIVER:******************************************");
-            string notification_tag = intent.GetStringExtra("NotificationTag");
-            int messageId = intent.GetIntExtra("MessageId", 0);
-            string title = intent.GetStringExtra("title");
-            string message = intent.GetStringExtra("message");
-            string channelId = intent.GetStringExtra("default");
-
-            Console.WriteLine("MESSAGE:" + message);
-            //Console.WriteLine("DURATION: ");
-            Console.WriteLine("NOT_ID:" + notification_tag + messageId.ToString());
-
-
-            PendingIntent pendingIntent = PendingIntent.GetActivity(context, 100, intent, PendingIntentFlags.UpdateCurrent);
-
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(AndroidApp.Context, channelId)
-                .SetContentIntent(pendingIntent)
-                .SetContentTitle(title)
-                .SetContentText(message)
-                .SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, Resource.Drawable.xamagonBlue))
-                .SetSmallIcon(Resource.Drawable.xamagonBlue)
-                .SetDefaults((int)NotificationDefaults.Sound | (int)NotificationDefaults.Vibrate)
-                .SetAutoCancel(true);
-
-            Notification notification = builder.Build();
-
-            NotificationManager mgr = (NotificationManager)context.GetSystemService(Context.NotificationService);
-
-            mgr.Notify(notification_tag, messageId, notification);
-        }
-
-
-    }*/
+    
 }
