@@ -113,46 +113,5 @@ namespace ProjectCaitlin.Droid
         }
     }
     
-    /*[BroadcastReceiver (Enabled =true)]
-    public class AlarmReceiver : BroadcastReceiver
-    {
-        
-        public override void OnReceive(Context context, Intent intent)
-        {
-            //Console.WriteLine("ScheduledAlarmHandler", "Starting service @" + SystemClock.ElapsedRealtime());
-
-            // Your App code here - start an Intentservice if needed;
-
-            Console.WriteLine("***************INSIDE RECEIVER:******************************************");
-            string notification_tag = intent.GetStringExtra("NotificationTag");
-            int messageId = intent.GetIntExtra("MessageId", 0);
-            string title = intent.GetStringExtra("title");
-            string message = intent.GetStringExtra("message");
-            string channelId = intent.GetStringExtra("default");
-
-            Console.WriteLine("MESSAGE:" + message);
-            //Console.WriteLine("DURATION: ");
-            Console.WriteLine("NOT_ID:" + notification_tag + messageId.ToString());
-
-
-            PendingIntent pendingIntent = PendingIntent.GetActivity(context, 100, intent, PendingIntentFlags.UpdateCurrent);
-
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(AndroidApp.Context, channelId)
-                .SetContentIntent(pendingIntent)
-                .SetContentTitle(title)
-                .SetContentText(message)
-                .SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, Resource.Drawable.xamagonBlue))
-                .SetSmallIcon(Resource.Drawable.xamagonBlue)
-                .SetDefaults((int)NotificationDefaults.Sound | (int)NotificationDefaults.Vibrate)
-                .SetAutoCancel(true);
-
-            Notification notification = builder.Build();
-
-            NotificationManager mgr = (NotificationManager)context.GetSystemService(Context.NotificationService);
-
-            mgr.Notify(notification_tag, messageId, notification);
-        }
-
-
-    }*/
+    
 }
