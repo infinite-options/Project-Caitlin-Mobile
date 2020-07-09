@@ -38,7 +38,7 @@ namespace ProjectCaitlin.Droid
             CreateNotificationChannel();
         }
 
-        public int ScheduleNotification(string title, string subtitle, string message, double duration,string notification_tag, int notification_id, String gOrR)
+        public int ScheduleNotification(string title, string subtitle, string message, double duration, string notification_tag, int notification_id, String gOrR)
         {
             if (!channelInitialized)
             {
@@ -53,6 +53,9 @@ namespace ProjectCaitlin.Droid
             intent.PutExtra("NotificationTag", notification_tag);
             intent.PutExtra("MessageId", notification_id);
             intent.PutExtra(channelId, channelId);
+            intent.PutExtra("grNum", Int32.Parse(subtitle.Substring(0, 1)));
+            intent.PutExtra("grId", subtitle.Substring(1, 20));
+            intent.PutExtra("goalOrRoutine", gOrR);
 
 
             PendingIntent pendingIntent = PendingIntent.GetBroadcast(AndroidApp.Context, pendingIntentId++, intent, PendingIntentFlags.UpdateCurrent);
@@ -67,8 +70,8 @@ namespace ProjectCaitlin.Droid
             Console.WriteLine("NOT_ID:" + notification_tag + notification_id.ToString());
             long dur = (long)(duration * 1000);
             Console.WriteLine("Duration in seconds for " + message + ": " + duration);
-            
-            
+
+
 
             alarmManager.SetRepeating(AlarmType.RtcWakeup, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + dur, (long)interval, pendingIntent);
             return messageId;
