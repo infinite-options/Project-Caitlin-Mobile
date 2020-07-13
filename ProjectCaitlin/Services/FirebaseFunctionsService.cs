@@ -144,8 +144,8 @@ namespace ProjectCaitlin.Services
         {
             HttpRequestMessage request = new HttpRequestMessage
             {
-                //RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/SavePhotoDetails"),
-                RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/SavePhotoDetailsMyLife"),
+                RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/SavePhotoDetails"),
+                //RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/SavePhotoDetailsMyLife"),
                 Method = HttpMethod.Post
             };
 
@@ -185,8 +185,8 @@ namespace ProjectCaitlin.Services
         {
             HttpRequestMessage request = new HttpRequestMessage
             {
-                //RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/GetPhotoDetails"),
-                RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/GetPhotoDetailsMyLife"),
+                RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/GetPhotoDetails"),
+                //RequestUri = new Uri("https://us-central1-project-caitlin-c71a9.cloudfunctions.net/GetPhotoDetailsMyLife"),
                 Method = HttpMethod.Get
             };
 

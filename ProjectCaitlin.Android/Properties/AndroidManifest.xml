@@ -1,7 +1,7 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" package="com.infiniteoptions_manifestmy.space" android:versionName="1.2.4.0" android:versionCode="10">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" android:installLocation="auto" package="com.infiniteoptions_manifestmy.space" android:versionName="1.2.4.1" android:versionCode="10">
 	<uses-sdk android:minSdkVersion="21" android:targetSdkVersion="28" />
-	<application android:label="ManifestMy Space">
+	<application android:label="ManifestMySpace">
 		<!--
 		<receiver android:name=".AlarmReceiver"/>-->
 	</application>
