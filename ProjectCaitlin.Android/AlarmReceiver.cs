@@ -37,7 +37,7 @@ namespace ProjectCaitlin.Droid
 
         int messageId = -1;
         NotificationManager manager;
-        FirebaseFunctionsService firebaseFunctionsService;
+        FirebaseFunctionsService firebaseFunctionsService = new FirebaseFunctionsService();
         public override async void OnReceive(Context context, Intent intent)
         {
             //Toast.MakeText(context, "Received intent!", ToastLength.Short).Show();

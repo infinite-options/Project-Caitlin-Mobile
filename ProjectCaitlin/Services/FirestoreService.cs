@@ -158,7 +158,7 @@ namespace ProjectCaitlin.Services
                 foreach (var document in peopleCollection.Documents)
                 {
                     var data = document.Data;
-                    if (data["important"].ToString() == "1")
+                    if (convertBinToBool(data["important"].ToString()))
                     {
                         var person = new person()
                         {
@@ -225,6 +225,8 @@ namespace ProjectCaitlin.Services
 
                             var serializedParent = JsonConvert.SerializeObject(grObject);
 
+                            user user = App.User;
+                            List<routine> rout = user.routines;
 
                             if (convertBinToBool(data["is_persistent"].ToString()))
                             {
@@ -310,9 +312,9 @@ namespace ProjectCaitlin.Services
             {
                 try
                 {
-                    if (data["is_available"].ToString() == "1")
+                    if (convertBinToBool(data["is_available"].ToString()))
                     {
-                        bool isInProgressCheck = data.ContainsKey("is_in_progress") ? data["is_in_progress"].ToString() == "1" : false;
+                        bool isInProgressCheck = data.ContainsKey("is_in_progress") ? convertBinToBool(data["is_in_progress"].ToString()) : false;
 
                         atObject atObject = new atObject
                         {
@@ -326,7 +328,7 @@ namespace ProjectCaitlin.Services
 
                             isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
 
-                            isComplete = data["is_complete"].ToString() == "1"
+                            isComplete = convertBinToBool(data["is_complete"].ToString())
                                                         && IsDateToday(data["datetime_completed"].ToString())
                                                         && !isInProgressCheck,
 
@@ -334,7 +336,7 @@ namespace ProjectCaitlin.Services
 
                             dbIdx = dbIdx_,
 
-                            isSublistAvailable = data["is_sublist_available"].ToString() == "1",
+                            isSublistAvailable = convertBinToBool(data["is_sublist_available"].ToString()),
 
                             dateTimeCompleted = DateTime.Parse(data["datetime_completed"].ToString()).ToLocalTime(),
 
@@ -434,9 +436,9 @@ namespace ProjectCaitlin.Services
             {
                 try
                 {
-                    if (data["is_available"].ToString() == "1")
+                    if (convertBinToBool(data["is_available"].ToString()))
                     {
-                        bool isInProgressCheck = data.ContainsKey("is_in_progress") ? data["is_in_progress"].ToString() == "1" : false;
+                        bool isInProgressCheck = data.ContainsKey("is_in_progress") ? convertBinToBool(data["is_in_progress"].ToString()) : false;
 
                         isObject isObject = new isObject
                         {
@@ -450,7 +452,7 @@ namespace ProjectCaitlin.Services
 
                             isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
 
-                            isComplete = data["is_complete"].ToString() == "1"
+                            isComplete = convertBinToBool(data["is_complete"].ToString())
                                                         && IsDateToday(data["datetime_completed"].ToString())
                                                         && !isInProgressCheck,
 
