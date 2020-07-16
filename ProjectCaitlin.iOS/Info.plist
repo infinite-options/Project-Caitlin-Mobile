@@ -19,12 +19,10 @@
 	</array>
 	<key>MinimumOSVersion</key>
 	<string>8.0</string>
-	<key>CFBundleDisplayName</key>
-	<string>ProjectCaitlin</string>
 	<key>CFBundleIdentifier</key>
-	<string>com.infiniteoptions.ProjectCaitlin</string>
+	<string>com.infiniteoptions-manifestmy.space</string>
 	<key>CFBundleVersion</key>
-	<string>1.2.2.7</string>
+	<string>1.2.4.1</string>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>
 	<key>CFBundleName</key>
@@ -69,5 +67,7 @@
 	</array>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>ProjectCaitlin</string>
+	<key>CFBundleDisplayName</key>
+	<string>ManifestMy Space</string>
 </dict>
 </plist>

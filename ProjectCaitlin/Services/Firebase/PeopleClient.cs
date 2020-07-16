@@ -1,9 +1,12 @@
 ﻿using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
+using Plugin.CloudFirestore;
+using ProjectCaitlin;
 using ProjectCaitlin.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,26 +19,10 @@ namespace VoiceRecognition.Services.Firebase
     public class PeopleClient
     {
         private readonly string UserId;
-        private readonly HttpClient client;
 
-        public PeopleClient()
-        {
-            string project_base_url = FirebaseFirestore.BASE_URL + FirebaseFirestore.PROJECT_URL;
-            client = new HttpClient
-            {
-                BaseAddress = new Uri(project_base_url)
-            };
-        }
-
-        public PeopleClient(string UserId) : this()
+        public PeopleClient(string UserId)
         {
             this.UserId = UserId;
-            Console.WriteLine("USER ID : " + UserId);
-            string project_base_url = FirebaseFirestore.BASE_URL + FirebaseFirestore.PROJECT_URL;
-            client = new HttpClient
-            {
-                BaseAddress = new Uri(project_base_url)
-            };
         }
 
         public PeopleClient(user user) : this(user.id) { }
@@ -46,125 +33,80 @@ namespace VoiceRecognition.Services.Firebase
          --------------------------------------*/
         public async Task<List<People>> GetAllPeopleAsync()
         {
-            try
+            var documents = await CrossCloudFirestore.Current
+                                    .Instance
+                                    .GetCollection("users")
+                                    .GetDocument(UserId)
+                                    .GetCollection("people")
+                                    .GetDocumentsAsync();
+            List<People> peeps = new List<People>();
+            if (documents.IsEmpty) return peeps;
+                foreach(var doc in documents.Documents)
             {
-                List<People> AllPeople = new List<People>();
-
-                //string uri = client.BaseAddress + FirebaseFirestore.USER_URL + "/" + "Ph2u3nRSZeYsWHitLSnv" + FirebaseFirestore.PEOPLE_URL;
-                string uri = client.BaseAddress + FirebaseFirestore.USER_URL + "/" + UserId + FirebaseFirestore.PEOPLE_URL;
-
-                Task<HttpResponseMessage> responseTask = client.GetAsync(uri);
-                responseTask.Wait();
-                if (responseTask.Result.StatusCode == System.Net.HttpStatusCode.OK)
+                var peep = doc.Data;
+                People person = new People()
                 {
-                    string content = await responseTask.Result.Content.ReadAsStringAsync();
-                    JObject peopleJson = JObject.Parse(content);
-                    PeopleParser peopleParser = new PeopleParser();
-                    if (!peopleJson.ContainsKey("documents")) { return AllPeople; }
-                    foreach(JToken pJt in peopleJson["documents"])
-                    {
-                        People peep = peopleParser.JsonToObject(pJt);
-                        if (peep != null)
-                        {
-                            AllPeople.Add(peep);
-                        }
-                    }
-                }
-                return AllPeople;
+                    FirstName = peep["name"].ToString(),
+                    Id = !peep.ContainsKey("unique_id") ? null : peep["unique_id"].ToString(),
+                    HavePic = peep.ContainsKey("have_pic") && (Boolean)peep["have_pic"],
+                    SpeakerId = !peep.ContainsKey("speaker_id") ? null : peep["speaker_id"].ToString(),
+                    picUrl = !peep.ContainsKey("pic") ? null : peep["pic"].ToString(),
+                    Important = peep.ContainsKey("important") && (Boolean)peep["important"],
+                    PhoneNumber = !peep.ContainsKey("phone_number") ? null : peep["phone_number"].ToString(),
+                    Relation = !peep.ContainsKey("relationship") ? null : peep["relationship"].ToString(),
+                };
+                peeps.Add(person);
             }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.StackTrace);
-                throw e;
-            }
+            return peeps;
         }
-        /*-----------------------------------
-         * @parameter: string: People Id
-         * @return: Task of Poeple Object
-         -----------------------------------*/
-        public async Task<People> GetPeopleFromIdAsync(string id)
+
+        public async Task<People> GetPeopleFromSpeakerIdAsync(string id)
         {
-            try
-            {
-                string uri = client.BaseAddress + FirebaseFirestore.USER_URL + "/" + UserId + FirebaseFirestore.PEOPLE_URL+"/"+id;
-                Task<HttpResponseMessage> responseTask = client.GetAsync(uri);
-                responseTask.Wait();
-                if (responseTask.Result.StatusCode == System.Net.HttpStatusCode.OK)
+            People person = null;
+            var peopleCollection = await CrossCloudFirestore.Current.Instance.GetCollection("users")
+                                    .GetDocument(UserId)
+                                    .GetCollection("people")
+                                    .WhereEqualsTo("speaker_id", id)
+                                    .GetDocumentsAsync();
+            if (peopleCollection.IsEmpty) { return null; }
+
+            var peep = peopleCollection.Documents.First().Data;
+            if (peep != null && peep.ContainsKey("name")) {
+                person = new People()
                 {
-                    string content = await responseTask.Result.Content.ReadAsStringAsync();
-                    JObject peopleJson = JObject.Parse(content);
-                    PeopleParser peopleParser = new PeopleParser();
-                    People peep = peopleParser.JsonToObject(peopleJson);
-                    return peep;
-                }
-                return null;
+                    FirstName = peep["name"].ToString(),
+                    Id = !peep.ContainsKey("unique_id") ? null : peep["unique_id"].ToString(),
+                    HavePic = peep.ContainsKey("have_pic") && (Boolean)peep["have_pic"],
+                    SpeakerId = !peep.ContainsKey("speaker_id") ? null : peep["speaker_id"].ToString(),
+                    picUrl = !peep.ContainsKey("pic") ? null : peep["pic"].ToString(),
+                    Important = peep.ContainsKey("important") && (Boolean)peep["important"],
+                    PhoneNumber = !peep.ContainsKey("phone_number") ? null : peep["phone_number"].ToString(),
+                    Relation = !peep.ContainsKey("relationship") ? null : peep["relationship"].ToString(),
+                };
             }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.StackTrace);
-                throw e;
-            }
+            return person;
         }
 
-        // Return People object with SpeakerId if found else null
-        public async Task<People> GetPeopleFromSpeakerIdAsync(string SpeakerId)
+        public async Task<People> PostPeopleAsync(People people)
         {
-            try
+            ProjectCaitlin.Services.Firebase.PeopleDto peopleDto = new ProjectCaitlin.Services.Firebase.PeopleDto()
             {
-                List<People> AllPeople = await this.GetAllPeopleAsync();
-                if(AllPeople==null || AllPeople.Count == 0)
-                {
-                    return null;
-                }
-                foreach(People p in AllPeople)
-                {
-                    if(p.SpeakerId == SpeakerId)
-                    {
-                        return p;
-                    }
-                }
-                return null;
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.StackTrace);
-                throw e;
-            }
-        }
-
-        public async Task<People> PostPeopleAsync(People people){
-            try
-            {
-                string uri = client.BaseAddress + FirebaseFirestore.USER_URL + "/" + UserId + FirebaseFirestore.PEOPLE_URL;
-                PeopleParser peopleParser = new PeopleParser();
-                var jsonObject = peopleParser.ObjectToJson(people);
-                string jsonString = jsonObject.ToString();
-                var content = new StringContent(jsonObject.ToString(), Encoding.UTF8, "application/json");
-                Task<HttpResponseMessage> responseTask = client.PostAsync(uri,content);
-                responseTask.Wait();
-                if (responseTask.Result.StatusCode == System.Net.HttpStatusCode.OK)
-                {
-                    string responseContent = await responseTask.Result.Content.ReadAsStringAsync();
-                    JObject peopleJson = JObject.Parse(responseContent);
-                    People peep = peopleParser.JsonToObject(peopleJson);
-                    return peep;
-                }
-                if (AppConfig.IsDebug())
-                {
-                    Trace.WriteLine(responseTask.Result.StatusCode + " : " + responseTask.Result.RequestMessage);
-                }
-                return null;
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.StackTrace);
-                throw e;
-            }
-        }
-
-        public async Task<People> PatchPeopleAsync()
-        {
-            throw new NotImplementedException();
+                pic = people.picUrl,
+                have_pic = people.HavePic,
+                speaker_id = people.SpeakerId,
+                unique_id = people.Id,
+                important = people.Important,
+                name = people.FirstName,
+                relation = people.Relation,
+                phone_number = people.PhoneNumber,
+            };
+            await CrossCloudFirestore.Current
+                         .Instance
+                         .GetCollection("users")
+                         .GetDocument(UserId)
+                         .GetCollection("people")
+                         .AddDocumentAsync(peopleDto);
+            return people;
         }
     }
 }

@@ -13,10 +13,12 @@ using Android.Support.V4.App;
 using Android.Support.V4.Content;
 using Android;
 using Firebase;
+using Android.Content;
+using Xamarin.Forms;
 
 namespace ProjectCaitlin.Droid
 {
-    [Activity(Label = "ProjectCaitlin", Icon = "@mipmap/icon", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation)]
+    [Activity(Label = "ManifestMy Space", Icon = "@mipmap/ic_launcher", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, LaunchMode = LaunchMode.SingleTop)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
         protected override void OnCreate(Bundle savedInstanceState)
@@ -55,7 +57,24 @@ namespace ProjectCaitlin.Droid
             CachedImageRenderer.InitImageViewHandler();
 
             LoadApplication(new App());
+            CreateNotificationFromIntent(base.Intent);
         }
+
+        protected override void OnNewIntent(Intent intent)
+        {
+            CreateNotificationFromIntent(intent);
+        }
+
+        private void CreateNotificationFromIntent(Intent intent)
+        {
+            if (intent?.Extras != null)
+            {
+                string title = intent.Extras.GetString(AndroidNotificationManager.TitleKey);
+                string message = intent.Extras.GetString(AndroidNotificationManager.MessageKey);
+                DependencyService.Get<INotificationManager>().ReceiveNotification(title, message, true);
+            }
+        }
+
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);

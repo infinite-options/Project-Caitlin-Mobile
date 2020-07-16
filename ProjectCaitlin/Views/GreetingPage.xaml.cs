@@ -57,7 +57,8 @@ namespace ProjectCaitlin.Views
                 while (true)
                 {
                     System.Threading.Thread.Sleep(35000);
-                    if (identifyButton! != null && !identifyButton.IsVisible)
+                    if (!Application.Current.Properties.ContainsKey("user_id")) break;
+                    if (identifyButton! != null && !identifyButton.IsVisible )
                     {
                         greetingViewModel.CMDIdentifyAndEnroll();
                         Task.Factory.StartNew(() => {
@@ -257,28 +258,28 @@ namespace ProjectCaitlin.Views
             });
         }
 
-        public void UpdatePopUpMessage(string s)
-        {
-            //popupMessageView.IsVisible = true;
-            //popUpMessageStatus.Text = s;
-            //System.Threading.Thread.Sleep(2000);
-            //popupMessageView.IsVisible = false;
-        }
+        //public void UpdatePopUpMessage(string s)
+        //{
+        //    //popupMessageView.IsVisible = true;
+        //    //popUpMessageStatus.Text = s;
+        //    //System.Threading.Thread.Sleep(2000);
+        //    //popupMessageView.IsVisible = false;
+        //}
 
-        public void PopUpSomethingWentWrong()
-        {
-            Task.Factory.StartNew(() => { UpdatePopUpMessage("Something Went Wrong!"); });
-        }
+        //public void PopUpSomethingWentWrong()
+        //{
+        //    Task.Factory.StartNew(() => { UpdatePopUpMessage("Something Went Wrong!"); });
+        //}
 
-        public void PopUpSmallAudioFile()
-        {
-            Task.Factory.StartNew(() => { UpdatePopUpMessage("Unbale to indentify the voice.\nAudio small for enrolling the person"); });
-        }
+        //public void PopUpSmallAudioFile()
+        //{
+        //    Task.Factory.StartNew(() => { UpdatePopUpMessage("Unbale to indentify the voice.\nAudio small for enrolling the person"); });
+        //}
 
-        public void PopUpNullAudioFile()
-        {
-            Task.Factory.StartNew(() => { UpdatePopUpMessage("Nothing was recorded"); });
-        }
+        //public void PopUpNullAudioFile()
+        //{
+        //    Task.Factory.StartNew(() => { UpdatePopUpMessage("Nothing was recorded"); });
+        //}
 
         private void SetRecognizedPersonOnUI(People people)
         {

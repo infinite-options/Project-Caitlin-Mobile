@@ -41,6 +41,7 @@ namespace ProjectCaitlin
         FirebaseFunctionsService firebaseFunctionsService = new FirebaseFunctionsService();
 
         GoogleService googleService = new GoogleService();
+        private static Boolean isCurrentlyRefressing = false;
 
         user user;
         //public DailyViewModel dailyViewModel;
@@ -99,15 +100,26 @@ namespace ProjectCaitlin
 
         public async Task RefreshPage()
         {
-            await firestoreService.LoadDatabase();
-            await googleService.LoadTodaysEvents();
+            if (!isCurrentlyRefressing)
+            {
+                isCurrentlyRefressing = true;
+                try
+                {
+                    await firestoreService.LoadDatabase();
+                    await googleService.LoadTodaysEvents();
 
-            //recalculate goals/routines durations
-            calculateDuration();
+                    //recalculate goals/routines durations
+                    calculateDuration();
 
-            SetupUI();
-            PrintFirebaseUser();
-
+                    SetupUI();
+                    PrintFirebaseUser();
+                }
+                catch (Exception e) {  }
+                finally
+                {
+                    isCurrentlyRefressing = false;
+                }
+            }
         }
 
         public void calculateDuration()

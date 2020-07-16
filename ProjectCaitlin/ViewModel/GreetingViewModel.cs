@@ -25,6 +25,7 @@ using ProjectCaitlin;
 
 using ProjectCaitlin.Models;
 using Acr.UserDialogs;
+using System.Threading;
 
 namespace ProjectCaitlin.ViewModel
 {
@@ -51,6 +52,8 @@ namespace ProjectCaitlin.ViewModel
             sw = new Stopwatch();
             //RecorderClient.AudioInputReceived += EnrollIdentifyWrapper;
             _ = RefreshAzProfiles(SpeakerIdListInitializationFailFlow);
+
+            Dialogs = UserDialogs.Instance;
 
             foreach (person people in App.User.people)
             {
@@ -399,7 +402,8 @@ namespace ProjectCaitlin.ViewModel
             //Device.BeginInvokeOnMainThread(()=> {
             //    Application.Current.MainPage.DisplayAlert("Message","Unable to indetify voice, voice short for enrolling","OK");
             //});
-            UserDialogs.Instance.Toast(new ToastConfig("We haven't heard this voice before,and the voice is short for enrolling.").SetDuration(TimeSpan.FromSeconds(3)).SetPosition(ToastPosition.Top));
+            //UserDialogs.Instance.Toast(new ToastConfig("We haven't heard this voice before,and the voice is short for enrolling.").SetDuration(TimeSpan.FromSeconds(3)).SetPosition(ToastPosition.Top));
+            DisposableAlerts("Voice Recognition Alert", "User not identified.", null, 3);
         }
 
         public async void AudioFileEmpty()
@@ -407,7 +411,8 @@ namespace ProjectCaitlin.ViewModel
             //Device.BeginInvokeOnMainThread(() => {
             //    Application.Current.MainPage.DisplayAlert("Message", "Recorded Audio File Empty", "OK");
             //});
-            UserDialogs.Instance.Toast(new ToastConfig("Nothing was recorded").SetDuration(TimeSpan.FromSeconds(3)).SetPosition(ToastPosition.Top));
+            //UserDialogs.Instance.Toast(new ToastConfig("Nothing was recorded").SetDuration(TimeSpan.FromSeconds(3)).SetPosition(ToastPosition.Top));
+            DisposableAlerts("Voice Recognition Alert", "Nothing was recorded", null, 3);
         }
 
         public async void AzIdNotFound_CreatedNew(Profile profile)
@@ -679,8 +684,20 @@ namespace ProjectCaitlin.ViewModel
             }
             Message = "Unable to load the list:";
         }
-
-
+        protected IUserDialogs Dialogs { get; }
+        public async void DisposableAlerts(string title, string message, string okText, int ttl)
+        {
+            try
+            {
+                var cts = new CancellationTokenSource();
+                cts.CancelAfter(TimeSpan.FromSeconds(ttl));
+                var tama = this.Dialogs;
+                await tama.AlertAsync(message, title, okText, cts.Token);
+            }
+            catch (OperationCanceledException)
+            {
+            }
+        }
 
     }
 
