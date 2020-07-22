@@ -12,6 +12,7 @@ using VoiceRecognition.View;
 using VoiceRecognition.ViewModel;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms.Markup;
+using VoiceRecognition.Model;
 
 namespace ProjectCaitlin.Views
 {
@@ -56,7 +57,8 @@ namespace ProjectCaitlin.Views
                 while (true)
                 {
                     System.Threading.Thread.Sleep(35000);
-                    if (identifyButton! != null && !identifyButton.IsVisible)
+                    if (!Application.Current.Properties.ContainsKey("user_id")) break;
+                    if (identifyButton! != null && !identifyButton.IsVisible )
                     {
                         greetingViewModel.CMDIdentifyAndEnroll();
                         Task.Factory.StartNew(() => {
@@ -81,6 +83,7 @@ namespace ProjectCaitlin.Views
         }
         private void SetupUI()
         {
+            UserImage.IsVisible = App.User.aboutMe.have_pic;
             UserImage.Source = App.User.aboutMe.pic;
             GreetingsTitleLabel.Text = GetTitleDayMessage();
             FirstNameLabel.Text = App.User.firstName;
@@ -252,6 +255,50 @@ namespace ProjectCaitlin.Views
                 //    this.trackBar.Text = SlideToActView.States.SendingToAzure;
                 //    //this.timer.IsVisible = false;
                 //});
+            });
+        }
+
+        //public void UpdatePopUpMessage(string s)
+        //{
+        //    //popupMessageView.IsVisible = true;
+        //    //popUpMessageStatus.Text = s;
+        //    //System.Threading.Thread.Sleep(2000);
+        //    //popupMessageView.IsVisible = false;
+        //}
+
+        //public void PopUpSomethingWentWrong()
+        //{
+        //    Task.Factory.StartNew(() => { UpdatePopUpMessage("Something Went Wrong!"); });
+        //}
+
+        //public void PopUpSmallAudioFile()
+        //{
+        //    Task.Factory.StartNew(() => { UpdatePopUpMessage("Unbale to indentify the voice.\nAudio small for enrolling the person"); });
+        //}
+
+        //public void PopUpNullAudioFile()
+        //{
+        //    Task.Factory.StartNew(() => { UpdatePopUpMessage("Nothing was recorded"); });
+        //}
+
+        private void SetRecognizedPersonOnUI(People people)
+        {
+            UserImage.IsVisible = people.HavePic;
+            UserImage.Source = people.picUrl;
+            GreetingsTitleLabel.Text = "You are talking to:";
+            FirstNameLabel.Text = people.FirstName;
+            MessageCardLabel.Text = null;
+            MessageLabel.Text = null;
+        }
+
+        public void AddRecognizedPersonDetailOnPage(People people)
+        {
+            Task.Factory.StartNew(() => {
+                SetRecognizedPersonOnUI(people);
+            });
+            Task.Factory.StartNew(() => {
+                System.Threading.Thread.Sleep(10000);
+                SetupUI();
             });
         }
     }

@@ -11,6 +11,8 @@ using Android.Views;
 using Android.Widget;
 using Firebase.Messaging;
 using ProjectCaitlin.Services;
+using Xamarin.Forms;
+using Xamarin.Forms.Xaml;
 
 namespace ProjectCaitlin.Droid
 {
@@ -31,8 +33,20 @@ namespace ProjectCaitlin.Droid
         public override void OnMessageReceived(RemoteMessage message)
         {
             base.OnMessageReceived(message);
-            firestoreService.LoadDatabase();
-            new AndroidNotificationManager().ScheduleNotification(message.GetNotification().Title, "1234thisisatestnotificationcheck", message.GetNotification().Body, 2.0, "1", 0, "routine");
+            if(message.Data.Count > 0)
+            {
+                Console.WriteLine("Data Payload found");
+                if (App.User.id != "" && App.User.id == message.Data["id"])
+                {
+                    //firestoreService.LoadDatabase();
+                    new AndroidNotificationManager().ScheduleNotification(message.Data["title"], "1234thisisatestnotificationcheck", message.Data["body"], 2.0, "1", 0, "routine");
+
+                }
+            }
+
+            
+            //firestoreService.LoadDatabase();
+            //new AndroidNotificationManager().ScheduleNotification(message.GetNotification().Title, "1234thisisatestnotificationcheck", message.GetNotification().Body, 2.0, "1", 0, "routine");
         }
     }
 }

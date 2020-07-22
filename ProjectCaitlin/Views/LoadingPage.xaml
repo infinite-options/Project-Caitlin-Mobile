@@ -12,7 +12,9 @@
         Margin="0,40,0,0">
         
         <Label
+
             Text="ManifestMy Space"
+
             HorizontalOptions="Center"
             TextColor="DimGray"
             FontSize="35"
