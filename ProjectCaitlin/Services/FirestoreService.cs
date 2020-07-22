@@ -68,8 +68,6 @@ namespace ProjectCaitlin.Services
         public async Task SetupFirestoreSnapshot()
         {
 
-            
-
                 CrossCloudFirestore.Current.Instance
                     .GetCollection("users")
                     .GetDocument(uid)
@@ -88,12 +86,9 @@ namespace ProjectCaitlin.Services
         {
             LoadFirebasePhoto();
             LoadPeople();
-            Console.WriteLine("Loading User in LoadDatabase()");
+            //Console.WriteLine("Loading User in LoadDatabase()");
             await LoadUser();
-            UserDialogs.Instance.ShowLoading("Refreshing Page...");
-            //Console.WriteLine(App.User);
-            await new ListViewPage().RefreshPage();
-            UserDialogs.Instance.HideLoading();
+           
 
         }
 
