@@ -17,8 +17,8 @@
   <ItemGroup>
     <PackageReference Include="Acr.UserDialogs" Version="7.1.0.446" />
     <PackageReference Include="DLToolkit.Forms.Controls.FlowListView" Version="2.0.11" />
-    <PackageReference Include="Microsoft.AppCenter" Version="3.2.2" />
-    <PackageReference Include="Microsoft.AppCenter.Push" Version="3.2.2" />
+    <PackageReference Include="Microsoft.AppCenter" Version="3.3.0" />
+    <PackageReference Include="Microsoft.AppCenter.Push" Version="3.3.0" />
     <PackageReference Include="Microsoft.AspNet.WebApi.Client" Version="5.2.7" />
     <PackageReference Include="PCLStorage" Version="1.0.2" />
     <PackageReference Include="Plugin.AudioRecorder" Version="1.1.0" />
@@ -28,8 +28,8 @@
     <PackageReference Include="System.Net.Http" Version="4.3.4" />
     <PackageReference Include="Xamarin.FFImageLoading.Forms" Version="2.4.11.982" />
     <PackageReference Include="DLToolkit.Forms.Controls.ImageCropView" Version="1.0.7" />
-    <PackageReference Include="CardsView" Version="2.6.2" />
-    <PackageReference Include="Xamarin.Forms" Version="4.7.0.968" />
+    <PackageReference Include="CardsView" Version="2.6.3" />
+    <PackageReference Include="Xamarin.Forms" Version="4.7.0.1142" />
     <PackageReference Include="Plugin.CloudFirestore" Version="3.1.0.2" />
   </ItemGroup>
   <ItemGroup>

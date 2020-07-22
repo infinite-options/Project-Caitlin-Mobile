@@ -12,6 +12,8 @@ using ProjectCaitlin.Services;
 using Newtonsoft.Json;
 using System.Collections;
 using System.Security.Cryptography.X509Certificates;
+using ProjectCaitlin.Views;
+using Acr.UserDialogs;
 
 namespace ProjectCaitlin.Services
 {
@@ -66,6 +68,8 @@ namespace ProjectCaitlin.Services
         public async Task SetupFirestoreSnapshot()
         {
 
+            
+
                 CrossCloudFirestore.Current.Instance
                     .GetCollection("users")
                     .GetDocument(uid)
@@ -73,6 +77,7 @@ namespace ProjectCaitlin.Services
                     {
                         if (!App.isFirstSetup)
                         {
+                            Console.WriteLine("In SetupFireStore Snapshot updating real time");
                             await LoadDatabase();
                         }
                         App.isFirstSetup = false;
@@ -83,7 +88,13 @@ namespace ProjectCaitlin.Services
         {
             LoadFirebasePhoto();
             LoadPeople();
+            Console.WriteLine("Loading User in LoadDatabase()");
             await LoadUser();
+            UserDialogs.Instance.ShowLoading("Refreshing Page...");
+            //Console.WriteLine(App.User);
+            await new ListViewPage().RefreshPage();
+            UserDialogs.Instance.HideLoading();
+
         }
 
         public async Task LoadUser()
@@ -232,9 +243,11 @@ namespace ProjectCaitlin.Services
                             {
                                 routine routine = JsonConvert.DeserializeObject<routine>(serializedParent);
 
+                                Console.WriteLine("Before setting notifications, checking routine isComplete: " + routine.isComplete);
+
                                 App.User.routines.Add(routine);
 
-                                setNotifications(routine, routineIdx, (IDictionary<string, object>)data["user_notifications"]);
+                                //setNotifications(routine, routineIdx, (IDictionary<string, object>)data["user_notifications"]);
 
                                 routineIdx++;
                             }
@@ -244,7 +257,7 @@ namespace ProjectCaitlin.Services
 
                                 App.User.goals.Add(goal);
 
-                                setNotifications(goal, goalIdx, (IDictionary<string, object>)data["user_notifications"]);
+                                //setNotifications(goal, goalIdx, (IDictionary<string, object>)data["user_notifications"]);
                                 goalIdx++;
                             }
                         }
@@ -594,7 +607,7 @@ namespace ProjectCaitlin.Services
                             //subtitle is not used, this is only for setting user info for now
                             string subtitle = grIdx + routine.id;
                             string message = "Open the app to review your tasks. " + notiAttriObjList[i].message;
-                            notificationManager.ScheduleNotification(title, subtitle, message, total, routine.id, i, "routine");
+                            //notificationManager.ScheduleNotification(title, subtitle, message, total, routine.id, i, "routine");
                             
                             firebaseFunctionsService.GRUserNotificationSetToTrue(routine, grIdx.ToString(), notiTimeKeysList[i]);
 
@@ -684,7 +697,7 @@ namespace ProjectCaitlin.Services
                             //subtitle is not used, this is only for setting user info for now
                             string subtitle = grIdx + goal.id;
                             string message = "Open the app to review your tasks. " + notiAttriObjList[i].message;
-                            notificationManager.ScheduleNotification(title, subtitle, message, total, goal.id, i, "goal");
+                            //notificationManager.ScheduleNotification(title, subtitle, message, total, goal.id, i, "goal");
 
                             firebaseFunctionsService.GRUserNotificationSetToTrue(goal, grIdx.ToString(), notiTimeKeysList[i]);
 
