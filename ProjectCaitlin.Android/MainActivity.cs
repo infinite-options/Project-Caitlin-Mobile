@@ -61,6 +61,10 @@ namespace ProjectCaitlin.Droid
 
             CachedImageRenderer.InitImageViewHandler();
 
+
+            IsPlayServicesAvailable();
+            CreateNotificationChannel();
+
             LoadApplication(new App());
             
             
@@ -70,7 +74,6 @@ namespace ProjectCaitlin.Droid
             if (FirebaseInstanceId.Instance.Token != null)
                 App.deviceToken = FirebaseInstanceId.Instance.Token;
 
-            IsPlayServicesAvailable();
         }
 
         protected override void OnNewIntent(Intent intent)
@@ -115,6 +118,28 @@ namespace ProjectCaitlin.Droid
             Log.Debug(TAG, "Google Play Services is available.");
             Console.WriteLine(TAG, "Google Play Services is available.");
             return true;
+        }
+
+        void CreateNotificationChannel()
+        {
+            if (Build.VERSION.SdkInt < BuildVersionCodes.O)
+            {
+                // Notification channels are new in API 26 (and not a part of the
+                // support library). There is no need to create a notification
+                // channel on older versions of Android.
+                return;
+            }
+
+            var channel = new NotificationChannel(CHANNEL_ID,
+                                                  "FCM Notifications",
+                                                  NotificationImportance.Default)
+            {
+
+                Description = "Firebase Cloud Messages appear in this channel"
+            };
+
+            var notificationManager = (NotificationManager)GetSystemService(Android.Content.Context.NotificationService);
+            notificationManager.CreateNotificationChannel(channel);
         }
     }
 }
