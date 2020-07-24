@@ -46,8 +46,8 @@ namespace ProjectCaitlin.Services
                 var userNotifData = (IDictionary<string, object>)grData["user_notifications"];
                 var userNotifStateData = (IDictionary<string, object>)userNotifData[state];
 
-                userNotifStateData["is_set"] = true;
-                userNotifStateData["date_set"] = DateTime.Now.ToString("ddd, dd MMM yyy HH:mm:ss 'GMT'");
+                //userNotifStateData["is_set"] = true;
+                //userNotifStateData["date_set"] = DateTime.Now.ToString("ddd, dd MMM yyy HH:mm:ss 'GMT'");
 
                 await CrossCloudFirestore.Current
                     .Instance
