@@ -13,7 +13,7 @@
         
         <Label
 
-            Text="ManifestMy Space"
+            Text="Manifest"
 
             HorizontalOptions="Center"
             TextColor="DimGray"

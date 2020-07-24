@@ -51,60 +51,33 @@ namespace ProjectCaitlin.Droid
             messageId = notification_id;
 
             Intent intent = new Intent(AndroidApp.Context, typeof(AlarmReceiver));
-            //intent.PutExtra(TitleKey, title);
-            //intent.PutExtra(MessageKey, message);
-            //intent.PutExtra("NotificationTag", notification_tag);
-            //intent.PutExtra("MessageId", notification_id);
-            //intent.PutExtra(channelId, channelId);
+            intent.PutExtra(TitleKey, title);
+            intent.PutExtra(MessageKey, message);
+            intent.PutExtra("NotificationTag", notification_tag);
+            intent.PutExtra("MessageId", notification_id);
+            intent.PutExtra(channelId, channelId);
             intent.PutExtra("grNum", Int32.Parse(subtitle.Substring(0, 1)));
             intent.PutExtra("grId", subtitle.Substring(1, 20));
             intent.PutExtra("goalOrRoutine", gOrR);
 
-            //string notification_tag = intent.GetStringExtra("NotificationTag");
-            int message_Id = notification_id;
-            //string title = intent.GetStringExtra("title");
-            //string message = intent.GetStringExtra("message");
-            //string channelId = intent.GetStringExtra("default");
 
-            int grIdx = intent.GetIntExtra("grNum", 0);
-            string grId = intent.GetStringExtra("grId");                                                    //notification.Request.Content.UserInfo["grId"].ToString();
-            string goalOrRoutine = intent.GetStringExtra("goalOrRoutine");                                 //notification.Request.Content.UserInfo["goalOrRoutine"].ToString();
 
-            Console.WriteLine("MESSAGE:" + message);
-            //Console.WriteLine("DURATION: ");
-            Console.WriteLine("NOT_ID:" + notification_tag + messageId.ToString());
+            PendingIntent pendingIntent = PendingIntent.GetBroadcast(AndroidApp.Context, pendingIntentId++, intent, PendingIntentFlags.UpdateCurrent);
 
-            Intent mainIntent = new Intent(AndroidApp.Context, typeof(MainActivity));
-            mainIntent.PutExtra(TitleKey, title);
-            mainIntent.PutExtra(MessageKey, message);
-            //mainIntent.PutExtra("NotificationTag", notification_tag);
-            //mainIntent.PutExtra("MessageId", notification_id);
-            //mainIntent.PutExtra(channelId, channelId);
-            mainIntent.AddFlags(ActivityFlags.ClearTop);
+            var interval = AlarmManager.IntervalDay;
+            //var interval = 60 * 1000;
+            //manager.Notify(notification_tag, messageId, notification);
+            var alarmManager = (AlarmManager)AndroidApp.Context.GetSystemService(Context.AlarmService);
+            Console.WriteLine("INSIDE SCHEDULE NOTIFICATION");
+            Console.WriteLine("MESSAGE:" + message + ", DURATION: ");
+            Console.WriteLine(duration);
+            Console.WriteLine("NOT_ID:" + notification_tag + notification_id.ToString());
+            long dur = (long)(duration * 1000);
+            Console.WriteLine("Duration in seconds for " + message + ": " + duration);
 
-            PendingIntent pendingIntent = PendingIntent.GetActivity(AndroidApp.Context, pendingIntentId, mainIntent, PendingIntentFlags.OneShot);
 
-            
 
-            DependencyService.Get<INotificationManager>().ReceiveNotification(title, message, true);
-
-            NotificationCompat.Builder builder = new NotificationCompat.Builder(AndroidApp.Context, channelId)
-                .SetContentIntent(pendingIntent)
-                .SetContentTitle(title)
-                .SetContentText(message)
-                .SetLargeIcon(BitmapFactory.DecodeResource(AndroidApp.Context.Resources, Resource.Drawable.ic_launcher))
-                .SetSmallIcon(Resource.Drawable.xamagonBlue)
-                .SetDefaults((int)NotificationDefaults.Sound | (int)NotificationDefaults.Vibrate)
-                .SetAutoCancel(true);
-
-            Android.App.Notification notification = builder.Build();
-
-            //NotificationManager mgr = (NotificationManager)context.GetSystemService(Context.NotificationService);
-            //var mgr = NotificationManagerCompat.From(AndroidApp.Context);
-            //manager = (NotificationManager)Android.Content.Context.GetSystemService(AndroidApp.NotificationService);
-
-            manager.Notify(notification_tag, message_Id, notification);
-            //alarmManager.SetRepeating(AlarmType.RtcWakeup, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + dur, (long)interval, pendingIntent);
+            alarmManager.SetRepeating(AlarmType.RtcWakeup, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + dur, (long)interval, pendingIntent);
             return messageId;
         }
 
