@@ -130,6 +130,7 @@ namespace ProjectCaitlin.Droid
                     if (!answer)
                     {
                         App.ParentPage = "ListView";
+                        firebaseFunctionsService = new FirebaseFunctionsService();
                         if (goalOrRoutine.Equals("routine"))
                         {
                             App.User.routines[grIdx].isInProgress = true;
