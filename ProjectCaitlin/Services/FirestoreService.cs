@@ -12,8 +12,6 @@ using ProjectCaitlin.Services;
 using Newtonsoft.Json;
 using System.Collections;
 using System.Security.Cryptography.X509Certificates;
-using ProjectCaitlin.Views;
-using Acr.UserDialogs;
 
 namespace ProjectCaitlin.Services
 {
@@ -75,8 +73,7 @@ namespace ProjectCaitlin.Services
                     {
                         if (!App.isFirstSetup)
                         {
-                            Console.WriteLine("In SetupFireStore Snapshot updating real time");
-                            await LoadDatabase();
+                            //await LoadDatabase();
                         }
                         App.isFirstSetup = false;
                     });
@@ -86,10 +83,7 @@ namespace ProjectCaitlin.Services
         {
             LoadFirebasePhoto();
             LoadPeople();
-            //Console.WriteLine("Loading User in LoadDatabase()");
             await LoadUser();
-           
-
         }
 
         public async Task LoadUser()
@@ -206,11 +200,11 @@ namespace ProjectCaitlin.Services
 
                                 photo = data["photo"].ToString(),
 
-                                isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
+                                isInProgress = isInProgressCheck, //&& IsDateToday(data["datetime_started"].ToString()),
 
-                                isComplete = convertBinToBool(data["is_complete"].ToString())
-                                                    && IsDateToday(data["datetime_completed"].ToString())
-                                                    && !isInProgressCheck,
+                                isComplete = convertBinToBool(data["is_complete"].ToString()),
+                                                    //&& IsDateToday(data["datetime_completed"].ToString())
+                                                    //&& !isInProgressCheck,
 
                                 expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
 
@@ -231,18 +225,14 @@ namespace ProjectCaitlin.Services
 
                             var serializedParent = JsonConvert.SerializeObject(grObject);
 
-                            user user = App.User;
-                            List<routine> rout = user.routines;
 
                             if (convertBinToBool(data["is_persistent"].ToString()))
                             {
                                 routine routine = JsonConvert.DeserializeObject<routine>(serializedParent);
 
-                                Console.WriteLine("Before setting notifications, checking routine isComplete: " + routine.isComplete);
-
                                 App.User.routines.Add(routine);
 
-                                //setNotifications(routine, routineIdx, (IDictionary<string, object>)data["user_notifications"]);
+                                setNotifications(routine, routineIdx, (IDictionary<string, object>)data["user_notifications"]);
 
                                 routineIdx++;
                             }
@@ -252,7 +242,7 @@ namespace ProjectCaitlin.Services
 
                                 App.User.goals.Add(goal);
 
-                                //setNotifications(goal, goalIdx, (IDictionary<string, object>)data["user_notifications"]);
+                                setNotifications(goal, goalIdx, (IDictionary<string, object>)data["user_notifications"]);
                                 goalIdx++;
                             }
                         }
@@ -334,11 +324,11 @@ namespace ProjectCaitlin.Services
 
                             photo = data["photo"].ToString(),
 
-                            isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
+                            isInProgress = isInProgressCheck, // && IsDateToday(data["datetime_started"].ToString()),
 
-                            isComplete = convertBinToBool(data["is_complete"].ToString())
-                                                        && IsDateToday(data["datetime_completed"].ToString())
-                                                        && !isInProgressCheck,
+                            isComplete = convertBinToBool(data["is_complete"].ToString()),
+                                                        //&& IsDateToday(data["datetime_completed"].ToString())
+                                                        //&& !isInProgressCheck,
 
                             expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
 
@@ -458,11 +448,11 @@ namespace ProjectCaitlin.Services
 
                             photo = data["photo"].ToString(),
 
-                            isInProgress = isInProgressCheck && IsDateToday(data["datetime_started"].ToString()),
+                            isInProgress = isInProgressCheck, //&& IsDateToday(data["datetime_started"].ToString()),
 
-                            isComplete = convertBinToBool(data["is_complete"].ToString())
-                                                        && IsDateToday(data["datetime_completed"].ToString())
-                                                        && !isInProgressCheck,
+                            isComplete = convertBinToBool(data["is_complete"].ToString()),
+                                                        //&& IsDateToday(data["datetime_completed"].ToString())
+                                                        //&& !isInProgressCheck,
 
                             expectedCompletionTime = TimeSpan.Parse(data["expected_completion_time"].ToString()),
 
@@ -568,14 +558,14 @@ namespace ProjectCaitlin.Services
 
                     IDictionary<string, object> userTimeDict = (IDictionary<string, object>)notificationDict[notiTimeKeysList[i]];
 
-                    notiAttriObjList[i].is_set = convertBinToBool(userTimeDict["is_set"].ToString())
-                                                    && ((userTimeDict["date_set"] != null) ? IsDateToday(userTimeDict["date_set"].ToString()) : false);
+                    //notiAttriObjList[i].is_set = convertBinToBool(userTimeDict["is_set"].ToString())
+                      //                              && ((userTimeDict["date_set"] != null) ? IsDateToday(userTimeDict["date_set"].ToString()) : false);
 
                     Console.WriteLine(notiAttriObjList[i]);
 
                     notiAttriObjList[i].is_enabled = convertBinToBool(userTimeDict["is_enabled"].ToString());
 
-                    if (notiAttriObjList[i].is_enabled && !notiAttriObjList[i].is_set)
+                    if (notiAttriObjList[i].is_enabled)// && !notiAttriObjList[i].is_set)
                     {
                         notiAttriObjList[i].time = TimeSpan.Parse(userTimeDict["time"].ToString());
 
@@ -596,15 +586,15 @@ namespace ProjectCaitlin.Services
 
                         notiAttriObjList[i].message = userTimeDict["message"].ToString();
 
-                        if (!routine.isComplete && total > 0 && !routine.Notification.user.before.is_set)
+                        if (!routine.isComplete && total > 0)// && !routine.Notification.user.before.is_set)
                         {
                             string title = titles[i];
                             //subtitle is not used, this is only for setting user info for now
                             string subtitle = grIdx + routine.id;
                             string message = "Open the app to review your tasks. " + notiAttriObjList[i].message;
-                            //notificationManager.ScheduleNotification(title, subtitle, message, total, routine.id, i, "routine");
+                            notificationManager.ScheduleNotification(title, subtitle, message, total, routine.id, i, "routine");
                             
-                            firebaseFunctionsService.GRUserNotificationSetToTrue(routine, grIdx.ToString(), notiTimeKeysList[i]);
+                            //firebaseFunctionsService.GRUserNotificationSetToTrue(routine, grIdx.ToString(), notiTimeKeysList[i]);
 
                         }
                         Console.WriteLine("total : " + total);
@@ -658,14 +648,14 @@ namespace ProjectCaitlin.Services
 
                     IDictionary<string, object> userTimeDict = (IDictionary<string, object>)notificationDict[notiTimeKeysList[i]];
 
-                    notiAttriObjList[i].is_set = convertBinToBool(userTimeDict["is_set"].ToString())
-                                                    && ((userTimeDict["date_set"] != null) ? IsDateToday(userTimeDict["date_set"].ToString()) : false);
+                    //notiAttriObjList[i].is_set = convertBinToBool(userTimeDict["is_set"].ToString())
+                    //                                && ((userTimeDict["date_set"] != null) ? IsDateToday(userTimeDict["date_set"].ToString()) : false);
 
                     Console.WriteLine(notiAttriObjList[i]);
 
                     notiAttriObjList[i].is_enabled = convertBinToBool(userTimeDict["is_enabled"].ToString());
 
-                    if (notiAttriObjList[i].is_enabled && !notiAttriObjList[i].is_set)
+                    if (notiAttriObjList[i].is_enabled)
                     {
                         notiAttriObjList[i].time = TimeSpan.Parse(userTimeDict["time"].ToString());
 
@@ -686,15 +676,15 @@ namespace ProjectCaitlin.Services
 
                         notiAttriObjList[i].message = userTimeDict["message"].ToString();
 
-                        if (!goal.isComplete && total > 0 && !goal.Notification.user.before.is_set)
+                        if (!goal.isComplete && total > 0)
                         {
                             string title = titles[i];
                             //subtitle is not used, this is only for setting user info for now
                             string subtitle = grIdx + goal.id;
                             string message = "Open the app to review your tasks. " + notiAttriObjList[i].message;
-                            //notificationManager.ScheduleNotification(title, subtitle, message, total, goal.id, i, "goal");
+                            notificationManager.ScheduleNotification(title, subtitle, message, total, goal.id, i, "goal");
 
-                            firebaseFunctionsService.GRUserNotificationSetToTrue(goal, grIdx.ToString(), notiTimeKeysList[i]);
+                            //firebaseFunctionsService.GRUserNotificationSetToTrue(goal, grIdx.ToString(), notiTimeKeysList[i]);
 
                         }
                         Console.WriteLine("total : " + total);

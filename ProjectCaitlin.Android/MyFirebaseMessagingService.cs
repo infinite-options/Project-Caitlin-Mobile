@@ -31,7 +31,7 @@ namespace ProjectCaitlin.Droid
          * OnMessageReceived receives the remote message from FCM
          
          */
-        public override void OnMessageReceived(RemoteMessage message)
+        public override async void OnMessageReceived(RemoteMessage message)
         {
             base.OnMessageReceived(message);
             if(message.Data.Count > 0)
@@ -42,7 +42,8 @@ namespace ProjectCaitlin.Droid
                     //firestoreService.LoadDatabase();
                     //new AndroidNotificationManager().ScheduleNotification(message.Data["title"], "1234thisisatestnotificationcheck", message.Data["body"], 2.0, "1", 0, "routine");
                     //sendLocalNotification(message.Data["title"], "1234thisisatestnotificationcheck", message.Data["body"], 2.0, "1", 0, "routine");
-                    SendLocalNotification("We are getting notification");
+                    //SendLocalNotification("We are getting notification");
+                    await firestoreService.LoadDatabase();
                 }
             }
 
@@ -51,7 +52,7 @@ namespace ProjectCaitlin.Droid
             //new AndroidNotificationManager().ScheduleNotification(message.GetNotification().Title, "1234thisisatestnotificationcheck", message.GetNotification().Body, 2.0, "1", 0, "routine");
         }
 
-        void SendLocalNotification(string body)
+        /*void SendLocalNotification(string body)
         {
             var intent = new Intent(this, typeof(MainActivity));
             intent.AddFlags(ActivityFlags.ClearTop);
@@ -76,6 +77,6 @@ namespace ProjectCaitlin.Droid
 
             var notificationManager = NotificationManager.FromContext(this);
             notificationManager.Notify(0, notificationBuilder.Build());
-        }
+        }*/
     }
 }

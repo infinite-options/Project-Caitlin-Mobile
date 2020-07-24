@@ -37,7 +37,7 @@ namespace ProjectCaitlin.Droid
 
         int messageId = -1;
         NotificationManager manager;
-        FirebaseFunctionsService firebaseFunctionsService = new FirebaseFunctionsService();
+        FirebaseFunctionsService firebaseFunctionsService;
         public override async void OnReceive(Context context, Intent intent)
         {
             //Toast.MakeText(context, "Received intent!", ToastLength.Short).Show();
@@ -130,6 +130,7 @@ namespace ProjectCaitlin.Droid
                     if (!answer)
                     {
                         App.ParentPage = "ListView";
+                        firebaseFunctionsService = new FirebaseFunctionsService();
                         if (goalOrRoutine.Equals("routine"))
                         {
                             App.User.routines[grIdx].isInProgress = true;
