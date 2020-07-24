@@ -158,7 +158,7 @@ namespace ProjectCaitlin.Services
                 foreach (var document in peopleCollection.Documents)
                 {
                     var data = document.Data;
-                    if (data["important"].ToString() == "1")
+                    if (convertBinToBool(data["important"].ToString()))
                     {
                         var person = new person()
                         {
@@ -324,7 +324,7 @@ namespace ProjectCaitlin.Services
 
                             photo = data["photo"].ToString(),
 
-                            isInProgress = isInProgressCheck, //&& IsDateToday(data["datetime_started"].ToString()),
+                            isInProgress = isInProgressCheck, // && IsDateToday(data["datetime_started"].ToString()),
 
                             isComplete = convertBinToBool(data["is_complete"].ToString()),
                                                         //&& IsDateToday(data["datetime_completed"].ToString())
@@ -558,8 +558,8 @@ namespace ProjectCaitlin.Services
 
                     IDictionary<string, object> userTimeDict = (IDictionary<string, object>)notificationDict[notiTimeKeysList[i]];
 
-                    //notiAttriObjList[i].is_set = convertBinToBool(userTimeDict["is_set"].ToString());
-                                                    //&& ((userTimeDict["date_set"] != null) ? IsDateToday(userTimeDict["date_set"].ToString()) : false);
+                    //notiAttriObjList[i].is_set = convertBinToBool(userTimeDict["is_set"].ToString())
+                      //                              && ((userTimeDict["date_set"] != null) ? IsDateToday(userTimeDict["date_set"].ToString()) : false);
 
                     Console.WriteLine(notiAttriObjList[i]);
 
@@ -586,7 +586,7 @@ namespace ProjectCaitlin.Services
 
                         notiAttriObjList[i].message = userTimeDict["message"].ToString();
 
-                        if (!routine.isComplete && total > 0) // && !routine.Notification.user.before.is_set)
+                        if (!routine.isComplete && total > 0)// && !routine.Notification.user.before.is_set)
                         {
                             string title = titles[i];
                             //subtitle is not used, this is only for setting user info for now
@@ -649,13 +649,13 @@ namespace ProjectCaitlin.Services
                     IDictionary<string, object> userTimeDict = (IDictionary<string, object>)notificationDict[notiTimeKeysList[i]];
 
                     //notiAttriObjList[i].is_set = convertBinToBool(userTimeDict["is_set"].ToString())
-                                                    //&& ((userTimeDict["date_set"] != null) ? IsDateToday(userTimeDict["date_set"].ToString()) : false);
+                    //                                && ((userTimeDict["date_set"] != null) ? IsDateToday(userTimeDict["date_set"].ToString()) : false);
 
                     Console.WriteLine(notiAttriObjList[i]);
 
                     notiAttriObjList[i].is_enabled = convertBinToBool(userTimeDict["is_enabled"].ToString());
 
-                    if (notiAttriObjList[i].is_enabled)// && !notiAttriObjList[i].is_set)
+                    if (notiAttriObjList[i].is_enabled)
                     {
                         notiAttriObjList[i].time = TimeSpan.Parse(userTimeDict["time"].ToString());
 
@@ -676,7 +676,7 @@ namespace ProjectCaitlin.Services
 
                         notiAttriObjList[i].message = userTimeDict["message"].ToString();
 
-                        if (!goal.isComplete && total > 0)// && !goal.Notification.user.before.is_set)
+                        if (!goal.isComplete && total > 0)
                         {
                             string title = titles[i];
                             //subtitle is not used, this is only for setting user info for now

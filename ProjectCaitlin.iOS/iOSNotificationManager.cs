@@ -3,6 +3,7 @@ using Foundation;
 using UserNotifications;
 using Xamarin.Forms;
 
+
 [assembly: Dependency(typeof(ProjectCaitlin.iOS.IOSNotificationManager))]
 namespace ProjectCaitlin.iOS
 {

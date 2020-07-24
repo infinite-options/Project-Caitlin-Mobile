@@ -32,6 +32,7 @@ namespace ProjectCaitlin
 
                 if (await googleService.RefreshToken())
                 {
+                    Console.WriteLine("Calling LoadDatabase from LoadingPage OnAppearing");
                     await firestoreService.LoadDatabase();
                     await googleService.LoadTodaysEvents();
                     firestoreService.SetupFirestoreSnapshot();

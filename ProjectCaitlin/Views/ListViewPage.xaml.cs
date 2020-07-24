@@ -709,6 +709,7 @@ namespace ProjectCaitlin
 
         public async void PrepareRefreshEvents()
         {
+            Console.WriteLine("Calling LoadDatabase from PrepareRefreshEvents");
             await Task.Delay(1000);
             dateTimeNow = DateTime.Now;
             await RefreshPage();
@@ -796,6 +797,7 @@ namespace ProjectCaitlin
             tapGestureRecognizer1.Tapped += async (s, e) =>
             {
                 UserDialogs.Instance.ShowLoading("Refreshing Page...");
+                //Console.WriteLine(App.User);
                 await RefreshPage();
                 UserDialogs.Instance.HideLoading();
             };
