@@ -10,6 +10,9 @@ using Android.Support.V4.App;
 using Google.Type;
 using Xamarin.Forms;
 using AndroidApp = Android.App.Application;
+using ProjectCaitlin.Models;
+using ProjectCaitlin.Views;
+using ProjectCaitlin.Services;
 //using Android.
 
 
@@ -56,6 +59,7 @@ namespace ProjectCaitlin.Droid
             intent.PutExtra("grNum", Int32.Parse(subtitle.Substring(0, 1)));
             intent.PutExtra("grId", subtitle.Substring(1, 20));
             intent.PutExtra("goalOrRoutine", gOrR);
+
 
 
             PendingIntent pendingIntent = PendingIntent.GetBroadcast(AndroidApp.Context, pendingIntentId++, intent, PendingIntentFlags.UpdateCurrent);

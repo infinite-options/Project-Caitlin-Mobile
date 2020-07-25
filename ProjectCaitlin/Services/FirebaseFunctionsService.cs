@@ -8,6 +8,7 @@ using Newtonsoft.Json;
 using Plugin.CloudFirestore;
 using ProjectCaitlin.Models;
 using System.Linq;
+using System.Transactions;
 
 namespace ProjectCaitlin.Services
 {
@@ -304,6 +305,52 @@ namespace ProjectCaitlin.Services
                 }
             }
             return docData;
+        }
+
+        public async Task<bool> sendDeviceToken(string userId, String token)
+        {
+            try
+            {
+                //IDocumentSnapshot document = null;
+
+                var document = await CrossCloudFirestore.Current
+                                            .Instance
+                                            .GetCollection("users")
+                                            .GetDocument(userId)
+                                            .GetDocumentAsync();
+
+                var data = (IDictionary<string, object>)document.Data;
+
+                if(data.ContainsKey("device_token")) {
+                    var tokenList = (List<object>)data["device_token"];
+                    if(!tokenList.Contains((string)token))
+                    {
+                        tokenList.Add(token);
+                    }
+                    
+                }
+                else
+                {
+                    var tokenList = new List<object>();
+                    tokenList.Add(token);
+                    data["device_token"] = tokenList;
+                }
+                //data["device_token"] = token;
+
+                await CrossCloudFirestore.Current
+                        .Instance
+                        .GetCollection("users")
+                        .GetDocument(userId)
+                        .UpdateDataAsync(data);
+
+                return true;
+            }
+            catch (Exception e)
+            {
+                Console.WriteLine(e);
+                return false;
+            }
+
         }
 
         private bool BinaryToBool(string binary)

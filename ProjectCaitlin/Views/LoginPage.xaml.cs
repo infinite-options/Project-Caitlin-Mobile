@@ -16,6 +16,7 @@ using ProjectCaitlin.Views;
 using Xamarin.Auth;
 using Xamarin.Forms;
 
+
 namespace ProjectCaitlin
 {
     // Learn more about making custom code visible in the Xamarin.Forms previewer
@@ -135,6 +136,7 @@ namespace ProjectCaitlin
 					//Query for email in Users collection
 					App.User.email = userJson["email"].ToString();
                     App.User.id = await firebaseFunctionsService.FindUserDocAsync(App.User.email);
+
 					Console.WriteLine("First user id : " + App.User.id);
 
                     if (App.User.id == "")
@@ -174,6 +176,8 @@ namespace ProjectCaitlin
 					await Application.Current.SavePropertiesAsync();
 
 					App.LoadApplicationProperties();
+
+					
 
 					//Navigate to the Daily Page after Login
 					await Navigation.PushAsync(new LoadingPage());

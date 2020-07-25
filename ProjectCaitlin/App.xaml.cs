@@ -5,7 +5,8 @@ using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using System.Threading.Tasks;
 using ProjectCaitlin.Views;
-
+using ProjectCaitlin.Services;
+//using Firebase.Iid;
 
 namespace ProjectCaitlin
 {
@@ -24,6 +25,10 @@ namespace ProjectCaitlin
         public static bool isFirstSetup { get; set; } = true;
 
         public static bool IsInForeground { get; set; } = false;
+
+        public static string deviceToken { get; set; } = "";
+
+        
 
         [assembly: XamlCompilation(XamlCompilationsOptions.Compile)]
         public App()
@@ -51,6 +56,12 @@ namespace ProjectCaitlin
         public static void LoadApplicationProperties()
         {
             User.id = Current.Properties["user_id"].ToString();
+            sendDeviceToken();
+        }
+
+        public static void sendDeviceToken()
+        {
+            new FirebaseFunctionsService().sendDeviceToken(App.User.id, App.deviceToken);
         }
 
         protected override void OnStart()

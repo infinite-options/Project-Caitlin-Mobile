@@ -305,6 +305,7 @@ namespace ProjectCaitlin
 
         public async void RefreshDatabase(object sender, EventArgs e)
         {
+            Console.WriteLine("Calling LoadUser from refresh Database");
             RefreshDatabaseButton.IsEnabled = false;
             await firestoreService.LoadUser();
             user = App.User;

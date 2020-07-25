@@ -404,6 +404,8 @@ namespace ProjectCaitlin.ViewModel
             //DateTime dateTimeNow = new DateTime(1999, 12, 1, 00, 00, 00);
             if (start.Subtract(TimeSpan.FromHours(4)) <= dateTimeNow.TimeOfDay && dateTimeNow.TimeOfDay <= end)
                 return true;
+            //TimeSpan sp = start.Subtract(TimeSpan.FromHours(4));
+            TimeSpan t = start.Subtract(TimeSpan.FromHours(4));
             return false;
         }
 

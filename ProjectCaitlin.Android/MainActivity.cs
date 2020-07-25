@@ -15,12 +15,18 @@ using Android;
 using Firebase;
 using Android.Content;
 using Xamarin.Forms;
+using Firebase.Messaging;
+using Firebase.Iid;
+using Android.Util;
+using Android.Gms.Common;
 
 namespace ProjectCaitlin.Droid
 {
     [Activity(Label = "ManifestMy Space", Icon = "@mipmap/ic_launcher", Theme = "@style/MainTheme", MainLauncher = true, ConfigurationChanges = ConfigChanges.ScreenSize | ConfigChanges.Orientation, LaunchMode = LaunchMode.SingleTop)]
     public class MainActivity : global::Xamarin.Forms.Platform.Android.FormsAppCompatActivity
     {
+        public const string TAG = "MainActivity";
+        internal static readonly string CHANNEL_ID = "my_notification_channel";
         protected override void OnCreate(Bundle savedInstanceState)
         {
             /*var options = new FirebaseOptions.Builder()
@@ -45,7 +51,6 @@ namespace ProjectCaitlin.Droid
 
             base.OnCreate(savedInstanceState);
 
-
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, savedInstanceState);
@@ -56,8 +61,19 @@ namespace ProjectCaitlin.Droid
 
             CachedImageRenderer.InitImageViewHandler();
 
+
+            IsPlayServicesAvailable();
+            CreateNotificationChannel();
+
             LoadApplication(new App());
+            
+            
             CreateNotificationFromIntent(base.Intent);
+
+            //Console.WriteLine("The Device Token in OnCreate: " + FirebaseInstanceId.Instance.Token);
+            if (FirebaseInstanceId.Instance.Token != null)
+                App.deviceToken = FirebaseInstanceId.Instance.Token;
+
         }
 
         protected override void OnNewIntent(Intent intent)
@@ -80,6 +96,50 @@ namespace ProjectCaitlin.Droid
             Xamarin.Essentials.Platform.OnRequestPermissionsResult(requestCode, permissions, grantResults);
 
             base.OnRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+        public bool IsPlayServicesAvailable()
+        {
+            int resultCode = GoogleApiAvailability.Instance.IsGooglePlayServicesAvailable(this);
+            if (resultCode != ConnectionResult.Success)
+            {
+                if (GoogleApiAvailability.Instance.IsUserResolvableError(resultCode))
+                    //Log.Debug(TAG, GoogleApiAvailability.Instance.GetErrorString(resultCode));
+                    Console.WriteLine("ERROR:" + TAG, GoogleApiAvailability.Instance.GetErrorString(resultCode));
+                else
+                {
+                    Log.Debug(TAG, "This device is not supported");
+                    Console.WriteLine(TAG, "This device is not supported");
+                    Finish();
+                }
+                return false;
+            }
+
+            Log.Debug(TAG, "Google Play Services is available.");
+            Console.WriteLine(TAG, "Google Play Services is available.");
+            return true;
+        }
+
+        void CreateNotificationChannel()
+        {
+            if (Build.VERSION.SdkInt < BuildVersionCodes.O)
+            {
+                // Notification channels are new in API 26 (and not a part of the
+                // support library). There is no need to create a notification
+                // channel on older versions of Android.
+                return;
+            }
+
+            var channel = new NotificationChannel(CHANNEL_ID,
+                                                  "FCM Notifications",
+                                                  NotificationImportance.Default)
+            {
+
+                Description = "Firebase Cloud Messages appear in this channel"
+            };
+
+            var notificationManager = (NotificationManager)GetSystemService(Android.Content.Context.NotificationService);
+            notificationManager.CreateNotificationChannel(channel);
         }
     }
 }
