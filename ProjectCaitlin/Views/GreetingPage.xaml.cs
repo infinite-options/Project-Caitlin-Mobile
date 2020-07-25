@@ -83,7 +83,6 @@ namespace ProjectCaitlin.Views
         }
         private void SetupUI()
         {
-            UserImage.IsVisible = App.User.aboutMe.have_pic;
             UserImage.Source = App.User.aboutMe.pic;
             GreetingsTitleLabel.Text = GetTitleDayMessage();
             FirstNameLabel.Text = App.User.firstName;
@@ -283,7 +282,7 @@ namespace ProjectCaitlin.Views
 
         private void SetRecognizedPersonOnUI(People people)
         {
-            UserImage.IsVisible = people.HavePic;
+            //UserImage.IsVisible = people.HavePic;
             UserImage.Source = people.picUrl;
             GreetingsTitleLabel.Text = "You are talking to:";
             FirstNameLabel.Text = people.FirstName;
@@ -293,10 +292,9 @@ namespace ProjectCaitlin.Views
 
         public void AddRecognizedPersonDetailOnPage(People people)
         {
-            Task.Factory.StartNew(() => {
+            Task.Factory.StartNew(() =>
+            {
                 SetRecognizedPersonOnUI(people);
-            });
-            Task.Factory.StartNew(() => {
                 System.Threading.Thread.Sleep(10000);
                 SetupUI();
             });

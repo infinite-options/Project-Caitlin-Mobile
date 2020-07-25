@@ -63,16 +63,16 @@
                                 Padding="10, 0, 10, 0">
 
                                 <Frame  CornerRadius="30" HeightRequest="300" WidthRequest="300" HorizontalOptions="Center" IsClippedToBounds="True">
-                                    <StackLayout>
-                                        <Image x:Name="isComplete" IsVisible="{Binding OkToCheckmark}" Source="greencheckmarkicon.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                    <Grid>
+                                        
 
                                         <Image Source="{Binding Source}"
                                Aspect="AspectFill"
                                HeightRequest="300"
                                WidthRequest="300"
                                HorizontalOptions="Center" />
-
-                                    </StackLayout>
+                                        <Image x:Name="isComplete" IsVisible="{Binding OkToCheckmark}" Source="greencheckmarkicon.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
+                                    </Grid>
                                 </Frame>
                                 <Label Text="{Binding Text}"
                                FontAttributes="Bold"

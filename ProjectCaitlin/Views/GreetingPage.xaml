@@ -52,6 +52,8 @@
                             <Label x:Name ="FirstNameLabel" Text=""  TextColor="White" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
                             <Label x:Name ="MessageLabel" Text=""  TextColor="White" Margin="20,20" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
                             <Label x:Name ="MessageCardLabel" Text=""  TextColor="White" Margin="20,20" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <!-- Below field is used voice recognition -->
+                            <Label x:Name ="RecognizedPerson" Text="" TextColor="White" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
                         </StackLayout>
                     </StackLayout>
 

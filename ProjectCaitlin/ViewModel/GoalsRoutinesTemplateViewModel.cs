@@ -55,7 +55,7 @@ namespace ProjectCaitlin.ViewModel
                 Color.Default,
                 Color.Black,
                 new DateTime(1, 1, 1),
-                "Tap to Learn More",
+                "Tap for Details",
                 App.User.aboutMe.message_day,
                 1,
                 false,
@@ -370,9 +370,9 @@ namespace ProjectCaitlin.ViewModel
                            Color.Goldenrod,
                            Color.Black,
                            calendarEvent.Start.DateTime.DateTime,
-                           "",
-                           "Start Time: " + calendarEvent.Start.DateTime.TimeOfDay + "\n" +
-                           "End Time: " + calendarEvent.End.DateTime.TimeOfDay + "",
+                           "Tap for Details",
+                           "Start Time: " + calendarEvent.Start.DateTime.DateTime.ToString("t", CultureInfo.CreateSpecificCulture("en-US")) + "\n" +
+                           "End Time: " + calendarEvent.End.DateTime.DateTime.ToString("t", CultureInfo.CreateSpecificCulture("en-US")) + "",
                            1,
                            false,
                            false,

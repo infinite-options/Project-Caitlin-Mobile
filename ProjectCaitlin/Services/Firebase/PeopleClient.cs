@@ -44,25 +44,67 @@ namespace VoiceRecognition.Services.Firebase
                 foreach(var doc in documents.Documents)
             {
                 var peep = doc.Data;
-                People person = new People()
-                {
-                    FirstName = peep["name"].ToString(),
-                    Id = !peep.ContainsKey("unique_id") ? null : peep["unique_id"].ToString(),
-                    HavePic = peep.ContainsKey("have_pic") && (Boolean)peep["have_pic"],
-                    SpeakerId = !peep.ContainsKey("speaker_id") ? null : peep["speaker_id"].ToString(),
-                    picUrl = !peep.ContainsKey("pic") ? null : peep["pic"].ToString(),
-                    Important = peep.ContainsKey("important") && (Boolean)peep["important"],
-                    PhoneNumber = !peep.ContainsKey("phone_number") ? null : peep["phone_number"].ToString(),
-                    Relation = !peep.ContainsKey("relationship") ? null : peep["relationship"].ToString(),
-                };
-                peeps.Add(person);
+                People person = ToPeople(peep);
+                if (peep != null) peeps.Add(person);
             }
             return peeps;
         }
 
+        public People ToPeople(IDictionary<string, object> peep)
+        {
+            if (peep.Count == 0) return null;
+            People person = new People();
+            foreach (String p in peep.Keys)
+            {
+                switch (p)
+                {
+                    case "name":
+                        {
+                            person.FirstName = (peep["name"] == null) ? null : peep["name"].ToString();
+                            break;
+                        }
+                    case "unique_id":
+                        {
+                            person.Id = (peep["unique_id"] == null) ? null : peep["unique_id"].ToString();
+                            break;
+                        }
+                    case "have_pic":
+                        {
+                            person.HavePic = (peep["have_pic"] == null || (Boolean)peep["have_pic"] == false) ? false : true;
+                            break;
+                        }
+                    case "speaker_id":
+                        {
+                            person.SpeakerId = (peep["speaker_id"] == null) ? null : peep["speaker_id"].ToString();
+                            break;
+                        }
+                    case "pic":
+                        {
+                            person.picUrl = (peep["pic"] == null) ? null : peep["pic"].ToString();
+                            break;
+                        }
+                    case "phone_number":
+                        {
+                            person.PhoneNumber = (peep["phone_number"] == null) ? null : peep["phone_number"].ToString();
+                            break;
+                        }
+                    case "relationship":
+                        {
+                            person.PhoneNumber = (peep["relationship"] == null) ? null : peep["relationship"].ToString();
+                            break;
+                        }
+                    case "important":
+                        {
+                            person.HavePic = (peep["important"] == null || (Boolean)peep["important"] == false) ? false : true;
+                            break;
+                        }
+                }
+            }
+            return person;
+            }
+
         public async Task<People> GetPeopleFromSpeakerIdAsync(string id)
         {
-            People person = null;
             var peopleCollection = await CrossCloudFirestore.Current.Instance.GetCollection("users")
                                     .GetDocument(UserId)
                                     .GetCollection("people")
@@ -71,19 +113,7 @@ namespace VoiceRecognition.Services.Firebase
             if (peopleCollection.IsEmpty) { return null; }
 
             var peep = peopleCollection.Documents.First().Data;
-            if (peep != null && peep.ContainsKey("name")) {
-                person = new People()
-                {
-                    FirstName = peep["name"].ToString(),
-                    Id = !peep.ContainsKey("unique_id") ? null : peep["unique_id"].ToString(),
-                    HavePic = peep.ContainsKey("have_pic") && (Boolean)peep["have_pic"],
-                    SpeakerId = !peep.ContainsKey("speaker_id") ? null : peep["speaker_id"].ToString(),
-                    picUrl = !peep.ContainsKey("pic") ? null : peep["pic"].ToString(),
-                    Important = peep.ContainsKey("important") && (Boolean)peep["important"],
-                    PhoneNumber = !peep.ContainsKey("phone_number") ? null : peep["phone_number"].ToString(),
-                    Relation = !peep.ContainsKey("relationship") ? null : peep["relationship"].ToString(),
-                };
-            }
+            People person = ToPeople(peep);
             return person;
         }
 
