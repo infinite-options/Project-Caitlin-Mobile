@@ -292,11 +292,16 @@ namespace ProjectCaitlin.Views
 
         public void AddRecognizedPersonDetailOnPage(People people)
         {
-            Task.Factory.StartNew(() =>
+            Device.BeginInvokeOnMainThread(() =>
             {
                 SetRecognizedPersonOnUI(people);
-                System.Threading.Thread.Sleep(10000);
-                SetupUI();
+            });
+
+            System.Threading.Thread.Sleep(10000);
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                    SetupUI();
             });
         }
     }
