@@ -319,9 +319,10 @@ namespace ProjectCaitlin.Services
                                             .GetDocument(userId)
                                             .GetDocumentAsync();
 
-                var data = (IDictionary<string, object>)document.Data;
+                var data = (IDictionary<string, object>)ConvertDocumentGet(document.Data, "goals&routines");
+                //var data = (IDictionary<string, object>)document.Data;
 
-                if(data.ContainsKey("device_token")) {
+                if (data.ContainsKey("device_token")) {
                     var tokenList = (List<object>)data["device_token"];
                     if(!tokenList.Contains((string)token))
                     {

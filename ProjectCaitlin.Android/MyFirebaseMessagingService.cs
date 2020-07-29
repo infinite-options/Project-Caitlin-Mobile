@@ -44,6 +44,7 @@ namespace ProjectCaitlin.Droid
                     //sendLocalNotification(message.Data["title"], "1234thisisatestnotificationcheck", message.Data["body"], 2.0, "1", 0, "routine");
                     //SendLocalNotification("We are getting notification");
                     await firestoreService.LoadDatabase();
+                    
                 }
             }
 
@@ -52,7 +53,7 @@ namespace ProjectCaitlin.Droid
             //new AndroidNotificationManager().ScheduleNotification(message.GetNotification().Title, "1234thisisatestnotificationcheck", message.GetNotification().Body, 2.0, "1", 0, "routine");
         }
 
-        /*void SendLocalNotification(string body)
+        void SendLocalNotification(string body)
         {
             var intent = new Intent(this, typeof(MainActivity));
             intent.AddFlags(ActivityFlags.ClearTop);
@@ -63,7 +64,7 @@ namespace ProjectCaitlin.Droid
             var pendingIntent = PendingIntent.GetActivity(this, requestCode, intent, PendingIntentFlags.OneShot);
 
             var notificationBuilder = new NotificationCompat.Builder(this)
-                .SetContentTitle("Manifest")
+                .SetContentTitle("Manifest_Notif")
                 .SetSmallIcon(Resource.Drawable.ic_launcher)
                 .SetContentText(body)
                 .SetAutoCancel(true)
@@ -77,6 +78,6 @@ namespace ProjectCaitlin.Droid
 
             var notificationManager = NotificationManager.FromContext(this);
             notificationManager.Notify(0, notificationBuilder.Build());
-        }*/
+        }
     }
 }
