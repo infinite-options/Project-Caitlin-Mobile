@@ -50,6 +50,8 @@ namespace ProjectCaitlin.Droid
             }
 
             base.OnCreate(savedInstanceState);
+            IsPlayServicesAvailable();
+            CreateNotificationChannel();
 
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
@@ -62,13 +64,12 @@ namespace ProjectCaitlin.Droid
             CachedImageRenderer.InitImageViewHandler();
 
 
-            IsPlayServicesAvailable();
-            CreateNotificationChannel();
+            
 
             LoadApplication(new App());
             
             
-            CreateNotificationFromIntent(base.Intent);
+            //CreateNotificationFromIntent(base.Intent);
 
             //Console.WriteLine("The Device Token in OnCreate: " + FirebaseInstanceId.Instance.Token);
             if (FirebaseInstanceId.Instance.Token != null)
@@ -76,7 +77,7 @@ namespace ProjectCaitlin.Droid
 
         }
 
-        protected override void OnNewIntent(Intent intent)
+        /*protected override void OnNewIntent(Intent intent)
         {
             CreateNotificationFromIntent(intent);
         }
@@ -89,7 +90,7 @@ namespace ProjectCaitlin.Droid
                 string message = intent.Extras.GetString(AndroidNotificationManager.MessageKey);
                 DependencyService.Get<INotificationManager>().ReceiveNotification(title, message, true);
             }
-        }
+        }*/
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
