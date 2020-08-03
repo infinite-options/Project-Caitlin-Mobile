@@ -19,15 +19,12 @@ namespace ProjectCaitlin.Droid
 {
     [Service]
     [IntentFilter(new[] { "com.google.firebase.MESSAGING_EVENT"})]
+    
     class MyFirebaseMessagingService : FirebaseMessagingService
     {
-        FirestoreService firestoreService = new FirestoreService();
+        //FirestoreService firestoreService = new FirestoreService();
         int not_tag = 1;
-        public MyFirebaseMessagingService()
-        {
-
-        }
-
+       
         /*
          * OnMessageReceived receives the remote message from FCM
          
@@ -46,7 +43,7 @@ namespace ProjectCaitlin.Droid
                     //SendLocalNotification("We are getting notification");
                     await firestoreService.LoadDatabase();
                 }*/
-
+                //await firestoreService.LoadDatabase();
                 SendLocalNotification(message);
             }
 
@@ -67,7 +64,7 @@ namespace ProjectCaitlin.Droid
             var requestCode = new Random().Next();
             var pendingIntent = PendingIntent.GetActivity(this, requestCode, intent, PendingIntentFlags.OneShot);
 
-            var notificationBuilder = new NotificationCompat.Builder(this)
+            var notificationBuilder = new NotificationCompat.Builder(this, MainActivity.CHANNEL_ID)
                 .SetContentTitle(title)
                 .SetSmallIcon(Resource.Drawable.ic_launcher)
                 .SetContentText(content)
@@ -75,14 +72,15 @@ namespace ProjectCaitlin.Droid
                 .SetShowWhen(false)
                 .SetContentIntent(pendingIntent);
 
-            if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
+            /*if (Build.VERSION.SdkInt >= BuildVersionCodes.O)
             {
                 notificationBuilder.SetChannelId(MainActivity.CHANNEL_ID);
-            }
+            }*/
 
             var notificationManager = NotificationManager.FromContext(this);
             //notificationManager.Notify(0, notificationBuilder.Build());
-            notificationManager.Notify((++not_tag).ToString(), 0, notificationBuilder.Build());
+            //notificationManager.Notify((++not_tag).ToString(), 0, notificationBuilder.Build());
+            notificationManager.Notify(0, notificationBuilder.Build());
         }
     }
 }

@@ -50,6 +50,20 @@ namespace ProjectCaitlin.Droid
             }
 
             base.OnCreate(savedInstanceState);
+
+            if (Intent.Extras != null)
+            {
+                foreach (var key in Intent.Extras.KeySet())
+                {
+                    if (key != null)
+                    {
+                        var value = Intent.Extras.GetString(key);
+                        Log.Debug(TAG, "Key: {0} Value: {1}", key, value);
+                        Console.WriteLine(TAG, "Key: {0} Value: {1}", key, value);
+                    }
+                }
+            }
+
             IsPlayServicesAvailable();
             CreateNotificationChannel();
 
@@ -67,6 +81,8 @@ namespace ProjectCaitlin.Droid
             
 
             LoadApplication(new App());
+
+            
             
             
             //CreateNotificationFromIntent(base.Intent);

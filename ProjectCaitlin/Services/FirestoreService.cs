@@ -12,6 +12,7 @@ using ProjectCaitlin.Services;
 using Newtonsoft.Json;
 using System.Collections;
 using System.Security.Cryptography.X509Certificates;
+using Acr.UserDialogs.Infrastructure;
 
 namespace ProjectCaitlin.Services
 {
@@ -27,6 +28,7 @@ namespace ProjectCaitlin.Services
 
         public FirestoreService()
         {
+            Console.WriteLine("FireStore Service Constructor called");
             uid = App.User.id;
             notificationManager = DependencyService.Get<INotificationManager>();
             googleService = new GoogleService();
@@ -81,6 +83,8 @@ namespace ProjectCaitlin.Services
 
         public async Task LoadDatabase()
         {
+            Console.WriteLine("In Load Database");
+            Log.Debug("FirestoreService", "Loading Database");
             LoadFirebasePhoto();
             LoadPeople();
             await LoadUser();
@@ -95,6 +99,7 @@ namespace ProjectCaitlin.Services
             App.User.allDates = new HashSet<string>();
 
             Console.WriteLine("uid is: " + uid);
+            Log.Debug("LoadUser", "uid is: " + uid);
 
             var userDocument = await CrossCloudFirestore.Current.Instance
                 .GetCollection("users")
@@ -232,6 +237,7 @@ namespace ProjectCaitlin.Services
 
                                 App.User.routines.Add(routine);
 
+                                
                                 setNotifications(routine, routineIdx, (IDictionary<string, object>)data["user_notifications"]);
 
                                 routineIdx++;
