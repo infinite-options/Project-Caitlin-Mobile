@@ -61,7 +61,7 @@ namespace ProjectCaitlin.Droid
                         App.User.id = message.Data["id"];
                         FirestoreService firestoreService = new FirestoreService();
                         await firestoreService.LoadDatabase();
-                        SendLocalNotification(message);
+                        //SendLocalNotification(message);
                     }
                     
                 //}
@@ -91,7 +91,7 @@ namespace ProjectCaitlin.Droid
             //string title = message.Data["title"] + " in local code";
             //string content = message.Data["content"] + " in local code";
             string title = "Manifest";
-            string content = "User updated";
+            string content = "Your trusted advisor updated your Goals and Routines!";
             //Unique request code to avoid PendingIntent collision.
             var requestCode = new Random().Next();
             var pendingIntent = PendingIntent.GetActivity(this, requestCode, intent, PendingIntentFlags.OneShot);
