@@ -34,6 +34,7 @@ namespace ProjectCaitlin.Views
         TimeSpan nightEnd = new TimeSpan(6, 0, 0);
         AudioRecorderService recorder;
         RecorderWrapper recorderWrapper;
+        Boolean active = true;
 
         public GreetingPage()
         {
@@ -56,11 +57,13 @@ namespace ProjectCaitlin.Views
 
             recorderWrapper = RecorderWrapper.Instance;
             recorder = recorderWrapper.audioRecorderService;
-            //SetSlider();
+            SetSlider();
+
+            active = true;
 
             Task.Factory.StartNew(() =>
             {
-                while (true)
+                while (active)
                 {
                     System.Threading.Thread.Sleep(35000);
                     if (!Application.Current.Properties.ContainsKey("user_id")) break;
@@ -85,8 +88,8 @@ namespace ProjectCaitlin.Views
                     }
                 }
             });
-            trackBar.Text = SlideToActView.States.Disabled;
-            trackBarFrame.BackgroundColor = Color.Gray;
+            //trackBar.Text = SlideToActView.States.Disabled;
+            //trackBarFrame.BackgroundColor = Color.Gray;
         }
 
         private void SetupUI()
@@ -146,12 +149,21 @@ namespace ProjectCaitlin.Views
 
         async void btn1Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ListViewPage());
+            active = false;
+            Device.BeginInvokeOnMainThread(() => {
+                Navigation.PopAsync();
+                Navigation.PushAsync(new ListViewPage());
+            });
         }
 
         async void btn2Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new GoalsRoutinesTemplate());
+            active = false;
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                Navigation.PopAsync();
+                Navigation.PushAsync(new GoalsRoutinesTemplate());
+            });
         }
 
         public void UpdateSlider(Color color, String label) {
@@ -165,15 +177,15 @@ namespace ProjectCaitlin.Views
         public void ResetSlider()
         {
             trackBarFrame.BackgroundColor = Color.Gray;
-            trackBar.Text = SlideToActView.States.Disabled;
-            //trackBar.Text = recorderWrapper.autoMode ? SlideToActView.States.Manual : SlideToActView.States.AlwaysOn;
+            //trackBar.Text = SlideToActView.States.Disabled;
+            trackBar.Text = recorderWrapper.autoMode ? SlideToActView.States.AlwaysOn : SlideToActView.States.Manual;
         }
 
         void Handle_SlideCompleted(object sender, System.EventArgs e)
         {
-            //recorderWrapper.autoMode = !recorderWrapper.autoMode;
-            //SetSlider();
-            //if (recorderWrapper.autoMode) identify();
+            recorderWrapper.autoMode = !recorderWrapper.autoMode;
+            SetSlider();
+            if (recorderWrapper.autoMode) identify();
         }
 
         void SetSlider()
@@ -268,6 +280,7 @@ namespace ProjectCaitlin.Views
         {
             Device.BeginInvokeOnMainThread(() =>
             {
+                ResetSlider();
                 SetRecognizedPersonOnUI(people);
             });
 
