@@ -14,6 +14,9 @@ using ProjectCaitlin.Services;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 using Android.Support.V4.App;
+using Xamarin.Forms.Internals;
+using Application = Xamarin.Forms.Application;
+
 
 namespace ProjectCaitlin.Droid
 {
@@ -24,7 +27,12 @@ namespace ProjectCaitlin.Droid
     {
         //FirestoreService firestoreService = new FirestoreService();
         int not_tag = 1;
-       
+
+        public MyFirebaseMessagingService()
+        {
+            
+        }
+
         /*
          * OnMessageReceived receives the remote message from FCM
          
@@ -32,9 +40,32 @@ namespace ProjectCaitlin.Droid
         public override async void OnMessageReceived(RemoteMessage message)
         {
             base.OnMessageReceived(message);
-            if(message.Data.Count > 0)
+            Bundle savedInstanceState = new Bundle();
+            global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
+
+            if (message.Data.Count > 0)
             {
                 Console.WriteLine("Data Payload found");
+                /*Application a = Xamarin.Forms.Application.Current;
+                Console.WriteLine("application initialized");
+                
+                IDictionary<string, object> properties = a.Properties;
+                
+                Console.WriteLine("Properties present: " + properties.Count);
+                Console.WriteLine("Id present in phone: " + properties["user_id"].ToString());*/
+                //string user_id = Xamarin.Forms.Application.Current.Properties["user_id"].ToString();
+                //if (user_id == message.Data["id"])
+                //{
+                    if(App.User.id == "" || App.User.id == null || App.User.id == message.Data["id"])
+                    {
+                        App.User.id = message.Data["id"];
+                        FirestoreService firestoreService = new FirestoreService();
+                        await firestoreService.LoadDatabase();
+                        SendLocalNotification(message);
+                    }
+                    
+                //}
+
                 /*if (App.User.id != "" && App.User.id == message.Data["id"])
                 {
                     //firestoreService.LoadDatabase();
@@ -43,8 +74,7 @@ namespace ProjectCaitlin.Droid
                     //SendLocalNotification("We are getting notification");
                     await firestoreService.LoadDatabase();
                 }*/
-                //await firestoreService.LoadDatabase();
-                SendLocalNotification(message);
+                
             }
 
             
@@ -58,8 +88,10 @@ namespace ProjectCaitlin.Droid
             intent.AddFlags(ActivityFlags.ClearTop);
             //intent.PutExtra("message", body);
 
-            string title = message.Data["title"] + " in local code";
-            string content = message.Data["content"] + " in local code";
+            //string title = message.Data["title"] + " in local code";
+            //string content = message.Data["content"] + " in local code";
+            string title = "Manifest";
+            string content = "User updated";
             //Unique request code to avoid PendingIntent collision.
             var requestCode = new Random().Next();
             var pendingIntent = PendingIntent.GetActivity(this, requestCode, intent, PendingIntentFlags.OneShot);
