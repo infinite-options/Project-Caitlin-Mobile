@@ -13,6 +13,7 @@ using VoiceRecognition.ViewModel;
 using System.Runtime.CompilerServices;
 using Xamarin.Forms.Markup;
 using VoiceRecognition.Model;
+using ProjectCaitlin.Services;
 
 namespace ProjectCaitlin.Views
 {
@@ -32,6 +33,8 @@ namespace ProjectCaitlin.Views
         TimeSpan nightStart = new TimeSpan(0, 0, 0);
         TimeSpan nightEnd = new TimeSpan(6, 0, 0);
         AudioRecorderService recorder;
+        RecorderWrapper recorderWrapper;
+        Boolean active = true;
 
         public GreetingPage()
         {
@@ -45,20 +48,27 @@ namespace ProjectCaitlin.Views
             navigationPage.BarBackgroundColor = Color.FromHex("#E9E8E8");
             SetupUI();
 
-            recorder = new AudioRecorderService
-            {
-                StopRecordingOnSilence = true, //will stop recording after 2 seconds (default)
-                StopRecordingAfterTimeout = true,  //stop recording after a max timeout (defined below)
-                TotalAudioTimeout = TimeSpan.FromSeconds(10) //audio will stop recording after 15 seconds
-            };
+            //recorder = new AudioRecorderService
+            //{
+            //    StopRecordingOnSilence = true, //will stop recording after 2 seconds (default)
+            //    StopRecordingAfterTimeout = true,  //stop recording after a max timeout (defined below)
+            //    TotalAudioTimeout = TimeSpan.FromSeconds(10) //audio will stop recording after 15 seconds
+            //};
+
+            recorderWrapper = RecorderWrapper.Instance;
+            recorder = recorderWrapper.audioRecorderService;
+            SetSlider();
+
+            active = true;
 
             Task.Factory.StartNew(() =>
             {
-                while (true)
+                while (active)
                 {
                     System.Threading.Thread.Sleep(35000);
                     if (!Application.Current.Properties.ContainsKey("user_id")) break;
-                    if (identifyButton! != null && !identifyButton.IsVisible )
+                    //if (identifyButton! != null && !identifyButton.IsVisible )
+                    if(recorderWrapper.autoMode)
                     {
                         greetingViewModel.CMDIdentifyAndEnroll();
                         Task.Factory.StartNew(() => {
@@ -78,9 +88,10 @@ namespace ProjectCaitlin.Views
                     }
                 }
             });
-            trackBar.Text = SlideToActView.States.Manual;
-            trackBarFrame.BackgroundColor = Color.Gray;
+            //trackBar.Text = SlideToActView.States.Disabled;
+            //trackBarFrame.BackgroundColor = Color.Gray;
         }
+
         private void SetupUI()
         {
             UserImage.Source = App.User.aboutMe.pic;
@@ -138,12 +149,21 @@ namespace ProjectCaitlin.Views
 
         async void btn1Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new ListViewPage());
+            active = false;
+            Device.BeginInvokeOnMainThread(() => {
+                Navigation.PopAsync();
+                Navigation.PushAsync(new ListViewPage());
+            });
         }
 
         async void btn2Clicked(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(new GoalsRoutinesTemplate());
+            active = false;
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                Navigation.PopAsync();
+                Navigation.PushAsync(new GoalsRoutinesTemplate());
+            });
         }
 
         public void UpdateSlider(Color color, String label) {
@@ -157,12 +177,20 @@ namespace ProjectCaitlin.Views
         public void ResetSlider()
         {
             trackBarFrame.BackgroundColor = Color.Gray;
-            trackBar.Text = identifyButton.IsVisible ? SlideToActView.States.Manual : SlideToActView.States.AlwaysOn;
+            //trackBar.Text = SlideToActView.States.Disabled;
+            trackBar.Text = recorderWrapper.autoMode ? SlideToActView.States.AlwaysOn : SlideToActView.States.Manual;
         }
 
         void Handle_SlideCompleted(object sender, System.EventArgs e)
         {
-            if (identifyButton.IsVisible)
+            recorderWrapper.autoMode = !recorderWrapper.autoMode;
+            SetSlider();
+            if (recorderWrapper.autoMode) identify();
+        }
+
+        void SetSlider()
+        {
+            if (recorderWrapper.autoMode)
             {
                 identifyButton.IsVisible = false;
                 trackBar.Text = SlideToActView.States.AlwaysOn;
@@ -176,41 +204,9 @@ namespace ProjectCaitlin.Views
 
         void enrollClicked(object sender, EventArgs e)
         {
-            // multi-thread timer for speaker
-            /*Task.Run(() =>
-            {
-                int i = 30;
-                Device.StartTimer(new TimeSpan(0, 0, 60), () =>
-                {
-                    timer.IsVisible = true;
-
-                    // do something every 60 seconds
-                    Device.BeginInvokeOnMainThread(() =>
-                    {
-                        timer.Text = i + "";
-                        i--;
-                    });
-                    if (i <= 0)
-                        return false;
-                    else
-                        return true; // return true to repeat counting, false to stop timer
-                });
-                greetingViewModel.CMDIdentifyAndEnroll();
-
-            });
-
-            timer.IsVisible = false;*/
-
-            //if (identifyButton.IsVisible)
-            //{
             Task.Run(() => { greetingViewModel.CMDIdentifyAndEnroll_Manual(); });
 
             Task.Factory.StartNew(() => {
-                    //Device.BeginInvokeOnMainThread(() =>
-                    //{
-                    //    this.timer.IsVisible = true;
-                    //});
-
                     for (int i = 30; i > 0; i--)
                     {
                         System.Threading.Thread.Sleep(1000);
@@ -221,20 +217,15 @@ namespace ProjectCaitlin.Views
                             this.trackBar.Text = string.Format("{0}\nTime Left {1}",SlideToActView.States.Recording,i);
                         });
                     }
-                    //Device.BeginInvokeOnMainThread(() =>
-                    //{
-                    //    this.trackBar.Text = "Sending to Azure";
-                    //    //this.timer.IsVisible = false;
-                    //});
                 });
-            //}
-            //else
-            //{
-            //    //Task.Run(() => { greetingViewModel.CMDIdentifyAndEnroll(); });
-            //}
         }
 
         void identifyClicked(object sender, EventArgs e)
+        {
+            identify();
+        }
+
+        void identify()
         {
             greetingViewModel.CMDIdentifyAndEnroll();
             Task.Factory.StartNew(() => {
@@ -244,16 +235,11 @@ namespace ProjectCaitlin.Views
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        this.trackBar.Text = string.Format("{0}\n{1}",SlideToActView.States.Recording,i);
+                        this.trackBar.Text = string.Format("{0}\n{1}", SlideToActView.States.Recording, i);
                     });
                     i += 1;
                     System.Threading.Thread.Sleep(1000);
                 }
-                //Device.BeginInvokeOnMainThread(() =>
-                //{
-                //    this.trackBar.Text = SlideToActView.States.SendingToAzure;
-                //    //this.timer.IsVisible = false;
-                //});
             });
         }
 
@@ -292,11 +278,17 @@ namespace ProjectCaitlin.Views
 
         public void AddRecognizedPersonDetailOnPage(People people)
         {
-            Task.Factory.StartNew(() =>
+            Device.BeginInvokeOnMainThread(() =>
             {
+                ResetSlider();
                 SetRecognizedPersonOnUI(people);
-                System.Threading.Thread.Sleep(10000);
-                SetupUI();
+            });
+
+            System.Threading.Thread.Sleep(10000);
+
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                    SetupUI();
             });
         }
     }
@@ -310,6 +302,7 @@ namespace ProjectCaitlin.Views
             public static String Recording { get { return "Recording"; } }
             public static String SendingToAzure { get { return "Sending to Azure"; } }
             public static String SendingToFirebase { get { return "Sending to Firebase"; } }
+            public static String Disabled { get { return "Disabled"; } }
         }
 
         public static readonly BindableProperty ThumbProperty =
