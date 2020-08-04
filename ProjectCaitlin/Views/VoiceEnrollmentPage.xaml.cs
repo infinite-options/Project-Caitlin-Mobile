@@ -18,38 +18,38 @@ namespace ProjectCaitlin.Views
         public VoiceEnrollmentPage()
         {
             InitializeComponent();
-            en = new GreetingViewModel(Navigation);
+            //en = new GreetingViewModel(Navigation);
 
         }
 
         private async void Button_Clicked(object sender, EventArgs e)
         {
-            string name = Name.Text;
-            string phoneNumber = PhoneNumber.Text;
-            People people = new People()
-            {
-                FirstName = name,
-                PhoneNumber = phoneNumber
-            };
-            //if in Azure but not in Firebase
-            //People result = await en.AddFireBasePeople(people);
+            //string name = Name.Text;
+            //string phoneNumber = PhoneNumber.Text;
+            //People people = new People()
+            //{
+            //    FirstName = name,
+            //    PhoneNumber = phoneNumber
+            //};
+            ////if in Azure but not in Firebase
+            ////People result = await en.AddFireBasePeople(people);
 
+            ////else
+            //if (GreetingViewModel.addFirebaseOnly)
+            //{
+            //    People result = await en.AddFireBasePeople(people);
+            //}
             //else
-            if (GreetingViewModel.addFirebaseOnly)
-            {
-                People result = await en.AddFireBasePeople(people);
-            }
-            else
-            {
-                en.AzIdNotFound_createNewProfileBackground(people);
-            }
+            //{
+            //    en.AzIdNotFound_createNewProfileBackground(people);
+            //}
 
-            await Navigation.PopAsync();
+            //await Navigation.PopAsync();
         }
 
         private async void Button_Clicked_1(object sender, EventArgs e)
         {
-            await Navigation.PopAsync();
-        }
+        //    await Navigation.PopAsync();
     }
+}
 }

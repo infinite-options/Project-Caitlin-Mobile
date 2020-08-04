@@ -81,7 +81,11 @@ namespace ProjectCaitlin
 
         void SetupUI()
         {
-            DayOfWeekLabel.Text = dateTimeNow.DayOfWeek.ToString();
+            TimeZone localZone = TimeZone.CurrentTimeZone;
+            DateTime currentDate = DateTime.Now;
+            String tzname = localZone.IsDaylightSavingTime(currentDate) ? localZone.DaylightName : localZone.StandardName;
+
+            DayOfWeekLabel.Text = dateTimeNow.DayOfWeek.ToString() +" ("+tzname+")";
 
             //dateTimeNow = DateTime.Now;
             //HidePreviousTimeOfDayElements(dateTimeNow.TimeOfDay);
