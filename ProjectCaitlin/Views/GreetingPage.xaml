@@ -34,7 +34,7 @@
 
                     </Label>
                 </StackLayout>
-
+                
                 <StackLayout VerticalOptions="CenterAndExpand">
                     <StackLayout x:Name="box">
                         <StackLayout>

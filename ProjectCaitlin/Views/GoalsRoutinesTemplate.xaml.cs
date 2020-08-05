@@ -11,6 +11,9 @@ namespace ProjectCaitlin.Views
     {
         readonly GoalsRoutinesTemplateViewModel pageModel;
 
+        FirestoreService firestoreService; 
+        GoogleService googleService = new GoogleService();
+
         public GoalsRoutinesTemplate()
         {
             InitializeComponent();
@@ -19,6 +22,7 @@ namespace ProjectCaitlin.Views
             pageModel = new GoalsRoutinesTemplateViewModel(this);
             BindingContext = pageModel;
             ContentStackLayout.HeightRequest = Application.Current.MainPage.Height - NavBar.Height;
+            firestoreService = new FirestoreService();
         }
 
         private void AddTapGestures()
@@ -45,12 +49,14 @@ namespace ProjectCaitlin.Views
                 await Navigation.PushAsync(new MonthlyViewPage());
                 UserDialogs.Instance.HideLoading();
             };
-            MyPhotosButton.GestureRecognizers.Add(tapGestureRecognizer3);
+            //MyPhotosButton.GestureRecognizers.Add(tapGestureRecognizer3);
 
 
             var tapGestureRecognizer4 = new TapGestureRecognizer();
             tapGestureRecognizer4.Tapped += async (s, e) => {
                 UserDialogs.Instance.ShowLoading("Refreshing Page...");
+                await firestoreService.LoadDatabase(); 
+                await googleService.LoadTodaysEvents();
                 Navigation.PushAsync(new GoalsRoutinesTemplate());
                 UserDialogs.Instance.HideLoading();
             };

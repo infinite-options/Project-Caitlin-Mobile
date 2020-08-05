@@ -183,12 +183,12 @@
             <RelativeLayout
                 VerticalOptions="End">
                 <Frame x:Name="NavBar" HasShadow="True" CornerRadius="0" Padding="0,-5,0,10" HeightRequest="65" VerticalOptions="End" RelativeLayout.WidthConstraint="{ConstraintExpression Type=RelativeToParent,Property=Width,Factor=1,Constant=0}">
-                    <Grid Grid.Row="1" Grid.Column="4">
+                    <Grid Grid.Row="1" Grid.Column="3">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.25*" />
-                            <ColumnDefinition Width="0.25*" />
-                            <ColumnDefinition Width="0.25*" />
-                            <ColumnDefinition Width="0.25*" />
+                            <ColumnDefinition Width="0.33*" />
+                            <ColumnDefinition Width="0.33*" />
+                            <!--<ColumnDefinition Width="0.25*" />-->
+                            <ColumnDefinition Width="0.33*" />
                         </Grid.ColumnDefinitions>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="1*" />
@@ -229,7 +229,10 @@
                                 </Label.FontFamily>
                             </Label>
                         </StackLayout>
-                        <StackLayout x:Name="MyPhotosButton" VerticalOptions="End" Grid.Column="2">
+
+                        <!--If you want to uncomment below section, for adjusting you have to make changes in Grid.Column="3",  <Grid.ColumnDefinitions> ans lastly Grid Column number to in the element-->
+
+                        <!--<StackLayout x:Name="MyPhotosButton" VerticalOptions="End" Grid.Column="2">
                             <ffimage:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="myphotosiconnotext.png" >
                                 <ffimage:CachedImage.HeightRequest>
                                     <OnPlatform x:TypeArguments="x:Double">
@@ -246,9 +249,9 @@
                                     </OnPlatform>
                                 </Label.FontFamily>
                             </Label>
-                        </StackLayout>
+                        </StackLayout>-->
 
-                        <StackLayout x:Name="AboutMeButton" VerticalOptions="End" Grid.Column="3">
+                        <StackLayout x:Name="AboutMeButton" VerticalOptions="End" Grid.Column="2">
                             <ffimage:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="aboutmeiconnotext.png" >
                                 <ffimage:CachedImage.HeightRequest>
                                     <OnPlatform x:TypeArguments="x:Double">

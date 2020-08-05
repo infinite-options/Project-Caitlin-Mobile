@@ -536,7 +536,7 @@ namespace ProjectCaitlin.Services
                 {
                     "Ready for " + routine.title + "?",
                     "Time for " + routine.title,
-                    "You missed " + routine.title
+                    "Last Chance for " + routine.title
                 };
 
             List<string> notiTimeKeysList
