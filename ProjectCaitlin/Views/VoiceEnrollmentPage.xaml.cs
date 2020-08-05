@@ -51,5 +51,5 @@ namespace ProjectCaitlin.Views
         {
             await Navigation.PopAsync();
         }
-    }
+}
 }

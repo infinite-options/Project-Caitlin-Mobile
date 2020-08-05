@@ -12,6 +12,7 @@ using System.Text;
 using System.Threading.Tasks;
 using VoiceRecognition.Config;
 using VoiceRecognition.Model;
+using ProjectCaitlin.Services;
 
 
 namespace VoiceRecognition.Services.Firebase
@@ -19,6 +20,8 @@ namespace VoiceRecognition.Services.Firebase
     public class PeopleClient
     {
         private readonly string UserId;
+
+        FirestoreService firestoreService = new FirestoreService();
 
         public PeopleClient(string UserId)
         {
@@ -70,7 +73,7 @@ namespace VoiceRecognition.Services.Firebase
                         }
                     case "have_pic":
                         {
-                            person.HavePic = (peep["have_pic"] == null || (Boolean)peep["have_pic"] == false) ? false : true;
+                            person.HavePic = (peep["have_pic"] == null || firestoreService.convertBinToBool(peep["have_pic"].ToString()) == false) ? false : true;
                             break;
                         }
                     case "speaker_id":
@@ -95,7 +98,7 @@ namespace VoiceRecognition.Services.Firebase
                         }
                     case "important":
                         {
-                            person.HavePic = (peep["important"] == null || (Boolean)peep["important"] == false) ? false : true;
+                            person.Important = (peep["important"] == null || firestoreService.convertBinToBool(peep["important"].ToString()) == false) ? false : true;
                             break;
                         }
                 }

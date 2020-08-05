@@ -51,6 +51,22 @@ namespace ProjectCaitlin.Droid
 
             base.OnCreate(savedInstanceState);
 
+            if (Intent.Extras != null)
+            {
+                foreach (var key in Intent.Extras.KeySet())
+                {
+                    if (key != null)
+                    {
+                        var value = Intent.Extras.GetString(key);
+                        Log.Debug(TAG, "Key: {0} Value: {1}", key, value);
+                        Console.WriteLine(TAG, "Key: {0} Value: {1}", key, value);
+                    }
+                }
+            }
+
+            IsPlayServicesAvailable();
+            CreateNotificationChannel();
+
             Xamarin.Essentials.Platform.Init(this, savedInstanceState);
             global::Xamarin.Forms.Forms.Init(this, savedInstanceState);
             global::Xamarin.Auth.Presenters.XamarinAndroid.AuthenticationConfiguration.Init(this, savedInstanceState);
@@ -62,13 +78,14 @@ namespace ProjectCaitlin.Droid
             CachedImageRenderer.InitImageViewHandler();
 
 
-            IsPlayServicesAvailable();
-            CreateNotificationChannel();
+            
 
             LoadApplication(new App());
+
             
             
-            CreateNotificationFromIntent(base.Intent);
+            
+            //CreateNotificationFromIntent(base.Intent);
 
             //Console.WriteLine("The Device Token in OnCreate: " + FirebaseInstanceId.Instance.Token);
             if (FirebaseInstanceId.Instance.Token != null)
@@ -76,7 +93,7 @@ namespace ProjectCaitlin.Droid
 
         }
 
-        protected override void OnNewIntent(Intent intent)
+        /*protected override void OnNewIntent(Intent intent)
         {
             CreateNotificationFromIntent(intent);
         }
@@ -89,7 +106,7 @@ namespace ProjectCaitlin.Droid
                 string message = intent.Extras.GetString(AndroidNotificationManager.MessageKey);
                 DependencyService.Get<INotificationManager>().ReceiveNotification(title, message, true);
             }
-        }
+        }*/
 
         public override void OnRequestPermissionsResult(int requestCode, string[] permissions, [GeneratedEnum] Android.Content.PM.Permission[] grantResults)
         {
