@@ -64,7 +64,7 @@ namespace ProjectCaitlin.Droid
 
             PendingIntent pendingIntent = PendingIntent.GetBroadcast(AndroidApp.Context, pendingIntentId++, intent, PendingIntentFlags.UpdateCurrent);
 
-            var interval = AlarmManager.IntervalDay;
+            
             //var interval = 60 * 1000;
             //manager.Notify(notification_tag, messageId, notification);
             var alarmManager = (AlarmManager)AndroidApp.Context.GetSystemService(Context.AlarmService);
@@ -77,7 +77,9 @@ namespace ProjectCaitlin.Droid
 
 
 
-            alarmManager.SetRepeating(AlarmType.RtcWakeup, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + dur, (long)interval, pendingIntent);
+            //alarmManager.SetRepeating(AlarmType.RtcWakeup, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + dur, (long)interval, pendingIntent);
+            alarmManager.Set(AlarmType.RtcWakeup, DateTimeOffset.UtcNow.ToUnixTimeMilliseconds() + dur, pendingIntent);
+            
             return messageId;
         }
 

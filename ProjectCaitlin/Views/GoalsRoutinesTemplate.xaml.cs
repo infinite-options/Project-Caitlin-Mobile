@@ -55,9 +55,9 @@ namespace ProjectCaitlin.Views
             var tapGestureRecognizer4 = new TapGestureRecognizer();
             tapGestureRecognizer4.Tapped += async (s, e) => {
                 UserDialogs.Instance.ShowLoading("Refreshing Page...");
-                //await firestoreService.LoadDatabase();
-                //await googleService.LoadTodaysEvents();
-                Navigation.PushAsync(new GoalsRoutinesTemplate());
+                await firestoreService.LoadDatabase();
+                await googleService.LoadTodaysEvents();
+                await Navigation.PushAsync(new GoalsRoutinesTemplate());
                 UserDialogs.Instance.HideLoading();
             };
             MyDayButton.GestureRecognizers.Add(tapGestureRecognizer4);
