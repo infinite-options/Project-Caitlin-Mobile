@@ -332,6 +332,8 @@ namespace ProjectCaitlin.Services
 
                             isInProgress = isInProgressCheck, // && IsDateToday(data["datetime_started"].ToString()),
 
+                            isMustDo = convertBinToBool(data["is_must_do"].ToString()),
+
                             isComplete = convertBinToBool(data["is_complete"].ToString()),
                                                         //&& IsDateToday(data["datetime_completed"].ToString())
                                                         //&& !isInProgressCheck,

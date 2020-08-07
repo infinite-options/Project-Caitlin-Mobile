@@ -725,9 +725,9 @@ namespace ProjectCaitlin
             {
                 if (!routine.isInProgress && !routine.isComplete)
                 {
-                    ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
-                    routine.isInProgress = true;
-                    firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
+                    //((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
+                    //routine.isInProgress = true;
+                    //firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
                 }
                 App.ListPageScrollPosY = mainScrollView.ScrollY;
                 await Navigation.PushAsync(new TaskPage(routineIdx, true));
@@ -763,9 +763,9 @@ namespace ProjectCaitlin
 
                 if (!goal.isInProgress && !goal.isComplete)
                 {
-                    updatedGrid.Children[2].IsVisible = true;
-                    goal.isInProgress = true;
-                    firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
+                    //updatedGrid.Children[2].IsVisible = true;
+                    //goal.isInProgress = true;
+                    //firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
                 }
                 App.ListPageScrollPosY = mainScrollView.ScrollY;
                 await Navigation.PushAsync(new TaskPage(goalIdx, false));

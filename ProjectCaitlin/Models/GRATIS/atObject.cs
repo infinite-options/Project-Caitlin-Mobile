@@ -9,5 +9,7 @@ namespace ProjectCaitlin.Models
 
         public bool isSublistAvailable { get; set; }
 
+        public bool isMustDo { get; set; }
+
     }
 }
