@@ -74,15 +74,15 @@ namespace ProjectCaitlin.iOS
             // Firebase component initialize
             //Firebase.Analytics.App.Configure();
 
-            Firebase.InstanceID.InstanceId.Notifications.ObserveTokenRefresh((sender, e) => {
-                var newToken = Messaging.SharedInstance.FcmToken;
-                // if you want to send notification per user, use this token
-                App.deviceToken = newToken;
-                App.sendDeviceToken();
-                System.Diagnostics.Debug.WriteLine(newToken);
+            //Firebase.InstanceID.InstanceId.Notifications.ObserveTokenRefresh((sender, e) => {
+            //    var newToken = Messaging.SharedInstance.FcmToken;
+            //    // if you want to send notification per user, use this token
+            //    App.deviceToken = newToken;
+            //    App.sendDeviceToken();
+            //    System.Diagnostics.Debug.WriteLine(newToken);
 
-                //connectFCM();
-            });
+            //    //connectFCM();
+            //});
 
             return base.FinishedLaunching(app, options);
         }
