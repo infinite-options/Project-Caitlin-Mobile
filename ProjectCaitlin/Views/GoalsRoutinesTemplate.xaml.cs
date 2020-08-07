@@ -11,7 +11,9 @@ namespace ProjectCaitlin.Views
     {
         readonly GoalsRoutinesTemplateViewModel pageModel;
 
+
         FirestoreService firestoreService;
+
         GoogleService googleService = new GoogleService();
 
         public GoalsRoutinesTemplate()
@@ -49,15 +51,17 @@ namespace ProjectCaitlin.Views
                 await Navigation.PushAsync(new MonthlyViewPage());
                 UserDialogs.Instance.HideLoading();
             };
-            MyPhotosButton.GestureRecognizers.Add(tapGestureRecognizer3);
+            //MyPhotosButton.GestureRecognizers.Add(tapGestureRecognizer3);
 
 
             var tapGestureRecognizer4 = new TapGestureRecognizer();
             tapGestureRecognizer4.Tapped += async (s, e) => {
                 UserDialogs.Instance.ShowLoading("Refreshing Page...");
+
                 await firestoreService.LoadDatabase();
                 await googleService.LoadTodaysEvents();
                 await Navigation.PushAsync(new GoalsRoutinesTemplate());
+
                 UserDialogs.Instance.HideLoading();
             };
             MyDayButton.GestureRecognizers.Add(tapGestureRecognizer4);

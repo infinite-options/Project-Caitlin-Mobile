@@ -9,6 +9,7 @@ using System.Windows.Input;
 using System.Collections.Generic;
 using System.Runtime.CompilerServices;
 using ProjectCaitlin.Services;
+using System.Data;
 
 namespace ProjectCaitlin.ViewModel
 {
@@ -82,6 +83,11 @@ namespace ProjectCaitlin.ViewModel
                                     {
                                         App.User.routines[a].tasks[_taskIdx].isInProgress = true;
                                         Items[_taskIdx].IsInProgress = true;
+                                        /*if(!App.User.routines[a].isComplete && !App.User.routines[a].isInProgress)
+                                        {
+                                            App.User.routines[a].isInProgress = true;
+                                            firebaseFunctionsService.updateGratisStatus(App.User.routines[a], "goals&routines", false);
+                                        }*/
                                         firebaseFunctionsService.updateGratisStatus(task, "actions&tasks", false);
                                     }
                                     await mainPage.Navigation.PushAsync(new StepsPage(a, _taskIdx, isRoutine, Items[_taskIdx], GRItemModel));
@@ -117,6 +123,11 @@ namespace ProjectCaitlin.ViewModel
                                         {
                                             App.User.routines[a].tasks[_taskIdx].isInProgress = true;
                                             Items[_taskIdx].IsInProgress = true;
+                                            if (!App.User.routines[a].isComplete && !App.User.routines[a].isInProgress)
+                                            {
+                                                App.User.routines[a].isInProgress = true;
+                                                firebaseFunctionsService.updateGratisStatus(App.User.routines[a], "goals&routines", false);
+                                            }
                                             firebaseFunctionsService.updateGratisStatus(task, "actions&tasks", false);
                                         }
                                     }
@@ -161,6 +172,11 @@ namespace ProjectCaitlin.ViewModel
                                     {
                                         App.User.goals[a].actions[_actionIdx].isInProgress = true;
                                         Items[_actionIdx].IsInProgress = true;
+                                        /*if (!App.User.goals[a].isComplete && !App.User.goals[a].isInProgress)
+                                        {
+                                            App.User.goals[a].isInProgress = true;
+                                            firebaseFunctionsService.updateGratisStatus(App.User.goals[a], "goals&routines", false);
+                                        }*/
                                         firebaseFunctionsService.updateGratisStatus(action, "actions&tasks", false);
                                     }
 
@@ -195,6 +211,11 @@ namespace ProjectCaitlin.ViewModel
                                         {
                                             App.User.goals[a].actions[_actionIdx].isInProgress = true;
                                             Items[_actionIdx].IsInProgress = true;
+                                            if (!App.User.goals[a].isComplete && !App.User.goals[a].isInProgress)
+                                            {
+                                                App.User.goals[a].isInProgress = true;
+                                                firebaseFunctionsService.updateGratisStatus(App.User.goals[a], "goals&routines", false);
+                                            }
                                             firebaseFunctionsService.updateGratisStatus(action, "actions&tasks", false);
                                         }
                                     }
@@ -210,27 +231,46 @@ namespace ProjectCaitlin.ViewModel
         private bool routineCheckCompletion(List<task> taskList)
         {
             int complCount = 0;
+            int mustDoTasks = 0;
+
+            
             foreach (task task in taskList)
             {
-                if (task.isComplete)
+                if (task.isMustDo)
+                {
+                    mustDoTasks++;
+
+                    complCount = (task.isComplete) ? complCount + 1 : complCount;
+                }
+                    
+
+                /*if (task.isComplete && task.isMustDo)
                 {
                     complCount++;
-                }
+                }*/
             }
-            return complCount == taskList.Count ? true : false;
+            return complCount == mustDoTasks ? true : false;
         }
 
         private bool goalCheckCompletion(List<action> actionList)
         {
             int complCount = 0;
+            int mustDoActions = 0;
             foreach (action action in actionList)
             {
+                if (action.isMustDo)
+                {
+                    mustDoActions++;
+                    complCount = (action.isComplete) ? complCount + 1 : complCount;
+                }
+                /*mustDoActions++;
+
                 if (action.isComplete)
                 {
                     complCount++;
-                }
+                }*/
             }
-            return complCount == actionList.Count ? true : false;
+            return complCount == mustDoActions ? true : false;
         }
     }
 

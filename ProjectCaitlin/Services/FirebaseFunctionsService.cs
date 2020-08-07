@@ -243,7 +243,7 @@ namespace ProjectCaitlin.Services
                     gratisConvertField = gratisBoolField.Concat(grBoolFieldAdd).ToList();
                     break;
                 case "actions&tasks":
-                    var atBoolFieldAdd = new List<string>() { "is_sublist_available" };
+                    var atBoolFieldAdd = new List<string>() { "is_sublist_available", "is_must_do" };
                     gratisConvertField = gratisBoolField.Concat(atBoolFieldAdd).ToList();
                     break;
                 case "instructions&steps":

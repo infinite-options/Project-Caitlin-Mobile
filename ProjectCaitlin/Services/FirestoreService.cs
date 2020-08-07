@@ -332,6 +332,8 @@ namespace ProjectCaitlin.Services
 
                             isInProgress = isInProgressCheck, // && IsDateToday(data["datetime_started"].ToString()),
 
+                            isMustDo = convertBinToBool(data["is_must_do"].ToString()),
+
                             isComplete = convertBinToBool(data["is_complete"].ToString()),
                                                         //&& IsDateToday(data["datetime_completed"].ToString())
                                                         //&& !isInProgressCheck,
@@ -536,7 +538,7 @@ namespace ProjectCaitlin.Services
                 {
                     "Ready for " + routine.title + "?",
                     "Time for " + routine.title,
-                    "You missed " + routine.title
+                    "Last Chance for " + routine.title
                 };
 
             List<string> notiTimeKeysList
