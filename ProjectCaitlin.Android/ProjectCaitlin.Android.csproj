@@ -407,6 +407,13 @@
       <Generator>
       </Generator>
     </AndroidResource>
+    <AndroidResource Include="..\ProjectCaitlin\Icons\logouticon.png">
+      <Link>Resources\drawable\logouticon.png</Link>
+      <SubType>
+      </SubType>
+      <Generator>
+      </Generator>
+    </AndroidResource>
     <AndroidResource Include="Resources\drawable\xamagonBlue.png">
       <SubType>
       </SubType>
