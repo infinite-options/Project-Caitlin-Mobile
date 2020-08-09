@@ -14,7 +14,7 @@
     <AssemblyName>ProjectCaitlin.iOS</AssemblyName>
     <MtouchEnableSGenConc>true</MtouchEnableSGenConc>
     <MtouchHttpClientHandler>NSUrlSessionHandler</MtouchHttpClientHandler>
-    <ProvisioningType>manual</ProvisioningType>
+    <ProvisioningType>automatic</ProvisioningType>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|iPhoneSimulator' ">
     <DebugSymbols>true</DebugSymbols>
@@ -27,8 +27,8 @@
     <MtouchArch>x86_64</MtouchArch>
     <MtouchLink>SdkOnly</MtouchLink>
     <MtouchDebug>true</MtouchDebug>
-    <CodesignProvision>ManifestMySpaceDistribution</CodesignProvision>
-    <CodesignKey>Apple Distribution: Infinite Options, LLC (8V66NC2T37)</CodesignKey>
+    <CodesignProvision>VS: WildCard Development</CodesignProvision>
+    <CodesignKey>Apple Development: Ashutosh Mahala (254UVQ6R66)</CodesignKey>
     <MtouchExtraArgs>--optimize=experimental-xforms-product-type</MtouchExtraArgs>
     <MtouchFloat32>true</MtouchFloat32>
     <MtouchSdkVersion>13.5</MtouchSdkVersion>
@@ -53,7 +53,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <MtouchArch>ARM64</MtouchArch>
-    <CodesignKey>Apple Development: Jeremy Manalo (RHJL94U6CR)</CodesignKey>
+    <CodesignKey>Apple Development: Ashutosh Mahala (254UVQ6R66)</CodesignKey>
     <MtouchDebug>true</MtouchDebug>
     <CodesignEntitlements>Entitlements.plist</CodesignEntitlements>
     <MtouchLink>None</MtouchLink>

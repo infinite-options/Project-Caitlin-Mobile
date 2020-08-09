@@ -19044,6 +19044,9 @@ namespace ProjectCaitlin.Droid
 			// aapt resource value: 0x7F07017F
 			public const int xamagonBlue = 2131165567;
 			
+			// aapt resource value: 0x7F070180
+			public const int yellowclockicon = 2131165568;
+			
 			static Drawable()
 			{
 				global::Android.Runtime.ResourceIdManager.UpdateIdValues();

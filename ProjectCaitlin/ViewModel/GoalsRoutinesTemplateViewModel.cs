@@ -348,7 +348,7 @@ namespace ProjectCaitlin.ViewModel
                                                 App.User.goals[indexes.GoalIndex].isInProgress = true;
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
-                                                firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", true);
+                                                firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
                                             }
                                         }
                                     }
