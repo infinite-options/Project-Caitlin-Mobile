@@ -400,7 +400,7 @@
       <Generator>
       </Generator>
     </AndroidResource>
-     <AndroidResource Include="..\ProjectCaitlin\Icons\yellowclockicon.png">
+    <AndroidResource Include="..\ProjectCaitlin\Icons\yellowclockicon.png">
       <Link>Resources\drawable\yellowclockicon.png</Link>
       <SubType>
       </SubType>
