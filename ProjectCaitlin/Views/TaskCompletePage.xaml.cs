@@ -14,6 +14,8 @@ using ProjectCaitlin.Models;
 
 namespace ProjectCaitlin.Views
 {
+    public delegate void UpdateParentGoalTask();
+
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TaskCompletePage : ContentPage
     {
@@ -26,6 +28,7 @@ namespace ProjectCaitlin.Views
         int b;
         bool isRoutine;
         readonly TaskCompletePageViewModel pageModel;
+        UpdateParentGoalTask updateParentTask;
         public TaskCompletePage(int a, int b, bool isRoutine, TaskItemModel _TaskItemModel, GRItemModel _GRItemModel)
         {
             InitializeComponent();
@@ -41,6 +44,12 @@ namespace ProjectCaitlin.Views
             itemcount = pageModel.count;
 
         }
+
+        public TaskCompletePage(int a, int b, bool isRoutine, TaskItemModel _TaskItemModel, GRItemModel _GRItemModel, UpdateParentGoalTask updateParentTask) : this(a, b, isRoutine, _TaskItemModel, _GRItemModel)
+        {
+            this.updateParentTask = updateParentTask;
+        }
+
         public async void nextpage(object sender, EventArgs args)
         {
             var completeActionCounter = 0;
@@ -99,7 +108,8 @@ namespace ProjectCaitlin.Views
                 next.Text = "Next";
                 CarouselTasks.Position = idx;
                 Console.WriteLine("CarouselTasks.Position: " + CarouselTasks.Position);
-                await Task.Delay(2000);
+                updateParentTask?.Invoke();
+                //await Task.Delay(2000);
             }
 
             else if (CarouselTasks.Position != App.User.goals[a].actions[b].instructions.Count - 1)

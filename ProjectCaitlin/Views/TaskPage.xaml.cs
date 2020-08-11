@@ -13,6 +13,8 @@ using ProjectCaitlin.Services;
 
 namespace ProjectCaitlin.Views
 {
+    public delegate void UpdateParentRoutine();
+
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class TaskPage : ContentPage
     {
@@ -21,6 +23,7 @@ namespace ProjectCaitlin.Views
         FirebaseFunctionsService firebaseFunctionsService = new FirebaseFunctionsService();
 
         GRItemModel GRItemModel;
+        public UpdateParentRoutine updateParentRoutine;
 
         public TaskPage(int routineNum, bool isRoutine)
         {
@@ -40,6 +43,11 @@ namespace ProjectCaitlin.Views
             taskGridViewModel = new TaskGridViewModel(this, routineNum, isRoutine, GRItemModel);
             BindingContext = taskGridViewModel;
 
+        }
+
+        public TaskPage(int routineNum, bool isRoutine, GRItemModel _GRItemModel, UpdateParentRoutine updateParentRoutine) : this(routineNum, isRoutine, _GRItemModel)
+        {
+            this.updateParentRoutine = updateParentRoutine;
         }
         public async void close(object sender, EventArgs args)
         {

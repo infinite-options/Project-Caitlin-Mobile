@@ -12,6 +12,7 @@ using ProjectCaitlin.Services;
 
 namespace ProjectCaitlin.Views
 {
+    public delegate void UpdateRoutineTaskParent();
     public partial class StepsPage : ContentPage
     {
         FirebaseFunctionsService firebaseFunctionsService;
@@ -24,6 +25,7 @@ namespace ProjectCaitlin.Views
         readonly StepsPageViewModel pageModel;
         TaskItemModel taskItemModel;
         GRItemModel GRItemModel;
+        public UpdateRoutineTaskParent updateParentTask;
 
         public StepsPage(int a, int b, bool isRoutine, TaskItemModel _taskItemModel, GRItemModel _GRItemModel)
         {
@@ -39,6 +41,11 @@ namespace ProjectCaitlin.Views
             BindingContext = pageModel;
             itemcount = pageModel.count;
             StepListView.HeightRequest = GetListViewHeight();
+        }
+
+        public StepsPage(int a, int b, bool isRoutine, TaskItemModel _taskItemModel, GRItemModel _GRItemModel, UpdateRoutineTaskParent updateParentTask) : this(a, b, isRoutine, _taskItemModel, _GRItemModel)
+        {
+            this.updateParentTask = updateParentTask;
         }
 
         private double GetListViewHeight()

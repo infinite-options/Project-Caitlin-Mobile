@@ -95,16 +95,17 @@ namespace ProjectCaitlin.ViewModel
                                             App.User.routines[a].tasks[b].steps[_stepIdx - 1].isInProgress = false;
                                             App.User.routines[a].tasks[b].steps[_stepIdx - 1].isComplete = true;
                                             Items[_stepIdx - 1].CheckmarkIcon = "greencheckmarkicon.png";
-                                            string prevStepDbIdx = App.User.routines[a].tasks[b].steps[_stepIdx - 1].dbIdx.ToString();
+                                            //string prevStepDbIdx = App.User.routines[a].tasks[b].steps[_stepIdx - 1].dbIdx.ToString();
 
 
-                                            firebaseFunctionsService.updateGratisStatus(step, "instructions&steps", true);
+                                            await firebaseFunctionsService.updateGratisStatus(App.User.routines[a].tasks[b].steps[_stepIdx - 1], "instructions&steps", true);
                                         }
 
                                         Items[_stepIdx].CheckmarkIcon = "yellowclockicon.png";
                                         App.User.routines[a].tasks[b].steps[indexForCheckmark].isInProgress = true;
 
-                                        firebaseFunctionsService.updateGratisStatus(step, "instructions&steps", false);
+                                        await firebaseFunctionsService.updateGratisStatus(step, "instructions&steps", false);
+                                        mainPage.updateParentTask?.Invoke();
                                     }
                                     else
                                     {
@@ -127,6 +128,7 @@ namespace ProjectCaitlin.ViewModel
                                                 firebaseFunctionsService.updateGratisStatus(step, "instructions&steps", false);
 
                                             }
+                                            mainPage.updateParentTask?.Invoke();
                                         }
                                         else
                                         {

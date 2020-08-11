@@ -214,14 +214,23 @@ namespace ProjectCaitlin.ViewModel
 
                                     if (App.User.routines[indexes.RoutineIndex].isSublistAvailable)
                                     {
-                                        if (!isRoutineComplete && !isRoutineInProgress)
-                                        {
-                                            App.User.routines[indexes.RoutineIndex].isInProgress = true;
-                                            ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
-                                            ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
-                                            firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
-                                        }
-                                        await mainPage.Navigation.PushAsync(new TaskPage(indexes.RoutineIndex, true, (GRItemModel)Items[indexes.ItemsIndex]));
+                                        //if (!isRoutineComplete && !isRoutineInProgress)
+                                        //{
+                                        //    App.User.routines[indexes.RoutineIndex].isInProgress = true;
+                                        //    ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
+                                        //    ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
+                                        //    firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
+                                        //}
+                                        //await mainPage.Navigation.PushAsync(new TaskPage(indexes.RoutineIndex, true, (GRItemModel)Items[indexes.ItemsIndex]));
+                                        await mainPage.Navigation.PushAsync(new TaskPage(indexes.RoutineIndex, true, (GRItemModel)Items[indexes.ItemsIndex], async() => {
+                                            if (!isRoutineComplete && !isRoutineInProgress)
+                                            {
+                                                App.User.routines[indexes.RoutineIndex].isInProgress = true;
+                                                ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
+                                                ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
+                                                await firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
+                                            }
+                                        }));
                                     }
                                     else
                                     {
@@ -321,14 +330,23 @@ namespace ProjectCaitlin.ViewModel
 
                                     if (App.User.goals[indexes.GoalIndex].isSublistAvailable)
                                     {
-                                        if (!isGoalComplete && !isGoalInProgress)
-                                        {
-                                            App.User.goals[indexes.GoalIndex].isInProgress = true;
-                                            ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
-                                            ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
-                                            firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
-                                        }
-                                        await mainPage.Navigation.PushAsync(new TaskPage(indexes.GoalIndex, false, (GRItemModel)Items[indexes.ItemsIndex]));
+                                        //if (!isGoalComplete && !isGoalInProgress)
+                                        //{
+                                        //    App.User.goals[indexes.GoalIndex].isInProgress = true;
+                                        //    ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
+                                        //    ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
+                                        //    firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
+                                        //}
+                                        //await mainPage.Navigation.PushAsync(new TaskPage(indexes.GoalIndex, false, (GRItemModel)Items[indexes.ItemsIndex]));
+                                        await mainPage.Navigation.PushAsync(new TaskPage(indexes.GoalIndex, false, (GRItemModel)Items[indexes.ItemsIndex], async() => {
+                                            if (!isGoalComplete && !isGoalInProgress)
+                                            {
+                                                App.User.goals[indexes.GoalIndex].isInProgress = true;
+                                                ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
+                                                ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
+                                                await firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
+                                            }
+                                        }));
                                     }
                                     else
                                     {
