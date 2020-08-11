@@ -368,33 +368,22 @@ namespace ProjectCaitlin.ViewModel
         public async void AzIdFound_FirebaseNotFound(Profile azProfile)
         {
             addFirebaseOnly = true;
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                mainPage.Navigation.PushAsync(new VoiceEnrollmentPage());
-            });
-            /*Message = "We have heard this voice(" + azProfile.IdentificationProfileId + ") before. However, we were unable to identify this person.\nIf you want you can add the details below";
-            DisplayForm = true;
-            Console.WriteLine(Message);
-
-            var ans = await mainPage.DisplayAlert("Question?", Message, "Yes", "No");
-            if (ans == true)
-            {
-                //Success condition
-            }
-            else
-            {
-                //false conditon
-            }*/
-
+            mainPage.DisplayAddNewPersonForm();
+            //Device.BeginInvokeOnMainThread(() =>
+            //{
+            //    mainPage.Navigation.PushAsync(new VoiceEnrollmentPage());
+            //});
+            
         }
 
         public async void AzIdNotFound()
         {
             addFirebaseOnly = false;
-            Device.BeginInvokeOnMainThread(() =>
-            {
-                mainPage.Navigation.PushAsync(new VoiceEnrollmentPage());
-            });
+            //Device.BeginInvokeOnMainThread(() =>
+            //{
+            //    mainPage.Navigation.PushAsync(new VoiceEnrollmentPage());
+            //});
+            mainPage.DisplayAddNewPersonForm();
         }
 
         public async void AzIdNotFound_AudioSmall()

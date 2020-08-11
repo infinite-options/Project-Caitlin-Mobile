@@ -35,6 +35,8 @@ namespace ProjectCaitlin.Views
         AudioRecorderService recorder;
         RecorderWrapper recorderWrapper;
         Boolean active = true;
+        Boolean addingNewUserActive = false;
+        Boolean isEnrollingNow = false;
 
         public GreetingPage()
         {
@@ -68,6 +70,8 @@ namespace ProjectCaitlin.Views
                     System.Threading.Thread.Sleep(35000);
                     if (!Application.Current.Properties.ContainsKey("user_id")) break;
                     //if (identifyButton! != null && !identifyButton.IsVisible )
+                    if (!active) break;
+                    if (addingNewUserActive || isEnrollingNow) continue;
                     if(recorderWrapper.autoMode)
                     {
                         greetingViewModel.CMDIdentifyAndEnroll();
@@ -147,6 +151,36 @@ namespace ProjectCaitlin.Views
             await Navigation.PushAsync(new LoginPage());
         }
 
+
+        async void AddPersonbuttonClicked(object sender, EventArgs e)
+        {
+            string name = NameEntry.Text;
+            string phoneNumber = PhoneNumberEntry.Text;
+            if (string.IsNullOrWhiteSpace(name))
+            {
+                NameEntry.Placeholder = "Please enter a name here";
+                NameEntry.PlaceholderColor = Color.FromHex("#ff7070");
+                return;
+            }
+            People people = new People()
+            {
+                FirstName = name,
+                PhoneNumber = phoneNumber
+            };
+
+            CancelAddingPersonButtonClicked(null, null);
+
+            if (GreetingViewModel.addFirebaseOnly)
+            {
+                _ = await greetingViewModel.AddFireBasePeople(people);
+            }
+            else
+            {
+                greetingViewModel.AzIdNotFound_createNewProfileBackground(people);
+            }
+            
+        }
+
         async void btn1Clicked(object sender, EventArgs e)
         {
             active = false;
@@ -163,6 +197,27 @@ namespace ProjectCaitlin.Views
             {
                 Navigation.PopAsync();
                 Navigation.PushAsync(new GoalsRoutinesTemplate());
+            });
+        }
+
+        async void CancelAddingPersonButtonClicked(object sender, EventArgs e) {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                NameEntry.Placeholder = "Name";
+                NameEntry.PlaceholderColor = Color.FromHex("#9c98ae");
+                addingNewUserActive = false;
+                EntryBox.IsVisible = false;
+                box.IsVisible = true;
+            });
+        }
+
+        public void DisplayAddNewPersonForm()
+        {
+            Device.BeginInvokeOnMainThread(() =>
+            {
+                addingNewUserActive = true;
+                EntryBox.IsVisible = true;
+                box.IsVisible = false;
             });
         }
 
@@ -205,7 +260,7 @@ namespace ProjectCaitlin.Views
         void enrollClicked(object sender, EventArgs e)
         {
             Task.Run(() => { greetingViewModel.CMDIdentifyAndEnroll_Manual(); });
-
+            isEnrollingNow = true;
             Task.Factory.StartNew(() => {
                     for (int i = 30; i > 0; i--)
                     {
@@ -217,7 +272,8 @@ namespace ProjectCaitlin.Views
                             this.trackBar.Text = string.Format("{0}\nTime Left {1}",SlideToActView.States.Recording,i);
                         });
                     }
-                });
+                isEnrollingNow = false;
+            });
         }
 
         void identifyClicked(object sender, EventArgs e)

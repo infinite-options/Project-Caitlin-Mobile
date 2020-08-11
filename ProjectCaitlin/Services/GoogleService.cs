@@ -11,6 +11,7 @@ using ProjectCaitlin.Methods;
 using Xamarin.Auth;
 using Xamarin.Forms;
 using Newtonsoft.Json.Linq;
+using System.Diagnostics;
 
 namespace ProjectCaitlin.Services
 {
@@ -38,7 +39,7 @@ namespace ProjectCaitlin.Services
             }
 
             var values = new Dictionary<string, string> {
-            { "refresh_token", Application.Current.Properties["access_token"].ToString()},
+            { "refresh_token", Application.Current.Properties["refreshToken"].ToString()},
             { "client_id", clientId },
             { "grant_type", "refresh_token"}
             };
@@ -55,6 +56,8 @@ namespace ProjectCaitlin.Services
 
             if (jsonParsed["error"] != null)
             {
+                Console.WriteLine(jsonParsed.ToString());
+                System.Diagnostics.Trace.WriteLine(jsonParsed.ToString());
                 Application.Current.Properties.Remove("refreshToken");
                 await Application.Current.MainPage.Navigation.PushAsync(new LoginPage());
                 return false;

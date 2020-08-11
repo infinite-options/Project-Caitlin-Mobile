@@ -36,7 +36,17 @@
                 </StackLayout>
                 
                 <StackLayout VerticalOptions="CenterAndExpand">
-                    <StackLayout x:Name="box">
+                    <StackLayout x:Name="EntryBox" IsVisible="false">
+                        <Label Text="Unable to find the voice" TextColor="White" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+                        <Label Text="Do you want to enroll?" TextColor="White" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
+                        <Entry x:Name="NameEntry" Placeholder="Name" PlaceholderColor="#9c98ae"  Opacity="50" ClearButtonVisibility="WhileEditing" TextColor="WhiteSmoke"/>
+                        <Entry x:Name="PhoneNumberEntry" Keyboard="Telephone" Placeholder="PhoneNumber" PlaceholderColor="#9c98ae"  Opacity="50" ClearButtonVisibility="WhileEditing" TextColor="WhiteSmoke"/>
+                        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand">
+                            <Button Text="Add" CornerRadius="10" Margin="0,5" Padding="0" WidthRequest="60"  TextColor="White"  BackgroundColor="#59556D" Clicked="AddPersonbuttonClicked"/>
+                            <Button Text="Cancel" WidthRequest="70" CornerRadius="10" Padding="0" Margin="0,5"  IsVisible="True" TextColor="White"  BackgroundColor="#59556D" Clicked="CancelAddingPersonButtonClicked"/>
+                        </StackLayout>
+                    </StackLayout>
+                    <StackLayout x:Name="box" IsVisible="true">
                         <StackLayout>
                             <ffimage:CachedImage
                         x:Name = "UserImage"
