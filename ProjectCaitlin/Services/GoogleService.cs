@@ -20,6 +20,32 @@ namespace ProjectCaitlin.Services
         public INavigation Navigation;
 
         //Use REFRESH TOKEN to receive another ACCESS TOKEN...and UPDATE App.user.access_token.
+
+        public async Task<bool> UseAccessToken()
+        {
+
+            //Make HTTP Request
+            var request = new HttpRequestMessage();
+            request.RequestUri = new Uri(Constants.UserInfoUrl);
+            request.Method = HttpMethod.Get;
+
+            //Format Headers of Request with included Token
+            string bearerString = string.Format("Bearer {0}", Application.Current.Properties["access_token"].ToString());
+            request.Headers.Add("Authorization", bearerString);
+            request.Headers.Add("Accept", "application/json");
+            var client = new HttpClient();
+            HttpResponseMessage response = await client.SendAsync(request);
+            HttpContent content = response.Content;
+            var json = await content.ReadAsStringAsync();
+            JObject jsonParsed = JObject.Parse(json);
+
+            if (jsonParsed["error"] != null)
+                return false;
+
+            return true;
+        }
+
+
         public async Task<bool> RefreshToken()
         {
             string clientId = null;
