@@ -723,14 +723,22 @@ namespace ProjectCaitlin
         {
             if (routine.isSublistAvailable)
             {
-                if (!routine.isInProgress && !routine.isComplete)
-                {
-                    //((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
-                    //routine.isInProgress = true;
-                    //firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
-                }
+                //if (!routine.isInProgress && !routine.isComplete)
+                //{
+                //    //((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
+                //    //routine.isInProgress = true;
+                //    //firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
+                //}
                 App.ListPageScrollPosY = mainScrollView.ScrollY;
-                await Navigation.PushAsync(new TaskPage(routineIdx, true));
+                //await Navigation.PushAsync(new TaskPage(routineIdx, true));
+                await Navigation.PushAsync(new TaskPage(routineIdx, true, null, async() => {
+                    if (!routine.isInProgress && !routine.isComplete)
+                    {
+                        ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
+                        routine.isInProgress = true;
+                        await firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
+                    }
+                }));
             }
             else
             {
@@ -761,14 +769,22 @@ namespace ProjectCaitlin
             if (goal.isSublistAvailable)
             {
 
-                if (!goal.isInProgress && !goal.isComplete)
-                {
-                    //updatedGrid.Children[2].IsVisible = true;
-                    //goal.isInProgress = true;
-                    //firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
-                }
+                //if (!goal.isInProgress && !goal.isComplete)
+                //{
+                //    updatedGrid.Children[2].IsVisible = true;
+                //    goal.isInProgress = true;
+                //    firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
+                //}
                 App.ListPageScrollPosY = mainScrollView.ScrollY;
-                await Navigation.PushAsync(new TaskPage(goalIdx, false));
+                //await Navigation.PushAsync(new TaskPage(goalIdx, false));
+                await Navigation.PushAsync(new TaskPage(goalIdx, false, null, async() => {
+                    if (!goal.isInProgress && !goal.isComplete)
+                    {
+                        updatedGrid.Children[2].IsVisible = true;
+                        goal.isInProgress = true;
+                        await firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
+                    }
+                }));
             }
             else
             {

@@ -111,7 +111,7 @@ namespace ProjectCaitlin.ViewModel
                                             App.User.routines[a].tasks[_taskIdx].isComplete = true;
                                             Items[_taskIdx].IsInProgress = false;
                                             Items[_taskIdx].IsComplete = true;
-                                            firebaseFunctionsService.updateGratisStatus(task, "actions&tasks", true);
+                                            await firebaseFunctionsService.updateGratisStatus(task, "actions&tasks", true);
 
                                             if (routineCheckCompletion(App.User.routines[a].tasks))
                                             {
@@ -123,7 +123,7 @@ namespace ProjectCaitlin.ViewModel
                                                     GRItemModel.IsInProgress = false;
                                                     GRItemModel.Text = "Done";
                                                 }
-                                                firebaseFunctionsService.updateGratisStatus(App.User.routines[a], "goals&routines", true);
+                                                await firebaseFunctionsService.updateGratisStatus(App.User.routines[a], "goals&routines", true);
                                             }
 
 
@@ -135,9 +135,9 @@ namespace ProjectCaitlin.ViewModel
                                             if (!App.User.routines[a].isComplete && !App.User.routines[a].isInProgress)
                                             {
                                                 App.User.routines[a].isInProgress = true;
-                                                firebaseFunctionsService.updateGratisStatus(App.User.routines[a], "goals&routines", false);
+                                                await firebaseFunctionsService.updateGratisStatus(App.User.routines[a], "goals&routines", false);
                                             }
-                                            firebaseFunctionsService.updateGratisStatus(task, "actions&tasks", false);
+                                            await firebaseFunctionsService.updateGratisStatus(task, "actions&tasks", false);
                                         }
                                         mainPage.updateParentRoutine?.Invoke();
                                     }
@@ -203,6 +203,7 @@ namespace ProjectCaitlin.ViewModel
                                 }
                                 else
                                 {
+                                    mainPage.updateParentRoutine?.Invoke();
                                     if (!isActionComplete)
                                     {
                                         if (isActionInProgress)
@@ -211,7 +212,7 @@ namespace ProjectCaitlin.ViewModel
                                             App.User.goals[a].actions[_actionIdx].isComplete = true;
                                             Items[_actionIdx].IsInProgress = false;
                                             Items[_actionIdx].IsComplete = true;
-                                            firebaseFunctionsService.updateGratisStatus(action, "actions&tasks", true);
+                                            await firebaseFunctionsService.updateGratisStatus(action, "actions&tasks", true);
 
                                             if (goalCheckCompletion(App.User.goals[a].actions))
                                             {
@@ -223,7 +224,7 @@ namespace ProjectCaitlin.ViewModel
                                                     GRItemModel.IsInProgress = false;
                                                     GRItemModel.Text = "Done";
                                                 }
-                                                firebaseFunctionsService.updateGratisStatus(App.User.goals[a], "goals&routines", true);
+                                                await firebaseFunctionsService.updateGratisStatus(App.User.goals[a], "goals&routines", true);
                                             }
                                         }
                                         else
@@ -238,7 +239,6 @@ namespace ProjectCaitlin.ViewModel
                                             firebaseFunctionsService.updateGratisStatus(action, "actions&tasks", false);
                                         }
                                     }
-                                    mainPage.updateParentRoutine?.Invoke();
                                 }
                             }),
                        actionIdx

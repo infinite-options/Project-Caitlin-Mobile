@@ -223,7 +223,7 @@ namespace ProjectCaitlin.ViewModel
                                         //}
                                         //await mainPage.Navigation.PushAsync(new TaskPage(indexes.RoutineIndex, true, (GRItemModel)Items[indexes.ItemsIndex]));
                                         await mainPage.Navigation.PushAsync(new TaskPage(indexes.RoutineIndex, true, (GRItemModel)Items[indexes.ItemsIndex], async() => {
-                                            if (!isRoutineComplete && !isRoutineInProgress)
+                                            if (!App.User.routines[indexes.RoutineIndex].isInProgress && !App.User.routines[indexes.RoutineIndex].isComplete)
                                             {
                                                 App.User.routines[indexes.RoutineIndex].isInProgress = true;
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
@@ -339,7 +339,7 @@ namespace ProjectCaitlin.ViewModel
                                         //}
                                         //await mainPage.Navigation.PushAsync(new TaskPage(indexes.GoalIndex, false, (GRItemModel)Items[indexes.ItemsIndex]));
                                         await mainPage.Navigation.PushAsync(new TaskPage(indexes.GoalIndex, false, (GRItemModel)Items[indexes.ItemsIndex], async() => {
-                                            if (!isGoalComplete && !isGoalInProgress)
+                                            if (!App.User.goals[indexes.GoalIndex].isInProgress && !App.User.goals[indexes.GoalIndex].isComplete)
                                             {
                                                 App.User.goals[indexes.GoalIndex].isInProgress = true;
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
