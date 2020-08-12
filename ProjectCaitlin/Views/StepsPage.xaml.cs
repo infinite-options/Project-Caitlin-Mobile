@@ -141,6 +141,8 @@ namespace ProjectCaitlin.Views
                 var firebaseFunctionsService = new FirebaseFunctionsService();
 
                 firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", true);
+
+                updateParentTask();
             }
         }
     }

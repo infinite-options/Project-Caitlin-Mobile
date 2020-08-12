@@ -92,13 +92,13 @@ namespace ProjectCaitlin.ViewModel
                                     //}
                                     //await mainPage.Navigation.PushAsync(new StepsPage(a, _taskIdx, isRoutine, Items[_taskIdx], GRItemModel));
                                     await mainPage.Navigation.PushAsync(new StepsPage(a, _taskIdx, isRoutine, Items[_taskIdx], GRItemModel, async ()=>{
-                                        if (!isTaskComplete)
+                                        if (!App.User.routines[a].tasks[_taskIdx].isComplete && !App.User.routines[a].tasks[_taskIdx].isInProgress)
                                         {
                                             App.User.routines[a].tasks[_taskIdx].isInProgress = true;
                                             Items[_taskIdx].IsInProgress = true;
                                             firebaseFunctionsService.updateGratisStatus(task, "actions&tasks", false);
-                                            mainPage.updateParentRoutine?.Invoke();
                                         }
+                                        mainPage.updateParentRoutine?.Invoke();
                                     }));
                                 }
                                 else

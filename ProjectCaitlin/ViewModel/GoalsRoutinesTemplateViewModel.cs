@@ -230,6 +230,18 @@ namespace ProjectCaitlin.ViewModel
                                                 ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
                                                 await firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
                                             }
+                                            if (App.User.routines[indexes.RoutineIndex].isInProgress)
+                                            {
+                                                ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = true;
+                                                ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Tap to Continue";
+                                                await firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
+                                            }
+                                            if (App.User.routines[indexes.RoutineIndex].isComplete)
+                                            {
+                                                ((GRItemModel)Items[indexes.ItemsIndex]).IsInProgress = false;
+                                                ((GRItemModel)Items[indexes.ItemsIndex]).Text = "Done";
+                                                await firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", true);
+                                            }
                                         }));
                                     }
                                     else

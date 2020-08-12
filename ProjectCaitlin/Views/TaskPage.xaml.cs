@@ -51,9 +51,9 @@ namespace ProjectCaitlin.Views
         }
         public async void close(object sender, EventArgs args)
         {
-            if (App.ParentPage == "ListView")
-                await Navigation.PushAsync(new ListViewPage());
-            else
+            //if (App.ParentPage == "ListView")
+            //    await Navigation.PushAsync(new ListViewPage());
+            //else
                 await Navigation.PopAsync();
         }
     }

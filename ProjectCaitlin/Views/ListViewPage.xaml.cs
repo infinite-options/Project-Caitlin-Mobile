@@ -392,9 +392,9 @@ namespace ProjectCaitlin
             {
 
                 StackLayout updatedStackLayout = (StackLayout)s;
-                updatedStackLayout.Children[0].WidthRequest = 30;
-                updatedStackLayout.Children[0].HeightRequest = 30;
-                ((CachedImage)updatedStackLayout.Children[0]).IsVisible = true;
+                //updatedStackLayout.Children[0].WidthRequest = 30;
+                //updatedStackLayout.Children[0].HeightRequest = 30;
+                //((CachedImage)updatedStackLayout.Children[0]).IsVisible = true;
 
                 routineOnClick(routine, routineIdx, updatedStackLayout);
 
@@ -734,9 +734,26 @@ namespace ProjectCaitlin
                 await Navigation.PushAsync(new TaskPage(routineIdx, true, null, async() => {
                     if (!routine.isInProgress && !routine.isComplete)
                     {
-                        ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
                         routine.isInProgress = true;
                         await firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
+                    }
+                    if (routine.isInProgress)
+                    {
+                        Device.BeginInvokeOnMainThread(async () => {
+                            ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
+                            updatedStackLayout.Children[0].WidthRequest = 30;
+                            updatedStackLayout.Children[0].HeightRequest = 30;
+                            ((CachedImage)updatedStackLayout.Children[0]).IsVisible = true;
+                        });
+                    }
+                    if (routine.isComplete)
+                    {
+                        Device.BeginInvokeOnMainThread(async () => {
+                            ((CachedImage)updatedStackLayout.Children[0]).Source = "greencheckmarkicon.png";
+                            updatedStackLayout.Children[0].WidthRequest = 30;
+                            updatedStackLayout.Children[0].HeightRequest = 30;
+                            ((CachedImage)updatedStackLayout.Children[0]).IsVisible = true;
+                        });
                     }
                 }));
             }
