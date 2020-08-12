@@ -3,6 +3,11 @@ using System.Collections.Generic;
 using ProjectCaitlin.Services;
 using ProjectCaitlin.Views;
 using Xamarin.Forms;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Threading.Tasks;
+using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 
 namespace ProjectCaitlin
 {
@@ -30,15 +35,35 @@ namespace ProjectCaitlin
                 firebaseFunctionsService = new FirebaseFunctionsService();
                 googleService = new GoogleService();
 
-                if (await googleService.RefreshToken())
+                bool loading = false;
+
+                if (!await googleService.UseAccessToken())
                 {
-                    Console.WriteLine("Calling LoadDatabase from LoadingPage OnAppearing");
+                    if (await googleService.RefreshToken())
+                    {
+                        loading = true;
+                        Console.WriteLine("Access Token Expired / Using Refresh Token");
+                        
+                    }
+                }
+
+                else
+                {
+                    loading = true;
+                    Console.WriteLine("Access token valid");
+                }
+
+                if(loading)
+                {
+                    Console.WriteLine("Calling LoadDatabase");
                     await firestoreService.LoadDatabase();
                     await googleService.LoadTodaysEvents();
-                    firestoreService.SetupFirestoreSnapshot();
                     await Navigation.PushAsync(new GoalsRoutinesTemplate());
                 }
+                
             }
         }
+
+        
     }
 }
