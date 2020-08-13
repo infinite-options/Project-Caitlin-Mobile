@@ -775,6 +775,9 @@ namespace ProjectCaitlin
                         ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
                         routine.isInProgress = true;
                         routine.isComplete = false;
+                        updatedStackLayout.Children[0].WidthRequest = 30;
+                        updatedStackLayout.Children[0].HeightRequest = 30;
+                        ((CachedImage)updatedStackLayout.Children[0]).IsVisible = true;
                         firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
                     }
                 }
