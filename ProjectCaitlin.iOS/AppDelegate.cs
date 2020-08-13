@@ -15,7 +15,7 @@ namespace ProjectCaitlin.iOS
     // User Interface of the application, as well as listening (and optionally responding) to 
     // application events from iOS.
     [Register("AppDelegate")]
-    public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, IUNUserNotificationCenterDelegate
+    public partial class AppDelegate : global::Xamarin.Forms.Platform.iOS.FormsApplicationDelegate, IUNUserNotificationCenterDelegate, IMessagingDelegate
     {
         //
         // This method is invoked when the application has loaded and is ready to run. In this 
@@ -70,6 +70,8 @@ namespace ProjectCaitlin.iOS
             }
 
             UIApplication.SharedApplication.RegisterForRemoteNotifications();
+            Messaging.SharedInstance.Delegate = this;
+
 
             // Firebase component initialize
             //Firebase.Analytics.App.Configure();
@@ -89,8 +91,9 @@ namespace ProjectCaitlin.iOS
 
         public override void RegisteredForRemoteNotifications(UIApplication application, NSData deviceToken)
         {
-            var DeviceToken = deviceToken.Description;
-            if (!string.IsNullOrWhiteSpace(DeviceToken))
+            Messaging.SharedInstance.ApnsToken = deviceToken;
+            var DeviceToken = deviceToken;
+            /*if (!string.IsNullOrWhiteSpace(DeviceToken))
             {
                 DeviceToken = DeviceToken.Trim('<').Trim('>');
             }
@@ -101,8 +104,8 @@ namespace ProjectCaitlin.iOS
             if (string.IsNullOrEmpty(oldDeviceToken) || !oldDeviceToken.Equals(DeviceToken))
             {
                 //TODO: Put your own logic here to notify your server that the device token has changed/been created!
-                App.deviceToken = DeviceToken;
-                App.sendDeviceToken();
+                //App.deviceToken = DeviceToken;
+                //App.sendDeviceToken();
             }
 
             // Save new device token
@@ -118,6 +121,7 @@ namespace ProjectCaitlin.iOS
 
         public override void ReceivedRemoteNotification(UIApplication application, NSDictionary userInfo)
         {
+            Console.WriteLine("iOS Push Received", "iOS Data Payload received");
             ProcessNotification(userInfo, false);
         }
 
@@ -147,6 +151,17 @@ namespace ProjectCaitlin.iOS
             {
                 Console.WriteLine("Received request to process notification but there was no payload.");
             }
+        }
+
+        [Export("messaging:didReceiveRegistrationToken:")]
+        public void DidReceiveRegistrationToken(Messaging messaging, string fcmToken)
+        {
+            Console.WriteLine($"Firebase registration token: {fcmToken}");
+
+            // TODO: If necessary send token to application server.
+            // Note: This callback is fired at each app startup and whenever a new token is generated.
+            App.deviceToken = fcmToken;
+            App.sendDeviceToken();
         }
 
 
