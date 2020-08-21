@@ -17,5 +17,7 @@ namespace ProjectCaitlin.Models
         public string pic { get; set; }
 
         public event PropertyChangedEventHandler PropertyChanged;
+
+        public TimeSettings timeSettings { get; set; } = new TimeSettings();
     }
 }

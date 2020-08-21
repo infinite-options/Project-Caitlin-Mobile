@@ -23,14 +23,14 @@ namespace ProjectCaitlin
         List<StackLayout> EventAndRoutineStackLayouts = new List<StackLayout>();
         List<StackLayout> GoalsStackLayouts = new List<StackLayout>();
 
-        TimeSpan morningStart = new TimeSpan(6, 0, 0);
-        TimeSpan morningEnd = new TimeSpan(11, 0, 0);
-        TimeSpan afternoonStart = new TimeSpan(11, 0, 0);
-        TimeSpan afternoonEnd = new TimeSpan(18, 0, 0);
-        TimeSpan eveningStart = new TimeSpan(18, 0, 0);
-        TimeSpan eveningEnd = new TimeSpan(23, 59, 59);
-        TimeSpan nightStart = new TimeSpan(0, 0, 0);
-        TimeSpan nightEnd = new TimeSpan(6, 0, 0);
+        TimeSpan morningStart;
+        TimeSpan morningEnd;
+        TimeSpan afternoonStart;
+        TimeSpan afternoonEnd;
+        TimeSpan eveningStart;
+        TimeSpan eveningEnd;
+        TimeSpan nightStart;
+        TimeSpan nightEnd;
 
         DateTime dateTimeNow;
 
@@ -59,7 +59,7 @@ namespace ProjectCaitlin
 
             /*labelFont = Device.RuntimePlatform == Device.iOS ? "Lobster-Regular" :
                 Device.RuntimePlatform == Device.Android ? "Lobster-Regular.ttf#Lobster-Regular" : "Assets/Fonts/Lobster-Regular.ttf#Lobster";*/
-
+            SetTimeSettings();
             SetupUI();
 
             AddTapGestures();
@@ -71,6 +71,18 @@ namespace ProjectCaitlin
             firestoreService = new FirestoreService();
 
             StartTimer();
+        }
+
+        private void SetTimeSettings()
+        {
+            morningStart = (string.IsNullOrWhiteSpace(App.User.aboutMe.timeSettings.morning))? new TimeSpan(6, 0, 0) : TimeSpan.Parse(App.User.aboutMe.timeSettings.morning);
+            morningEnd = (string.IsNullOrWhiteSpace(App.User.aboutMe.timeSettings.afternoon)) ?  new TimeSpan(12, 0, 0) : TimeSpan.Parse(App.User.aboutMe.timeSettings.afternoon);
+            afternoonStart = (string.IsNullOrWhiteSpace(App.User.aboutMe.timeSettings.afternoon)) ? new TimeSpan(12, 0, 0) : TimeSpan.Parse(App.User.aboutMe.timeSettings.afternoon);
+            afternoonEnd = (string.IsNullOrWhiteSpace(App.User.aboutMe.timeSettings.evening)) ? new TimeSpan(16, 0, 0) : TimeSpan.Parse(App.User.aboutMe.timeSettings.evening);
+            eveningStart = (string.IsNullOrWhiteSpace(App.User.aboutMe.timeSettings.evening)) ? new TimeSpan(16, 0, 0) : TimeSpan.Parse(App.User.aboutMe.timeSettings.evening);
+            eveningEnd = (string.IsNullOrWhiteSpace(App.User.aboutMe.timeSettings.night)) ? new TimeSpan(20, 0, 0) : TimeSpan.Parse(App.User.aboutMe.timeSettings.night);
+            nightStart = (string.IsNullOrWhiteSpace(App.User.aboutMe.timeSettings.night)) ? new TimeSpan(20, 0, 0) : TimeSpan.Parse(App.User.aboutMe.timeSettings.night);
+            nightEnd = new TimeSpan(23, 59, 59);
         }
 
         protected override void OnAppearing()
@@ -114,7 +126,7 @@ namespace ProjectCaitlin
 
                     //recalculate goals/routines durations
                     calculateDuration();
-
+                    SetTimeSettings();
                     SetupUI();
                     PrintFirebaseUser();
                 }
@@ -584,6 +596,15 @@ namespace ProjectCaitlin
                     return MorningREStackLayout;
                 else
                     return MorningGoalsStackLayout;
+            }
+            if (new TimeSpan(0, 0, 0) <= startTime && morningStart > startTime)
+            {
+                //Console.WriteLine("Night");
+
+                if (GorR == "routine")
+                    return NightREStackLayout;
+                else
+                    return NightGoalsStackLayout;
             }
 
             if (morningStart <= startTime && startTime < morningEnd)

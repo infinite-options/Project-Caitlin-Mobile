@@ -90,6 +90,32 @@ namespace ProjectCaitlin.Services
             await LoadUser();
         }
 
+        public async Task<IDictionary<string, object>> GetUserFromFirebase()
+        {
+            Log.Debug("GetUserFromFirebase", "Getting data for user: "+uid+"from firebase");
+            var userDocument = await CrossCloudFirestore.Current.Instance
+                .GetCollection("users")
+                .GetDocument(uid)
+                .GetDocumentAsync();
+            return userDocument.Data;
+        }
+
+        public async Task LoadTimeSettings()
+        {
+            var userDict = await GetUserFromFirebase();
+
+            if (userDict.ContainsKey("about_me"))
+            {
+                var aboutMeData = (Dictionary<string, object>)userDict["about_me"];
+                if (aboutMeData.ContainsKey("timeSettings"))
+                {
+                    var timeSettings = (Dictionary<string, object>)aboutMeData["timeSettings"];
+                    LoadTimeSettings(timeSettings);
+                }
+            }
+
+        }
+
         public async Task LoadUser()
         {
             // reset current user and goals values (in case of reload)
@@ -141,6 +167,16 @@ namespace ProjectCaitlin.Services
             }
         }
 
+        private void LoadTimeSettings(Dictionary<string, object> timeSettings)
+        {
+            App.User.aboutMe.timeSettings.afternoon = timeSettings["afternoon"].ToString();
+            App.User.aboutMe.timeSettings.dayEnd = timeSettings["dayEnd"].ToString();
+            App.User.aboutMe.timeSettings.dayStart = timeSettings["dayStart"].ToString();
+            App.User.aboutMe.timeSettings.evening = timeSettings["evening"].ToString();
+            App.User.aboutMe.timeSettings.morning = timeSettings["morning"].ToString();
+            App.User.aboutMe.timeSettings.night = timeSettings["night"].ToString();
+            App.User.aboutMe.timeSettings.timeZone = timeSettings["timeZone"].ToString();
+        }
 
 
         private void LoadAboutMe(Dictionary<string, object> aboutMeData)
@@ -148,6 +184,11 @@ namespace ProjectCaitlin.Services
             App.User.aboutMe.message_day = aboutMeData["message_day"].ToString();
             App.User.aboutMe.message_card = aboutMeData["message_card"].ToString();
             App.User.aboutMe.pic = aboutMeData["pic"].ToString();
+            if (aboutMeData.ContainsKey("timeSettings"))
+            {
+                var timeSettings = (Dictionary<string, object>)aboutMeData["timeSettings"];
+                LoadTimeSettings(timeSettings);
+            }
         }
 
         public async Task LoadPeople()
