@@ -37,7 +37,7 @@ namespace ProjectCaitlin.Views
 
             var tapGestureRecognizer2 = new TapGestureRecognizer();
             tapGestureRecognizer2.Tapped += async (s, e) => {
-                await Navigation.PushAsync(new ListViewPage());
+                await Navigation.PushAsync(new TodaysList());
             };
             ListViewButton.GestureRecognizers.Add(tapGestureRecognizer2);
             

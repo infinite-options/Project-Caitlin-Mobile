@@ -752,7 +752,7 @@ namespace ProjectCaitlin
                 //}
                 App.ListPageScrollPosY = mainScrollView.ScrollY;
                 //await Navigation.PushAsync(new TaskPage(routineIdx, true));
-                await Navigation.PushAsync(new TaskPage(routineIdx, true, null, async() => {
+                await Navigation.PushAsync(new StepsPageCopy(routineIdx, true, null, async () => {
                     if (!routine.isInProgress && !routine.isComplete)
                     {
                         routine.isInProgress = true;
@@ -777,6 +777,31 @@ namespace ProjectCaitlin
                         });
                     }
                 }));
+                //await Navigation.PushAsync(new TaskPage(routineIdx, true, null, async() => {
+                //    if (!routine.isInProgress && !routine.isComplete)
+                //    {
+                //        routine.isInProgress = true;
+                //        await firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", false);
+                //    }
+                //    if (routine.isInProgress)
+                //    {
+                //        Device.BeginInvokeOnMainThread(async () => {
+                //            ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
+                //            updatedStackLayout.Children[0].WidthRequest = 30;
+                //            updatedStackLayout.Children[0].HeightRequest = 30;
+                //            ((CachedImage)updatedStackLayout.Children[0]).IsVisible = true;
+                //        });
+                //    }
+                //    if (routine.isComplete)
+                //    {
+                //        Device.BeginInvokeOnMainThread(async () => {
+                //            ((CachedImage)updatedStackLayout.Children[0]).Source = "greencheckmarkicon.png";
+                //            updatedStackLayout.Children[0].WidthRequest = 30;
+                //            updatedStackLayout.Children[0].HeightRequest = 30;
+                //            ((CachedImage)updatedStackLayout.Children[0]).IsVisible = true;
+                //        });
+                //    }
+                //}));
             }
             else
             {
@@ -818,7 +843,7 @@ namespace ProjectCaitlin
                 //}
                 App.ListPageScrollPosY = mainScrollView.ScrollY;
                 //await Navigation.PushAsync(new TaskPage(goalIdx, false));
-                await Navigation.PushAsync(new TaskPage(goalIdx, false, null, async() => {
+                await Navigation.PushAsync(new TaskCompletePageCopy(goalIdx, false, null, async () => {
                     if (!goal.isInProgress && !goal.isComplete)
                     {
                         updatedGrid.Children[2].IsVisible = true;
@@ -826,6 +851,14 @@ namespace ProjectCaitlin
                         await firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
                     }
                 }));
+                //await Navigation.PushAsync(new TaskPage(goalIdx, false, null, async() => {
+                //    if (!goal.isInProgress && !goal.isComplete)
+                //    {
+                //        updatedGrid.Children[2].IsVisible = true;
+                //        goal.isInProgress = true;
+                //        await firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
+                //    }
+                //}));
             }
             else
             {

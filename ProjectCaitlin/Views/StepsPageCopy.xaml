@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:ffimage="clr-namespace:FFImageLoading.Forms;assembly=FFImageLoading.Forms"
+             xmlns:viewmodels="clr-namespace:ProjectCaitlin.ViewModel"
+             xmlns:models="clr-namespace:ProjectCaitlin.ViewModel"
+             x:DataType="viewmodels:StepsPageViewModelCopy"
+             x:Class="ProjectCaitlin.Views.StepsPageCopy"
+             NavigationPage.HasNavigationBar="False">
+    <Grid>
+        <ScrollView>
+            <StackLayout Orientation="Vertical">
+
+                <StackLayout Margin="20, 10, 20, 10"
+                             Orientation="Horizontal">
+
+                    <!-- BACK ARROW-->
+                    <ImageButton 
+                                Source="arrowicon.png"
+                                BackgroundColor="Transparent"
+                                HeightRequest="25"
+                                WidthRequest="25"
+                                HorizontalOptions="Start"
+                                VerticalOptions="Center"
+                                Clicked="back"/>
+
+                    <!-- CURRENT ROUTINE-->
+                    <Label
+                            Text="{Binding TaskName}"
+                            FontSize="30"
+                            HorizontalTextAlignment="Center"
+                            FontAttributes="Bold"     
+                            TextColor= "Black"
+                            HorizontalOptions="CenterAndExpand"
+                            VerticalOptions="Center"/>
+
+                    <!-- EXIT BUTTON-->
+                    <ImageButton
+                        Source="exiticon.png"
+                        BackgroundColor="Transparent"
+                        HeightRequest="25"
+                        WidthRequest="25"
+                        HorizontalOptions="End"
+                        Clicked="close"
+                        VerticalOptions="Center"/>
+                </StackLayout>
+
+                <Frame CornerRadius="10"
+                           HeightRequest="290"
+                           WidthRequest="355"
+                           Padding="0"
+                           HorizontalOptions="Center"
+                           IsClippedToBounds="True"
+                           HasShadow="True">
+                    <ffimage:CachedImage Source="{Binding TopImage}" Aspect="AspectFill"/>
+                </Frame>
+
+                <Label Text="{Binding TopLabel}"
+                           HorizontalOptions="Start"
+                           HorizontalTextAlignment="Start"
+                           FontSize="40"
+                           Padding="28, 0, 28, 0"
+                           TextColor="#272E32"/>
+
+                <Label Text="{Binding ExpectedCompletionTime}"
+                           HorizontalOptions="Start"
+                           HorizontalTextAlignment="Start"
+                           FontSize="15"
+                           Padding="30, 0, 30, 0"
+                           TextColor="#6C7072"/>
+
+                <StackLayout
+                    x:Name="ListStackLayoutCopy"
+                    Padding="0,20,0,30"
+                    VerticalOptions="Fill">
+                    <ContentView>
+                    <ListView
+                        x:Name="StepListViewCopy"
+                        HasUnevenRows="true"
+                        ItemsSource="{Binding Items}"
+                        SeparatorColor="#6C7072"
+                        SelectionMode="None"
+                        VerticalOptions="Fill">
+
+                        <ListView.ItemTemplate>
+                            <DataTemplate x:DataType="viewmodels:ListViewItemModelCopy">
+                                <ViewCell>
+                                    <Grid>
+                                        <Grid.ColumnDefinitions>
+                                            <ColumnDefinition Width="5*" />
+
+                                        </Grid.ColumnDefinitions>
+
+                                        <Label
+                                            x:Name="{Binding StepLabelName}"
+                                            Text="{Binding Text}"
+                                            Padding="30, 15, 10, 15"
+                                            Grid.Column="0"
+                                            VerticalOptions="Center"
+                                            HorizontalOptions="Start"
+                                            FontSize="15"
+                                            FontAttributes="Bold"
+                                            TextColor="#272E32">
+                                        </Label>
+
+                                        <ImageButton
+                                            x:Name = "{Binding CheckmarkImageName}"
+                                            Source="{Binding CheckmarkIcon}"
+                                            Grid.Column="1"
+                                            WidthRequest="33"
+                                            HeightRequest="33"
+                                            HorizontalOptions="Center"
+                                            VerticalOptions="Center"
+                                            BackgroundColor="Transparent"
+                                            Command="{Binding CompleteStep}"
+                                            CommandParameter="{Binding CompleteIdx}"/>
+                                    </Grid>
+                                </ViewCell>
+                            </DataTemplate>
+                        </ListView.ItemTemplate>
+                    </ListView>
+                    </ContentView>
+
+                    <Button
+                        x:Name="DoneButtonCopy"
+                        Text="I Am Done"
+                              Clicked="DoneClicked"
+                              HorizontalOptions="Center"
+                              BackgroundColor="#272E32"
+                              TextColor="White"
+                              WidthRequest="100"/>
+
+                </StackLayout>
+
+            </StackLayout>
+
+        </ScrollView>
+
+    </Grid>
+
+</ContentPage>
