@@ -55,7 +55,7 @@ namespace ProjectCaitlin.ViewModel
                 int stepIdx = 0;
                 int stepNum = 1;
 
-                Console.WriteLine("step count: " + App.User.routines[a].tasks[b].steps.Count);
+                Console.WriteLine("step count: " + App.User.routines[a].tasks.Count);
 
                 foreach (task step in App.User.routines[a].tasks)
                 {
@@ -98,13 +98,13 @@ namespace ProjectCaitlin.ViewModel
                                             //string prevStepDbIdx = App.User.routines[a].tasks[b].steps[_stepIdx - 1].dbIdx.ToString();
 
 
-                                            await firebaseFunctionsService.updateGratisStatus(App.User.routines[a].tasks[_stepIdx - 1], "goals&routines", true);
+                                            await firebaseFunctionsService.updateGratisStatus(App.User.routines[a].tasks[_stepIdx - 1], "actions&tasks", true);
                                         }
 
                                         Items[_stepIdx].CheckmarkIcon = "yellowclockicon.png";
                                         App.User.routines[a].tasks[indexForCheckmark].isInProgress = true;
 
-                                        await firebaseFunctionsService.updateGratisStatus(step, "goals&routines", false);
+                                        await firebaseFunctionsService.updateGratisStatus(step, "actions&tasks", false);
                                         mainPage.updateParentTask?.Invoke();
                                     }
                                     else
@@ -117,7 +117,7 @@ namespace ProjectCaitlin.ViewModel
                                                 App.User.routines[a].tasks[indexForCheckmark].isComplete = true;
                                                 Items[_stepIdx].CheckmarkIcon = "greencheckmarkicon.png";
 
-                                                firebaseFunctionsService.updateGratisStatus(step, "goals&routines", true);
+                                                await firebaseFunctionsService.updateGratisStatus(step, "actions&tasks", true);
 
                                             }
                                             else
@@ -125,10 +125,10 @@ namespace ProjectCaitlin.ViewModel
                                                 Items[_stepIdx].CheckmarkIcon = "yellowclockicon.png";
                                                 App.User.routines[a].tasks[indexForCheckmark].isInProgress = true;
 
-                                                firebaseFunctionsService.updateGratisStatus(step, "goals&routines", false);
+                                                await firebaseFunctionsService.updateGratisStatus(step, "actions&tasks", false);
 
                                             }
-                                            mainPage.updateParentTask?.Invoke();
+                                            mainPage.updateParentRoutine?.Invoke();
                                         }
                                         else
                                         {

@@ -19,13 +19,14 @@ namespace ProjectCaitlin.Controls
 
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
         {
-            if (item.GetType() == typeof(goal))
+            TodaysListTileDisplayObject displayObject = item as TodaysListTileDisplayObject;
+            if (string.Equals(displayObject.Type,"Goal"))
             {
-                return ((item as goal).isComplete) ? GoalTodaysListCompleteTemplate : GoalTodaysListNotCompleteTemplate;
+                return (displayObject.IsComplete) ? GoalTodaysListCompleteTemplate : GoalTodaysListNotCompleteTemplate;
             }
-            else if (item.GetType() == typeof(routine))
+            else if (string.Equals(displayObject.Type, "Routine"))
             {
-                return ((item as routine).isComplete) ? RoutineTodaysListCompleteTemplate : RoutineTodaysListNotCompleteTemplate;
+                return (displayObject.IsComplete) ? RoutineTodaysListCompleteTemplate : RoutineTodaysListNotCompleteTemplate;
             }
             else
             {

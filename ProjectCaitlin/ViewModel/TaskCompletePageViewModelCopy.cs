@@ -75,7 +75,8 @@ namespace ProjectCaitlin.ViewModel
                 Items.Add(new InstructionModelCopy
                 (
                     instruction.photo, instruction.title, _okToCheckmark
-                  ));
+                  )
+                { Description = TopLabel});
                 Console.WriteLine("instruction " + i + " isComplete : " + instruction.isComplete);
                 i++;
             }
@@ -106,6 +107,7 @@ namespace ProjectCaitlin.ViewModel
             }
         }
 
+        public string Description { get; set; }
 
         public Command CompleteInstuction { get; set; }
 

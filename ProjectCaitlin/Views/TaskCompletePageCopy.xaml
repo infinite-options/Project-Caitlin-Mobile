@@ -8,7 +8,7 @@
              x:Class="ProjectCaitlin.Views.TaskCompletePageCopy"
              NavigationPage.HasNavigationBar="False">
     <ContentPage.Content>
-        <StackLayout BackgroundColor="DarkSlateGray"
+        <StackLayout BackgroundColor="White"
                      VerticalOptions="FillAndExpand">
                 <StackLayout
                     Orientation="Horizontal"
@@ -18,7 +18,7 @@
                     <!-- BACK ARROW-->
 
                     <ImageButton
-                        Source="arrowiconwhite.png"
+                        Source="arrowicon.png"
                         BackgroundColor="Transparent"
                         HeightRequest="25"
                         WidthRequest="25"
@@ -27,17 +27,14 @@
                         Clicked="back"/>
 
                     <!-- CURRENT ROUTINE-->
-                    <Label
-                            Text="{Binding TopLabel}"
-                            FontSize="30"
-                            FontAttributes="Bold"
-                            TextColor= "White"
-                            HorizontalOptions="CenterAndExpand"
-                            VerticalOptions="Center"/>
+                    <!--<Label Text=" " FontSize="30" FontAttributes="Bold" TextColor= "Black"
+                            HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>-->
+                <IndicatorView x:Name="indicatorView" IndicatorSize="8.0" IndicatorColor="Gray"
+                       SelectedIndicatorColor="Black" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
 
-                    <!-- EXIT BUTTON-->
+                <!-- EXIT BUTTON-->
                     <ImageButton
-                        Source="exiticonwhite.png"
+                        Source="exiticon.png"
                         BackgroundColor="Transparent"
                         HeightRequest="25"
                         WidthRequest="25"
@@ -46,41 +43,27 @@
                         Clicked="close"/>
 
                 </StackLayout>
-                <Label
+                <!--<Label
                 Text="{Binding TopLabel2}"
                 FontSize="18"
-                TextColor= "White"
+                TextColor= "Black"
                 HorizontalOptions="Center"
                 HeightRequest="100"
-                VerticalOptions="Start"/>
+                VerticalOptions="Start"/>-->
 
-            <StackLayout Margin="15"
-                         VerticalOptions="Start">
-                <CarouselView x:Name="CarouselTasks" HeightRequest="400" ItemsSource="{Binding Items}">
+            <StackLayout Margin="0, 15, 0, 20" VerticalOptions="Start">
+                <CarouselView x:Name="CarouselTasks" HeightRequest="400" ItemsSource="{Binding Items}" IndicatorView="indicatorView">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
-                            <StackLayout
-                                Padding="10, 0, 10, 0">
-
-                                <Frame  CornerRadius="30" HeightRequest="300" WidthRequest="300" HorizontalOptions="Center" IsClippedToBounds="True">
+                            <StackLayout Padding="20, 0, 20, 0">
+                                <Frame CornerRadius="30" HeightRequest="300" WidthRequest="300" HasShadow="False" HorizontalOptions="Center" IsClippedToBounds="True">
                                     <Grid>
-                                        
-
-                                        <Image Source="{Binding Source}"
-                               Aspect="AspectFill"
-                               HeightRequest="300"
-                               WidthRequest="300"
-                               HorizontalOptions="Center" />
+                                        <Image Source="{Binding Source}" Aspect="AspectFill" HeightRequest="300" WidthRequest="300" HorizontalOptions="Center" />
                                         <Image x:Name="isComplete" IsVisible="{Binding OkToCheckmark}" Source="greencheckmarkicon.png" HorizontalOptions="CenterAndExpand" VerticalOptions="CenterAndExpand"/>
                                     </Grid>
                                 </Frame>
-                                <Label Text="{Binding Text}"
-                               FontAttributes="Bold"
-                               FontSize="30"
-                               HorizontalOptions="Start"
-                               TextColor="White"
-                               VerticalOptions="Center" />
-
+                                <Label Text="{Binding Text}" FontAttributes="Bold" FontSize="40" HorizontalOptions="Start" TextColor="Black" VerticalOptions="Center" />
+                                <Label Text="{Binding Description}" FontSize="16" FontAttributes="Bold" TextColor= "#9EA0A4"/>
                             </StackLayout>
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
@@ -88,13 +71,18 @@
                 <StackLayout>
                     <Grid>
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.5*" />
-                            <ColumnDefinition Width="0.2*" />
+                            <ColumnDefinition Width="6*"/>
+                            <ColumnDefinition Width="3*"/>
+                            <ColumnDefinition Width="*"/>
                         </Grid.ColumnDefinitions>
+                        <Grid.RowDefinitions>
+                            <RowDefinition Height="7*"/>
+                            <RowDefinition Height="3*"/>
+                        </Grid.RowDefinitions>
                         <!--<ImageButton Grid.Column="0" Source="waveformiconwhite.png" BackgroundColor="Transparent" HeightRequest="50" HorizontalOptions="Start" VerticalOptions="Center" />-->
-                        <Frame  Grid.Column="1" HasShadow="False" CornerRadius="20" Padding="0" HeightRequest="40" HorizontalOptions="Center" >
-                            <Button x:Name="next" CornerRadius="20" Grid.Column="1" Text="Start" FontSize="16" WidthRequest="90" BackgroundColor="LightGray" TextColor="Black"  Clicked="nextpage"/>
-                        </Frame>
+                        <!--<Frame  Grid.Column="1" HasShadow="False" CornerRadius="20" Padding="0" HeightRequest="60" HorizontalOptions="Center" >-->
+                            <Button x:Name="next" CornerRadius="25" Grid.Row="1" Grid.Column="1" Text="Next" FontSize="15" HeightRequest="50" WidthRequest="120" BorderWidth="1" BorderColor="Black" BackgroundColor="White" TextColor="Black"  Clicked="nextpage"/>
+                        <!--</Frame>-->
                     </Grid>
                 </StackLayout>
             </StackLayout>

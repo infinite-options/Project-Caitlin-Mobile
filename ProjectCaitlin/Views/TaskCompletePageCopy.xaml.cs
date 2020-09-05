@@ -58,6 +58,7 @@ namespace ProjectCaitlin.Views
             GRItemModel = _GRItemModel;
             this.routineNum = routineNum;
             a = routineNum;
+            firebaseFunctionsService = new FirebaseFunctionsService();
             //taskGridViewModel = new TaskGridViewModel(this, routineNum, isRoutine, GRItemModel);
             //BindingContext = taskGridViewModel;
             this.isRoutine = isRoutine;
@@ -77,19 +78,20 @@ namespace ProjectCaitlin.Views
             var completeActionCounter = 0;
             var goalId = App.User.goals[a].id;
             var actionId = App.User.goals[a].actions[b].id;
+            var actionCount = App.User.goals[a].actions.Count;
 
             if (next.Text == "Done")
             {
                 var firestoreService = new FirestoreService();
 
-                firebaseFunctionsService.updateGratisStatus(App.User.goals[a].actions[b], "actions&tasks", true);
+                firebaseFunctionsService.updateGratisStatus(App.User.goals[a].actions[actionCount-1], "actions&tasks", true);
 
                 // Set data model completion status
-                App.User.goals[a].actions[b].isComplete = true;
-                App.User.goals[a].actions[b].isInProgress = false;
-                TaskItemModel.IsComplete = true;
-                TaskItemModel.IsInProgress = false;
-                App.User.goals[a].actions[b].dateTimeCompleted = DateTime.Now;
+                //App.User.goals[a].actions[b].isComplete = true;
+                //App.User.goals[a].actions[b].isInProgress = false;
+                //TaskItemModel.IsComplete = true;
+                //TaskItemModel.IsInProgress = false;
+                //App.User.goals[a].actions[b].dateTimeCompleted = DateTime.Now;
 
                 foreach (action action in App.User.goals[a].actions)
                 {
@@ -121,14 +123,14 @@ namespace ProjectCaitlin.Views
             else if (next.Text == "Start")
             {
                 int idx = 0;
-                while (App.User.goals[a].actions[idx].isComplete)
+                while (idx< App.User.goals[a].actions.Count && App.User.goals[a].actions[idx].isComplete)
                 {
                     idx++;
                     Console.WriteLine("instruction complete idx: " + idx);
                 }
                 //App.user.goals[a].actions[b].instructions[0].isComplete = true;
-                next.Text = "Next";
-                CarouselTasks.Position = idx;
+                next.Text = idx< actionCount ? "Next": "Done";
+                CarouselTasks.Position = idx < actionCount ? idx: idx-1;
                 Console.WriteLine("CarouselTasks.Position: " + CarouselTasks.Position);
                 updateParentTask?.Invoke();
                 //await Task.Delay(2000);

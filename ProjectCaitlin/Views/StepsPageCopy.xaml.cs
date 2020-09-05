@@ -130,9 +130,9 @@ namespace ProjectCaitlin.Views
                 App.User.routines[routineNum].isInProgress = false;
                 App.User.routines[routineNum].dateTimeCompleted = DateTime.Now;
 
-                firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", true);
+                await firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", true);
                 await Navigation.PopAsync();
-                updateParentTask();
+                updateParentRoutine?.Invoke();
             }
             else
             {
