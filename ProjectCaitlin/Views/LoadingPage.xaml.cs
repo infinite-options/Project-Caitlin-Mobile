@@ -58,7 +58,7 @@ namespace ProjectCaitlin
                     Console.WriteLine("Calling LoadDatabase");
                     await firestoreService.LoadDatabase();
                     await googleService.LoadTodaysEvents();
-                    await Navigation.PushAsync(new TodaysList());
+                    await Navigation.PushAsync(new ListViewPage());
                 }
                 
             }
