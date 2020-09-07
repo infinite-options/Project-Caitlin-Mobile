@@ -4,167 +4,127 @@
              x:Class="ProjectCaitlin.Views.TodaysList"
              xmlns:model="clr-namespace:ProjectCaitlin.Models"
              xmlns:controls="clr-namespace:ProjectCaitlin.Controls"
-             NavigationPage.HasNavigationBar="True">
+             NavigationPage.HasNavigationBar="False">
 
     <ContentPage.Resources>
         <DataTemplate x:Key="EventTodaysListTemplate" x:DataType="model:TodaysListTileDisplayObject">
-            <Frame BackgroundColor="#E9E8E8" Padding="20,7,20,7" Margin="0">
-                <Frame BackgroundColor="#C8D7E4" HeightRequest="100" CornerRadius="10" HasShadow="True" Padding="10" Margin="0">
-                    <Grid Padding="0" Margin="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="0.5*"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1.5*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.5*"/>
-                            <ColumnDefinition Width="6*"/>
-                            <ColumnDefinition Width="0.5*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Text="{Binding Title}" Font="Bold, 20" Grid.Column="1" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="1" VerticalOptions="CenterAndExpand"/>
-                        <Label Text="{Binding SubTitle}" TextColor="#9FA1A3" Font="15" Grid.Column="1" Grid.Row="5" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-                        <Frame BackgroundColor="#C8D7E4" TranslationX="10" HasShadow="False" Padding="0" Margin="0" Grid.Column="2" Grid.Row="0" Grid.RowSpan="7" Grid.ColumnSpan="3">
-                            <Frame HasShadow="False" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="0" Margin="0" HeightRequest="80" WidthRequest="80">
-                                <ImageButton BackgroundColor="#C8D7E4" BorderColor="#9FA1A3" Source="{Binding Photo}" HorizontalOptions="FillAndExpand" HeightRequest="80" WidthRequest="80"/>
-                            </Frame>
+            <Frame BackgroundColor="#C8D7E4" HeightRequest="166" CornerRadius="20" HasShadow="True" Padding="0" Margin="0">
+                <Grid Padding="20,0,20,0" Margin="0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="0.5*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="7*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="1*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="{Binding TimeDifference}" Padding="0,30,0,0" Font="Bold, 14" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="1" VerticalOptions="CenterAndExpand"/>
+                    <Label Text="{Binding Title}" Padding="0,20,0,0" Font="Bold, 28" Grid.Column="0" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="1" VerticalOptions="StartAndExpand"/>
+                    <Label Text="{Binding SubTitle}" Margin="0,0,0,10" TextColor="#9FA1A3" Font="16" Grid.Column="0" Grid.Row="5" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+                    <Frame BackgroundColor="#C8D7E4" HasShadow="False" Padding="0" Margin="0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="7" Grid.ColumnSpan="3">
+                        <Frame HasShadow="False" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="0" Margin="0" HeightRequest="80" WidthRequest="80">
+                            <Image BackgroundColor="#C8D7E4" Source="{Binding Photo}" HorizontalOptions="FillAndExpand" HeightRequest="80" WidthRequest="80" AutomationProperties.Name="Event Image" />
                         </Frame>
-                    </Grid>
-                </Frame>
+                    </Frame>
+                </Grid>
             </Frame>
         </DataTemplate>
         <DataTemplate x:Key="GoalTodaysListNotCompleteTemplate" x:DataType="model:TodaysListTileDisplayObject">
-                    <Frame BackgroundColor="#E9E8E8" Padding="10">
-                        <Frame BackgroundColor="White" HeightRequest="100" CornerRadius="10" HasShadow="True" Padding="10" Margin="0">
-                            <Grid Padding="0" Margin="0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="0.5*"/>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="1.5*"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.5*"/>
-                                    <ColumnDefinition Width="6*"/>
-                                    <ColumnDefinition Width="0.5*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                </Grid.ColumnDefinitions>
-                                <Label Text="{Binding Title}" Font="Bold, 20" Grid.Column="1" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="1" VerticalOptions="CenterAndExpand"/>
-                                <Label Text="{Binding SubTitle}" TextColor="#9FA1A3" Font="15" Grid.Column="1" Grid.Row="5" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-                                <Frame TranslationX="10" HasShadow="False" Padding="0" Margin="0" Grid.Column="2" Grid.Row="0" Grid.RowSpan="7" Grid.ColumnSpan="3">
-                                    <Frame VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="0" Margin="0" CornerRadius="40" HeightRequest="80" WidthRequest="80">
-                                        <ImageButton BackgroundColor="#EDE2CB" Source="{Binding Photo}" HorizontalOptions="FillAndExpand" BorderWidth="50" HeightRequest="80" WidthRequest="80"/>
-                                    </Frame>
-                                </Frame>
-                            </Grid>
+            <Frame BackgroundColor="White" HeightRequest="136" CornerRadius="10" HasShadow="True" Padding="0" Margin="0">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding TouchCommand}" CommandParameter="{Binding GratisObject}"/>
+                </Frame.GestureRecognizers>
+                <Grid Padding="0" Margin="20,0,20,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="{Binding Title}" Padding ="0,20,0,0" Font="Bold, 24"  Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="1" VerticalOptions="CenterAndExpand"/>
+                    <Label Text="{Binding SubTitle}" TextColor="#9FA1A3"  Font="15" Grid.Column="0" Grid.Row="2" Grid.RowSpan="1" Grid.ColumnSpan="1" VerticalOptions="StartAndExpand"/>
+                    <Frame HasShadow="False" Padding="0" Margin="0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="1">
+                        <Frame VerticalOptions="CenterAndExpand" Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" CornerRadius="28" HeightRequest="56" WidthRequest="56">
+                            <Image BackgroundColor="#EDE2CB" Source="{Binding Photo}" HorizontalOptions="FillAndExpand" HeightRequest="56" WidthRequest="56" AutomationProperties.Name="Goal Incomplete Image" />
                         </Frame>
                     </Frame>
+                </Grid>
+            </Frame>
         </DataTemplate>
         <DataTemplate x:Key="GoalTodaysListCompleteTemplate" x:DataType="model:TodaysListTileDisplayObject">
-                    <Frame BackgroundColor="#E9E8E8" Padding="10">
-                        <Frame BackgroundColor="#E9E8E8" BorderColor="#9FA1A3" HeightRequest="100" CornerRadius="10" HasShadow="False" Padding="10" Margin="0">
-                            <Grid Padding="0" Margin="0">
-                                <Grid.RowDefinitions>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="0.5*"/>
-                                    <RowDefinition Height="1*"/>
-                                    <RowDefinition Height="1.5*"/>
-                                </Grid.RowDefinitions>
-                                <Grid.ColumnDefinitions>
-                                    <ColumnDefinition Width="0.5*"/>
-                                    <ColumnDefinition Width="6*"/>
-                                    <ColumnDefinition Width="0.5*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                    <ColumnDefinition Width="1*"/>
-                                </Grid.ColumnDefinitions>
-                                <Label Text="{Binding Title}" TextColor="#9FA1A3" Font="Bold, 20" Grid.Column="1" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="1" VerticalOptions="CenterAndExpand"/>
-                                <Label Text="{Binding SubTitle}" TextColor="#9FA1A3" Font="15" Grid.Column="1" Grid.Row="5" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-                                <Frame BackgroundColor="#E9E8E8" TranslationX="10" HasShadow="False" Padding="0" Margin="0" Grid.Column="2" Grid.Row="0" Grid.RowSpan="7" Grid.ColumnSpan="3">
-                                    <Frame HasShadow="False" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="0" Margin="0" CornerRadius="40" HeightRequest="80" WidthRequest="80">
-                                        <ImageButton BackgroundColor="#E9E8E8" Source="greencheckmarkicon.png" HorizontalOptions="FillAndExpand" BorderWidth="50" HeightRequest="80" WidthRequest="80"/>
-                                    </Frame>
-                                </Frame>
-                            </Grid>
+            <Frame BackgroundColor="#E9E8E8" BorderColor="Black" HeightRequest="136" CornerRadius="10" HasShadow="False" Padding="0" Margin="0">
+                <Grid Padding="0" Margin="20,1,20,1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="{Binding Title}" Padding ="0,20,0,0" Font="Bold, 24"  Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="1" VerticalOptions="CenterAndExpand"/>
+                    <Label Text="{Binding SubTitle}" TextColor="#9FA1A3"  Font="15" Grid.Column="0" Grid.Row="2" Grid.RowSpan="1" Grid.ColumnSpan="1" VerticalOptions="StartAndExpand"/>
+                    <Frame BackgroundColor="#E9E8E8" HasShadow="False" Padding="0" Margin="0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="1">
+                        <Frame VerticalOptions="CenterAndExpand" HasShadow="False" Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" CornerRadius="28" HeightRequest="56" WidthRequest="56">
+                            <Image BackgroundColor="#E9E8E8" Source="greencheckmarkicon.png" HorizontalOptions="FillAndExpand" HeightRequest="56" WidthRequest="56" AutomationProperties.Name=" Goal Completed"/>
                         </Frame>
                     </Frame>
-                </DataTemplate>
+                </Grid>
+            </Frame>
+        </DataTemplate>
         <DataTemplate x:Key="RoutineTodaysListNotCompleteTemplate" x:DataType="model:TodaysListTileDisplayObject">
-            <Frame BackgroundColor="#E9E8E8" Padding="10">
-                <Frame BackgroundColor="White" HeightRequest="100" CornerRadius="10" HasShadow="True" Padding="10" Margin="0">
-                    <Grid Padding="0" Margin="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="0.5*"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1.5*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.5*"/>
-                            <ColumnDefinition Width="6*"/>
-                            <ColumnDefinition Width="0.5*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Text="{Binding Title}" Font="Bold, 20" Grid.Column="1" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="1" VerticalOptions="CenterAndExpand"/>
-                        <Label Text="{Binding SubTitle}" TextColor="#9FA1A3" Font="15" Grid.Column="1" Grid.Row="5" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-                        <Frame TranslationX="10" HasShadow="False" Padding="0" Margin="0" Grid.Column="2" Grid.Row="0" Grid.RowSpan="7" Grid.ColumnSpan="3">
-                            <Frame VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="0" Margin="0" CornerRadius="40" HeightRequest="80" WidthRequest="80">
-                                <ImageButton BackgroundColor="#EDE2CB" Source="{Binding Photo}" HorizontalOptions="FillAndExpand" BorderWidth="50" HeightRequest="80" WidthRequest="80"/>
-                            </Frame>
+            <Frame BackgroundColor="White" HeightRequest="136" CornerRadius="10" HasShadow="True" Padding="0" Margin="0">
+                <Grid Padding="0" Margin="20,0,20,0">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="{Binding Title}" Padding ="0,20,0,0" Font="Bold, 24"  Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="1" VerticalOptions="CenterAndExpand"/>
+                    <Label Text="{Binding SubTitle}" TextColor="#9FA1A3"  Font="15" Grid.Column="0" Grid.Row="2" Grid.RowSpan="1" Grid.ColumnSpan="1" VerticalOptions="StartAndExpand"/>
+                    <Frame HasShadow="False" Padding="0" Margin="0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="1">
+                        <Frame VerticalOptions="CenterAndExpand" Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" CornerRadius="28" HeightRequest="56" WidthRequest="56">
+                            <Image BackgroundColor="#EDE2CB" Source="{Binding Photo}" HorizontalOptions="FillAndExpand" HeightRequest="56" WidthRequest="56" AutomationProperties.Name="Incomplete Routine Image" />
                         </Frame>
-                    </Grid>
-                </Frame>
+                    </Frame>
+                </Grid>
             </Frame>
         </DataTemplate>
         <DataTemplate x:Key="RoutineTodaysListCompleteTemplate" x:DataType="model:TodaysListTileDisplayObject">
-            <Frame BackgroundColor="#E9E8E8" Padding="10">
-                <Frame BackgroundColor="#E9E8E8" BorderColor="#9FA1A3" HeightRequest="100" CornerRadius="10" HasShadow="False" Padding="10" Margin="0">
-                    <Grid Padding="0" Margin="0">
-                        <Grid.RowDefinitions>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="0.5*"/>
-                            <RowDefinition Height="1*"/>
-                            <RowDefinition Height="1.5*"/>
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition Width="0.5*"/>
-                            <ColumnDefinition Width="6*"/>
-                            <ColumnDefinition Width="0.5*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                            <ColumnDefinition Width="1*"/>
-                        </Grid.ColumnDefinitions>
-                        <Label Text="{Binding Title}" TextColor="#9FA1A3" Font="Bold, 20" Grid.Column="1" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="1" VerticalOptions="CenterAndExpand"/>
-                        <Label Text="{Binding SubTitle}" TextColor="#9FA1A3" Font="15" Grid.Column="1" Grid.Row="5" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
-                        <Frame BackgroundColor="#E9E8E8" TranslationX="10" HasShadow="False" Padding="0" Margin="0" Grid.Column="2" Grid.Row="0" Grid.RowSpan="7" Grid.ColumnSpan="3">
-                            <Frame HasShadow="False" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="0" Margin="0" CornerRadius="40" HeightRequest="80" WidthRequest="80">
-                                <ImageButton BackgroundColor="#E9E8E8" Source="greencheckmarkicon.png" HorizontalOptions="FillAndExpand" BorderWidth="50" HeightRequest="80" WidthRequest="80"/>
-                            </Frame>
+            <Frame BackgroundColor="#E9E8E8" BorderColor="Black" HeightRequest="136" CornerRadius="10" HasShadow="False" Padding="0" Margin="0">
+                <Grid Padding="0" Margin="20,1,20,1">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                        <RowDefinition Height="1*"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="2*"/>
+                    </Grid.ColumnDefinitions>
+                    <Label Text="{Binding Title}" Padding ="0,20,0,0" Font="Bold, 24"  Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="1" VerticalOptions="CenterAndExpand"/>
+                    <Label Text="{Binding SubTitle}" TextColor="#9FA1A3"  Font="15" Grid.Column="0" Grid.Row="2" Grid.RowSpan="1" Grid.ColumnSpan="1" VerticalOptions="StartAndExpand"/>
+                    <Frame BackgroundColor="#E9E8E8" HasShadow="False" Padding="0" Margin="0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="1">
+                        <Frame VerticalOptions="CenterAndExpand" HasShadow="False" Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" CornerRadius="28" HeightRequest="56" WidthRequest="56">
+                            <Image BackgroundColor="#E9E8E8" Source="greencheckmarkicon.png" HorizontalOptions="FillAndExpand" HeightRequest="56" WidthRequest="56" AutomationProperties.Name=" Routine Completed Image"/>
                         </Frame>
-                    </Grid>
-                </Frame>
+                    </Frame>
+                </Grid>
             </Frame>
         </DataTemplate>
         
@@ -175,8 +135,19 @@
     </ContentPage.Resources>
     
     <ContentPage.Content>
-        <StackLayout>
-            <CollectionView x:Name="TodaysListCollectionView" BackgroundColor="#E9E8E8" VerticalOptions="CenterAndExpand" ItemTemplate="{StaticResource GratisTodaysListSelector}">
+        <StackLayout BackgroundColor="#E9E8E8">
+            <CollectionView x:Name="TodaysListCollectionView" VerticalOptions="CenterAndExpand" ItemTemplate="{StaticResource GratisTodaysListSelector}" IsGrouped="True" Margin="20,0,20,0">
+                <CollectionView.ItemsLayout>
+                    <LinearItemsLayout ItemSpacing="15" Orientation="Vertical"/>
+                </CollectionView.ItemsLayout>
+                <CollectionView.GroupHeaderTemplate>
+                    <DataTemplate>
+                        <StackLayout Orientation="Horizontal" Padding="0,80,0,0">
+                            <Image Source="{Binding GroupIcon}" WidthRequest="48" HeightRequest="48" AutomationProperties.Name="Morning Events, Goals, and Routines" />
+                            <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" VerticalOptions="Center"/>
+                        </StackLayout>
+                    </DataTemplate>
+                </CollectionView.GroupHeaderTemplate>
             </CollectionView>
             <Frame HasShadow="True" Padding="10" HeightRequest="50">
                 <StackLayout Padding="0" Orientation="Horizontal" HeightRequest="40">
@@ -189,7 +160,7 @@
                         <Label  Text="Today's List" FontSize="12"/>
                     </StackLayout>
                     <StackLayout Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" HeightRequest="40">
-                        <ImageButton BackgroundColor="White" Source="aboutmeiconnotext.png" HeightRequest="25" AutomationProperties.Name="Go To About Me" />
+                        <ImageButton BackgroundColor="White" Clicked="OnAboutMe_Clicked" Source="aboutmeiconnotext.png" HeightRequest="25" AutomationProperties.Name="Go To About Me" />
                         <Label  Text="About Me" FontSize="12"/>
                     </StackLayout>
                 </StackLayout>

@@ -1,0 +1,182 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="ProjectCaitlin.Views.AboutMe"
+             NavigationPage.HasNavigationBar="False">
+    <ContentPage.Content>
+        <FlexLayout Direction="Column">
+            <Grid FlexLayout.Grow="1">
+
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+                    <RowDefinition Height="*"/>
+
+
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <Frame
+       Grid.ColumnSpan="7"
+       Grid.Column="0"
+       Grid.Row="0"
+       Grid.RowSpan="3"
+
+       Margin="10"
+       BorderColor="White"
+       CornerRadius="125"
+       HeightRequest="200"
+       WidthRequest="200"  
+       IsClippedToBounds="True"
+       HorizontalOptions="Center"
+       VerticalOptions="CenterAndExpand"
+       >
+
+                    <Image Source="https://previews.123rf.com/images/yacobchuk/yacobchuk1801/yacobchuk180102816/94661421-the-portrait-of-a-handsome-dark-haired-middle-aged-man-in-a-blue-shirt-smiling-at-the-camera-while-p.jpg"
+         Aspect="AspectFill"
+         Margin="-20"
+         HeightRequest="100"
+         WidthRequest="100"  />
+
+
+                </Frame>
+
+                <Label Text="Michael J."
+       Grid.Column="1"
+       Grid.ColumnSpan="5"
+       Grid.Row="2"
+       Grid.RowSpan="3"
+       FontSize="40"
+       FontFamily="Inter Medium"
+       FontAttributes="Bold"
+       VerticalOptions="Center"
+       TextColor="Black"
+       HorizontalOptions = "CenterAndExpand" />
+
+                <Button Text="Log Out" x:Name="LogOut"           
+                BorderColor="Black"
+                BorderWidth="1"
+              
+       Grid.Column="2"
+       Grid.ColumnSpan="3"
+       Grid.Row="3"
+       Grid.RowSpan="3"
+               
+                VerticalOptions="CenterAndExpand"
+                HorizontalOptions="Center"
+                CornerRadius="28" FontSize="16" WidthRequest="170" BackgroundColor="White" TextColor="Black"
+                
+               ></Button>
+
+                <Label Text="Contact My Trsuted Advisors"
+       Grid.Column="0"
+       Grid.ColumnSpan="7"
+       Grid.Row="2"
+       Grid.RowSpan="6"
+       FontSize="Large" 
+       FontAttributes="Bold"
+       TextColor="Black"
+       VerticalOptions="Center"
+       HorizontalOptions = "CenterAndExpand" />
+
+                <Frame
+     Grid.ColumnSpan="2"
+       Grid.Column="1"
+       Grid.Row="4"
+       Grid.RowSpan="4"
+
+     Margin="10"
+       BorderColor="White"
+       CornerRadius="100"
+       HeightRequest="50"
+       WidthRequest="50"
+       IsClippedToBounds="True"
+       HorizontalOptions="Center"
+       VerticalOptions="CenterAndExpand">
+
+
+                    <Image Source="https://cdn7.dissolve.com/p/D1061_21_535/D1061_21_535_1200.jpg"
+         Aspect="AspectFill"
+         Margin="-20"
+         HeightRequest="100"
+         WidthRequest="100"  />
+
+                </Frame>
+
+                <Frame
+       Grid.ColumnSpan="2"
+       Grid.Column="4"
+       Grid.Row="4"
+       Grid.RowSpan="4"
+
+       Margin="10"
+       BorderColor="White"
+       CornerRadius="100"
+       HeightRequest="50"
+       WidthRequest="50"
+       IsClippedToBounds="True"
+       HorizontalOptions="Center"
+       VerticalOptions="CenterAndExpand"
+       >
+
+                    <Image Source="https://sweetjanemag.com/wp-content/uploads/2019/11/edward-cisneros-_H6wpor9mjs-unsplash-1080x675.jpg"
+         Aspect="AspectFill"
+         Margin="-20"
+         HeightRequest="100"
+         WidthRequest="100"  />
+
+                </Frame>
+
+                <Label Text="Marshall"
+       Grid.Column="0"
+       Grid.ColumnSpan="4"
+       Grid.Row="6"
+       Grid.RowSpan="2"
+       FontSize="Large" 
+       FontAttributes="Bold"
+       VerticalOptions="Center"
+       HorizontalOptions = "CenterAndExpand" />
+
+                <Label Text="Marshallita"
+       Grid.Column="3"
+       Grid.ColumnSpan="4"
+       Grid.Row="6"
+       Grid.RowSpan="2"
+       FontSize="Large" 
+       FontAttributes="Bold"
+       VerticalOptions="Center"
+       HorizontalOptions = "CenterAndExpand" />
+
+            </Grid>
+            <Frame HasShadow="True" Padding="10" HeightRequest="50">
+                <StackLayout Padding="0" Orientation="Horizontal" HeightRequest="40">
+                    <!--<StackLayout Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" HeightRequest="40">
+                        <ImageButton BackgroundColor="White" Source="mydayiconnotext.png" HeightRequest="25" AutomationProperties.Name="Go To My Day" />
+                        <Label Text="My Day" FontSize="12"/>
+                    </StackLayout>-->
+                    <StackLayout Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" HeightRequest="40">
+                        <ImageButton BackgroundColor="White" Clicked="OnTodaysList_Clicked" Source="listviewiconnotext.png" HeightRequest="25" AutomationProperties.Name="Refresh List View" />
+                        <Label  Text="Today's List" FontSize="12"/>
+                    </StackLayout>
+                    <StackLayout Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" HeightRequest="40">
+                        <ImageButton BackgroundColor="White" Source="aboutmeiconnotext.png" HeightRequest="25" AutomationProperties.Name="Go To About Me" />
+                        <Label  Text="About Me" FontSize="12"/>
+                    </StackLayout>
+                </StackLayout>
+            </Frame>
+        </FlexLayout>
+    </ContentPage.Content>
+</ContentPage>

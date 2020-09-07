@@ -20,11 +20,11 @@ namespace ProjectCaitlin.Controls
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
         {
             TodaysListTileDisplayObject displayObject = item as TodaysListTileDisplayObject;
-            if (string.Equals(displayObject.Type,"Goal"))
+            if (displayObject.Type == TileType.Goal)
             {
                 return (displayObject.IsComplete) ? GoalTodaysListCompleteTemplate : GoalTodaysListNotCompleteTemplate;
             }
-            else if (string.Equals(displayObject.Type, "Routine"))
+            else if (displayObject.Type == TileType.Routine)
             {
                 return (displayObject.IsComplete) ? RoutineTodaysListCompleteTemplate : RoutineTodaysListNotCompleteTemplate;
             }
