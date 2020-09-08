@@ -19,6 +19,10 @@ namespace ProjectCaitlin.Models
         public TimeSpan AvailableEndTime { get; set; }
         public string ActualStartTime { get; set; }
         public string ActualEndTime { get; set; }
+        public Color BorderColor { get; set; }
+        public Color FrameBgColorComplete { set; private get; }
+        public Color FrameBgColorInComplete { set; private get; }
+        public Color FrameBgColor { get { return (isComplete) ? FrameBgColorComplete : FrameBgColorInComplete; } }
         public string Title { get; set; }
         public string SubTitle { get; set; }
         public string TimeDifference { get; set; }
@@ -26,7 +30,17 @@ namespace ProjectCaitlin.Models
         public string Photo { get; set; }
         public string TimeMessage {get; set;}
         private bool isComplete;
-        public bool IsComplete { get { return this.isComplete; } set { this.isComplete = value; OnPropertyChanged(); } }
+        public bool IsComplete { 
+            get { return this.isComplete; } 
+            set {
+                BorderColor = Color.Black; 
+                this.isComplete = value; 
+                OnPropertyChanged("IsComplete"); 
+                OnPropertyChanged("BorderColor");
+                OnPropertyChanged("FrameBgColor");
+                OnPropertyChanged("IsNotComplete");
+            } }
+        public bool IsNotComplete { get { return !isComplete; } }
         private bool inProgress;
         public bool InProgress { get { return this.inProgress; } set { this.inProgress = value; OnPropertyChanged(); } }
         public bool IsSubListAvailable { get; set; }

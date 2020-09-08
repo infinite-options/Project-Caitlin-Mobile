@@ -28,6 +28,7 @@ namespace ProjectCaitlin.Views
         bool isRoutine;
         readonly TaskCompletePageViewModelCopy pageModel;
         UpdateParentGoalTask updateParentTask;
+        UpdateParentGoalTask onCompletion;
         int routineNum;
 
         //public TaskCompletePageCopy(int a, int b, bool isRoutine, TaskItemModel _TaskItemModel, GRItemModel _GRItemModel)
@@ -73,6 +74,12 @@ namespace ProjectCaitlin.Views
             this.updateParentTask = updateParentTask;
         }
 
+        public TaskCompletePageCopy(int routineNum, bool isRoutine, GRItemModel _GRItemModel, UpdateParentGoalTask updateParentTask, UpdateParentGoalTask onCompletion) : this(routineNum, isRoutine, _GRItemModel)
+        {
+            this.updateParentTask = updateParentTask;
+            this.onCompletion = onCompletion;
+        }
+
         public async void nextpage(object sender, EventArgs args)
         {
             var completeActionCounter = 0;
@@ -80,11 +87,11 @@ namespace ProjectCaitlin.Views
             var actionId = App.User.goals[a].actions[b].id;
             var actionCount = App.User.goals[a].actions.Count;
 
-            if (next.Text == "Done")
+            if (next.Text == "I'm Done")
             {
-                var firestoreService = new FirestoreService();
+                //var firestoreService = new FirestoreService();
 
-                firebaseFunctionsService.updateGratisStatus(App.User.goals[a].actions[actionCount-1], "actions&tasks", true);
+                //firebaseFunctionsService.updateGratisStatus(App.User.goals[a].actions[actionCount-1], "actions&tasks", true);
 
                 // Set data model completion status
                 //App.User.goals[a].actions[b].isComplete = true;
@@ -100,24 +107,23 @@ namespace ProjectCaitlin.Views
                         completeActionCounter++;
                     }
                 }
-
+                await Navigation.PopAsync();
                 if (completeActionCounter == App.User.goals[a].actions.Count)
                 {
-                    firebaseFunctionsService.updateGratisStatus(App.User.goals[a], "goals&routines", true);
+                    //await firebaseFunctionsService.updateGratisStatus(App.User.goals[a], "goals&routines", true);
 
                     // Set data model completion status
-                    App.User.goals[a].isComplete = true;
-                    App.User.goals[a].isInProgress = false;
-                    if (App.ParentPage != "ListView")
-                    {
-                        GRItemModel.IsComplete = true;
-                        GRItemModel.IsInProgress = false;
-                        GRItemModel.Text = "Done";
-                    }
-                    App.User.goals[a].dateTimeCompleted = DateTime.Now;
+                    //App.User.goals[a].isComplete = true;
+                    //App.User.goals[a].isInProgress = false;
+                    //if (App.ParentPage != "ListView")
+                    //{
+                    //    GRItemModel.IsComplete = true;
+                    //    GRItemModel.IsInProgress = false;
+                    //    GRItemModel.Text = "Done";
+                    //}
+                    //App.User.goals[a].dateTimeCompleted = DateTime.Now;
+                    onCompletion?.Invoke();
                 }
-
-                await Navigation.PopAsync();
             }
 
             else if (next.Text == "Start")
@@ -145,6 +151,7 @@ namespace ProjectCaitlin.Views
                 firebaseFunctionsService.updateGratisStatus(instruction, "actions&tasks", true);
 
                 CarouselTasks.Position = CarouselTasks.Position + 1;
+                updateParentTask?.Invoke();
             }
             else if (CarouselTasks.Position == App.User.goals[a].actions.Count - 1)
             {
@@ -153,7 +160,10 @@ namespace ProjectCaitlin.Views
                 App.User.goals[a].actions[CarouselTasks.Position].isComplete = true;
                 pageModel.Items[CarouselTasks.Position].OkToCheckmark = true;
                 firebaseFunctionsService.updateGratisStatus(instruction, "actions&tasks", true);
-                next.Text = "Done";
+                next.Text = "I'm Done";
+                next.BackgroundColor = Color.Black;
+                next.TextColor = Color.White;
+                updateParentTask?.Invoke();
 
             }
             else if (CarouselTasks.Position != App.User.goals[a].actions.Count - 1)
@@ -164,8 +174,10 @@ namespace ProjectCaitlin.Views
                 pageModel.Items[CarouselTasks.Position].OkToCheckmark = true;
                 firebaseFunctionsService.updateGratisStatus(instruction, "actions&tasks", true);
 
-                next.Text = "Done";
-
+                next.Text = "I'm Done";
+                next.BackgroundColor = Color.Black;
+                next.TextColor = Color.White;
+                updateParentTask?.Invoke();
             }
 
 
@@ -175,7 +187,7 @@ namespace ProjectCaitlin.Views
         {
             if (CarouselTasks.Position != 0)
             {
-                next.Text = "Done";
+                next.Text = "I'm Done";
             }
         }
 

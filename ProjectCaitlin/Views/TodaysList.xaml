@@ -37,11 +37,11 @@
             </Frame>
         </DataTemplate>
         <DataTemplate x:Key="GoalTodaysListNotCompleteTemplate" x:DataType="model:TodaysListTileDisplayObject">
-            <Frame BackgroundColor="White" HeightRequest="136" CornerRadius="10" HasShadow="True" Padding="0" Margin="0">
+            <Frame BackgroundColor="{Binding FrameBgColor}" BorderColor="{Binding BorderColor}" HeightRequest="136" CornerRadius="10" HasShadow="{Binding IsNotComplete}" Padding="0" Margin="0">
                 <Frame.GestureRecognizers>
-                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding TouchCommand}" CommandParameter="{Binding GratisObject}"/>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding TouchCommand}"/>
                 </Frame.GestureRecognizers>
-                <Grid Padding="0" Margin="20,0,20,0">
+                <Grid Padding="0" Margin="20,1,20,1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
                         <RowDefinition Height="1*"/>
@@ -53,11 +53,17 @@
                     </Grid.ColumnDefinitions>
                     <Label Text="{Binding Title}" Padding ="0,20,0,0" Font="Bold, 24"  Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="1" VerticalOptions="CenterAndExpand"/>
                     <Label Text="{Binding SubTitle}" TextColor="#9FA1A3"  Font="15" Grid.Column="0" Grid.Row="2" Grid.RowSpan="1" Grid.ColumnSpan="1" VerticalOptions="StartAndExpand"/>
-                    <Frame HasShadow="False" Padding="0" Margin="0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="1">
-                        <Frame VerticalOptions="CenterAndExpand" Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" CornerRadius="28" HeightRequest="56" WidthRequest="56">
+                    <Frame BackgroundColor="{Binding FrameBgColor}" HasShadow="False" Padding="0" Margin="0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="1">
+                        <Frame VerticalOptions="CenterAndExpand" IsVisible="{Binding IsNotComplete}" Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" CornerRadius="28" HeightRequest="56" WidthRequest="56">
                             <Image BackgroundColor="#EDE2CB" Source="{Binding Photo}" HorizontalOptions="FillAndExpand" HeightRequest="56" WidthRequest="56" AutomationProperties.Name="Goal Incomplete Image" />
                         </Frame>
                     </Frame>
+                    <Image Source="yellowclockicon.png" IsVisible="{Binding InProgress}" HorizontalOptions="FillAndExpand" 
+                           HeightRequest="56" WidthRequest="56" AutomationProperties.Name="In Progress Image" 
+                           Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="1"/>
+                    <Image IsVisible="{Binding IsComplete}" Source="greencheckmarkicon.png" HorizontalOptions="FillAndExpand" BackgroundColor="{Binding FrameBgColor}"
+                           HeightRequest="56" WidthRequest="56" AutomationProperties.Name="Goal Incomplete Image" 
+                           Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="1"/>
                 </Grid>
             </Frame>
         </DataTemplate>
@@ -85,6 +91,9 @@
         </DataTemplate>
         <DataTemplate x:Key="RoutineTodaysListNotCompleteTemplate" x:DataType="model:TodaysListTileDisplayObject">
             <Frame BackgroundColor="White" HeightRequest="136" CornerRadius="10" HasShadow="True" Padding="0" Margin="0">
+                <Frame.GestureRecognizers>
+                    <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding TouchCommand}"/>
+                </Frame.GestureRecognizers>
                 <Grid Padding="0" Margin="20,0,20,0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
@@ -156,7 +165,7 @@
                         <Label Text="My Day" FontSize="12"/>
                     </StackLayout>-->
                     <StackLayout Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" HeightRequest="40">
-                        <ImageButton BackgroundColor="White" Source="listviewiconnotext.png" HeightRequest="25" AutomationProperties.Name="Refresh List View" />
+                        <ImageButton BackgroundColor="White" Clicked="Refresh" Source="listviewiconnotext.png" HeightRequest="25" AutomationProperties.Name="Refresh List View" />
                         <Label  Text="Today's List" FontSize="12"/>
                     </StackLayout>
                     <StackLayout Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" HeightRequest="40">

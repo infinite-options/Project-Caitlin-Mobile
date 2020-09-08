@@ -16,7 +16,7 @@ using Xamarin.Forms.Xaml;
 using Android.Support.V4.App;
 using Xamarin.Forms.Internals;
 using Application = Xamarin.Forms.Application;
-
+using System.Threading;
 
 namespace ProjectCaitlin.Droid
 {
@@ -60,7 +60,16 @@ namespace ProjectCaitlin.Droid
                     {
                         App.User.id = message.Data["id"];
                         FirestoreService firestoreService = new FirestoreService();
+                    try
+                    {
+                        Thread.Sleep(3000);
                         await firestoreService.LoadDatabase();
+                    }
+                    catch (Exception e)
+                    {
+                        Console.WriteLine(e.StackTrace);
+                    }
+                        
                         //SendLocalNotification(message);
                     }
                     

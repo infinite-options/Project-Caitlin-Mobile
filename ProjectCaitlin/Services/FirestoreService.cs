@@ -13,6 +13,7 @@ using Newtonsoft.Json;
 using System.Collections;
 using System.Security.Cryptography.X509Certificates;
 using Acr.UserDialogs.Infrastructure;
+using System.Runtime.CompilerServices;
 
 namespace ProjectCaitlin.Services
 {
@@ -25,6 +26,8 @@ namespace ProjectCaitlin.Services
         FirebaseFunctionsService firebaseFunctionsService;
 
         INotificationManager notificationManager;
+
+        public static FirestoreService Instance = new FirestoreService();
 
         public FirestoreService()
         {

@@ -36,38 +36,68 @@ namespace ProjectCaitlin.ViewModel
             }
         }
 
-        async public void UponTileUpdate(TodaysListTileDisplayObject Tile)
+        async public void UponGoalTileUpdate(TodaysListTileDisplayObject Tile)
         {
             if (!Tile.InProgress && !Tile.IsComplete)
             {
                 Tile.InProgress = true;
-                await firebaseFunctionsService.updateGratisStatus(Tile.GratisObject as GratisObject, "goals&routines", false);
+                await firebaseFunctionsService.updateGratisStatus(App.User.goals[Tile.Index], "goals&routines", false);
+            }
+        }
+
+        async public void CompleteGoal(TodaysListTileDisplayObject Tile)
+        {
+            Tile.InProgress = false;
+            Tile.IsComplete = true;
+            await firebaseFunctionsService.updateGratisStatus(App.User.goals[Tile.Index], "goals&routines", true);
+        }
+
+        async public void CompleteRoutine(TodaysListTileDisplayObject Tile)
+        {
+            Tile.InProgress = false;
+            Tile.IsComplete = true;
+            await firebaseFunctionsService.updateGratisStatus(App.User.routines[Tile.Index], "goals&routines", true);
+        }
+
+        async public void UponRoutineTileUpdate(TodaysListTileDisplayObject Tile)
+        {
+            if (!Tile.InProgress && !Tile.IsComplete)
+            {
+                Tile.InProgress = true;
+                await firebaseFunctionsService.updateGratisStatus(App.User.routines[Tile.Index], "goals&routines", false);
             }
         }
 
         async void HandleGoalTileTouch(TodaysListTileDisplayObject Tile)
         {
-            goal goal = Tile.GratisObject as goal;
+            goal goal = App.User.goals[Tile.Index];
             if (!goal.isSublistAvailable || goal.actions.Count==0)
             {
-                UponTileUpdate(Tile);
+                if (Tile.InProgress)
+                {
+                    CompleteGoal(Tile);
+                } else 
+                {
+                    UponGoalTileUpdate(Tile); 
+                }
             }
             else
             {
-                Navigation.PushAsync(new TaskCompletePageCopy(Tile.Index, false, null, async () => { UponTileUpdate(Tile); }));
+                //await Navigation.PushAsync(new TaskCompletePageCopy(Tile.Index, false, null, async () => { UponGoalTileUpdate(Tile); }));
+                await Navigation.PushAsync(new TaskCompletePageCopy(Tile.Index, false, null, async () => { UponGoalTileUpdate(Tile); }, async () => { CompleteGoal(Tile); }));
             }
         }
 
         async void HandleRoutineTileTouch(TodaysListTileDisplayObject Tile)
         {
-            routine routine = Tile.GratisObject as routine;
+            routine routine = App.User.routines[Tile.Index];
             if (!routine.isSublistAvailable || routine.tasks.Count == 0)
             {
-                UponTileUpdate(Tile);
+                UponRoutineTileUpdate(Tile);
             }
             else
             {
-                Navigation.PushAsync(new StepsPageCopy(Tile.Index, true, Tile.GratisObject as GRItemModel, async () => { UponTileUpdate(Tile); }));
+                await Navigation.PushAsync(new StepsPageCopy(Tile.Index, true, Tile.GratisObject as GRItemModel, async () => { UponRoutineTileUpdate(Tile); }));
             }
         }
 

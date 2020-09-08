@@ -55,32 +55,26 @@ namespace ProjectCaitlin.Views
                 SubTitle = "Starts in few minutes",
                 IsSubListAvailable = _goal.isSublistAvailable,
                 Photo = _goal.photo,
-                GratisObject = _goal
+                FrameBgColorComplete = Color.FromHex("#E9E8E8"),
+                FrameBgColorInComplete = Color.FromHex("#FFFFFF")
+                //GratisObject = _goal
             };
 
             goalTile.TouchCommand = new Command(async () => ViewModel.OnTileTapped(goalTile));
 
-            //goalTile.TouchCommand = new Command(
-            //    async () => tama(goalTile)
-            //    );
             return goalTile;
         }
 
-        private void tama(TodaysListTileDisplayObject tile)
+        private TodaysListTileDisplayObject ToTile(goal _goal, int index)
         {
-            tile.IsComplete = true;
+            TodaysListTileDisplayObject tile = ToTile(_goal);
+            tile.Index = index;
+            return tile;
         }
-
-        //private TodaysListTileDisplayObject ToTile(goal _goal, int index)
-        //{
-        //    TodaysListTileDisplayObject tile = ToTile(_goal);
-        //    tile.Index = index;
-        //    return tile;
-        //}
 
         private TodaysListTileDisplayObject ToTile(routine _routine)
         {
-            TodaysListTileDisplayObject routineTile = new TodaysListTileDisplayObject()
+            TodaysListTileDisplayObject routineTile = new TodaysListTileDisplayObject(_routine.isInProgress, _routine.isComplete)
             {
                 Type = TileType.Routine,
                 AvailableEndTime = _routine.availableEndTime,
@@ -88,11 +82,9 @@ namespace ProjectCaitlin.Views
                 ActualEndTime = _routine.dateTimeCompleted.ToString(),
                 Title = _routine.title,
                 SubTitle = "This will run for an hour",
-                IsComplete = _routine.isComplete,
-                InProgress = _routine.isInProgress,
                 IsSubListAvailable = _routine.isSublistAvailable,
                 Photo = _routine.photo,
-                GratisObject = _routine
+                //GratisObject = _routine
             };
             routineTile.TouchCommand = new Command(async () => ViewModel.OnTileTapped(routineTile));
 
@@ -125,14 +117,15 @@ namespace ProjectCaitlin.Views
 
         private List<TodaysListTileDisplayObject> ToTileList(List<goal> goalList)
         {
-            List<TodaysListTileDisplayObject> goalTiles = new List<TodaysListTileDisplayObject>();
-
-            for (int idx = 0; idx < goalList.Count; idx++)
-            {
-                TodaysListTileDisplayObject tile = ToTile(goalList[idx]);
-                tile.Index = idx;
-                goalTiles.Add(tile);
-            }
+            //List<TodaysListTileDisplayObject> goalTiles = new List<TodaysListTileDisplayObject>();
+            List<TodaysListTileDisplayObject> goalTiles;
+            //for (int idx = 0; idx < goalList.Count; idx++)
+            //{
+            //    TodaysListTileDisplayObject tile = ToTile(goalList[idx]);
+            //    tile.Index = idx;
+            //    goalTiles.Add(tile);
+            //}
+            goalTiles = goalList.Select((value, index) => ToTile(value, index)).ToList();
             return goalTiles;
         }
 
@@ -221,6 +214,20 @@ namespace ProjectCaitlin.Views
         private void OnAboutMe_Clicked(object sender, EventArgs e)
         {
             Navigation.PushAsync(new AboutMe());
+        }
+
+        private void Refresh(object sender, EventArgs e)
+        {
+            try
+            {
+                Task loadingStatus = ProjectCaitlin.Services.FirestoreService.Instance.LoadDatabase();
+                loadingStatus.Wait();
+                LoadUI();
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine(exception.StackTrace);
+            }
         }
     }
 }

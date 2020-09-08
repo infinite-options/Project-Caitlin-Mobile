@@ -830,6 +830,12 @@ namespace ProjectCaitlin
             }
         }
 
+        async public void CompleteGoal(goal goal)
+        {
+            goal.dateTimeCompleted = DateTime.Now;
+            await firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", true);
+        }
+
         public async void goalOnClick(goal goal, int goalIdx, Grid updatedGrid)
         {
             if (goal.isSublistAvailable)
@@ -850,6 +856,8 @@ namespace ProjectCaitlin
                         goal.isInProgress = true;
                         await firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
                     }
+                }, async() => {
+                    CompleteGoal(goal); 
                 }));
                 //await Navigation.PushAsync(new TaskPage(goalIdx, false, null, async() => {
                 //    if (!goal.isInProgress && !goal.isComplete)
@@ -919,7 +927,7 @@ namespace ProjectCaitlin
             {
                 await Navigation.PushAsync(new GoalsRoutinesTemplate());
             };
-            MyDayButton.GestureRecognizers.Add(tapGestureRecognizer4);
+            //MyDayButton.GestureRecognizers.Add(tapGestureRecognizer4);
         }
 
         void PrintFirebaseUser()

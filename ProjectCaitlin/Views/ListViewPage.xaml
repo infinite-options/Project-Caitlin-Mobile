@@ -337,14 +337,14 @@
                         <ColumnDefinition Width="0.25*" />
                     </Grid.ColumnDefinitions>-->
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="0.33*" />
-                        <ColumnDefinition Width="0.33*" />
-                        <ColumnDefinition Width="0.33*" />
+                        <!--<ColumnDefinition Width="0.33*" />-->
+                        <ColumnDefinition Width="0.5*" />
+                        <ColumnDefinition Width="0.5*" />
                     </Grid.ColumnDefinitions>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*" />
                     </Grid.RowDefinitions>
-                    <StackLayout x:Name="MyDayButton" VerticalOptions="End" Grid.Column="0">
+                    <!--<StackLayout x:Name="MyDayButton" VerticalOptions="End" Grid.Column="0">
                         <forms:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="mydayiconnotext.png" >
                             <forms:CachedImage.HeightRequest>
                                 <OnPlatform x:TypeArguments="x:Double">
@@ -361,8 +361,8 @@
                                 </OnPlatform>
                             </Label.FontFamily>
                         </Label>
-                    </StackLayout>
-                    <StackLayout x:Name="ListViewButton" VerticalOptions="End" Grid.Column="1" >
+                    </StackLayout>-->
+                    <StackLayout x:Name="ListViewButton" VerticalOptions="End" Grid.Column="0" >
                         <forms:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="listviewiconselectednotext.png" >
                             <forms:CachedImage.HeightRequest>
                                 <OnPlatform x:TypeArguments="x:Double">
@@ -399,7 +399,7 @@
                         </Label>
                     </StackLayout>-->
                     <!--<StackLayout x:Name="AboutMeButton" VerticalOptions="End" Grid.Column="3">-->
-                    <StackLayout x:Name="AboutMeButton" VerticalOptions="End" Grid.Column="2">
+                    <StackLayout x:Name="AboutMeButton" VerticalOptions="End" Grid.Column="1">
                         <forms:CachedImage DownsampleWidth="25" BackgroundColor="Transparent" Source="aboutmeiconnotext.png" >
                             <forms:CachedImage.HeightRequest>
                                 <OnPlatform x:TypeArguments="x:Double">
