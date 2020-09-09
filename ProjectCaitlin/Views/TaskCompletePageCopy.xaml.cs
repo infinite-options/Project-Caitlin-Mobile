@@ -28,6 +28,7 @@ namespace ProjectCaitlin.Views
         bool isRoutine;
         readonly TaskCompletePageViewModelCopy pageModel;
         UpdateParentGoalTask updateParentTask;
+        UpdateParentGoalTask inProcess;
         UpdateParentGoalTask onCompletion;
         int routineNum;
 
@@ -74,9 +75,16 @@ namespace ProjectCaitlin.Views
             this.updateParentTask = updateParentTask;
         }
 
-        public TaskCompletePageCopy(int routineNum, bool isRoutine, GRItemModel _GRItemModel, UpdateParentGoalTask updateParentTask, UpdateParentGoalTask onCompletion) : this(routineNum, isRoutine, _GRItemModel)
+        public TaskCompletePageCopy(int routineNum, bool isRoutine, GRItemModel _GRItemModel, UpdateParentGoalTask updateParentTask, UpdateParentGoalTask inProcess) : this(routineNum, isRoutine, _GRItemModel)
         {
             this.updateParentTask = updateParentTask;
+            this.inProcess = inProcess;
+        }
+
+        public TaskCompletePageCopy(int routineNum, bool isRoutine, GRItemModel _GRItemModel, UpdateParentGoalTask updateParentTask, UpdateParentGoalTask inProcess, UpdateParentGoalTask onCompletion) : this(routineNum, isRoutine, _GRItemModel)
+        {
+            this.updateParentTask = updateParentTask;
+            this.inProcess = inProcess;
             this.onCompletion = onCompletion;
         }
 
@@ -139,6 +147,7 @@ namespace ProjectCaitlin.Views
                 CarouselTasks.Position = idx < actionCount ? idx: idx-1;
                 Console.WriteLine("CarouselTasks.Position: " + CarouselTasks.Position);
                 updateParentTask?.Invoke();
+                inProcess?.Invoke();
                 //await Task.Delay(2000);
             }
 
