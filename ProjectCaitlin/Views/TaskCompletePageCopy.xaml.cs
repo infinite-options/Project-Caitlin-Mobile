@@ -131,6 +131,7 @@ namespace ProjectCaitlin.Views
                     //}
                     //App.User.goals[a].dateTimeCompleted = DateTime.Now;
                     onCompletion?.Invoke();
+                    return;
                 }
             }
 

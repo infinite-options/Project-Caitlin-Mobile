@@ -1059,6 +1059,17 @@ namespace ProjectCaitlin
                         await firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
                     }
 
+                    if (goal.isInProgress)
+                    {
+                        Console.WriteLine("Print YellowCLock");
+                        Device.BeginInvokeOnMainThread(async () => {
+                            ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
+                            updatedStackLayout.Children[0].WidthRequest = 30;
+                            updatedStackLayout.Children[0].HeightRequest = 30;
+                            ((CachedImage)updatedStackLayout.Children[0]).IsVisible = true;
+                        });
+                    }
+
                 }, async () => {
 
                     Console.WriteLine("2nd Async");
