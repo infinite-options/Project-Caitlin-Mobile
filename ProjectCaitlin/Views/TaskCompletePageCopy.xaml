@@ -52,7 +52,7 @@
                 VerticalOptions="Start"/>-->
 
             <StackLayout Margin="0, 15, 0, 20" VerticalOptions="Start">
-                <CarouselView x:Name="CarouselTasks" HeightRequest="400" ItemsSource="{Binding Items}" IndicatorView="indicatorView">
+                <CarouselView x:Name="CarouselTasks"  ItemsSource="{Binding Items}" IndicatorView="indicatorView">
                     <CarouselView.ItemTemplate>
                         <DataTemplate>
                             <StackLayout Padding="20, 0, 20, 0">
@@ -68,7 +68,7 @@
                         </DataTemplate>
                     </CarouselView.ItemTemplate>
                 </CarouselView>
-                <StackLayout>
+                <!--<StackLayout>
                     <Grid>
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="6*"/>
@@ -79,11 +79,23 @@
                             <RowDefinition Height="7*"/>
                             <RowDefinition Height="3*"/>
                         </Grid.RowDefinitions>
-                        <!--<ImageButton Grid.Column="0" Source="waveformiconwhite.png" BackgroundColor="Transparent" HeightRequest="50" HorizontalOptions="Start" VerticalOptions="Center" />-->
-                        <!--<Frame  Grid.Column="1" HasShadow="False" CornerRadius="20" Padding="0" HeightRequest="60" HorizontalOptions="Center" >-->
+                        --><!--<ImageButton Grid.Column="0" Source="waveformiconwhite.png" BackgroundColor="Transparent" HeightRequest="50" HorizontalOptions="Start" VerticalOptions="Center" />-->
+                        <!--<Frame  Grid.Column="1" HasShadow="False" CornerRadius="20" Padding="0" HeightRequest="60" HorizontalOptions="Center" >--><!--
                             <Button x:Name="next" CornerRadius="25" Grid.Row="1" Grid.Column="1" Text="Next" FontSize="15" HeightRequest="50" WidthRequest="120" BorderWidth="1" BorderColor="Black" BackgroundColor="White" TextColor="Black"  Clicked="nextpage"/>
-                        <!--</Frame>-->
+                        --><!--</Frame>--><!--
                     </Grid>
+                </StackLayout>-->
+                <StackLayout VerticalOptions="EndAndExpand">
+                    <Frame HasShadow="False" HeightRequest="100" WidthRequest="0" VerticalOptions="EndAndExpand">
+                        <Button x:Name="next"  CornerRadius="25" HorizontalOptions="EndAndExpand" 
+                            VerticalOptions="End"
+                            Text="Next" FontSize="16"
+                            Margin="10"
+                            FontAttributes="Bold"
+                            HeightRequest="52"
+                            WidthRequest="132" BorderWidth="1" BorderColor="Black" BackgroundColor="White" TextColor="Black"
+                        Clicked="nextpage"/>
+                    </Frame>
                 </StackLayout>
             </StackLayout>
         </StackLayout>
