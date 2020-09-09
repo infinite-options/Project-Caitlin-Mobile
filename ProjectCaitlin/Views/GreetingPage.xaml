@@ -13,9 +13,10 @@
              BackgroundColor="White">
             <!--BackgroundColor="#1A1827"-->
     <ContentPage.Content>
-        <ScrollView >
+        <FlexLayout Direction="Column">
+        <!--<ScrollView >-->
             <!--<AbsoluteLayout>-->
-            <StackLayout
+            <StackLayout FlexLayout.Grow="1"
                 Margin="0,0,0,0">
                 <!--<StackLayout HorizontalOptions="End">
                     <!- -<ImageButton
@@ -46,7 +47,7 @@
                         </StackLayout>
                     </StackLayout>
                     <StackLayout x:Name="box" IsVisible="true" Margin="0,10,0,0">
-                        <StackLayout>
+                        <!--<StackLayout>-->
                             <ffimage:CachedImage
                         x:Name = "UserImage"
                         HeightRequest="200"
@@ -55,13 +56,13 @@
                                     <fftransformations:CircleTransformation/>
                                 </ffimage:CachedImage.Transformations>
                             </ffimage:CachedImage>
-                        </StackLayout>
+                        <!--</StackLayout>-->
                         <StackLayout>
                             <!-- HIDING GREETINGS LABEL <Label x:Name ="GreetingsTitleLabel" Text="" TextColor="Black" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>-->
                             <Label x:Name ="FirstNameLabel" Text=""  TextColor="Black" FontSize="40" FontFamily="Inter" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
                             <!-- HIDING MESSAGE LABEL -->
                             <!--<Label x:Name ="MessageLabel" Text=""  TextColor="Black" Margin="20,20" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>-->
-                            <Button x:Name= "LogoutButton" FontFamily= "Inter" Font="Smibold" BackgroundColor="White" Text="Log Out" TextColor="Black" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" FontSize="16" CornerRadius="40" BorderColor="Black" BorderWidth="1" Margin="40,0,40,0" Clicked="LogoutBtnClick" HeightRequest="52" WidthRequest="172"/>
+                            <Button x:Name= "LogoutButton" FontFamily= "Inter" Font="Smibold" BackgroundColor="White" Text="Log Out" TextColor="Black" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" FontSize="16" CornerRadius="80" BorderColor="Black" BorderWidth="1" Margin="40,0,40,0" Clicked="LogoutBtnClick" HeightRequest="52" WidthRequest="172"/>
                             <!-- HIDING MESSAGE CARD LABEL -->
                             <!--<Label x:Name ="MessageCardLabel" Text=""  TextColor="Black" Margin="20,20" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>-->
                             <!-- Below field is used voice recognition -->
@@ -170,7 +171,7 @@
 
                 <!--Insertion of Nav Bar-->
 
-                 <Frame HasShadow="True" Padding="10" HeightRequest="50">
+            <Frame HasShadow="True" Padding="10" HeightRequest="50">
                     <StackLayout Padding="0" Orientation="Horizontal" HeightRequest="40">
                 <!--<StackLayout Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" HeightRequest="40">
                         <ImageButton BackgroundColor="White" Source="mydayiconnotext.png" HeightRequest="25" AutomationProperties.Name="Go To My Day" />
@@ -199,6 +200,7 @@
                 <!--</AbsoluteLayout>-->
                
             </StackLayout>
-        </ScrollView>
+        </FlexLayout>
+        <!--</ScrollView>-->
     </ContentPage.Content>
 </ContentPage>

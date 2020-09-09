@@ -245,11 +245,13 @@ namespace ProjectCaitlin
             //    foreach (StackLayout stackLayout in GetInTimeOfDayList(goal.availableStartTime.TimeOfDay, goal.availableEndTime.TimeOfDay))
             //        PopulateGoal(goal, stackLayout);
 
+            
+
+            PopulateEventsAndRoutines(0, 0);
+
             int goalIdx = 0;
             foreach (goal goal in user.goals)
                 PopulateGoal(goal, goalIdx++, GetFirstInTimeOfDay("goal", goal.availableStartTime));
-
-            PopulateEventsAndRoutines(0, 0);
         }
 
         private void PopulateEventsAndRoutines(int eventIdx, int routineIdx)
