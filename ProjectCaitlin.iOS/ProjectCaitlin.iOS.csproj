@@ -80,7 +80,6 @@
     <Compile Include="Main.cs" />
     <Compile Include="AppDelegate.cs" />
     <None Include="Entitlements.plist" />
-    <None Include="GoogleService-Info.plist" />
     <None Include="Info.plist" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ButtonTextWrap.cs" />
@@ -304,6 +303,7 @@
     <BundleResource Include="Resources\previousbutton.png" />
     <BundleResource Include="Resources\yellowclockicon.png" />
     <BundleResource Include="Resources\btn_google_signin_light_normal_web.png" />
+    <BundleResource Include="GoogleService-Info.plist" />
     <BundleResource Include="Resources\logouticon.png" />
   </ItemGroup>
 </Project>
