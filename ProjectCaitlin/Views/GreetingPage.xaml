@@ -10,31 +10,30 @@
              mc:Ignorable="d"
              x:Class="ProjectCaitlin.Views.GreetingPage"
              NavigationPage.HasNavigationBar="False"
-             BackgroundColor="#1A1827">
+             BackgroundColor="White">
+            <!--BackgroundColor="#1A1827"-->
     <ContentPage.Content>
         <ScrollView >
             <!--<AbsoluteLayout>-->
             <StackLayout
-            Margin="0,40,10,0">
-                <StackLayout
-            HorizontalOptions="End">
-                    <ImageButton
-                Source="logouticon.png"
-                WidthRequest="25"
-                HeightRequest="25"
-                Margin="0,0,5,0"
-                HorizontalOptions="Center"
-                Clicked="LogoutBtnClick">
+                Margin="0,0,0,0">
+                <!--<StackLayout HorizontalOptions="End">
+                    <!- -<ImageButton
+                        Source="logouticon.png"
+                        WidthRequest="25"
+                        HeightRequest="25"
+                        Margin="0,0,5,0"
+                        HorizontalOptions="Center"
+                        Clicked="LogoutBtnClick">
                     </ImageButton>
                     <Label
-                Text="Log Out"
-                FontSize="10"
-                TextColor="WhiteSmoke"
-                HorizontalOptions="Center">
+                        Text="Log Out"
+                        FontSize="10"
+                        TextColor="WhiteSmoke"
+                        HorizontalOptions="Center">
+                    </Label> - ->
+                </StackLayout>-->
 
-                    </Label>
-                </StackLayout>
-                
                 <StackLayout VerticalOptions="CenterAndExpand">
                     <StackLayout x:Name="EntryBox" IsVisible="false">
                         <Label Text="Unable to find the voice" TextColor="White" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="CenterAndExpand" VerticalOptions="Center"/>
@@ -46,32 +45,36 @@
                             <Button Text="Cancel" WidthRequest="70" CornerRadius="10" Padding="0" Margin="0,5"  IsVisible="True" TextColor="White"  BackgroundColor="#59556D" Clicked="CancelAddingPersonButtonClicked"/>
                         </StackLayout>
                     </StackLayout>
-                    <StackLayout x:Name="box" IsVisible="true">
+                    <StackLayout x:Name="box" IsVisible="true" Margin="0,10,0,0">
                         <StackLayout>
                             <ffimage:CachedImage
                         x:Name = "UserImage"
-                        HeightRequest="140"
-                        WidthRequest="140">
+                        HeightRequest="200"
+                        WidthRequest="200">
                                 <ffimage:CachedImage.Transformations>
                                     <fftransformations:CircleTransformation/>
                                 </ffimage:CachedImage.Transformations>
                             </ffimage:CachedImage>
                         </StackLayout>
                         <StackLayout>
-                            <Label x:Name ="GreetingsTitleLabel" Text="" TextColor="White" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
-                            <Label x:Name ="FirstNameLabel" Text=""  TextColor="White" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
-                            <Label x:Name ="MessageLabel" Text=""  TextColor="White" Margin="20,20" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
-                            <Label x:Name ="MessageCardLabel" Text=""  TextColor="White" Margin="20,20" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <!-- HIDING GREETINGS LABEL <Label x:Name ="GreetingsTitleLabel" Text="" TextColor="Black" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>-->
+                            <Label x:Name ="FirstNameLabel" Text=""  TextColor="Black" FontSize="40" FontFamily="Inter" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <!-- HIDING MESSAGE LABEL -->
+                            <!--<Label x:Name ="MessageLabel" Text=""  TextColor="Black" Margin="20,20" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>-->
+                            <Button x:Name= "LogoutButton" FontFamily= "Inter" Font="Smibold" BackgroundColor="White" Text="Log Out" TextColor="Black" HorizontalOptions="CenterAndExpand" FontAttributes="Bold" FontSize="16" CornerRadius="40" BorderColor="Black" BorderWidth="1" Margin="40,0,40,0" Clicked="LogoutBtnClick" HeightRequest="52" WidthRequest="172"/>
+                            <!-- HIDING MESSAGE CARD LABEL -->
+                            <!--<Label x:Name ="MessageCardLabel" Text=""  TextColor="Black" Margin="20,20" FontSize="Small" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>-->
                             <!-- Below field is used voice recognition -->
-                            <Label x:Name ="RecognizedPerson" Text="" TextColor="White" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
+                            <Label x:Name ="RecognizedPerson" Text="" TextColor="Black" FontSize="Large" HorizontalTextAlignment="Center" HorizontalOptions="Center" VerticalOptions="Center"/>
                         </StackLayout>
                     </StackLayout>
 
-                    <StackLayout Margin="50">
+                    <!-- Hiding Enroll (SPEAKER RECOGNITION) Buttons PT. 1 -->
+                    <!--  <StackLayout Margin="50">
                         <StackLayout Orientation="Horizontal">
                             <Button Text="Enroll" CornerRadius="10" Margin="0,5" Padding="0" WidthRequest="60" Clicked ="enrollClicked" TextColor="White"  BackgroundColor="#59556D" />
                             <Button x:Name="identifyButton" Text="Identify" WidthRequest="70" CornerRadius="10" Padding="0" Margin="0,5" Clicked ="identifyClicked" IsVisible="True" TextColor="White"  BackgroundColor="#59556D" />
-                            <!--<Label x:Name="timer" Margin="5" Text="30" IsVisible="False" TextColor="White"  BackgroundColor="#59556D" />-->
+                            <!- -<Label x:Name="timer" Margin="5" Text="30" IsVisible="False" TextColor="White"  BackgroundColor="#59556D" /> - ->
                             <local:SlideToActView SlideCompleted="Handle_SlideCompleted" HorizontalOptions="FillAndExpand" Margin="0,5">
                                 <local:SlideToActView.Thumb>
                                     <Frame CornerRadius="10" HasShadow="false" BackgroundColor="Silver" Padding="0" HeightRequest="45" WidthRequest="45">
@@ -84,8 +87,11 @@
                                     </Frame>
                                 </local:SlideToActView.TrackBar>
                             </local:SlideToActView>
-                        </StackLayout >
-                        <!--<StackLayout >
+                        </StackLayout > 
+                        END OF HIDING BUTTONS PT 1 -->
+
+
+                    <!--<StackLayout >
                             <local:SlideToActView SlideCompleted="Handle_SlideCompleted">
                                 <local:SlideToActView.Thumb>
                                     <Frame CornerRadius="10" HasShadow="false" BackgroundColor="Silver" Padding="0" HeightRequest="45" WidthRequest="45">
@@ -99,12 +105,15 @@
                                 </local:SlideToActView.TrackBar>
                             </local:SlideToActView>
                         </StackLayout>-->
-                        <Button Text="View Today's List" CornerRadius="10" Margin="5" Clicked ="btn1Clicked" TextColor="White"  BackgroundColor="#59556D" />
-                        <Button Text="Manage My Day " CornerRadius="10" Margin="5" Clicked="btn2Clicked" TextColor="White" BackgroundColor="#59556D"/>
-                    </StackLayout>
 
-                    <StackLayout
+                    <!--Hide buttons (SPEAKER RECOGNITION) pt. 2-->
+                    <!-- <Button Text="View Today's List" CornerRadius="10" Margin="5" Clicked ="btn1Clicked" TextColor="White"  BackgroundColor="#59556D" />
+                        <Button Text="Manage My Day " CornerRadius="10" Margin="5" Clicked="btn2Clicked" TextColor="White" BackgroundColor="#59556D"/>
+                    </StackLayout>  END OF HIDE BUTTONS 2 -->
+
+                    <StackLayout HorizontalOptions="Center"
                         x:Name="importantPeopleSL">
+                        <Label Text="Contact My Trusted Advisors" HorizontalOptions="Center" TextColor="Black" FontSize="Medium" FontAttributes="Bold" Margin="0,10,0,30"/>
                         <!--<Label
                         Text="Important Individuals"
                         FontSize="20"
@@ -118,52 +127,78 @@
                         TextColor="WhiteSmoke"
                         Margin="0,0,0,10">
                         </Label>-->
-                        <flv:FlowListView
-                        FlowColumnCount="3"
-                    SeparatorVisibility="Default"
-                    HasUnevenRows="False"
-                    RowHeight="105"
-                    BackgroundColor="#1A1827"
-                    FlowItemsSource="{Binding Items}">
 
-                            <flv:FlowListView.FlowColumnTemplate>
+                        <!-- FLOW LIST VIEW LOCATION -->
+                        <CarouselView BackgroundColor="White" ItemsSource="{Binding Items}" IndicatorView="indicatorView" >
+                            <CarouselView.ItemTemplate>
                                 <DataTemplate>
                                     <StackLayout>
-                                        <ffimage:CachedImage
-                                        Margin="22,0,22,0"
-                                        Source="{Binding Source}"
-                                        HeightRequest="80"
-                                        WidthRequest="80"
-                                        Aspect="AspectFill">
-                                            <ffimage:CachedImage.GestureRecognizers>
-                                                <TapGestureRecognizer 
-                                                Command="{Binding Navigate}"
-                                                CommandParameter="{Binding NavigateIdx}">
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="Center">
+                                            <ffimage:CachedImage
+                                                Margin="0,0,0,0"
+                                                Source="{Binding Source}"
+                                                HeightRequest="80"
+                                                WidthRequest="80"
+                                                Aspect="AspectFill">
+                                                <ffimage:CachedImage.GestureRecognizers>
+                                                    <TapGestureRecognizer 
+                                                    Command="{Binding Navigate}"
+                                                    CommandParameter="{Binding NavigateIdx}">
 
-                                                </TapGestureRecognizer>
-                                            </ffimage:CachedImage.GestureRecognizers>
-                                            <ffimage:CachedImage.Transformations>
-                                                <fftransformations:CircleTransformation />
-                                            </ffimage:CachedImage.Transformations>
-                                        </ffimage:CachedImage>
-                                        <Label HorizontalOptions="Center" TextColor="White" Text="{Binding Text}"  />
+                                                    </TapGestureRecognizer>
+                                                </ffimage:CachedImage.GestureRecognizers>
+                                                <ffimage:CachedImage.Transformations>
+                                                    <fftransformations:CircleTransformation />
+                                                </ffimage:CachedImage.Transformations>
+                                            </ffimage:CachedImage>
+                                        </StackLayout>
+
+                                        <StackLayout Orientation="Horizontal" HorizontalOptions="CenterAndExpand" >
+                                            <Label HorizontalOptions="Center" FontSize="18" FontFamily="Inter" TextColor="Black" Text="{Binding Text}"  />
+                                        </StackLayout>
                                     </StackLayout>
                                 </DataTemplate>
-                            </flv:FlowListView.FlowColumnTemplate>
-                        </flv:FlowListView>
+                            </CarouselView.ItemTemplate>
+                        </CarouselView>
+                        <IndicatorView  Margin="0,-550,0,0" x:Name="indicatorView"
+                            IndicatorColor="LightGray"
+                            SelectedIndicatorColor="DarkGray"
+                             HorizontalOptions="Center" />
+
                     </StackLayout>
                 </StackLayout>
-            </StackLayout>
-                <!--<ContentView x:Name="popupMessageView" BackgroundColor="#C0808080" Padding="10, 0" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
-                    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
-                        <StackLayout Orientation="Vertical" HeightRequest="150" WidthRequest="200" BackgroundColor="White">
 
-                            --><!--<ActivityIndicator x:Name="activityIndicator" Margin="0,50,0,0" VerticalOptions="Center" HorizontalOptions="Center" Color="Black" WidthRequest="30" HeightRequest="30" ></ActivityIndicator>--><!--
+                <!--Insertion of Nav Bar-->
+
+                 <Frame HasShadow="True" Padding="10" HeightRequest="50">
+                    <StackLayout Padding="0" Orientation="Horizontal" HeightRequest="40">
+                <!--<StackLayout Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" HeightRequest="40">
+                        <ImageButton BackgroundColor="White" Source="mydayiconnotext.png" HeightRequest="25" AutomationProperties.Name="Go To My Day" />
+                        <Label Text="My Day" FontSize="12"/>
+                    </StackLayout>-->
+                <StackLayout Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" HeightRequest="40">
+                    <ImageButton BackgroundColor="White" Clicked="btn1Clicked" Source="listviewiconnotext.png" HeightRequest="25" AutomationProperties.Name="Refresh List View" />
+                    <Label  Text="Today's List" FontSize="12"/>
+                </StackLayout>
+                <StackLayout Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" HeightRequest="40">
+                    <ImageButton BackgroundColor="White"  Source="aboutmeiconnotext.png" HeightRequest="25" AutomationProperties.Name="Go To About Me" BorderColor="Blue" />
+                    <Label  Text="About Me" FontSize="12"/>
+                </StackLayout>
+            </StackLayout>
+            </Frame>
+
+            <!--<ContentView x:Name="popupMessageView" BackgroundColor="#C0808080" Padding="10, 0" IsVisible="false" AbsoluteLayout.LayoutBounds="0, 0, 1, 1" AbsoluteLayout.LayoutFlags="All">
+                    <StackLayout VerticalOptions="Center" HorizontalOptions="Center">
+                        <StackLayout Orientation="Vertical" HeightRequest="150" WidthRequest="200" BackgroundColor="White">-->
+                <!--<ActivityIndicator x:Name="activityIndicator" Margin="0,50,0,0" VerticalOptions="Center" HorizontalOptions="Center" Color="Black" WidthRequest="30" HeightRequest="30" ></ActivityIndicator>-->
+                <!--
                             <Label x:Name="popUpMessageStatus" TextColor="Black" VerticalOptions="CenterAndExpand" HorizontalOptions="Center" VerticalTextAlignment="Center" Text="Loading..."></Label>
                         </StackLayout>
                     </StackLayout>
                 </ContentView>-->
-            <!--</AbsoluteLayout>-->
+                <!--</AbsoluteLayout>-->
+               
+            </StackLayout>
         </ScrollView>
     </ContentPage.Content>
 </ContentPage>

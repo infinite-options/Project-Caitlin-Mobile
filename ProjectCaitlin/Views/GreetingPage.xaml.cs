@@ -82,8 +82,9 @@ namespace ProjectCaitlin.Views
                             {
                                 Device.BeginInvokeOnMainThread(() =>
                                 {
-                                    this.trackBarFrame.BackgroundColor = Color.Yellow;
-                                    this.trackBar.Text = string.Format("{0}\n{1}", SlideToActView.States.Recording, i);
+                                    //HIDE BUTTONS (SPEAKER RECOGNITION) CODE BEHIND
+                                         //this.trackBarFrame.BackgroundColor = Color.Yellow;
+                                         //this.trackBar.Text = string.Format("{0}\n{1}", SlideToActView.States.Recording, i);
                                 });
                                 i += 1;
                                 System.Threading.Thread.Sleep(1000);
@@ -92,17 +93,20 @@ namespace ProjectCaitlin.Views
                     }
                 }
             });
-            //trackBar.Text = SlideToActView.States.Disabled;
-            //trackBarFrame.BackgroundColor = Color.Gray;
+            //HIDE BUTTONS (SPEAKER RECOGNITION) CODE BEHIND
+                  //trackBar.Text = SlideToActView.States.Disabled;
+                 //trackBarFrame.BackgroundColor = Color.Gray;
         }
 
         private void SetupUI()
         {
             UserImage.Source = App.User.aboutMe.pic;
-            GreetingsTitleLabel.Text = GetTitleDayMessage();
+            //HIDING GREETINGS LABEL
+                //GreetingsTitleLabel.Text = GetTitleDayMessage();
             FirstNameLabel.Text = App.User.firstName;
-            MessageCardLabel.Text = App.User.aboutMe.message_card;
-            MessageLabel.Text = App.User.aboutMe.message_day;
+            //HIDING MESSAGE AND MESSAGE CARD LABELS
+                 //MessageCardLabel.Text = App.User.aboutMe.message_card;
+                 //MessageLabel.Text = App.User.aboutMe.message_day;
 
             if (App.User.people.Count == 0)
             {
@@ -224,16 +228,20 @@ namespace ProjectCaitlin.Views
         public void UpdateSlider(Color color, String label) {
             if (color != null)
             {
-                trackBarFrame.BackgroundColor = color;
+                //HIDE BUTTONS (SPEAKER RECOGNITION) CODE BEHIND
+                    //trackBarFrame.BackgroundColor = color;
             }
-            trackBar.Text = label; 
+            //HIDE BUTTONS (SPEAKER RECOGNITION) CODE BEHIND
+                //trackBar.Text = label; 
         }
 
         public void ResetSlider()
         {
-            trackBarFrame.BackgroundColor = Color.Gray;
-            //trackBar.Text = SlideToActView.States.Disabled;
-            trackBar.Text = recorderWrapper.autoMode ? SlideToActView.States.AlwaysOn : SlideToActView.States.Manual;
+            //HIDE BUTTONS (SPEAKER RECOGNITION) CODE BEHIND
+                     // trackBarFrame.BackgroundColor = Color.Gray;
+            //PREVIOUSLY COMMENTED //trackBar.Text = SlideToActView.States.Disabled;
+            //HIDE BUTTONS (SPEAKER RECOGNITION) CODE BEHIND
+                     //trackBar.Text = recorderWrapper.autoMode ? SlideToActView.States.AlwaysOn : SlideToActView.States.Manual;
         }
 
         void Handle_SlideCompleted(object sender, System.EventArgs e)
@@ -247,13 +255,15 @@ namespace ProjectCaitlin.Views
         {
             if (recorderWrapper.autoMode)
             {
-                identifyButton.IsVisible = false;
-                trackBar.Text = SlideToActView.States.AlwaysOn;
+                //HIDE BUTTONS (SPEAKER RECOGNITION) CODE BEHIND
+                    //identifyButton.IsVisible = false;
+                    //trackBar.Text = SlideToActView.States.AlwaysOn;
             }
             else
             {
-                identifyButton.IsVisible = true;
-                trackBar.Text = SlideToActView.States.Manual;
+                //HIDE BUTTONS (SPEAKER RECOGNITION) CODE BEHIND
+                    //identifyButton.IsVisible = true;
+                    //trackBar.Text = SlideToActView.States.Manual;
             }
         }
 
@@ -268,8 +278,9 @@ namespace ProjectCaitlin.Views
 
                         Device.BeginInvokeOnMainThread(() =>
                         {
-                            //this.timer.Text = string.Format("{0}", i);
-                            this.trackBar.Text = string.Format("{0}\nTime Left {1}",SlideToActView.States.Recording,i);
+                            //Previously Commented! //this.timer.Text = string.Format("{0}", i);
+                            //HIDE BUTTONS (SPEAKER RECOGNITION) CODE BEHIND
+                                //this.trackBar.Text = string.Format("{0}\nTime Left {1}",SlideToActView.States.Recording,i);
                         });
                     }
                 isEnrollingNow = false;
@@ -291,7 +302,8 @@ namespace ProjectCaitlin.Views
                 {
                     Device.BeginInvokeOnMainThread(() =>
                     {
-                        this.trackBar.Text = string.Format("{0}\n{1}", SlideToActView.States.Recording, i);
+                        //HIDE BUTTONS (SPEAKER RECOGNITION) CODE BEHIND
+                             // this.trackBar.Text = string.Format("{0}\n{1}", SlideToActView.States.Recording, i);
                     });
                     i += 1;
                     System.Threading.Thread.Sleep(1000);
@@ -326,10 +338,12 @@ namespace ProjectCaitlin.Views
         {
             //UserImage.IsVisible = people.HavePic;
             UserImage.Source = people.picUrl;
-            GreetingsTitleLabel.Text = "You are talking to:";
+            //HIDING GREETINGS LABEL
+                //GreetingsTitleLabel.Text = "You are talking to:";
             FirstNameLabel.Text = people.FirstName;
-            MessageCardLabel.Text = null;
-            MessageLabel.Text = null;
+            //HIDING MESSAGE AND MESSAGE CARD LABELS
+                   //MessageCardLabel.Text = null;
+                   //MessageLabel.Text = null;
         }
 
         public void AddRecognizedPersonDetailOnPage(People people)
