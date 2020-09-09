@@ -20,8 +20,8 @@
                     <ImageButton
                         Source="arrowicon.png"
                         BackgroundColor="Transparent"
-                        HeightRequest="25"
-                        WidthRequest="25"
+                        HeightRequest="45"
+                        WidthRequest="45"
                         HorizontalOptions="Start"
                         VerticalOptions="Center"
                         Clicked="back"/>
@@ -36,8 +36,8 @@
                     <ImageButton
                         Source="exiticon.png"
                         BackgroundColor="Transparent"
-                        HeightRequest="25"
-                        WidthRequest="25"
+                        HeightRequest="45"
+                        WidthRequest="45"
                         HorizontalOptions="End"
                         VerticalOptions="Center"
                         Clicked="close"/>

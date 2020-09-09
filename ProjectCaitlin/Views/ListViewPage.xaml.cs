@@ -488,98 +488,230 @@ namespace ProjectCaitlin
             stackLayout.Children.Add(frame);
         }
 
+        //private void PopulateGoal(goal goal, int goalIdx, StackLayout stackLayout)
+        //{
+        //    StackLayout goalStackLayout = new StackLayout()
+        //    {
+        //        Margin = new Thickness(0, 0, 10, 0)
+        //    };
+
+        //    Grid grid = new Grid();
+
+        //    CachedImage image = new CachedImage()
+        //    {
+        //        Source = goal.photo,
+        //        WidthRequest = 120,
+        //        HeightRequest = 90,
+        //        HorizontalOptions = LayoutOptions.Start,
+        //        Transformations = new List<ITransformation>()
+        //        {
+        //            new RoundedTransformation(30, 120, 90),
+        //        },
+        //    };
+        //    if (goal.isComplete || goal.isInProgress)
+        //    {
+        //        image.Opacity = .6;
+        //    }
+
+        //    CachedImage inProgressImage = new CachedImage()
+        //    {
+        //        Source = Xamarin.Forms.ImageSource.FromFile("yellowclockicon.png"),
+        //        WidthRequest = 70,
+        //        HeightRequest = 70,
+        //        IsVisible = goal.isInProgress,
+        //        HorizontalOptions = LayoutOptions.CenterAndExpand,
+        //        VerticalOptions = LayoutOptions.CenterAndExpand
+        //    };
+
+        //    CachedImage checkmarkImage = new CachedImage()
+        //    {
+        //        Source = Xamarin.Forms.ImageSource.FromFile("greencheckmarkicon.png"),
+        //        WidthRequest = 70,
+        //        HeightRequest = 70,
+        //        IsVisible = goal.isComplete && !goal.isInProgress,
+        //        HorizontalOptions = LayoutOptions.CenterAndExpand,
+        //        VerticalOptions = LayoutOptions.CenterAndExpand
+        //    };
+
+        //    Label goalLabel = new Label
+        //    {
+        //        Text = goal.title,
+        //        TextColor = Color.DimGray,
+        //        FontFamily = labelFont,
+        //        HorizontalOptions = LayoutOptions.Start,
+
+        //    };
+
+        //    var tapGestureRecognizer = new TapGestureRecognizer();
+        //    tapGestureRecognizer.Tapped += async (s, e) =>
+        //    {
+        //        App.ListPageScrollPosY = mainScrollView.ScrollY;
+
+        //        StackLayout updatedStackLayout = (StackLayout)s;
+        //        Grid updatedGrid = (Grid)updatedStackLayout.Children[0];
+        //        ((CachedImage)updatedGrid.Children[0]).Opacity = .6;
+
+        //        goalOnClick(goal, goalIdx, updatedGrid);
+        //    };
+        //    goalStackLayout.GestureRecognizers.Add(tapGestureRecognizer);
+
+        //    var indicator = new ActivityIndicator { Color = Color.Gray, };
+        //    indicator.SetBinding(ActivityIndicator.IsRunningProperty, "IsLoading");
+        //    indicator.BindingContext = image;
+
+        //    grid.Children.Add(image, 0, 0);
+        //    grid.Children.Add(checkmarkImage, 0, 0);
+        //    grid.Children.Add(inProgressImage, 0, 0);
+
+        //    goalStackLayout.Children.Add(grid);
+        //    goalStackLayout.Children.Add(goalLabel);
+
+        //    stackLayout.Children.Add(goalStackLayout);
+        //}
+
+        //Addition for Goals in List View
+
         private void PopulateGoal(goal goal, int goalIdx, StackLayout stackLayout)
         {
-            StackLayout goalStackLayout = new StackLayout()
+            int stackLayoutIdx = stackLayout.Children.Count;
+
+            StackLayout itemStackLayout = new StackLayout()
             {
-                Margin = new Thickness(0, 0, 10, 0)
+                Orientation = StackOrientation.Horizontal
             };
 
-            Grid grid = new Grid();
-
-            CachedImage image = new CachedImage()
+            Frame frame = new Frame
             {
-                Source = goal.photo,
-                WidthRequest = 120,
-                HeightRequest = 90,
-                HorizontalOptions = LayoutOptions.Start,
-                Transformations = new List<ITransformation>()
-                {
-                    new RoundedTransformation(30, 120, 90),
-                },
-            };
-            if (goal.isComplete || goal.isInProgress)
-            {
-                image.Opacity = .6;
-            }
-
-            CachedImage inProgressImage = new CachedImage()
-            {
-                Source = Xamarin.Forms.ImageSource.FromFile("yellowclockicon.png"),
-                WidthRequest = 70,
-                HeightRequest = 70,
-                IsVisible = goal.isInProgress,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                VerticalOptions = LayoutOptions.CenterAndExpand
+                CornerRadius = 10,
+                HasShadow = false,
+                HorizontalOptions = LayoutOptions.FillAndExpand,
+                Padding = new Thickness(10, 10, 10, 10),
+                Margin = new Thickness(0, 2, 0, 2)
             };
 
-            CachedImage checkmarkImage = new CachedImage()
+            StackLayout stackLayoutOuter = new StackLayout
             {
-                Source = Xamarin.Forms.ImageSource.FromFile("greencheckmarkicon.png"),
-                WidthRequest = 70,
-                HeightRequest = 70,
-                IsVisible = goal.isComplete && !goal.isInProgress,
-                HorizontalOptions = LayoutOptions.CenterAndExpand,
-                VerticalOptions = LayoutOptions.CenterAndExpand
+                Orientation = StackOrientation.Horizontal
+            };
+
+            StackLayout stackLayoutInner = new StackLayout
+            {
+                HorizontalOptions = LayoutOptions.StartAndExpand,
             };
 
             Label goalLabel = new Label
             {
                 Text = goal.title,
-                TextColor = Color.DimGray,
+                FontSize = 20,
                 FontFamily = labelFont,
-                HorizontalOptions = LayoutOptions.Start,
+                VerticalOptions = LayoutOptions.Start,
 
             };
 
-            var tapGestureRecognizer = new TapGestureRecognizer();
-            tapGestureRecognizer.Tapped += async (s, e) =>
+            //Label startTimeLabel = new Label
+            //{
+            //    Text = "Starts at " + DateTime.ParseExact(routine.availableStartTime.ToString(), "HH:mm:ss", null).ToString("hh:mm tt", CultureInfo.GetCultureInfo("en-US")),
+            //    FontSize = 10,
+            //    TextColor = Color.DimGray,
+            //    VerticalOptions = LayoutOptions.EndAndExpand,
+            //    FontFamily = labelFont
+            //};
+
+            //Label expectedTimeLabel = new Label
+            //{
+            //    Text = "Expected to take " + routine.expectedCompletionTime.TotalMinutes.ToString() + " minutes",
+            //    FontSize = 10,
+            //    TextColor = Color.DimGray,
+            //    VerticalOptions = LayoutOptions.StartAndExpand,
+            //    FontFamily = labelFont
+
+            //};
+
+            CachedImage image = new CachedImage()
             {
-                App.ListPageScrollPosY = mainScrollView.ScrollY;
-
-                StackLayout updatedStackLayout = (StackLayout)s;
-                Grid updatedGrid = (Grid)updatedStackLayout.Children[0];
-                ((CachedImage)updatedGrid.Children[0]).Opacity = .6;
-
-                goalOnClick(goal, goalIdx, updatedGrid);
+                Source = goal.photo,
+                WidthRequest = 50,
+                HeightRequest = 50,
+                HorizontalOptions = LayoutOptions.End,
+                Transformations = new List<ITransformation>()
+                {
+                    new CircleTransformation(),
+                },
             };
-            goalStackLayout.GestureRecognizers.Add(tapGestureRecognizer);
 
             var indicator = new ActivityIndicator { Color = Color.Gray, };
             indicator.SetBinding(ActivityIndicator.IsRunningProperty, "IsLoading");
             indicator.BindingContext = image;
 
-            grid.Children.Add(image, 0, 0);
-            grid.Children.Add(checkmarkImage, 0, 0);
-            grid.Children.Add(inProgressImage, 0, 0);
+            stackLayoutInner.Children.Add(goalLabel);
+            //stackLayoutInner.Children.Add(startTimeLabel);
+            //stackLayoutInner.Children.Add(expectedTimeLabel);
 
-            goalStackLayout.Children.Add(grid);
-            goalStackLayout.Children.Add(goalLabel);
+            stackLayoutOuter.Children.Add(stackLayoutInner);
+            stackLayoutOuter.Children.Add(image);
 
-            stackLayout.Children.Add(goalStackLayout);
+            frame.Content = stackLayoutOuter;
+
+            CachedImage checkmarkImage = new CachedImage()
+            {
+                Source = "",
+                WidthRequest = 0,
+                HeightRequest = 0,
+                IsVisible = false,
+                HorizontalOptions = LayoutOptions.Start,
+                VerticalOptions = LayoutOptions.CenterAndExpand
+            };
+
+            if (goal.isComplete || goal.isInProgress)
+            {
+                checkmarkImage.IsVisible = true;
+                if (goal.isInProgress)
+                    checkmarkImage.Source = "yellowclockicon.png ";
+                else
+                {
+                    if (goal.isComplete)
+                        checkmarkImage.Source = "greencheckmarkicon.png";
+                }
+                checkmarkImage.WidthRequest = 30;
+                checkmarkImage.HeightRequest = 30;
+            }
+
+            itemStackLayout.Children.Add(checkmarkImage);
+            itemStackLayout.Children.Add(frame);
+            stackLayout.Children.Add(itemStackLayout);
+
+            var tapGestureRecognizer = new TapGestureRecognizer();
+            tapGestureRecognizer.Tapped += async (s, e) =>
+            {
+
+                StackLayout updatedStackLayout = (StackLayout)s;
+                //updatedStackLayout.Children[0].WidthRequest = 30;
+                //updatedStackLayout.Children[0].HeightRequest = 30;
+                //((CachedImage)updatedStackLayout.Children[0]).IsVisible = true;
+
+                goalOnClick(goal, goalIdx, updatedStackLayout);
+
+
+            };
+            stackLayout.Children[stackLayoutIdx].GestureRecognizers.Add(tapGestureRecognizer);
         }
 
         private void putLayoutsIntoLists()
         {
+            GoalsStackLayouts.Add(MorningREStackLayout);
+            GoalsStackLayouts.Add(AfternoonREStackLayout);
+            GoalsStackLayouts.Add(EveningREStackLayout);
+            GoalsStackLayouts.Add(NightREStackLayout);
+
             EventAndRoutineStackLayouts.Add(MorningREStackLayout);
             EventAndRoutineStackLayouts.Add(AfternoonREStackLayout);
             EventAndRoutineStackLayouts.Add(EveningREStackLayout);
             EventAndRoutineStackLayouts.Add(NightREStackLayout);
 
-            GoalsStackLayouts.Add(MorningGoalsStackLayout);
-            GoalsStackLayouts.Add(AfternoonGoalsStackLayout);
-            GoalsStackLayouts.Add(EveningGoalsStackLayout);
-            GoalsStackLayouts.Add(NightGoalsStackLayout);
+            //GoalsStackLayouts.Add(MorningGoalsStackLayout);
+            //GoalsStackLayouts.Add(AfternoonGoalsStackLayout);
+            //GoalsStackLayouts.Add(EveningGoalsStackLayout);
+            //GoalsStackLayouts.Add(NightGoalsStackLayout);
         }
 
         private StackLayout GetFirstInTimeOfDay(string GorR, TimeSpan startTime)
@@ -595,7 +727,8 @@ namespace ProjectCaitlin
                 if (GorR == "routine")
                     return MorningREStackLayout;
                 else
-                    return MorningGoalsStackLayout;
+                    //return MorningGoalsStackLayout;
+                    return MorningREStackLayout;
             }
             if (new TimeSpan(0, 0, 0) <= startTime && morningStart > startTime)
             {
@@ -604,7 +737,8 @@ namespace ProjectCaitlin
                 if (GorR == "routine")
                     return NightREStackLayout;
                 else
-                    return NightGoalsStackLayout;
+                    //return NightGoalsStackLayout;
+                    return NightREStackLayout;
             }
 
             if (morningStart <= startTime && startTime < morningEnd)
@@ -614,7 +748,8 @@ namespace ProjectCaitlin
                 if (GorR == "routine")
                     return MorningREStackLayout;
                 else
-                    return MorningGoalsStackLayout;
+                    //return MorningGoalsStackLayout;
+                    return MorningREStackLayout;
             }
             if (afternoonStart <= startTime && startTime < afternoonEnd)
             {
@@ -623,7 +758,8 @@ namespace ProjectCaitlin
                 if (GorR == "routine")
                     return AfternoonREStackLayout;
                 else
-                    return AfternoonGoalsStackLayout;
+                    //return AfternoonGoalsStackLayout;
+                    return AfternoonREStackLayout;
             }
             if (eveningStart <= startTime && startTime < eveningEnd)
             {
@@ -632,7 +768,8 @@ namespace ProjectCaitlin
                 if (GorR == "routine")
                     return EveningREStackLayout;
                 else
-                    return EveningGoalsStackLayout;
+                    //return EveningGoalsStackLayout;
+                    return EveningREStackLayout;
             }
             if (nightStart <= startTime && startTime < nightEnd)
             {
@@ -641,7 +778,8 @@ namespace ProjectCaitlin
                 if (GorR == "routine")
                     return NightREStackLayout;
                 else
-                    return NightGoalsStackLayout;
+                    //return NightGoalsStackLayout;
+                    return NightREStackLayout;
             }
 
             return new StackLayout();
@@ -658,28 +796,32 @@ namespace ProjectCaitlin
             {
                 //Console.WriteLine("Morning");
 
-                result.Add(MorningGoalsStackLayout);
+                //result.Add(MorningGoalsStackLayout);
+                result.Add(MorningREStackLayout);
             }
             if ((startTime < afternoonEnd && afternoonStart < endTime)
                 || startTime == afternoonStart || afternoonEnd == endTime)
             {
                 //Console.WriteLine("Afternoon");
 
-                result.Add(AfternoonGoalsStackLayout);
+                //result.Add(AfternoonGoalsStackLayout);
+                result.Add(AfternoonREStackLayout);
             }
             if ((startTime < eveningEnd && eveningStart < endTime)
                 || startTime == eveningStart || eveningEnd == endTime)
             {
                 //Console.WriteLine("Evening");
 
-                result.Add(EveningGoalsStackLayout);
+                //result.Add(EveningGoalsStackLayout);
+                result.Add(EveningREStackLayout);
             }
             if ((startTime < nightEnd && nightStart < endTime)
                 || startTime == nightStart || nightEnd == endTime)
             {
                 //Console.WriteLine("Night");
 
-                result.Add(NightGoalsStackLayout);
+                //result.Add(NightGoalsStackLayout);
+                result.Add(NightREStackLayout);
             }
 
             return result;
@@ -836,7 +978,66 @@ namespace ProjectCaitlin
             await firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", true);
         }
 
-        public async void goalOnClick(goal goal, int goalIdx, Grid updatedGrid)
+        //public async void goalOnClick(goal goal, int goalIdx, Grid updatedGrid)
+        //{
+        //    if (goal.isSublistAvailable)
+        //    {
+
+        //        //if (!goal.isInProgress && !goal.isComplete)
+        //        //{
+        //        //    updatedGrid.Children[2].IsVisible = true;
+        //        //    goal.isInProgress = true;
+        //        //    firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
+        //        //}
+        //        App.ListPageScrollPosY = mainScrollView.ScrollY;
+        //        //await Navigation.PushAsync(new TaskPage(goalIdx, false));
+        //        await Navigation.PushAsync(new TaskCompletePageCopy(goalIdx, false, null, async () => {
+        //            if (!goal.isInProgress && !goal.isComplete)
+        //            {
+        //                updatedGrid.Children[2].IsVisible = true;
+        //                goal.isInProgress = true;
+        //                await firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
+        //            }
+        //        }, async() => {
+        //            CompleteGoal(goal); 
+        //        }));
+        //        //await Navigation.PushAsync(new TaskPage(goalIdx, false, null, async() => {
+        //        //    if (!goal.isInProgress && !goal.isComplete)
+        //        //    {
+        //        //        updatedGrid.Children[2].IsVisible = true;
+        //        //        goal.isInProgress = true;
+        //        //        await firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
+        //        //    }
+        //        //}));
+        //    }
+        //    else
+        //    {
+        //        if (!goal.isComplete)
+        //        {
+
+        //            if (goal.isInProgress)
+        //            {
+        //                updatedGrid.Children[1].IsVisible = true;
+        //                updatedGrid.Children[2].IsVisible = false;
+        //                goal.isInProgress = false;
+        //                goal.isComplete = true;
+
+        //                firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", true);
+        //            }
+        //            else
+        //            {
+        //                updatedGrid.Children[2].IsVisible = true;
+        //                goal.isInProgress = true;
+        //                goal.isComplete = false;
+        //                firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
+        //            }
+        //        }
+        //    }
+        //}
+
+        //Addition for Goals in List View
+
+        public async void goalOnClick(goal goal, int goalIdx, StackLayout updatedStackLayout)
         {
             if (goal.isSublistAvailable)
             {
@@ -850,14 +1051,57 @@ namespace ProjectCaitlin
                 App.ListPageScrollPosY = mainScrollView.ScrollY;
                 //await Navigation.PushAsync(new TaskPage(goalIdx, false));
                 await Navigation.PushAsync(new TaskCompletePageCopy(goalIdx, false, null, async () => {
+                    Console.WriteLine("1st Async");
                     if (!goal.isInProgress && !goal.isComplete)
                     {
-                        updatedGrid.Children[2].IsVisible = true;
                         goal.isInProgress = true;
+                        goal.isComplete = false;
                         await firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
                     }
-                }, async() => {
-                    CompleteGoal(goal); 
+
+                    if (goal.isInProgress)
+                    {
+                        Console.WriteLine("Print YellowCLock");
+                        Device.BeginInvokeOnMainThread(async () => {
+                            ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
+                            updatedStackLayout.Children[0].WidthRequest = 30;
+                            updatedStackLayout.Children[0].HeightRequest = 30;
+                            ((CachedImage)updatedStackLayout.Children[0]).IsVisible = true;
+                        });
+                    }
+
+                }, async () => {
+
+                    Console.WriteLine("2nd Async");
+                    goal.isInProgress = true;
+                    await firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
+
+                    if (goal.isInProgress)
+                    {
+                        Console.WriteLine("Print YellowCLock");
+                        Device.BeginInvokeOnMainThread(async () => {
+                            ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
+                            updatedStackLayout.Children[0].WidthRequest = 30;
+                            updatedStackLayout.Children[0].HeightRequest = 30;
+                            ((CachedImage)updatedStackLayout.Children[0]).IsVisible = true;
+                        });
+                    }
+                }, async () => {
+                    Console.WriteLine("3rd Async");
+                    goal.isComplete = true;
+                    await firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", true);
+
+                    if (goal.isComplete)
+                    {
+                        Console.WriteLine("Print GreenTick");
+                        Device.BeginInvokeOnMainThread(async () => {
+                            ((CachedImage)updatedStackLayout.Children[0]).Source = "greencheckmarkicon.png";
+                            updatedStackLayout.Children[0].WidthRequest = 30;
+                            updatedStackLayout.Children[0].HeightRequest = 30;
+                            ((CachedImage)updatedStackLayout.Children[0]).IsVisible = true;
+                        });
+                    }
+
                 }));
                 //await Navigation.PushAsync(new TaskPage(goalIdx, false, null, async() => {
                 //    if (!goal.isInProgress && !goal.isComplete)
@@ -872,11 +1116,9 @@ namespace ProjectCaitlin
             {
                 if (!goal.isComplete)
                 {
-
                     if (goal.isInProgress)
                     {
-                        updatedGrid.Children[1].IsVisible = true;
-                        updatedGrid.Children[2].IsVisible = false;
+                        ((CachedImage)updatedStackLayout.Children[0]).Source = "greencheckmarkicon.png";
                         goal.isInProgress = false;
                         goal.isComplete = true;
 
@@ -884,9 +1126,12 @@ namespace ProjectCaitlin
                     }
                     else
                     {
-                        updatedGrid.Children[2].IsVisible = true;
+                        ((CachedImage)updatedStackLayout.Children[0]).Source = "yellowclockicon.png";
                         goal.isInProgress = true;
                         goal.isComplete = false;
+                        updatedStackLayout.Children[0].WidthRequest = 30;
+                        updatedStackLayout.Children[0].HeightRequest = 30;
+                        ((CachedImage)updatedStackLayout.Children[0]).IsVisible = true;
                         firebaseFunctionsService.updateGratisStatus(goal, "goals&routines", false);
                     }
                 }

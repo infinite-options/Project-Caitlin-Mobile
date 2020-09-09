@@ -44,11 +44,6 @@
                 </StackLayout>
 
                 <StackLayout
-                    x:Name="MorningREStackLayout"
-                    Padding="0,30,0,0">
-
-                    <!--Morning Label-->
-                    <StackLayout
                         Orientation="Horizontal">
 
                         <Image
@@ -71,18 +66,46 @@
 
                     </StackLayout>
 
+                <StackLayout
+                    x:Name="MorningREStackLayout"
+                    Padding="0,30,0,0">
+
+                    <!--Morning Label-->
+                    <!--<StackLayout
+                        Orientation="Horizontal">
+
+                        <Image
+                            Source="sunrisemid.png"
+                            WidthRequest="40"
+                            HeightRequest="40"/>
+
+
+                        <Label
+                            Text="Morning"
+                            FontSize="20"
+                            VerticalOptions="Center">
+                            <Label.FontFamily>
+                                <OnPlatform x:TypeArguments="x:String">
+                                    <On Platform="iOS" Value="Lobster-Regular" />
+                                    <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                                </OnPlatform>
+                            </Label.FontFamily>
+                        </Label>
+
+                    </StackLayout>-->
+
                     <!-- Start Goals/Routines/Events -->
 
                 </StackLayout>
 
                 <!-- Morning Goals Sections -->
 
-                <StackLayout
+                <!--<StackLayout
                     x:Name="MorningGoalsSection"
                     Orientation="Vertical"
                     Padding="0,20,0,0">
 
-                    <!-- Morning Goals Label -->
+                     Morning Goals Label 
                     <Label
                         Text="Morning Goals"
                         FontSize="20"
@@ -104,11 +127,34 @@
                             x:Name="MorningGoalsStackLayout"
                             Orientation="Horizontal">
 
-                            <!--Start Morning Goals-->
+                            Start Morning Goals
 
                         </StackLayout>
 
                     </ScrollView>
+
+                </StackLayout>-->
+
+                <!-- Afternoon Label -->
+                <StackLayout
+                    Orientation="Horizontal">
+
+                    <Image
+                        Source="fullsun.png"
+                        WidthRequest="40"
+                        HeightRequest="40"/>
+
+                    <Label
+                        Text="Afternoon"
+                        FontSize="20"
+                        VerticalOptions="Center">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Lobster-Regular" />
+                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
 
                 </StackLayout>
 
@@ -117,7 +163,7 @@
                     Padding="0,30,0,0">
 
                     <!-- Afternoon Label -->
-                    <StackLayout
+                    <!--<StackLayout
                         Orientation="Horizontal">
 
                         <Image
@@ -137,13 +183,13 @@
                             </Label.FontFamily>
                         </Label>
 
-                    </StackLayout>
+                    </StackLayout>-->
 
                     <!-- Start Afternoon Routines/Events -->
 
                 </StackLayout>
 
-                <StackLayout
+                <!--<StackLayout
                     x:Name="AfternoonGoalsSection"
                     Orientation="Vertical"
                     Padding="0,20,0,0">
@@ -168,9 +214,32 @@
                                 x:Name="AfternoonGoalsStackLayout"
                                 Orientation="Horizontal">
 
-                            <!-- Start Afternoon Goals -->
+                             Start Afternoon Goals 
                         </StackLayout>
                     </ScrollView>
+
+                </StackLayout>-->
+
+                <!-- Evening Label -->
+                <StackLayout
+                    Orientation="Horizontal">
+
+                    <Image
+                        Source="sunriselow.png"
+                        WidthRequest="40"
+                        HeightRequest="40"/>
+
+                    <Label
+                        Text="Evening"
+                        FontSize="20"
+                        VerticalOptions="Center">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Lobster-Regular" />
+                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
 
                 </StackLayout>
 
@@ -178,7 +247,7 @@
                     x:Name="EveningREStackLayout"
                     Padding="0,30,0,0">
 
-                    <!-- Afternoon Label -->
+                    <!-- Evening Label -->
                     <StackLayout
                         Orientation="Horizontal">
 
@@ -207,7 +276,7 @@
                 </StackLayout>
 
                 <!--Evening Goals-->
-                <StackLayout
+                <!--<StackLayout
                     x:Name="EveningGoalsSection"
                     Orientation="Vertical"
                     Padding="0,20,0,0">
@@ -232,9 +301,32 @@
                                 x:Name="EveningGoalsStackLayout"
                                 Orientation="Horizontal">
 
-                            <!-- Start Evening Goals -->
+                             Start Evening Goals 
                         </StackLayout>
                     </ScrollView>
+
+                </StackLayout>-->
+
+                <!--Night Label-->
+                <StackLayout
+                    Orientation="Horizontal">
+
+                    <Image
+                        Source="moon.png"
+                        WidthRequest="40"
+                        HeightRequest="40"/>
+
+                    <Label
+                        Text="Night"
+                        FontSize="20"
+                        VerticalOptions="Center">
+                        <Label.FontFamily>
+                            <OnPlatform x:TypeArguments="x:String">
+                                <On Platform="iOS" Value="Lobster-Regular" />
+                                <On Platform="Android" Value="CircularStd-Medium.otf#Circular Std"/>
+                            </OnPlatform>
+                        </Label.FontFamily>
+                    </Label>
 
                 </StackLayout>
 
@@ -242,7 +334,7 @@
                     x:Name="NightREStackLayout"
                     Padding="0,30,0,0">
 
-                    <!--Afternoon Label-->
+                    <!--Night Label
                     <StackLayout
                         Orientation="Horizontal">
 
@@ -263,7 +355,7 @@
                             </Label.FontFamily>
                         </Label>
 
-                    </StackLayout>
+                    </StackLayout>-->
 
                     <!--Start Afternoon Routines/Events-->
                     <!--Here-->
@@ -271,7 +363,7 @@
                 </StackLayout>
 
                 <!--Night Goals-->
-                <StackLayout
+                <!--<StackLayout
                     x:Name="NightGoalsSection"
                     Orientation="Vertical"
                     Padding="0,20,0,0">
@@ -296,11 +388,11 @@
                                 x:Name="NightGoalsStackLayout"
                                 Orientation="Horizontal">
 
-                            <!-- Start Night Goals -->
+                             Start Night Goals 
                         </StackLayout>
                     </ScrollView>
 
-                </StackLayout>
+                </StackLayout>-->
 
                 <StackLayout
                     IsVisible="false"
