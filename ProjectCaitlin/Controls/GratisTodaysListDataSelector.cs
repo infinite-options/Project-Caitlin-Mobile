@@ -10,23 +10,19 @@ namespace ProjectCaitlin.Controls
     {
 
         public DataTemplate EventTodaysListTemplate { get; set; }
-
-        public DataTemplate GoalTodaysListCompleteTemplate { get; set; }
-        public DataTemplate GoalTodaysListNotCompleteTemplate { get; set; }
-        
-        public DataTemplate RoutineTodaysListCompleteTemplate { get; set; }
-        public DataTemplate RoutineTodaysListNotCompleteTemplate { get; set; }
+        public DataTemplate GoalTodaysListTemplate { get; set; }
+        public DataTemplate RoutineTodaysListTemplate { get; set; }
 
         protected override DataTemplate OnSelectTemplate(object item, BindableObject container)
         {
             TodaysListTileDisplayObject displayObject = item as TodaysListTileDisplayObject;
             if (displayObject.Type == TileType.Goal)
             {
-                return (displayObject.IsComplete) ? GoalTodaysListCompleteTemplate : GoalTodaysListNotCompleteTemplate;
+                return GoalTodaysListTemplate;
             }
             else if (displayObject.Type == TileType.Routine)
             {
-                return (displayObject.IsComplete) ? RoutineTodaysListCompleteTemplate : RoutineTodaysListNotCompleteTemplate;
+                return RoutineTodaysListTemplate;
             }
             else
             {

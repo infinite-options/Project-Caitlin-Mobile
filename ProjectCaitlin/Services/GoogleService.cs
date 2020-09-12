@@ -21,6 +21,7 @@ namespace ProjectCaitlin.Services
 
         //Use REFRESH TOKEN to receive another ACCESS TOKEN...and UPDATE App.user.access_token.
 
+        public static GoogleService Instance = new GoogleService();
         public async Task<bool> UseAccessToken()
         {
 

@@ -27,10 +27,16 @@ namespace ProjectCaitlin.Views
         readonly PartOfDay Evening = new PartOfDay() { Name = "Evening", Photo="sunriselow.png" };
         readonly PartOfDay Night = new PartOfDay() { Name = "Night", Photo="moon.png"};
 
+        private TimeSpan MorningStartTime;
+        private TimeSpan AfternoonStartTime;
+        private TimeSpan EveningStartTime;
+        private TimeSpan NightStartTime;
+
+
         ObservableCollection<TodaysListTileDisplayObjectGroup> Items { get; set; }
 
         private TapGestureRecognizer TapGestureRecognizer;
-        private TodaysListViewModel ViewModel;
+        private readonly TodaysListViewModel ViewModel;
         public TodaysList()
         {
             InitializeComponent();
@@ -40,11 +46,14 @@ namespace ProjectCaitlin.Views
             TapGestureRecognizer = new TapGestureRecognizer();
             ViewModel = new TodaysListViewModel(Navigation, new WeakReference<TodaysList>(this, false));
             BindingContext = ViewModel;
-            
+            RefreshViewInstance.Command = new Command(() => { Refresh(null, null); RefreshViewInstance.IsRefreshing = false; });
         }
+
 
         private TodaysListTileDisplayObject ToTile(goal _goal)
         {
+            string startTime = DateTime.Today.Add(_goal.availableStartTime).ToString("hh:mm tt");
+            string endTime = DateTime.Today.Add(_goal.availableEndTime).ToString("hh:mm tt");
             TodaysListTileDisplayObject goalTile = new TodaysListTileDisplayObject(_goal.isInProgress, _goal.isComplete)
             {
                 Type = TileType.Goal,
@@ -52,12 +61,11 @@ namespace ProjectCaitlin.Views
                 AvailableStartTime = _goal.availableStartTime,
                 ActualEndTime = _goal.dateTimeCompleted.ToString(),
                 Title = _goal.title,
-                SubTitle = "Starts in few minutes",
+                SubTitle = "This is available from "+startTime+" to "+endTime,
                 IsSubListAvailable = _goal.isSublistAvailable,
                 Photo = _goal.photo,
                 FrameBgColorComplete = Color.FromHex("#E9E8E8"),
                 FrameBgColorInComplete = Color.FromHex("#FFFFFF")
-                //GratisObject = _goal
             };
 
             goalTile.TouchCommand = new Command(async () => ViewModel.OnTileTapped(goalTile));
@@ -74,6 +82,7 @@ namespace ProjectCaitlin.Views
 
         private TodaysListTileDisplayObject ToTile(routine _routine)
         {
+            TimeSpan differene = _routine.availableEndTime - _routine.availableStartTime;
             TodaysListTileDisplayObject routineTile = new TodaysListTileDisplayObject(_routine.isInProgress, _routine.isComplete)
             {
                 Type = TileType.Routine,
@@ -81,14 +90,22 @@ namespace ProjectCaitlin.Views
                 AvailableStartTime = _routine.availableStartTime,
                 ActualEndTime = _routine.dateTimeCompleted.ToString(),
                 Title = _routine.title,
-                SubTitle = "This will run for an hour",
+                SubTitle = "This takes: " + ((int) differene.TotalMinutes).ToString() + " minutes",
                 IsSubListAvailable = _routine.isSublistAvailable,
                 Photo = _routine.photo,
-                //GratisObject = _routine
+                FrameBgColorComplete = Color.FromHex("#E9E8E8"),
+                FrameBgColorInComplete = Color.FromHex("#FFFFFF")
             };
             routineTile.TouchCommand = new Command(async () => ViewModel.OnTileTapped(routineTile));
 
             return routineTile;
+        }
+
+        private TodaysListTileDisplayObject ToTile(routine _routine, int index)
+        {
+            TodaysListTileDisplayObject tile = ToTile(_routine);
+            tile.Index = index;
+            return tile;
         }
 
         private TodaysListTileDisplayObject ToTile(EventsItems _event)
@@ -96,8 +113,8 @@ namespace ProjectCaitlin.Views
             TodaysListTileDisplayObject eventTile = new TodaysListTileDisplayObject()
             {
                 Type = TileType.Event,
-                AvailableEndTime = _event.Start.DateTime.LocalDateTime.TimeOfDay,
-                AvailableStartTime = _event.End.DateTime.LocalDateTime.TimeOfDay,
+                AvailableEndTime = _event.End.DateTime.LocalDateTime.TimeOfDay,
+                AvailableStartTime = _event.Start.DateTime.LocalDateTime.TimeOfDay,
                 TimeDifference = _event.Start.DateTime.LocalDateTime.ToString("h:mm tt") + " - " + _event.End.DateTime.LocalDateTime.ToString("h:mm tt"),
                 Title = _event.EventName,
                 SubTitle = _event.Description,
@@ -106,6 +123,12 @@ namespace ProjectCaitlin.Views
             return eventTile;
         }
 
+        private TodaysListTileDisplayObject ToTile(EventsItems _event, int index)
+        {
+            TodaysListTileDisplayObject tile = ToTile(_event);
+            tile.Index = index;
+            return tile;
+        }
 
         private void MergeTiles(List<TodaysListTileDisplayObject> inputlist, List<TodaysListTileDisplayObject> outputList)
         {
@@ -117,39 +140,22 @@ namespace ProjectCaitlin.Views
 
         private List<TodaysListTileDisplayObject> ToTileList(List<goal> goalList)
         {
-            //List<TodaysListTileDisplayObject> goalTiles = new List<TodaysListTileDisplayObject>();
             List<TodaysListTileDisplayObject> goalTiles;
-            //for (int idx = 0; idx < goalList.Count; idx++)
-            //{
-            //    TodaysListTileDisplayObject tile = ToTile(goalList[idx]);
-            //    tile.Index = idx;
-            //    goalTiles.Add(tile);
-            //}
             goalTiles = goalList.Select((value, index) => ToTile(value, index)).ToList();
             return goalTiles;
         }
 
         private List<TodaysListTileDisplayObject> ToTileList(List<routine> routineList)
         {
-            List<TodaysListTileDisplayObject> routineTiles = new List<TodaysListTileDisplayObject>();
-            for (int idx = 0; idx < routineList.Count; idx++)
-            {
-                TodaysListTileDisplayObject tile = ToTile(routineList[idx]);
-                tile.Index = idx;
-                routineTiles.Add(tile);
-            }
+            List<TodaysListTileDisplayObject> routineTiles;
+            routineTiles = routineList.Select((value, index) => ToTile(value, index)).ToList();
             return routineTiles;
         }
 
         private List<TodaysListTileDisplayObject> ToTileList(List<EventsItems> eventList)
         {
-            List<TodaysListTileDisplayObject> eventTiles = new List<TodaysListTileDisplayObject>();
-            for (int idx = 0; idx < eventList.Count; idx++)
-            {
-                TodaysListTileDisplayObject tile = ToTile(eventList[idx]);
-                tile.Index = idx;
-                eventTiles.Add(tile);
-            }
+            List<TodaysListTileDisplayObject> eventTiles;
+            eventTiles = eventList.Select((value, index) => ToTile(value, index)).ToList();
             return eventTiles;
         }
 
@@ -175,17 +181,17 @@ namespace ProjectCaitlin.Views
 
         private PartOfDay GetPartOfDay(TodaysListTileDisplayObject tile)
         {
-            if(tile.AvailableStartTime < new TimeSpan(6, 0, 0))
+            if(tile.AvailableStartTime < MorningStartTime)
             {
                 return Morning;
-            }else if(tile.AvailableStartTime < new TimeSpan(12, 0, 0))
+            }else if(tile.AvailableStartTime < AfternoonStartTime)
             {
                 return Morning;
-            }else if (tile.AvailableStartTime < new TimeSpan(14, 0, 0))
+            }else if (tile.AvailableStartTime < EveningStartTime)
             {
                 return Afternoon;
             }
-            else if (tile.AvailableStartTime < new TimeSpan(20, 0, 0))
+            else if (tile.AvailableStartTime < NightStartTime)
             {
                 return Evening;
             }
@@ -199,34 +205,49 @@ namespace ProjectCaitlin.Views
             TodaysListCollectionView.ItemsSource = Items;
         }
 
+
+        private void SetTimeOfDayStartTime()
+        {
+            MorningStartTime = (string.IsNullOrWhiteSpace(App.User.aboutMe.timeSettings.morning)) ? new TimeSpan(6, 0, 0) : TimeSpan.Parse(App.User.aboutMe.timeSettings.morning);
+            AfternoonStartTime = (string.IsNullOrWhiteSpace(App.User.aboutMe.timeSettings.afternoon)) ? new TimeSpan(12, 0, 0) : TimeSpan.Parse(App.User.aboutMe.timeSettings.afternoon);
+            EveningStartTime = (string.IsNullOrWhiteSpace(App.User.aboutMe.timeSettings.evening)) ? new TimeSpan(16, 0, 0) : TimeSpan.Parse(App.User.aboutMe.timeSettings.evening);
+            NightStartTime = (string.IsNullOrWhiteSpace(App.User.aboutMe.timeSettings.night)) ? new TimeSpan(20, 0, 0) : TimeSpan.Parse(App.User.aboutMe.timeSettings.night);
+        }
+
         private void LoadUI()
         {
+            SetTimeOfDayStartTime();
             LoadTiles(App.User.goals, App.User.routines, App.User.CalendarEvents);
             TodaysListCollectionView.Header = new Label
             {
                 Text = DateTime.Now.DayOfWeek.ToString(),
                 FontSize = 40,
-                Padding = new Thickness(0, 80, 0, 0)
+                Padding = new Thickness(0, 40, 0, 0)
             };
             
         }
 
-        private void OnAboutMe_Clicked(object sender, EventArgs e)
+        private async void OnAboutMe_Clicked(object sender, EventArgs e)
         {
-            Navigation.PushAsync(new AboutMe());
+            Navigation.PushAsync(new GreetingPage());
         }
 
-        private void Refresh(object sender, EventArgs e)
+        private async void Refresh(object sender, EventArgs e)
         {
+            LoadingIndicator.IsRunning = true;
             try
             {
-                Task loadingStatus = ProjectCaitlin.Services.FirestoreService.Instance.LoadDatabase();
-                loadingStatus.Wait();
+                await ProjectCaitlin.Services.FirestoreService.Instance.LoadDatabase();
+                await ProjectCaitlin.Services.GoogleService.Instance.LoadTodaysEvents();
                 LoadUI();
             }
             catch (Exception exception)
             {
                 Console.WriteLine(exception.StackTrace);
+            }
+            finally
+            {
+                LoadingIndicator.IsRunning = false;
             }
         }
     }

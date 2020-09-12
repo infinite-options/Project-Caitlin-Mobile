@@ -36,7 +36,7 @@
                 </Grid>
             </Frame>
         </DataTemplate>
-        <DataTemplate x:Key="GoalTodaysListNotCompleteTemplate" x:DataType="model:TodaysListTileDisplayObject">
+        <DataTemplate x:Key="GoalTodaysListTemplate" x:DataType="model:TodaysListTileDisplayObject">
             <Frame BackgroundColor="{Binding FrameBgColor}" BorderColor="{Binding BorderColor}" HeightRequest="136" CornerRadius="10" HasShadow="{Binding IsNotComplete}" Padding="0" Margin="0">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding TouchCommand}"/>
@@ -67,55 +67,11 @@
                 </Grid>
             </Frame>
         </DataTemplate>
-        <DataTemplate x:Key="GoalTodaysListCompleteTemplate" x:DataType="model:TodaysListTileDisplayObject">
-            <Frame BackgroundColor="#E9E8E8" BorderColor="Black" HeightRequest="136" CornerRadius="10" HasShadow="False" Padding="0" Margin="0">
-                <Grid Padding="0" Margin="20,1,20,1">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="8*"/>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Text="{Binding Title}" Padding ="0,20,0,0" Font="Bold, 24"  Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="1" VerticalOptions="CenterAndExpand"/>
-                    <Label Text="{Binding SubTitle}" TextColor="#9FA1A3"  Font="15" Grid.Column="0" Grid.Row="2" Grid.RowSpan="1" Grid.ColumnSpan="1" VerticalOptions="StartAndExpand"/>
-                    <Frame BackgroundColor="#E9E8E8" HasShadow="False" Padding="0" Margin="0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="1">
-                        <Frame VerticalOptions="CenterAndExpand" HasShadow="False" Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" CornerRadius="28" HeightRequest="56" WidthRequest="56">
-                            <Image BackgroundColor="#E9E8E8" Source="greencheckmarkicon.png" HorizontalOptions="FillAndExpand" HeightRequest="56" WidthRequest="56" AutomationProperties.Name=" Goal Completed"/>
-                        </Frame>
-                    </Frame>
-                </Grid>
-            </Frame>
-        </DataTemplate>
-        <DataTemplate x:Key="RoutineTodaysListNotCompleteTemplate" x:DataType="model:TodaysListTileDisplayObject">
-            <Frame BackgroundColor="White" HeightRequest="136" CornerRadius="10" HasShadow="True" Padding="0" Margin="0">
+        <DataTemplate x:Key="RoutineTodaysListTemplate" x:DataType="model:TodaysListTileDisplayObject">
+            <Frame BackgroundColor="{Binding FrameBgColor}" BorderColor="{Binding BorderColor}" HeightRequest="136" CornerRadius="10" HasShadow="{Binding IsNotComplete}" Padding="0" Margin="0">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding TouchCommand}"/>
                 </Frame.GestureRecognizers>
-                <Grid Padding="0" Margin="20,0,20,0">
-                    <Grid.RowDefinitions>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                        <RowDefinition Height="1*"/>
-                    </Grid.RowDefinitions>
-                    <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="8*"/>
-                        <ColumnDefinition Width="2*"/>
-                    </Grid.ColumnDefinitions>
-                    <Label Text="{Binding Title}" Padding ="0,20,0,0" Font="Bold, 24"  Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="1" VerticalOptions="CenterAndExpand"/>
-                    <Label Text="{Binding SubTitle}" TextColor="#9FA1A3"  Font="15" Grid.Column="0" Grid.Row="2" Grid.RowSpan="1" Grid.ColumnSpan="1" VerticalOptions="StartAndExpand"/>
-                    <Frame HasShadow="False" Padding="0" Margin="0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="1">
-                        <Frame VerticalOptions="CenterAndExpand" Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" CornerRadius="28" HeightRequest="56" WidthRequest="56">
-                            <Image BackgroundColor="#EDE2CB" Source="{Binding Photo}" HorizontalOptions="FillAndExpand" HeightRequest="56" WidthRequest="56" AutomationProperties.Name="Incomplete Routine Image" />
-                        </Frame>
-                    </Frame>
-                </Grid>
-            </Frame>
-        </DataTemplate>
-        <DataTemplate x:Key="RoutineTodaysListCompleteTemplate" x:DataType="model:TodaysListTileDisplayObject">
-            <Frame BackgroundColor="#E9E8E8" BorderColor="Black" HeightRequest="136" CornerRadius="10" HasShadow="False" Padding="0" Margin="0">
                 <Grid Padding="0" Margin="20,1,20,1">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
@@ -128,42 +84,46 @@
                     </Grid.ColumnDefinitions>
                     <Label Text="{Binding Title}" Padding ="0,20,0,0" Font="Bold, 24"  Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="1" VerticalOptions="CenterAndExpand"/>
                     <Label Text="{Binding SubTitle}" TextColor="#9FA1A3"  Font="15" Grid.Column="0" Grid.Row="2" Grid.RowSpan="1" Grid.ColumnSpan="1" VerticalOptions="StartAndExpand"/>
-                    <Frame BackgroundColor="#E9E8E8" HasShadow="False" Padding="0" Margin="0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="1">
-                        <Frame VerticalOptions="CenterAndExpand" HasShadow="False" Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" CornerRadius="28" HeightRequest="56" WidthRequest="56">
-                            <Image BackgroundColor="#E9E8E8" Source="greencheckmarkicon.png" HorizontalOptions="FillAndExpand" HeightRequest="56" WidthRequest="56" AutomationProperties.Name=" Routine Completed Image"/>
+                    <Frame BackgroundColor="{Binding FrameBgColor}" HasShadow="False" Padding="0" Margin="0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="1">
+                        <Frame VerticalOptions="CenterAndExpand" IsVisible="{Binding IsNotComplete}" Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" CornerRadius="28" HeightRequest="56" WidthRequest="56">
+                            <Image BackgroundColor="#EDE2CB" Source="{Binding Photo}" HorizontalOptions="FillAndExpand" HeightRequest="56" WidthRequest="56" AutomationProperties.Name="Goal Incomplete Image" />
                         </Frame>
                     </Frame>
+                    <Image Source="yellowclockicon.png" IsVisible="{Binding InProgress}" HorizontalOptions="FillAndExpand" 
+                           HeightRequest="56" WidthRequest="56" AutomationProperties.Name="In Progress Image" 
+                           Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="1"/>
+                    <Image IsVisible="{Binding IsComplete}" Source="greencheckmarkicon.png" HorizontalOptions="FillAndExpand" BackgroundColor="{Binding FrameBgColor}"
+                           HeightRequest="56" WidthRequest="56" AutomationProperties.Name="Goal Incomplete Image" 
+                           Grid.Column="1" Grid.Row="0" Grid.RowSpan="3" Grid.ColumnSpan="1"/>
                 </Grid>
             </Frame>
         </DataTemplate>
-        
 
-        <controls:GratisTodaysListDataSelector x:Key="GratisTodaysListSelector" GoalTodaysListCompleteTemplate="{StaticResource GoalTodaysListCompleteTemplate}" GoalTodaysListNotCompleteTemplate="{StaticResource GoalTodaysListNotCompleteTemplate}"
-                                               RoutineTodaysListCompleteTemplate="{StaticResource RoutineTodaysListCompleteTemplate}" RoutineTodaysListNotCompleteTemplate="{StaticResource RoutineTodaysListNotCompleteTemplate}"
+        <controls:GratisTodaysListDataSelector x:Key="GratisTodaysListSelector" GoalTodaysListTemplate="{StaticResource GoalTodaysListTemplate}"
+                                               RoutineTodaysListTemplate="{StaticResource RoutineTodaysListTemplate}"
                                                EventTodaysListTemplate="{StaticResource EventTodaysListTemplate}"/>
     </ContentPage.Resources>
     
     <ContentPage.Content>
         <StackLayout BackgroundColor="#E9E8E8">
-            <CollectionView x:Name="TodaysListCollectionView" VerticalOptions="CenterAndExpand" ItemTemplate="{StaticResource GratisTodaysListSelector}" IsGrouped="True" Margin="20,0,20,0">
-                <CollectionView.ItemsLayout>
-                    <LinearItemsLayout ItemSpacing="15" Orientation="Vertical"/>
-                </CollectionView.ItemsLayout>
-                <CollectionView.GroupHeaderTemplate>
-                    <DataTemplate>
-                        <StackLayout Orientation="Horizontal" Padding="0,80,0,0">
-                            <Image Source="{Binding GroupIcon}" WidthRequest="48" HeightRequest="48" AutomationProperties.Name="Morning Events, Goals, and Routines" />
-                            <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" VerticalOptions="Center"/>
-                        </StackLayout>
-                    </DataTemplate>
-                </CollectionView.GroupHeaderTemplate>
-            </CollectionView>
+            <ActivityIndicator x:Name="LoadingIndicator" IsRunning="False" />
+            <RefreshView x:Name="RefreshViewInstance" IsRefreshing="{Binding IsBusy, Mode=OneWay}">
+                <CollectionView x:Name="TodaysListCollectionView" VerticalOptions="CenterAndExpand" ItemTemplate="{StaticResource GratisTodaysListSelector}" IsGrouped="True" Margin="20,0,20,0">
+                    <CollectionView.ItemsLayout>
+                        <LinearItemsLayout ItemSpacing="15" Orientation="Vertical"/>
+                    </CollectionView.ItemsLayout>
+                    <CollectionView.GroupHeaderTemplate>
+                        <DataTemplate>
+                            <StackLayout Orientation="Horizontal" Padding="0,40,0,0">
+                                <Image Source="{Binding GroupIcon}" WidthRequest="48" HeightRequest="48" AutomationProperties.Name="Morning Events, Goals, and Routines" />
+                                <Label Text="{Binding Name}" FontAttributes="Bold" FontSize="16" VerticalOptions="Center"/>
+                            </StackLayout>
+                        </DataTemplate>
+                    </CollectionView.GroupHeaderTemplate>
+                </CollectionView>
+            </RefreshView>
             <Frame HasShadow="True" Padding="10" HeightRequest="50">
                 <StackLayout Padding="0" Orientation="Horizontal" HeightRequest="40">
-                    <!--<StackLayout Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" HeightRequest="40">
-                        <ImageButton BackgroundColor="White" Source="mydayiconnotext.png" HeightRequest="25" AutomationProperties.Name="Go To My Day" />
-                        <Label Text="My Day" FontSize="12"/>
-                    </StackLayout>-->
                     <StackLayout Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" HeightRequest="40">
                         <ImageButton BackgroundColor="White" Clicked="Refresh" Source="listviewiconnotext.png" HeightRequest="25" AutomationProperties.Name="Refresh List View" />
                         <Label  Text="Today's List" FontSize="12"/>

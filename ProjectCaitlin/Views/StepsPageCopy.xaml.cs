@@ -26,6 +26,7 @@ namespace ProjectCaitlin.Views
         GRItemModel GRItemModel;
         public UpdateRoutineTaskParent updateParentTask;
         public UpdateParentRoutine updateParentRoutine;
+        public UpdateParentRoutine OnCompletion;
         int routineNum;
 
         //public StepsPageCopy(int a, int b, bool isRoutine, TaskItemModel _taskItemModel, GRItemModel _GRItemModel)
@@ -63,6 +64,12 @@ namespace ProjectCaitlin.Views
         public StepsPageCopy(int routineNum, bool isRoutine, GRItemModel _GRItemModel, UpdateParentRoutine updateParentRoutine) : this(routineNum, isRoutine, _GRItemModel)
         {
             this.updateParentRoutine = updateParentRoutine;
+        }
+
+        public StepsPageCopy(int routineNum, bool isRoutine, GRItemModel _GRItemModel, UpdateParentRoutine updateParentRoutine, UpdateParentRoutine onCompletion) : this(routineNum, isRoutine, _GRItemModel)
+        {
+            this.updateParentRoutine = updateParentRoutine;
+            this.OnCompletion = onCompletion;
         }
 
         //public StepsPageCopy(int a, int b, bool isRoutine, TaskItemModel _taskItemModel, GRItemModel _GRItemModel, UpdateRoutineTaskParent updateParentTask) : this(a, b, isRoutine, _taskItemModel, _GRItemModel)
@@ -132,13 +139,16 @@ namespace ProjectCaitlin.Views
 
                 await firebaseFunctionsService.updateGratisStatus(routine, "goals&routines", true);
                 await Navigation.PopAsync();
-                updateParentRoutine?.Invoke();
+                //updateParentRoutine?.Invoke();
+                OnCompletion?.Invoke();
+                return;
             }
             else
             {
                 DoneButtonCopy.IsEnabled = true;
                 await DisplayAlert("Oops!", "Please complete all steps before marking this task as done", "OK");
             }
+            updateParentRoutine?.Invoke();
         }
 
         //public async void DoneClicked(object sender, EventArgs args)

@@ -19,7 +19,10 @@ namespace ProjectCaitlin.Models
         public TimeSpan AvailableEndTime { get; set; }
         public string ActualStartTime { get; set; }
         public string ActualEndTime { get; set; }
-        public Color BorderColor { get; set; }
+        public Color BorderColor {
+            get { if (!isComplete) return Color.Transparent;
+                return Color.Black; }
+        }
         public Color FrameBgColorComplete { set; private get; }
         public Color FrameBgColorInComplete { set; private get; }
         public Color FrameBgColor { get { return (isComplete) ? FrameBgColorComplete : FrameBgColorInComplete; } }
@@ -32,10 +35,9 @@ namespace ProjectCaitlin.Models
         private bool isComplete;
         public bool IsComplete { 
             get { return this.isComplete; } 
-            set {
-                BorderColor = Color.Black; 
-                this.isComplete = value; 
-                OnPropertyChanged("IsComplete"); 
+            set { 
+                this.isComplete = value;
+                OnPropertyChanged("IsComplete");
                 OnPropertyChanged("BorderColor");
                 OnPropertyChanged("FrameBgColor");
                 OnPropertyChanged("IsNotComplete");

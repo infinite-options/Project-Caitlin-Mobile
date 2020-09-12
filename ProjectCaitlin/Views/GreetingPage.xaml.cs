@@ -72,25 +72,28 @@ namespace ProjectCaitlin.Views
                     //if (identifyButton! != null && !identifyButton.IsVisible )
                     if (!active) break;
                     if (addingNewUserActive || isEnrollingNow) continue;
-                    if(recorderWrapper.autoMode)
-                    {
-                        greetingViewModel.CMDIdentifyAndEnroll();
-                        Task.Factory.StartNew(() => {
-                            System.Threading.Thread.Sleep(500);
-                            int i = 0;
-                            while (greetingViewModel.IsRecording())
-                            {
-                                Device.BeginInvokeOnMainThread(() =>
-                                {
-                                    //HIDE BUTTONS (SPEAKER RECOGNITION) CODE BEHIND
-                                         //this.trackBarFrame.BackgroundColor = Color.Yellow;
-                                         //this.trackBar.Text = string.Format("{0}\n{1}", SlideToActView.States.Recording, i);
-                                });
-                                i += 1;
-                                System.Threading.Thread.Sleep(1000);
-                            }
-                        });
-                    }
+
+                    // Reducing work by commenting out while loop as Voice Recognition has been muted
+                    //
+                    //if(recorderWrapper.autoMode)
+                    //{
+                    //    greetingViewModel.CMDIdentifyAndEnroll();
+                    //    Task.Factory.StartNew(() => {
+                    //        System.Threading.Thread.Sleep(500);
+                    //        int i = 0;
+                    //        while (greetingViewModel.IsRecording())
+                    //        {
+                    //            Device.BeginInvokeOnMainThread(() =>
+                    //            {
+                    //                //HIDE BUTTONS (SPEAKER RECOGNITION) CODE BEHIND
+                    //                     //this.trackBarFrame.BackgroundColor = Color.Yellow;
+                    //                     //this.trackBar.Text = string.Format("{0}\n{1}", SlideToActView.States.Recording, i);
+                    //            });
+                    //            i += 1;
+                    //            System.Threading.Thread.Sleep(1000);
+                    //        }
+                    //    });
+                    //}
                 }
             });
             //HIDE BUTTONS (SPEAKER RECOGNITION) CODE BEHIND

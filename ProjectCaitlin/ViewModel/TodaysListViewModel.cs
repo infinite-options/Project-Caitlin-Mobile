@@ -52,6 +52,12 @@ namespace ProjectCaitlin.ViewModel
             await firebaseFunctionsService.updateGratisStatus(App.User.goals[Tile.Index], "goals&routines", true);
         }
 
+
+        async void  CompleteRoutineUI(TodaysListTileDisplayObject Tile)
+        {
+            Tile.IsComplete = true;
+        }
+
         async public void CompleteRoutine(TodaysListTileDisplayObject Tile)
         {
             Tile.InProgress = false;
@@ -83,21 +89,30 @@ namespace ProjectCaitlin.ViewModel
             }
             else
             {
-                //await Navigation.PushAsync(new TaskCompletePageCopy(Tile.Index, false, null, async () => { UponGoalTileUpdate(Tile); }));
-                await Navigation.PushAsync(new TaskCompletePageCopy(Tile.Index, false, null, async () => { UponGoalTileUpdate(Tile); }, async () => { CompleteGoal(Tile); }));
+                await Navigation.PushAsync(new TaskCompletePageCopy(Tile.Index, false, null, async () => { UponGoalTileUpdate(Tile); }, null, async () => { CompleteGoal(Tile); }));
             }
         }
+
+
+        
 
         async void HandleRoutineTileTouch(TodaysListTileDisplayObject Tile)
         {
             routine routine = App.User.routines[Tile.Index];
             if (!routine.isSublistAvailable || routine.tasks.Count == 0)
             {
-                UponRoutineTileUpdate(Tile);
+                if (Tile.InProgress)
+                {
+                    CompleteRoutine(Tile);
+                }
+                else
+                {
+                    UponRoutineTileUpdate(Tile);
+                }
             }
             else
             {
-                await Navigation.PushAsync(new StepsPageCopy(Tile.Index, true, Tile.GratisObject as GRItemModel, async () => { UponRoutineTileUpdate(Tile); }));
+                await Navigation.PushAsync(new StepsPageCopy(Tile.Index, true, Tile.GratisObject as GRItemModel, async () => { UponRoutineTileUpdate(Tile); }, async () => { CompleteRoutineUI(Tile); }));
             }
         }
 
