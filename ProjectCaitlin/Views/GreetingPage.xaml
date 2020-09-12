@@ -177,11 +177,11 @@
                         <Label Text="My Day" FontSize="12"/>
                     </StackLayout>-->
                 <StackLayout Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" HeightRequest="40">
-                    <ImageButton BackgroundColor="White" Clicked="btn1Clicked" Source="listviewiconnotext.png" HeightRequest="25" AutomationProperties.Name="Refresh List View" />
+                    <ImageButton BackgroundColor="White" Clicked="btn1Clicked" Source="listviewiconnotext.png" HeightRequest="25" AutomationProperties.Name="Got To List View" />
                     <Label  Text="Today's List" FontSize="12"/>
                 </StackLayout>
                 <StackLayout Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" HeightRequest="40">
-                    <ImageButton BackgroundColor="White"  Source="aboutmeiconnotext.png" HeightRequest="25" AutomationProperties.Name="Go To About Me" BorderColor="Blue" />
+                    <ImageButton BackgroundColor="White"  Source="aboutmeiconnotext.png" HeightRequest="25" AutomationProperties.Name="About Me" BorderColor="Blue" />
                     <Label  Text="About Me" FontSize="12"/>
                 </StackLayout>
             </StackLayout>

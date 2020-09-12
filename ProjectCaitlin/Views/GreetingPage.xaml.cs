@@ -193,7 +193,7 @@ namespace ProjectCaitlin.Views
             active = false;
             Device.BeginInvokeOnMainThread(() => {
                 Navigation.PopAsync();
-                Navigation.PushAsync(new ListViewPage());
+                //Navigation.PushAsync(new ListViewPage());
             });
         }
 
