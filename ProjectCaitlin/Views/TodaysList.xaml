@@ -37,7 +37,7 @@
             </Frame>
         </DataTemplate>
         <DataTemplate x:Key="GoalTodaysListTemplate" x:DataType="model:TodaysListTileDisplayObject">
-            <Frame BackgroundColor="{Binding FrameBgColor}" BorderColor="{Binding BorderColor}" HeightRequest="136" CornerRadius="10" HasShadow="{Binding IsNotComplete}" Padding="0" Margin="0">
+            <Frame BackgroundColor="{Binding FrameBgColor}" BorderColor="{Binding BorderColor}" HeightRequest="136" CornerRadius="10" HasShadow="False" Padding="0" Margin="0">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding TouchCommand}"/>
                 </Frame.GestureRecognizers>
@@ -68,7 +68,7 @@
             </Frame>
         </DataTemplate>
         <DataTemplate x:Key="RoutineTodaysListTemplate" x:DataType="model:TodaysListTileDisplayObject">
-            <Frame BackgroundColor="{Binding FrameBgColor}" BorderColor="{Binding BorderColor}" HeightRequest="136" CornerRadius="10" HasShadow="{Binding IsNotComplete}" Padding="0" Margin="0">
+            <Frame BackgroundColor="{Binding FrameBgColor}" BorderColor="{Binding BorderColor}" HeightRequest="136" CornerRadius="10" HasShadow="False" Padding="0" Margin="0">
                 <Frame.GestureRecognizers>
                     <TapGestureRecognizer NumberOfTapsRequired="1" Command="{Binding TouchCommand}"/>
                 </Frame.GestureRecognizers>
