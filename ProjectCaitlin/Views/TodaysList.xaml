@@ -8,7 +8,7 @@
 
     <ContentPage.Resources>
         <DataTemplate x:Key="EventTodaysListTemplate" x:DataType="model:TodaysListTileDisplayObject">
-            <Frame BackgroundColor="#C8D7E4" HeightRequest="166" CornerRadius="20" HasShadow="True" Padding="0" Margin="0">
+            <Frame BackgroundColor="#C8D7E4" HeightRequest="166" CornerRadius="20" HasShadow="False" Padding="0" Margin="0">
                 <Grid Padding="20,0,20,0" Margin="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
