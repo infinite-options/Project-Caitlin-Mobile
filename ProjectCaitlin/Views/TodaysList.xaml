@@ -8,7 +8,7 @@
 
     <ContentPage.Resources>
         <DataTemplate x:Key="EventTodaysListTemplate" x:DataType="model:TodaysListTileDisplayObject">
-            <Frame BackgroundColor="#C8D7E4" HeightRequest="166" CornerRadius="20" HasShadow="False" Padding="0" Margin="0">
+            <Frame BackgroundColor="#C8D7E4" HeightRequest="136" CornerRadius="20" HasShadow="False" Padding="0" Margin="0">
                 <Grid Padding="20,0,20,0" Margin="0">
                     <Grid.RowDefinitions>
                         <RowDefinition Height="1*"/>
@@ -25,9 +25,9 @@
                         <ColumnDefinition Width="1*"/>
                         <ColumnDefinition Width="1*"/>
                     </Grid.ColumnDefinitions>
-                    <Label Text="{Binding TimeDifference}" Padding="0,30,0,0" Font="Bold, 14" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="1" VerticalOptions="CenterAndExpand"/>
+                    <Label Text="{Binding TimeDifference}" Padding="0,10,0,0" Font="Bold, 14" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="1" VerticalOptions="CenterAndExpand"/>
                     <Label Text="{Binding Title}" Padding="0,20,0,0" Font="Bold, 28" Grid.Column="0" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="1" VerticalOptions="StartAndExpand"/>
-                    <Label Text="{Binding SubTitle}" Margin="0,0,0,10" TextColor="#9FA1A3" Font="16" Grid.Column="0" Grid.Row="5" Grid.RowSpan="2" Grid.ColumnSpan="2"/>
+                    <Label Text="{Binding SubTitle}" Margin="0,0,0,10" TextColor="#9FA1A3" Font="16" Grid.Column="0" Grid.Row="5" Grid.RowSpan="3" Grid.ColumnSpan="1"/>
                     <Frame BackgroundColor="#C8D7E4" HasShadow="False" Padding="0" Margin="0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="7" Grid.ColumnSpan="3">
                         <Frame HasShadow="False" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="0" Margin="0" HeightRequest="80" WidthRequest="80">
                             <Image BackgroundColor="#C8D7E4" Source="{Binding Photo}" HorizontalOptions="FillAndExpand" HeightRequest="80" WidthRequest="80" AutomationProperties.Name="Event Image" />

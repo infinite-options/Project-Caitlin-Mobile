@@ -46,7 +46,7 @@
                             <Button Text="Cancel" WidthRequest="70" CornerRadius="10" Padding="0" Margin="0,5"  IsVisible="True" TextColor="White"  BackgroundColor="#59556D" Clicked="CancelAddingPersonButtonClicked"/>
                         </StackLayout>
                     </StackLayout>
-                    <StackLayout x:Name="box" IsVisible="true" Margin="0,10,0,0">
+                    <StackLayout x:Name="box" IsVisible="true" Margin="0,100,0,0">
                         <!--<StackLayout>-->
                             <ffimage:CachedImage
                         x:Name = "UserImage"
@@ -113,7 +113,7 @@
 
                     <StackLayout HorizontalOptions="Center"
                         x:Name="importantPeopleSL">
-                        <Label Text="Contact My Trusted Advisors" HorizontalOptions="Center" TextColor="Black" FontSize="Medium" FontAttributes="Bold" Margin="0,10,0,30"/>
+                        <Label Text="Contact My Trusted Advisors" HorizontalOptions="Center" TextColor="Black" FontSize="Medium" FontAttributes="Bold" Margin="0,60,0,30"/>
                         <!--<Label
                         Text="Important Individuals"
                         FontSize="20"
@@ -160,7 +160,7 @@
                                 </DataTemplate>
                             </CarouselView.ItemTemplate>
                         </CarouselView>
-                        <IndicatorView  Margin="0,-550,0,0" x:Name="indicatorView"
+                        <IndicatorView  Margin="0,0,0,50" x:Name="indicatorView"
                             IndicatorColor="LightGray"
                             SelectedIndicatorColor="DarkGray"
                              HorizontalOptions="Center" />
