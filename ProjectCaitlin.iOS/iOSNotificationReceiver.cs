@@ -88,7 +88,7 @@ namespace ProjectCaitlin.iOS
                                 }
                                 else
                                 {
-                                    await App.Current.MainPage.Navigation.PushAsync(new ListViewPage());
+                                    await App.Current.MainPage.Navigation.PushAsync(new TodaysList());
                                 }
 
                             }
@@ -103,7 +103,7 @@ namespace ProjectCaitlin.iOS
                                 }
                                 else
                                 {
-                                    await App.Current.MainPage.Navigation.PushAsync(new ListViewPage());
+                                    await App.Current.MainPage.Navigation.PushAsync(new TodaysList());
                                 }
                             }
                             

@@ -61,7 +61,7 @@ namespace ProjectCaitlin.Views
                 AvailableStartTime = _goal.availableStartTime,
                 ActualEndTime = _goal.dateTimeCompleted.ToString(),
                 Title = _goal.title,
-                SubTitle = "This is available from "+startTime+" to "+endTime,
+                SubTitle = "This is available from: \n"+startTime+" to "+endTime,
                 IsSubListAvailable = _goal.isSublistAvailable,
                 Photo = _goal.photo,
                 FrameBgColorComplete = Color.FromHex("#E9E8E8"),
@@ -222,7 +222,8 @@ namespace ProjectCaitlin.Views
             {
                 Text = DateTime.Now.DayOfWeek.ToString(),
                 FontSize = 40,
-                Padding = new Thickness(0, 40, 0, 0)
+                Padding = new Thickness(0, 80, 0, 0),
+                Margin = new Thickness(0, 40, 0, 0)
             };
             
         }
