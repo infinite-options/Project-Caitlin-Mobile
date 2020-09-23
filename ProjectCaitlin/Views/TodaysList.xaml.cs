@@ -7,6 +7,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
+using Xamarin.Essentials;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -202,7 +203,9 @@ namespace ProjectCaitlin.Views
         {
             var tiles = PopulateTiles(goals, routines, events);
             Items = GroupTiles(tiles);
-            TodaysListCollectionView.ItemsSource = Items;
+            MainThread.BeginInvokeOnMainThread(() => {
+                TodaysListCollectionView.ItemsSource = Items;
+            });
         }
 
 
@@ -217,6 +220,9 @@ namespace ProjectCaitlin.Views
         private void LoadUI()
         {
             SetTimeOfDayStartTime();
+            var mainDisplay = DeviceDisplay.MainDisplayInfo;
+            var height = mainDisplay.Height;
+            TodaysListCollectionView.HeightRequest = height/2 - 100;
             LoadTiles(App.User.goals, App.User.routines, App.User.CalendarEvents);
             TodaysListCollectionView.Header = new Label
             {

@@ -106,13 +106,17 @@
     
     <ContentPage.Content>
         <!--<StackLayout BackgroundColor="#E9E8E8">-->
-        <FlexLayout Direction="Column" BackgroundColor="#E9E8E8">
+        <FlexLayout JustifyContent="End" Direction="Column" BackgroundColor="#E9E8E8">
             
             <ActivityIndicator x:Name="LoadingIndicator" IsRunning="False" />
-            <BoxView BackgroundColor="#E9E8E8" HeightRequest="3"/>
+            <!--<StackLayout BackgroundColor="Red" FlexLayout.Grow="1" VerticalOptions="CenterAndExpand">-->
+            <!--<BoxView BackgroundColor="Red" HeightRequest="100"/>-->
             <!--<Frame BackgroundColor="#E9E8E8" FlexLayout.Grow="1" Margin="0" Padding="0" HasShadow="False">-->
-            <RefreshView x:Name="RefreshViewInstance" IsRefreshing="{Binding IsBusy, Mode=OneWay}" Margin="0" Padding="0">
-                <CollectionView FlexLayout.Grow="1" x:Name="TodaysListCollectionView" VerticalOptions="CenterAndExpand" ItemTemplate="{StaticResource GratisTodaysListSelector}" IsGrouped="True" Margin="20,0,20,0">
+            <RefreshView x:Name="RefreshViewInstance" VerticalOptions="CenterAndExpand" IsRefreshing="{Binding IsBusy, Mode=OneWay}" Margin="0" Padding="0">
+                <CollectionView x:Name="TodaysListCollectionView" ItemTemplate="{StaticResource GratisTodaysListSelector}" IsGrouped="True" Margin="20,0,20,0">
+                    <!--<CollectionView.Behaviors>
+                        <controls:CollectionViewHightBehavior/>
+                    </CollectionView.Behaviors>-->
                     <CollectionView.ItemsLayout>
                         <LinearItemsLayout ItemSpacing="15" Orientation="Vertical"/>
                     </CollectionView.ItemsLayout>
@@ -127,8 +131,9 @@
                 </CollectionView>
             </RefreshView>
             <!--</Frame>-->
-            <BoxView BackgroundColor="#E9E8E8" HeightRequest="3"/>
-            <Frame HasShadow="True" Padding="10" HeightRequest="80">
+            <!--</StackLayout>-->
+            <!--<BoxView BackgroundColor="#E9E8E8" HeightRequest="3"/>-->
+            <Frame HasShadow="True" Padding="10" HeightRequest="50">
                 <StackLayout Padding="0" Orientation="Horizontal" HeightRequest="40">
                     <StackLayout Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" HeightRequest="40">
                         <ImageButton BackgroundColor="White" Clicked="Refresh" Source="listviewiconnotext.png" HeightRequest="25" AutomationProperties.Name="Refresh List View" />
