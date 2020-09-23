@@ -46,12 +46,12 @@
                             <Button Text="Cancel" WidthRequest="70" CornerRadius="10" Padding="0" Margin="0,5"  IsVisible="True" TextColor="White"  BackgroundColor="#59556D" Clicked="CancelAddingPersonButtonClicked"/>
                         </StackLayout>
                     </StackLayout>
-                    <StackLayout x:Name="box" IsVisible="true" Margin="0,100,0,0">
+                    <StackLayout x:Name="box" IsVisible="true" Margin="0,50,0,0">
                         <!--<StackLayout>-->
                             <ffimage:CachedImage
                         x:Name = "UserImage"
-                        HeightRequest="200"
-                        WidthRequest="200">
+                        HeightRequest="140"
+                        WidthRequest="140">
                                 <ffimage:CachedImage.Transformations>
                                     <fftransformations:CircleTransformation/>
                                 </ffimage:CachedImage.Transformations>
@@ -113,7 +113,7 @@
 
                     <StackLayout HorizontalOptions="Center"
                         x:Name="importantPeopleSL">
-                        <Label Text="Contact My Trusted Advisors" HorizontalOptions="Center" TextColor="Black" FontSize="Medium" FontAttributes="Bold" Margin="0,60,0,30"/>
+                        <Label Text="Contact My Trusted Advisors" HorizontalOptions="Center" TextColor="Black" FontSize="Medium" FontAttributes="Bold" Margin="0,40,0,30"/>
                         <!--<Label
                         Text="Important Individuals"
                         FontSize="20"
