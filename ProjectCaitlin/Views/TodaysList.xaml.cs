@@ -119,7 +119,7 @@ namespace ProjectCaitlin.Views
                 TimeDifference = _event.Start.DateTime.LocalDateTime.ToString("h:mm tt") + " - " + _event.End.DateTime.LocalDateTime.ToString("h:mm tt"),
                 Title = _event.EventName,
                 SubTitle = _event.Description,
-                Photo = "eventIcon.jpg"
+                Photo = "calendar-5.png"
             };
             return eventTile;
         }
@@ -220,9 +220,16 @@ namespace ProjectCaitlin.Views
         private void LoadUI()
         {
             SetTimeOfDayStartTime();
-            var mainDisplay = DeviceDisplay.MainDisplayInfo;
-            var height = mainDisplay.Height;
-            TodaysListCollectionView.HeightRequest = height/2 - 100;
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+                var mainDisplay = DeviceDisplay.MainDisplayInfo;
+                var height = mainDisplay.Height;
+                TodaysListCollectionView.HeightRequest = height / 2 - 100;
+            }
+            if(Device.RuntimePlatform == Device.Android)
+            {
+                NavBar.HeightRequest = 100;
+            }
             LoadTiles(App.User.goals, App.User.routines, App.User.CalendarEvents);
             TodaysListCollectionView.Header = new Label
             {

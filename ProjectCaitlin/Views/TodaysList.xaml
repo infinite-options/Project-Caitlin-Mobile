@@ -133,7 +133,7 @@
             <!--</Frame>-->
             <!--</StackLayout>-->
             <!--<BoxView BackgroundColor="#E9E8E8" HeightRequest="3"/>-->
-            <Frame HasShadow="True" Padding="10" HeightRequest="50">
+            <Frame x:Name="NavBar" HasShadow="True" Padding="10" HeightRequest="50">
                 <StackLayout Padding="0" Orientation="Horizontal" HeightRequest="40">
                     <StackLayout Padding="0" Margin="0" HorizontalOptions="CenterAndExpand" HeightRequest="40">
                         <ImageButton BackgroundColor="White" Clicked="Refresh" Source="listviewiconnotext.png" HeightRequest="25" AutomationProperties.Name="Refresh List View" />
