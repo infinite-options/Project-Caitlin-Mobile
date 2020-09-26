@@ -119,7 +119,7 @@ namespace ProjectCaitlin.Views
                 TimeDifference = _event.Start.DateTime.LocalDateTime.ToString("h:mm tt") + " - " + _event.End.DateTime.LocalDateTime.ToString("h:mm tt"),
                 Title = _event.EventName,
                 SubTitle = _event.Description,
-                Photo = "calendar-5.png"
+                Photo = "calendarFive.png"
             };
             return eventTile;
         }

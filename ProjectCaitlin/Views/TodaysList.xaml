@@ -20,17 +20,15 @@
                         <RowDefinition Height="1*"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="7*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
-                        <ColumnDefinition Width="1*"/>
+                        <ColumnDefinition Width="8*"/>
+                        <ColumnDefinition Width="2*"/>
                     </Grid.ColumnDefinitions>
                     <Label Text="{Binding TimeDifference}" Padding="0,10,0,0" Font="Bold, 14" Grid.Column="0" Grid.Row="0" Grid.RowSpan="2" Grid.ColumnSpan="1" VerticalOptions="CenterAndExpand"/>
-                    <Label Text="{Binding Title}" Padding="0,20,0,0" Font="Bold, 28" Grid.Column="0" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="1" VerticalOptions="StartAndExpand"/>
+                    <Label Text="{Binding Title}" Padding="0,20,0,0" Font="Bold, 24" Grid.Column="0" Grid.Row="1" Grid.RowSpan="4" Grid.ColumnSpan="1" VerticalOptions="StartAndExpand"/>
                     <Label Text="{Binding SubTitle}" Margin="0,0,0,10" TextColor="#9FA1A3" Font="16" Grid.Column="0" Grid.Row="5" Grid.RowSpan="3" Grid.ColumnSpan="1"/>
-                    <Frame BackgroundColor="#C8D7E4" HasShadow="False" Padding="0" Margin="0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="7" Grid.ColumnSpan="3">
-                        <Frame HasShadow="False" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="0" Margin="0" HeightRequest="80" WidthRequest="80">
-                            <Image BackgroundColor="#C8D7E4" Source="{Binding Photo}" HorizontalOptions="FillAndExpand" HeightRequest="80" WidthRequest="80" AutomationProperties.Name="Event Image" />
+                    <Frame BackgroundColor="#C8D7E4" HasShadow="False" Padding="0" Margin="0" Grid.Column="1" Grid.Row="0" Grid.RowSpan="7" Grid.ColumnSpan="1">
+                        <Frame HasShadow="False" VerticalOptions="CenterAndExpand" HorizontalOptions="CenterAndExpand" Padding="0" Margin="0" HeightRequest="56" WidthRequest="56">
+                            <Image BackgroundColor="#C8D7E4" Source="{Binding Photo}" HorizontalOptions="FillAndExpand" HeightRequest="56" WidthRequest="56" AutomationProperties.Name="Event Image" />
                         </Frame>
                     </Frame>
                 </Grid>
