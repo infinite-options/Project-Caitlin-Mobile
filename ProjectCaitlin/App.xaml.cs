@@ -35,6 +35,19 @@ namespace ProjectCaitlin
         {
             InitializeComponent();
 
+            //new RdsUserClient().GetUser("100-000001");
+            //IDataClient dataClient = DataClientFactory.GetDataClient();
+            ////var t  = dataClient.GetAllOtherTAs("100-000001");
+            //var t = dataClient.GetGoalsAndRoutines("100-000028");
+            //var t = dataClient.GetUser("100-000028");
+            //t.Wait();
+            //Console.WriteLine(t.Result[0]);
+            ////Console.WriteLine(t.Result[0].firstName);
+            //if (t.Result != null)
+            //{
+            //    Console.WriteLine(t.Result.firstName);
+            //}
+
             // use the dependency service to get a platform-specific implementation and initialize it
             DependencyService.Get<INotificationManager>().Initialize();
 
@@ -56,7 +69,7 @@ namespace ProjectCaitlin
         public static void LoadApplicationProperties()
         {
             User.id = Current.Properties["user_id"].ToString();
-            sendDeviceToken();
+            //sendDeviceToken();
         }
 
         public static void sendDeviceToken()

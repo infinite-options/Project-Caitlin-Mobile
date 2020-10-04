@@ -130,43 +130,94 @@ namespace ProjectCaitlin.Services
             Console.WriteLine("uid is: " + uid);
             Log.Debug("LoadUser", "uid is: " + uid);
 
-            var userDocument = await CrossCloudFirestore.Current.Instance
-                .GetCollection("users")
-                .GetDocument(uid)
-                .GetDocumentAsync();
+            //var userDocument = await CrossCloudFirestore.Current.Instance
+            //    .GetCollection("users")
+            //    .GetDocument(uid)
+            //    .GetDocumentAsync();
 
 
-            Console.WriteLine("Printing Data");
-            Console.WriteLine(userDocument);
+            //Console.WriteLine("Printing Data");
+            //Console.WriteLine(userDocument);
             
 
-            var docData = userDocument.Data;
+            //var docData = userDocument.Data;
 
             //Console.WriteLine(userDocument.Data["is_displayed_today"]);
 
 
-            if (docData.ContainsKey("first_name") && docData.ContainsKey("last_name"))
-            {
-                App.User.firstName = docData["first_name"].ToString();
-                Console.WriteLine(docData["first_name"].ToString());
-                App.User.lastName = docData["last_name"].ToString();
-            }
+            //if (docData.ContainsKey("first_name") && docData.ContainsKey("last_name"))
+            //{
+            //    App.User.firstName = docData["first_name"].ToString();
+            //    Console.WriteLine(docData["first_name"].ToString());
+            //    App.User.lastName = docData["last_name"].ToString();
+            //}
 
-            if (docData.ContainsKey("email_id"))
-            {
-                App.User.email = docData["email_id"].ToString();
-            }
+            //if (docData.ContainsKey("email_id"))
+            //{
+            //    App.User.email = docData["email_id"].ToString();
+            //}
 
-            if (docData.ContainsKey("goals&routines"))
-            {
-                var grArrayData = (List<object>)docData["goals&routines"];
-                LoadGoalsAndRoutines(grArrayData);
-            }
+            //if (docData.ContainsKey("goals&routines"))
+            //{
+            //    var grArrayData = (List<object>)docData["goals&routines"];
+            //    LoadGoalsAndRoutines(grArrayData);
+            //}
 
-            if (docData.ContainsKey("about_me"))
+            //if (docData.ContainsKey("about_me"))
+            //{
+            //    var aboutMeData = (Dictionary<string, object>)docData["about_me"];
+            //    LoadAboutMe(aboutMeData);
+            //}
+
+            IDataClient dataClient = DataClientFactory.GetDataClient();
+            //var t  = dataClient.GetAllOtherTAs("100-000001");
+            var t = dataClient.GetUser(App.User.id);
+            var v = dataClient.GetGoalsAndRoutines(App.User.id);
+            v.Wait();
+            if (v.Result != null)
             {
-                var aboutMeData = (Dictionary<string, object>)docData["about_me"];
-                LoadAboutMe(aboutMeData);
+                List<goal> goals = new List<goal>();
+                List<routine> routines = new List<routine>();
+                //foreach(GratisObject gro in v.Result)
+                for( int index=0; index<v.Result.Count; index++)
+                {
+                    GratisObject gro = v.Result[index];
+                    if(gro.GetType() == typeof(goal))
+                    {
+                        goal gl = (goal)gro;
+                        var actions = dataClient.GetActionsAndTasks(((goal)gro).id,"goal");
+                        actions.Wait();
+                        foreach(atObject at in actions.Result)
+                        {
+                            gl.actions.Add((action)at);
+                        }
+                        goals.Add(gl);
+                    }
+                    else if (gro.GetType() == typeof(routine))
+                    {
+                        routine gl = (routine)gro;
+                        var actions = dataClient.GetActionsAndTasks(gl.id, "routine");
+                        actions.Wait();
+                        foreach (atObject at in actions.Result)
+                        {
+                            gl.tasks.Add((task)at);
+                        }
+                        routines.Add(gl);
+                    }
+                }
+                App.User.goals = goals;
+                App.User.routines = routines;
+            }
+            //Console.WriteLine(t.Result[0].firstName);
+            t.Wait();
+            if (t.Result != null)
+            {
+                App.User.firstName = t.Result.firstName;
+                App.User.lastName = t.Result.lastName;
+                App.User.email = t.Result.email;
+                App.User.people = t.Result.people;
+                App.User.aboutMe = t.Result.aboutMe;
+                //Console.WriteLine(t.Result.firstName);
             }
         }
 
@@ -197,29 +248,39 @@ namespace ProjectCaitlin.Services
         public async Task LoadPeople()
         {
             //load people from firebase
-            var peopleCollection = await CrossCloudFirestore.Current.Instance.GetCollection("users")
-                                    .GetDocument(uid)
-                                    .GetCollection("people")
-                                    .GetDocumentsAsync();
+            //var peopleCollection = await CrossCloudFirestore.Current.Instance.GetCollection("users")
+            //                        .GetDocument(uid)
+            //                        .GetCollection("people")
+            //                        .GetDocumentsAsync();
 
-            if (peopleCollection != null)
+            //if (peopleCollection != null)
+            //{
+            //    foreach (var document in peopleCollection.Documents)
+            //    {
+            //        var data = document.Data;
+            //        if (convertBinToBool(data["important"].ToString()))
+            //        {
+            //            var person = new person()
+            //            {
+            //                name = data["name"].ToString(),
+            //                relationship = data.ContainsKey("relationship") ? data["relationship"].ToString() : "",
+            //                phoneNumber = data["phone_number"].ToString(),
+            //                pic = data.ContainsKey("pic") ? data["pic"].ToString() : "",
+            //                //speakerId = data["speaker_id"].ToString(),
+            //            };
+            //            App.User.people.Add(person);
+            //        }
+            //    }
+            //}
+            IDataClient dataClient = DataClientFactory.GetDataClient();
+            //var t  = dataClient.GetAllOtherTAs("100-000001");
+            var t = dataClient.GetUser(App.User.id);
+            t.Wait();
+            //Console.WriteLine(t.Result[0].firstName);
+            if (t.Result != null)
             {
-                foreach (var document in peopleCollection.Documents)
-                {
-                    var data = document.Data;
-                    if (convertBinToBool(data["important"].ToString()))
-                    {
-                        var person = new person()
-                        {
-                            name = data["name"].ToString(),
-                            relationship = data.ContainsKey("relationship") ? data["relationship"].ToString() : "",
-                            phoneNumber = data["phone_number"].ToString(),
-                            pic = data.ContainsKey("pic") ? data["pic"].ToString() : "",
-                            //speakerId = data["speaker_id"].ToString(),
-                        };
-                        App.User.people.Add(person);
-                    }
-                }
+                App.User.people = t.Result.people;
+                //Console.WriteLine(t.Result.firstName);
             }
         }
 

@@ -102,6 +102,27 @@ namespace ProjectCaitlin.Views
             return routineTile;
         }
 
+        private TodaysListTileDisplayObject ToTile(GratisObject gratis)
+        {
+            TimeSpan differene = gratis.availableEndTime - gratis.availableStartTime;
+            TodaysListTileDisplayObject routineTile = new TodaysListTileDisplayObject(gratis.isInProgress, gratis.isComplete)
+            {
+                Type = TileType.Routine,
+                AvailableEndTime = gratis.availableEndTime,
+                AvailableStartTime = gratis.availableStartTime,
+                ActualEndTime = gratis.dateTimeCompleted.ToString(),
+                Title = gratis.title,
+                SubTitle = "This takes: " + ((int)differene.TotalMinutes).ToString() + " minutes",
+                IsSubListAvailable = false,
+                Photo = gratis.photo,
+                FrameBgColorComplete = Color.FromHex("#E9E8E8"),
+                FrameBgColorInComplete = Color.FromHex("#FFFFFF")
+            };
+            routineTile.TouchCommand = new Command(async () => ViewModel.OnTileTapped(routineTile));
+
+            return routineTile;
+        }
+
         private TodaysListTileDisplayObject ToTile(routine _routine, int index)
         {
             TodaysListTileDisplayObject tile = ToTile(_routine);
@@ -146,6 +167,13 @@ namespace ProjectCaitlin.Views
             return goalTiles;
         }
 
+        private List<TodaysListTileDisplayObject> ToTileList(List<GratisObject> gratisList)
+        {
+            List<TodaysListTileDisplayObject> gratisTiles =null;
+            //gratisTiles = gratisList.Select((value, index) => ToTile(value, index)).ToList();
+            return gratisTiles;
+        }
+
         private List<TodaysListTileDisplayObject> ToTileList(List<routine> routineList)
         {
             List<TodaysListTileDisplayObject> routineTiles;
@@ -164,6 +192,15 @@ namespace ProjectCaitlin.Views
         {
             List<TodaysListTileDisplayObject> Tiles = ToTileList(goals);
             MergeTiles(ToTileList(routines), Tiles);
+            MergeTiles(ToTileList(events), Tiles);
+
+            Tiles.Sort();
+            return new ObservableCollection<TodaysListTileDisplayObject>(Tiles);
+        }
+
+        private ObservableCollection<TodaysListTileDisplayObject> PopulateTiles(List<GratisObject> gratis, List<EventsItems> events)
+        {
+            List<TodaysListTileDisplayObject> Tiles = ToTileList(gratis);
             MergeTiles(ToTileList(events), Tiles);
 
             Tiles.Sort();
@@ -208,6 +245,15 @@ namespace ProjectCaitlin.Views
             });
         }
 
+        private void LoadTiles(List<GratisObject> gratis, List<EventsItems> events)
+        {
+            var tiles = PopulateTiles(gratis, events);
+            Items = GroupTiles(tiles);
+            MainThread.BeginInvokeOnMainThread(() => {
+                TodaysListCollectionView.ItemsSource = Items;
+            });
+        }
+
 
         private void SetTimeOfDayStartTime()
         {
@@ -239,6 +285,29 @@ namespace ProjectCaitlin.Views
                 Margin = new Thickness(0, 40, 0, 0)
             };
             
+        }
+
+        private void LoadUI(List<GratisObject> gratis, List<EventsItems> calendarEvents)
+        {
+            SetTimeOfDayStartTime();
+            if (Device.RuntimePlatform == Device.iOS)
+            {
+                var mainDisplay = DeviceDisplay.MainDisplayInfo;
+                var height = mainDisplay.Height;
+                TodaysListCollectionView.HeightRequest = height / 2 - 100;
+            }
+            if (Device.RuntimePlatform == Device.Android)
+            {
+                NavBar.HeightRequest = 100;
+            }
+            LoadTiles(gratis, calendarEvents);
+            TodaysListCollectionView.Header = new Label
+            {
+                Text = DateTime.Now.DayOfWeek.ToString(),
+                FontSize = 40,
+                Padding = new Thickness(0, 40, 0, 0),
+                Margin = new Thickness(0, 40, 0, 0)
+            };
         }
 
         private async void OnAboutMe_Clicked(object sender, EventArgs e)
